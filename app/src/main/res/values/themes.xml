@@ -1,5 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.Connectattoo" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/white</item>
+        <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
 
-    <style name="Theme.Connectattooandroid" parent="android:Theme.Material.Light.NoActionBar" />
+    </style>
+
+    <style name="Theme.Connectattoo" parent="Base.Theme.Connectattoo" />
 </resources>
