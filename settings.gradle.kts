@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "connectattoo.android"
+rootProject.name = "Connectattoo"
 include(":app")
