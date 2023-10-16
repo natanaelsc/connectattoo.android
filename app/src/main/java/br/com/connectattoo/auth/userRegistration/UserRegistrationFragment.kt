@@ -1,27 +1,24 @@
-package br.com.connectattoo.auth.cadastroCliente
+package br.com.connectattoo.auth.userRegistration
 
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import androidx.lifecycle.viewmodel.CreationExtras
-import br.com.connectattoo.R
-import br.com.connectattoo.databinding.FragmentCadastroClienteBinding
+import br.com.connectattoo.databinding.FragmentUserRegistrationBinding
 import com.github.rtoshiro.util.format.SimpleMaskFormatter
 import com.github.rtoshiro.util.format.text.MaskTextWatcher
 import com.google.android.material.snackbar.Snackbar
 
 
-class CadastroClienteFragment : Fragment() {
+class UserRegistrationFragment : Fragment() {
 
-    private var _binding: FragmentCadastroClienteBinding? = null
+    private var _binding: FragmentUserRegistrationBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var senha : EditText
@@ -42,7 +39,7 @@ class CadastroClienteFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentCadastroClienteBinding.inflate(inflater,container, false)
+        _binding = FragmentUserRegistrationBinding.inflate(inflater,container, false)
         return binding.root
     }
 

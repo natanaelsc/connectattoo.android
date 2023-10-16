@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fillViewport="true"
     android:background="@color/white"
-    tools:context=".auth.cadastroCliente.CadastroClienteFragment">
+    tools:context=".auth.userRegistration.UserRegistrationFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

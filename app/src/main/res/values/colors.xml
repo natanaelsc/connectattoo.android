@@ -4,6 +4,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="red">#EF5350</color>
     <color name="DeepPurple">#673AB7</color>
+    <color name="Purple500">#7A32C1</color>
+    <color name="gray400">#cbc9ca</color>
     <color name="verde">#2E7D32</color>
 
 </resources>

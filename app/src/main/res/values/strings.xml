@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Connectattoo</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="txt_welcome"><P /> Nos ajude a direcionar sua jornada. <b><font color="#FF000000">Você é um tatuador</font></b> em busca de novos clientes <b> <font color="#FF000000">ou um cliente</font></b> em busca do tatuador ideal?</string>
 </resources>
