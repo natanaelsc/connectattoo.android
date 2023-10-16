@@ -18,14 +18,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.google.android.material.textview.MaterialTextView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="ConnecTattoo "
-                    android:textColor="@color/black"
-                    android:textStyle="italic"
-                    android:textSize="25dp"/>
+                    android:src="@drawable/logo"
+                    android:layout_gravity="center"/>
             </com.google.android.material.appbar.MaterialToolbar>
 
         <LinearLayout
