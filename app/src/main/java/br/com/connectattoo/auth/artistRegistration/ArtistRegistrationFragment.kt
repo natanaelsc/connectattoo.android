@@ -1,4 +1,4 @@
-package br.com.connectattoo.auth.cadastroTatuador
+package br.com.connectattoo.auth.artistRegistration
 
 import android.annotation.SuppressLint
 import android.graphics.Color
@@ -10,16 +10,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import br.com.connectattoo.R
-import br.com.connectattoo.databinding.FragmentCadastroClienteBinding
-import br.com.connectattoo.databinding.FragmentCadastroTatuadorBinding
+import br.com.connectattoo.databinding.FragmentArtistRegistrationBinding
 import com.github.rtoshiro.util.format.SimpleMaskFormatter
 import com.github.rtoshiro.util.format.text.MaskTextWatcher
 import com.google.android.material.snackbar.Snackbar
 
-class CadastroTatuadorFragment : Fragment() {
+class ArtistRegistrationFragment : Fragment() {
 
-    private var _binding: FragmentCadastroTatuadorBinding? = null
+    private var _binding: FragmentArtistRegistrationBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var senha : EditText
@@ -39,7 +37,7 @@ class CadastroTatuadorFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentCadastroTatuadorBinding.inflate(inflater,container, false)
+        _binding = FragmentArtistRegistrationBinding.inflate(inflater,container, false)
         return binding.root
     }
 

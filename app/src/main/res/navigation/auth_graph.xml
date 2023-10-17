@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/auth_graph"
+    app:startDestination="@id/welcomeFragment">
+
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="br.com.connectattoo.auth.welcome.WelcomeFragment"
+        android:label="WelcomeFragment" >
+        <action
+            android:id="@+id/action_welcomeFragment_to_artistRegistrationFragment"
+            app:destination="@id/artistRegistrationFragment" />
+        <action
+            android:id="@+id/action_welcomeFragment_to_userRegistrationFragment"
+            app:destination="@id/userRegistrationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/artistRegistrationFragment"
+        android:name="br.com.connectattoo.auth.artistRegistration.ArtistRegistrationFragment"
+        android:label="fragment_artist_registration"
+        tools:layout="@layout/fragment_artist_registration" />
+    <fragment
+        android:id="@+id/userRegistrationFragment"
+        android:name="br.com.connectattoo.auth.userRegistration.UserRegistrationFragment"
+        android:label="fragment_user_registration"
+        tools:layout="@layout/fragment_user_registration" />
+</navigation>

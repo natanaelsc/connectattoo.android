@@ -51,4 +51,23 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     implementation ("com.github.rtoshiro.mflibrary:mflibrary:1.0.0")
+
+    implementation("androidx.navigation:navigation-fragment-ktx:2.5.3")
+    implementation("androidx.navigation:navigation-ui-ktx:2.5.3")
+
+    implementation ("com.github.bumptech.glide:glide:4.12.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
+
+    implementation ("androidx.room:room-runtime:2.4.1")
+    annotationProcessor ("androidx.room:room-compiler:2.4.1")
+
+
+    //retrofit
+    implementation ("com.squareup.retrofit2:retrofit:2.6.4")
+    implementation ("com.squareup.retrofit2:converter-gson:2.6.4")
+    implementation ("com.squareup.retrofit2:converter-scalars:2.4.0")
+
+
+    //gson
+    implementation ("com.google.code.gson:gson:2.8.6")
 }
