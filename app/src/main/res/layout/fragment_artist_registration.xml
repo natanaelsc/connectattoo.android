@@ -40,7 +40,7 @@
                 />
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editNome"
+                android:id="@+id/editName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="ex. Natan Silva"
@@ -76,7 +76,7 @@
                 />
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/SenhaEditText"
+                android:id="@+id/EditTextpassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Senha"
@@ -87,7 +87,7 @@
                 />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/txtInforPadrao"
+                android:id="@+id/txtpasswordFeature"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Mínimo de 8 caracteres, com 1 símbolo especial, 1 letra  maiúscula, 1 letra minúscula e um numeral"
@@ -96,7 +96,7 @@
                 />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/txtInforError"
+                android:id="@+id/txtpasswordNotCharacteristics"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Senha não atende as condições"
@@ -114,7 +114,7 @@
                 >
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/txtCondiçõesSenha"
+                    android:id="@+id/txtConditionsPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Condições de Senha"
@@ -122,171 +122,172 @@
                     app:layout_constraintTop_toBottomOf="@id/txtInforError"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    tools:ignore="NotSibling" />
+                    tools:ignore="NotSibling"
+                    android:visibility="visible"/>
 
                 <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/ImgCloseCaracteresMinimmo"
+                    android:id="@+id/ImgCloseMinimumCharacters"
                     android:layout_width="10dp"
                     android:layout_height="10dp"
                     android:src="@drawable/close"
                     android:layout_marginTop="11dp"
                     android:layout_marginEnd="10dp"
-                    app:layout_constraintTop_toBottomOf="@id/txtCondiçõesSenha"
+                    app:layout_constraintTop_toBottomOf="@id/txtConditionsPassword"
                     app:layout_constraintStart_toStartOf="parent"
                     android:visibility="gone"/>
 
                 <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/ImgCheckCaracteresMinimmo"
+                    android:id="@+id/ImgCheckMinimumCharacters"
                     android:layout_width="17dp"
                     android:layout_height="17dp"
                     android:src="@drawable/checkmark"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="10dp"
-                    app:layout_constraintTop_toBottomOf="@id/txtCondiçõesSenha"
+                    app:layout_constraintTop_toBottomOf="@id/txtConditionsPassword"
                     app:layout_constraintStart_toStartOf="parent"
                     android:visibility="gone"
                     />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/txtCaracteresMinimo"
+                    android:id="@+id/txtMinimumCharacters"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="comprimento minimo de 8 caracteres"
                     android:layout_marginTop="5dp"
                     android:layout_marginStart="15dp"
-                    app:layout_constraintTop_toBottomOf="@id/txtCondiçõesSenha"
+                    app:layout_constraintTop_toBottomOf="@id/txtConditionsPassword"
                     />
 
                 <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/ImgCloseSimboloEspecial"
+                    android:id="@+id/ImgCloseSpecialSymbol"
                     android:layout_width="10dp"
                     android:layout_height="10dp"
                     android:src="@drawable/close"
                     android:layout_marginTop="11dp"
                     android:layout_marginEnd="10dp"
-                    app:layout_constraintTop_toBottomOf="@id/txtCaracteresMinimo"
+                    app:layout_constraintTop_toBottomOf="@id/txtMinimumCharacters"
                     app:layout_constraintStart_toStartOf="parent"
                     android:visibility="gone"
                     />
                 <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/ImgCheckSimboloEspecial"
+                    android:id="@+id/ImgCheckSpecialSymbol"
                     android:layout_width="19dp"
                     android:layout_height="19dp"
                     android:src="@drawable/checkmark"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="13dp"
-                    app:layout_constraintTop_toBottomOf="@id/txtCaracteresMinimo"
+                    app:layout_constraintTop_toBottomOf="@id/txtMinimumCharacters"
                     app:layout_constraintStart_toStartOf="parent"
                     android:visibility="gone"
                     />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/txtSimboloEspecial"
+                    android:id="@+id/txtSpecialSymbol"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Um simbolo especial (*?#!)"
                     android:layout_marginTop="5dp"
                     android:layout_marginStart="16dp"
-                    app:layout_constraintTop_toBottomOf="@id/txtCaracteresMinimo"
+                    app:layout_constraintTop_toBottomOf="@id/txtMinimumCharacters"
                     />
 
                 <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/ImgCloseLetraMaiuscula"
+                    android:id="@+id/ImgCloseCapitalLetter"
                     android:layout_width="10dp"
                     android:layout_height="10dp"
                     android:src="@drawable/close"
                     android:layout_marginTop="11dp"
                     android:layout_marginEnd="10dp"
-                    app:layout_constraintTop_toBottomOf="@id/txtSimboloEspecial"
+                    app:layout_constraintTop_toBottomOf="@id/txtSpecialSymbol"
                     app:layout_constraintStart_toStartOf="parent"
                     android:visibility="gone"
                     />
                 <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/ImgCheckLetraMaiuscula"
+                    android:id="@+id/ImgCheckCapitalLetter"
                     android:layout_width="19dp"
                     android:layout_height="19dp"
                     android:src="@drawable/checkmark"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="13dp"
-                    app:layout_constraintTop_toBottomOf="@id/txtSimboloEspecial"
+                    app:layout_constraintTop_toBottomOf="@id/txtSpecialSymbol"
                     app:layout_constraintStart_toStartOf="parent"
                     android:visibility="gone"
                     />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/txtLetraMaiuscula"
+                    android:id="@+id/txtCapitalLetter"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Uma letra maiúscula (A-Z)"
                     android:layout_marginTop="5dp"
                     android:layout_marginStart="16dp"
-                    app:layout_constraintTop_toBottomOf="@id/txtSimboloEspecial"
+                    app:layout_constraintTop_toBottomOf="@id/txtSpecialSymbol"
                     />
 
                 <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/ImgCloseLetraMinuscula"
+                    android:id="@+id/ImgCloseLowerCase"
                     android:layout_width="10dp"
                     android:layout_height="10dp"
                     android:src="@drawable/close"
                     android:layout_marginTop="11dp"
                     android:layout_marginEnd="10dp"
-                    app:layout_constraintTop_toBottomOf="@id/txtLetraMaiuscula"
+                    app:layout_constraintTop_toBottomOf="@id/txtCapitalLetter"
                     app:layout_constraintStart_toStartOf="parent"
                     android:visibility="gone"
                     />
                 <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/ImgCheckLetraMinuscula"
+                    android:id="@+id/ImgCheckLowerCase"
                     android:layout_width="19dp"
                     android:layout_height="19dp"
                     android:src="@drawable/checkmark"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="13dp"
-                    app:layout_constraintTop_toBottomOf="@id/txtLetraMaiuscula"
+                    app:layout_constraintTop_toBottomOf="@id/txtCapitalLetter"
                     app:layout_constraintStart_toStartOf="parent"
                     android:visibility="gone"
                     />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/txtLetraMinuscula"
+                    android:id="@+id/txtLowerCase"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Uma letra minúscula (a-z)"
                     android:layout_marginTop="5dp"
                     android:layout_marginStart="16dp"
-                    app:layout_constraintTop_toBottomOf="@id/txtLetraMaiuscula"
+                    app:layout_constraintTop_toBottomOf="@id/txtCapitalLetter"
                     />
 
                 <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/ImgCloseNumero"
+                    android:id="@+id/ImgCloseNumber"
                     android:layout_width="10dp"
                     android:layout_height="10dp"
                     android:src="@drawable/close"
                     android:layout_marginTop="11dp"
                     android:layout_marginEnd="10dp"
-                    app:layout_constraintTop_toBottomOf="@id/txtLetraMinuscula"
+                    app:layout_constraintTop_toBottomOf="@id/txtLowerCase"
                     app:layout_constraintStart_toStartOf="parent"
                     android:visibility="gone"
                     />
                 <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/ImgCheckNumero"
+                    android:id="@+id/ImgCheckNumber"
                     android:layout_width="19dp"
                     android:layout_height="19dp"
                     android:src="@drawable/checkmark"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="13dp"
-                    app:layout_constraintTop_toBottomOf="@id/txtLetraMinuscula"
+                    app:layout_constraintTop_toBottomOf="@id/txtLowerCase"
                     app:layout_constraintStart_toStartOf="parent"
                     android:visibility="gone"
                     />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/txtNumero"
+                    android:id="@+id/txtNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Um Numero (0-9)"
                     android:layout_marginTop="5dp"
                     android:layout_marginStart="16dp"
-                    app:layout_constraintTop_toBottomOf="@id/txtLetraMinuscula"
+                    app:layout_constraintTop_toBottomOf="@id/txtLowerCase"
                     />
 
 
@@ -311,7 +312,7 @@
                 android:inputType="textPassword"/>
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/txtconfirmPasswordInfor"
+                android:id="@+id/txtconfirmPasswordError"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="As senhas inseridas não coincidem"
@@ -322,49 +323,13 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nome do Estúdio (opcional)"
-                android:textStyle="bold"
-                android:layout_marginTop="16dp"
-                />
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editEstudio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="ex. Estúdio Tatto"
-                android:background="@drawable/bg_edit"
-                android:layout_marginTop="4dp"
-                android:padding="15dp"
-                android:inputType="textPassword"/>
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Endereço do Estúdio"
-                android:textStyle="bold"
-                android:layout_marginTop="16dp"
-                />
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editEndereco"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Endereço"
-                android:background="@drawable/bg_edit"
-                android:layout_marginTop="4dp"
-                android:padding="15dp"
-                android:inputType="textPassword"/>
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:text="Data de Nascimento"
                 android:textStyle="bold"
                 android:layout_marginTop="16dp"
                 />
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editData"
+                android:id="@+id/editDate"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:hint="DD/MM/YYYY"
@@ -374,7 +339,7 @@
                 android:inputType="number"/>
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/txtInforErrorData"
+                android:id="@+id/txtInforErrorDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Campo de preenchimento obrigatório"
@@ -407,7 +372,7 @@
             </LinearLayout>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btCriarConta"
+                android:id="@+id/btCreateAccount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Criar conta"
@@ -419,6 +384,7 @@
                 />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btCancel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
