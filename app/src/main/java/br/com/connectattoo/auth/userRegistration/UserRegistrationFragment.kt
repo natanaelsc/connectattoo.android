@@ -10,6 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.navigation.fragment.findNavController
+import br.com.connectattoo.R
 import br.com.connectattoo.databinding.FragmentUserRegistrationBinding
 import com.github.rtoshiro.util.format.SimpleMaskFormatter
 import com.github.rtoshiro.util.format.text.MaskTextWatcher
@@ -21,9 +23,9 @@ class UserRegistrationFragment : Fragment() {
     private var _binding: FragmentUserRegistrationBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var senha : EditText
+    private lateinit var password : EditText
     private lateinit var confirmPassword : EditText
-    private lateinit var data : EditText
+    private lateinit var date : EditText
 
     private var is8char = false
     private var hasUpper = false
@@ -46,7 +48,7 @@ class UserRegistrationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        senha = binding.SenhaEditText
+        password = binding.EditTextpassword
         confirmPassword = binding.editconfirmPassword
 
         inputPassword()
@@ -55,12 +57,12 @@ class UserRegistrationFragment : Fragment() {
 
 
 
-        binding.btCriarConta.setOnClickListener {
-            val nome = binding.editNome.text.toString()
+        binding.btCreateAccount.setOnClickListener {
+            val name = binding.editName.text.toString()
             val email = binding.editEmail.text.toString()
-            val Password = binding.SenhaEditText.text.toString()
+            val Password = binding.EditTextpassword.text.toString()
             val confirmPassword = binding.editconfirmPassword.text.toString()
-            val data = binding.editData.text.toString()
+            val date = binding.editDate.text.toString()
 
             val checkBox = binding.checkBox
             var checked:Boolean
@@ -71,7 +73,7 @@ class UserRegistrationFragment : Fragment() {
             validatingDate()
 
 
-            if ((nome.isEmpty()) || (email.isEmpty()) || (Password.isEmpty()) || (confirmPassword.isEmpty()) || (data.isEmpty()) || ( correctPassword == false) || (checked == false) || (Password != confirmPassword) || (incorrectDate == true)){
+            if ((name.isEmpty()) || (email.isEmpty()) || (Password.isEmpty()) || (confirmPassword.isEmpty()) || (date.isEmpty()) || ( correctPassword == false) || (checked == false) || (Password != confirmPassword) || (incorrectDate == true)){
                 val snackbar =
                     Snackbar.make(it, "verificar se todos os campos foram preenchidos corretamente!", Snackbar.LENGTH_SHORT)
                 snackbar.setTextColor(Color.WHITE)
@@ -82,126 +84,130 @@ class UserRegistrationFragment : Fragment() {
             }
         }
 
+        binding.btCancel.setOnClickListener {
+            findNavController().navigate(R.id.action_userRegistrationFragment_to_welcomeFragment)
+        }
+
 
     }
 
     private fun validatingDate(){
-        val data = binding.editData.text.toString()
+        val data = binding.editDate.text.toString()
         if (data.length <10){
-            binding.txtInforErrorData.visibility = View.VISIBLE
+            binding.txtInforErrorDate.visibility = View.VISIBLE
             incorrectDate = true
         }else{
-            binding.txtInforErrorData.visibility = View.GONE
+            binding.txtInforErrorDate.visibility = View.GONE
             incorrectDate = false
         }
     }
 
 
     private fun dateMask(){
-         data = binding.editData
+         date = binding.editDate
         val smf = SimpleMaskFormatter("NN/NN/NNNN")
-        val mtw = MaskTextWatcher(data, smf)
-        data.addTextChangedListener(mtw)
+        val mtw = MaskTextWatcher(date, smf)
+        date.addTextChangedListener(mtw)
     }
 
 
     @SuppressLint("SuspiciousIndentation")
     private fun validPassword()
     {
+        val password = password.text.toString()
+        if(password.length <8)
+        {
+            is8char = true
+            binding.txtConditionsPassword.visibility = View.VISIBLE
+            binding.txtpasswordNotCharacteristics.visibility = View.VISIBLE
+            binding.linearLayout.visibility = View.VISIBLE
+            binding.txtpasswordFeature.visibility = View.GONE
+            binding.txtMinimumCharacters.setTextColor(Color.RED)
+            binding.ImgCloseMinimumCharacters.visibility = View.VISIBLE
+            binding.ImgCheckMinimumCharacters.visibility = View.GONE
 
-        val password = senha.text.toString()
-            if(password.length <8)
-            {
-                is8char = true
-                binding.txtInforError.visibility = View.VISIBLE
-                binding.linearLayout.visibility = View.VISIBLE
-                binding.txtInforPadrao.visibility = View.GONE
-                binding.txtCaracteresMinimo.setTextColor(Color.RED)
-                binding.ImgCloseCaracteresMinimmo.visibility = View.VISIBLE
-                binding.ImgCheckCaracteresMinimmo.visibility = View.GONE
-
-            }else {
-                is8char = false
-                binding.txtCaracteresMinimo.setTextColor(Color.GREEN)
-                binding.ImgCheckCaracteresMinimmo.visibility = View.VISIBLE
-                binding.ImgCloseCaracteresMinimmo.visibility = View.GONE
-            }
-            if(!password.matches(Regex("^(?=.*[_.*=!%()$&@+-/]).*$"))) {
-                 hasSpecialSymbol = true
-                binding.txtInforError.visibility = View.VISIBLE
-                 binding.linearLayout.visibility = View.VISIBLE
-                 binding.txtInforPadrao.visibility = View.GONE
-                 binding.txtSimboloEspecial.setTextColor(Color.RED)
-                binding.ImgCloseSimboloEspecial.visibility = View.VISIBLE
-                binding.ImgCheckSimboloEspecial.visibility = View.GONE
-                    }else  {
-                 hasSpecialSymbol = false
-                binding.txtSimboloEspecial.setTextColor(Color.GREEN)
-                binding.ImgCheckSimboloEspecial.visibility = View.VISIBLE
-                binding.ImgCloseSimboloEspecial.visibility = View.GONE
-                    }
-           if (!password.matches(".*[A-Z].*".toRegex())) {
-                    hasUpper = true
-               binding.txtInforError.visibility = View.VISIBLE
-               binding.linearLayout.visibility = View.VISIBLE
-               binding.txtInforPadrao.visibility = View.GONE
-               binding.txtLetraMaiuscula.setTextColor(Color.RED)
-               binding.ImgCloseLetraMaiuscula.visibility = View.VISIBLE
-               binding.ImgCheckLetraMaiuscula.visibility = View.GONE
-                    }  else {
-                    hasUpper = false
-                    binding.txtLetraMaiuscula.setTextColor(Color.GREEN)
-                   binding.ImgCheckLetraMaiuscula.visibility = View.VISIBLE
-                    binding.ImgCloseLetraMaiuscula.visibility = View.GONE
-                    }
-          if(!password.matches(".*[a-z].*".toRegex())) {
-                haslow = true
-              binding.txtInforError.visibility = View.VISIBLE
-              binding.linearLayout.visibility = View.VISIBLE
-              binding.txtInforPadrao.visibility = View.GONE
-              binding.txtLetraMinuscula.setTextColor(Color.RED)
-              binding.ImgCloseLetraMinuscula.visibility = View.VISIBLE
-              binding.ImgCheckLetraMinuscula.visibility = View.GONE
-            } else {
-                haslow = false
-              binding.txtLetraMinuscula.setTextColor(Color.GREEN)
-              binding.ImgCheckLetraMinuscula.visibility = View.VISIBLE
-              binding.ImgCloseLetraMinuscula.visibility = View.GONE
-          }
+        }else {
+            is8char = false
+            binding.txtMinimumCharacters.setTextColor(Color.GREEN)
+            binding.ImgCheckMinimumCharacters.visibility = View.VISIBLE
+            binding.ImgCloseMinimumCharacters.visibility = View.GONE
+        }
+        if(!password.matches(Regex("^(?=.*[_.*=!%()$&@+-/]).*$"))) {
+            hasSpecialSymbol = true
+            binding.txtpasswordNotCharacteristics.visibility = View.VISIBLE
+            binding.linearLayout.visibility = View.VISIBLE
+            binding.txtpasswordFeature.visibility = View.GONE
+            binding.txtSpecialSymbol.setTextColor(Color.RED)
+            binding.ImgCloseSpecialSymbol.visibility = View.VISIBLE
+            binding.ImgCheckSpecialSymbol.visibility = View.GONE
+        }else  {
+            hasSpecialSymbol = false
+            binding.txtSpecialSymbol.setTextColor(Color.GREEN)
+            binding.ImgCheckSpecialSymbol.visibility = View.VISIBLE
+            binding.ImgCloseSpecialSymbol.visibility = View.GONE
+        }
+        if (!password.matches(".*[A-Z].*".toRegex())) {
+            hasUpper = true
+            binding.txtpasswordNotCharacteristics.visibility = View.VISIBLE
+            binding.linearLayout.visibility = View.VISIBLE
+            binding.txtpasswordFeature.visibility = View.GONE
+            binding.txtCapitalLetter.setTextColor(Color.RED)
+            binding.ImgCloseCapitalLetter.visibility = View.VISIBLE
+            binding.ImgCheckCapitalLetter.visibility = View.GONE
+        }  else {
+            hasUpper = false
+            binding.txtCapitalLetter.setTextColor(Color.GREEN)
+            binding.ImgCheckCapitalLetter.visibility = View.VISIBLE
+            binding.ImgCloseCapitalLetter.visibility = View.GONE
+        }
+        if(!password.matches(".*[a-z].*".toRegex())) {
+            haslow = true
+            binding.txtpasswordNotCharacteristics.visibility = View.VISIBLE
+            binding.linearLayout.visibility = View.VISIBLE
+            binding.txtpasswordFeature.visibility = View.GONE
+            binding.txtLowerCase.setTextColor(Color.RED)
+            binding.ImgCloseLowerCase.visibility = View.VISIBLE
+            binding.ImgCheckLowerCase.visibility = View.GONE
+        } else {
+            haslow = false
+            binding.txtLowerCase.setTextColor(Color.GREEN)
+            binding.ImgCheckLowerCase.visibility = View.VISIBLE
+            binding.ImgCloseLowerCase.visibility = View.GONE
+        }
         if (!password.matches(".*[0-9].*".toRegex())){
             hasNum = true
-            binding.txtInforError.visibility = View.VISIBLE
+            binding.txtpasswordNotCharacteristics.visibility = View.VISIBLE
             binding.linearLayout.visibility = View.VISIBLE
-            binding.txtInforPadrao.visibility = View.GONE
-            binding.txtNumero.setTextColor(Color.RED)
-            binding.ImgCloseNumero.visibility = View.VISIBLE
-            binding.ImgCheckNumero.visibility = View.GONE
+            binding.txtpasswordFeature.visibility = View.GONE
+            binding.txtNumber.setTextColor(Color.RED)
+            binding.ImgCloseNumber.visibility = View.VISIBLE
+            binding.ImgCheckNumber.visibility = View.GONE
         } else {
             hasNum = false
-            binding.txtNumero.setTextColor(Color.GREEN)
-            binding.ImgCloseNumero.visibility = View.GONE
-            binding.ImgCheckNumero.visibility = View.VISIBLE
+            binding.txtNumber.setTextColor(Color.GREEN)
+            binding.ImgCloseNumber.visibility = View.GONE
+            binding.ImgCheckNumber.visibility = View.VISIBLE
         }
         if(is8char == false &&  hasNum == false && hasSpecialSymbol == false && hasUpper == false && haslow == false ){
 
-            binding.txtInforError.visibility = View.GONE
+            binding.txtpasswordNotCharacteristics.visibility = View.GONE
             binding.linearLayout.visibility = View.GONE
-            binding.txtInforPadrao.visibility = View.VISIBLE
+            binding.txtpasswordFeature.visibility = View.VISIBLE
             correctPassword = true
         }
 
     }
 
     private fun inputPassword()  {
-        senha.addTextChangedListener(object : TextWatcher{
+        password.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 validPassword()
                 if(is8char &&  hasNum && hasSpecialSymbol && hasUpper && haslow ){
-                    binding.txtInforError.visibility = View.GONE
+                    binding.txtpasswordNotCharacteristics.visibility = View.GONE
                     binding.linearLayout.visibility = View.GONE
-                    binding.txtInforPadrao.visibility = View.VISIBLE
+                    binding.txtpasswordFeature.visibility = View.VISIBLE
                 }
 
             }
@@ -225,18 +231,18 @@ class UserRegistrationFragment : Fragment() {
 
     private fun confirmPassword(){
         val  confirmPassword = binding.editconfirmPassword.text.toString()
-        val senha = binding.SenhaEditText.text.toString()
+        val password = binding.EditTextpassword.text.toString()
         if (confirmPassword.isEmpty()){
             inforPassword = false
-            binding.txtconfirmPasswordInfor.visibility = View.GONE
+            binding.txtconfirmPasswordError.visibility = View.GONE
 
-        }else    if (senha != confirmPassword){
+        }else    if (password != confirmPassword){
             inforPassword = true
-            binding.txtconfirmPasswordInfor.visibility = View.VISIBLE
+            binding.txtconfirmPasswordError.visibility = View.VISIBLE
 
         }else{
             inforPassword = false
-            binding.txtconfirmPasswordInfor.visibility = View.GONE
+            binding.txtconfirmPasswordError.visibility = View.GONE
         }
     }
 
