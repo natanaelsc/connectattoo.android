@@ -268,6 +268,7 @@ class UserRegistrationFragment : Fragment() {
 
     fun isEmailValid() {
         val  email = binding.editEmail.text.toString()
+
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             binding.editEmail.setBackgroundResource(R.drawable.bg_edit_input_invalid)
         }else{
