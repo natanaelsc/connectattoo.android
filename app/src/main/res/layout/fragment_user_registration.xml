@@ -333,6 +333,7 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:hint="DD/MM/YYYY"
+                android:textColorHint="@color/black"
                 android:background="@drawable/bg_edit"
                 android:layout_marginTop="4dp"
                 android:padding="15dp"
