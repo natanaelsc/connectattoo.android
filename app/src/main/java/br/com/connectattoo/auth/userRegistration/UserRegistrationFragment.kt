@@ -243,10 +243,12 @@ class UserRegistrationFragment : Fragment() {
         }else    if (password != confirmPassword){
             inforPassword = true
             binding.txtconfirmPasswordError.visibility = View.VISIBLE
+            binding.editconfirmPassword.setBackgroundResource(R.drawable.bg_edit_input_invalid)
 
         }else{
             inforPassword = false
             binding.txtconfirmPasswordError.visibility = View.GONE
+            binding.editconfirmPassword.setBackgroundResource(R.drawable.bg_edit_input_valid)
         }
     }
 
