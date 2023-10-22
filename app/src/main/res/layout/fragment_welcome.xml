@@ -119,7 +119,7 @@
                         <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="CLIENTA"
+                            android:text="CLIENTE"
                             android:textColor="@color/white"
                             android:fontFamily="@font/raleway_black"
                             android:layout_marginTop="10dp"
