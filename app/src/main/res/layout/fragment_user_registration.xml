@@ -79,7 +79,6 @@
                 android:id="@+id/EditTextpassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Senha"
                 android:background="@drawable/bg_edit"
                 android:layout_marginTop="4dp"
                 android:padding="15dp"
