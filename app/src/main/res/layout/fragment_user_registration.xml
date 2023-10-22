@@ -305,7 +305,6 @@
                 android:id="@+id/editconfirmPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Confirmar senha"
                 android:background="@drawable/bg_edit"
                 android:layout_marginTop="4dp"
                 android:padding="15dp"
