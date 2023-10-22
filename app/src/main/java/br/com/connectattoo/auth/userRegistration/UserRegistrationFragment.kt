@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -26,6 +27,7 @@ class UserRegistrationFragment : Fragment() {
     private lateinit var password : EditText
     private lateinit var confirmPassword : EditText
     private lateinit var date : EditText
+    private lateinit var confirmEmail : EditText
 
     private var is8char = false
     private var hasUpper = false
@@ -50,10 +52,12 @@ class UserRegistrationFragment : Fragment() {
 
         password = binding.EditTextpassword
         confirmPassword = binding.editconfirmPassword
+        confirmEmail = binding.editEmail
 
         inputPassword()
         inputPasswordconfirm()
         dateMask()
+        validateEmail()
 
 
 
@@ -246,7 +250,28 @@ class UserRegistrationFragment : Fragment() {
         }
     }
 
+    private fun validateEmail(){
+        confirmEmail.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                isEmailValid()
+            }
+
+            override fun afterTextChanged(s: Editable?) { }
+        })
+
+    }
+
+    fun isEmailValid() {
+        val  email = binding.editEmail.text.toString()
+        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            binding.editEmail.setBackgroundResource(R.drawable.bg_edit_input_invalid)
+        }else{
+            binding.editEmail.setBackgroundResource(R.drawable.bg_edit_input_valid)
+        }
+    }
 
     override fun onDestroy() {
         super.onDestroy()
