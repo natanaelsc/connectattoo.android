@@ -28,6 +28,7 @@ class UserRegistrationFragment : Fragment() {
     private lateinit var confirmPassword : EditText
     private lateinit var date : EditText
     private lateinit var confirmEmail : EditText
+    private lateinit var name : EditText
 
     private var isChar = false
     private var hasUpper = false
@@ -55,12 +56,14 @@ class UserRegistrationFragment : Fragment() {
         confirmPassword = binding.editTexConfirmPassword
         confirmEmail = binding.editTexEmail
         date = binding.editTexDate
+        name = binding.editTexName
 
         inputPassword()
         inputPasswordconfirm()
         dateMask()
         validateEmail()
         validatingDate()
+        nameFocusListener()
 
 
 
@@ -77,6 +80,7 @@ class UserRegistrationFragment : Fragment() {
             confirmPassword()
             isEmailValid()
             validPassword()
+            isValidatName()
 
 
             if ((name.isEmpty()) ||  (incorrectEmail == true)  || (correctPassword == false ) ||  (checked == false) || (incorrectConfirmPassword == true) || (incorrectDate == true)){
@@ -98,6 +102,26 @@ class UserRegistrationFragment : Fragment() {
 
 
     }
+
+
+    private fun nameFocusListener(){
+        binding.editTexName.setOnFocusChangeListener{ _,focused ->
+            if (!focused){
+                isValidatName()
+            }
+
+        }
+    }
+
+    private fun isValidatName() {
+        val name = binding.editTexName.text.toString()
+        if (name.isEmpty()){
+            binding.editTexName.setBackgroundResource(R.drawable.bg_edit_input_invalid)
+        }else{
+            binding.editTexName.setBackgroundResource(R.drawable.bg_edit_input_valid)
+        }
+    }
+
 
     private fun validatingDate(){
         date.addTextChangedListener(object : TextWatcher{
