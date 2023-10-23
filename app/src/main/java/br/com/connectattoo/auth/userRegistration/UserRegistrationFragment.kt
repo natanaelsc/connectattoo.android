@@ -34,7 +34,7 @@ class UserRegistrationFragment : Fragment() {
     private var hasLow = false
     private var hasNum = false
     private var hasSpecialSymbol = false
-    private var incorrectconfirmPassword = true
+    private var incorrectConfirmPassword = true
     private var correctPassword = false
     private var incorrectDate = false
     private var incorrectEmail = true
@@ -79,7 +79,7 @@ class UserRegistrationFragment : Fragment() {
             validPassword()
 
 
-            if ((name.isEmpty()) ||  (incorrectEmail == true)  || (correctPassword == false ) ||  (checked == false) || (incorrectconfirmPassword == true) || (incorrectDate == true)){
+            if ((name.isEmpty()) ||  (incorrectEmail == true)  || (correctPassword == false ) ||  (checked == false) || (incorrectConfirmPassword == true) || (incorrectDate == true)){
 
 
                 val snackbar =
@@ -257,17 +257,17 @@ class UserRegistrationFragment : Fragment() {
         val  confirmPassword = binding.editconfirmPassword.text.toString()
         val password = binding.editTextpassword.text.toString()
         if (confirmPassword.isEmpty()){
-            incorrectconfirmPassword = true
+            incorrectConfirmPassword = true
             binding.txtconfirmPasswordError.visibility = View.GONE
             binding.editconfirmPassword.setBackgroundResource(R.drawable.bg_edit_input_invalid)
 
         }else    if (password != confirmPassword){
-            incorrectconfirmPassword = true
+            incorrectConfirmPassword = true
             binding.txtconfirmPasswordError.visibility = View.VISIBLE
             binding.editconfirmPassword.setBackgroundResource(R.drawable.bg_edit_input_invalid)
 
         }else{
-            incorrectconfirmPassword = false
+            incorrectConfirmPassword = false
             binding.txtconfirmPasswordError.visibility = View.GONE
             binding.editconfirmPassword.setBackgroundResource(R.drawable.bg_edit_input_valid)
         }
