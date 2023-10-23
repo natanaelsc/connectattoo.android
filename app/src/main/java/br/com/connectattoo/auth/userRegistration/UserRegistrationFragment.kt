@@ -20,6 +20,7 @@ import com.github.rtoshiro.util.format.text.MaskTextWatcher
 import com.google.android.material.snackbar.Snackbar
 import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 
 
@@ -73,7 +74,6 @@ class UserRegistrationFragment : Fragment() {
 
         binding.btCreateAccount.setOnClickListener {
             val name = binding.editTexName.text.toString()
-            val dateConfirm = binding.editTexDate.text.toString()
             val checkBox = binding.checkBox
             var checked:Boolean
 
@@ -141,35 +141,44 @@ class UserRegistrationFragment : Fragment() {
 
     }
 
-
     private fun isValidatingDate(){
 
-       val date = binding.editTexDate.text.toString()
+        val date = binding.editTexDate.text.toString()
 
-            val dateFormat = SimpleDateFormat("dd/MM/yyyy")
-            dateFormat.isLenient = false
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+        dateFormat.isLenient = false
 
-            try {
-                val parsedDate = dateFormat.parse(date)
-                if (parsedDate != null) {
-                    val currentDate = Date()
+        try {
+            val parsedDate = dateFormat.parse(date)
+            if (parsedDate != null) {
+                val currentDate = Date()
+                val calendar = Calendar.getInstance()
+                calendar.time = parsedDate
+                val year = calendar.get(Calendar.YEAR)
 
-                    if (!parsedDate.after(currentDate)) {
-                        binding.txtInforErrorDate.visibility = View.GONE
-                        incorrectDate = false
-                        binding.editTexDate.setBackgroundResource(R.drawable.bg_edit_input_valid)
-                    } else {
-                        binding.txtInforErrorDate.visibility = View.VISIBLE
-                        incorrectDate = true
-                        binding.editTexDate.setBackgroundResource(R.drawable.bg_edit_input_invalid)
-                    }
+                if (year >= 1000 && year <= currentDate.year + 1900) {
+                    binding.txtInforErrorDate.visibility = View.GONE
+                    incorrectDate = false
+                    binding.editTexDate.setBackgroundResource(R.drawable.bg_edit_input_valid)
+                } else {
+                    throw ParseException("", 0)
                 }
-            } catch (e: ParseException) {
-                binding.txtInforErrorDate.visibility = View.VISIBLE
-                incorrectDate = true
-                binding.editTexDate.setBackgroundResource(R.drawable.bg_edit_input_invalid)
-            }
 
+                if (!parsedDate.after(currentDate)) {
+                    binding.txtInforErrorDate.visibility = View.GONE
+                    incorrectDate = false
+                    binding.editTexDate.setBackgroundResource(R.drawable.bg_edit_input_valid)
+                } else {
+                    binding.txtInforErrorDate.visibility = View.VISIBLE
+                    incorrectDate = true
+                    binding.editTexDate.setBackgroundResource(R.drawable.bg_edit_input_invalid)
+                }
+            }
+        } catch (e: ParseException) {
+            binding.txtInforErrorDate.visibility = View.VISIBLE
+            incorrectDate = true
+            binding.editTexDate.setBackgroundResource(R.drawable.bg_edit_input_invalid)
+        }
 
     }
 
