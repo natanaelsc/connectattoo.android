@@ -31,7 +31,7 @@ class UserRegistrationFragment : Fragment() {
 
     private var isChar = false
     private var hasUpper = false
-    private var haslow = false
+    private var hasLow = false
     private var hasNum = false
     private var hasSpecialSymbol = false
     private var incorrectconfirmPassword = true
@@ -185,7 +185,7 @@ class UserRegistrationFragment : Fragment() {
             binding.ImgCloseCapitalLetter.visibility = View.GONE
         }
         if(!password.matches(".*[a-z].*".toRegex())) {
-            haslow = true
+            hasLow = true
             binding.txtpasswordNotCharacteristics.visibility = View.VISIBLE
             binding.linearLayout.visibility = View.VISIBLE
             binding.txtpasswordFeature.visibility = View.GONE
@@ -193,7 +193,7 @@ class UserRegistrationFragment : Fragment() {
             binding.ImgCloseLowerCase.visibility = View.VISIBLE
             binding.ImgCheckLowerCase.visibility = View.GONE
         } else {
-            haslow = false
+            hasLow = false
             binding.txtLowerCase.setTextColor(Color.GREEN)
             binding.ImgCheckLowerCase.visibility = View.VISIBLE
             binding.ImgCloseLowerCase.visibility = View.GONE
@@ -212,7 +212,7 @@ class UserRegistrationFragment : Fragment() {
             binding.ImgCloseNumber.visibility = View.GONE
             binding.ImgCheckNumber.visibility = View.VISIBLE
         }
-        if(isChar == false &&  hasNum == false && hasSpecialSymbol == false && hasUpper == false && haslow == false ){
+        if(isChar == false &&  hasNum == false && hasSpecialSymbol == false && hasUpper == false && hasLow == false ){
 
             binding.txtpasswordNotCharacteristics.visibility = View.GONE
             binding.linearLayout.visibility = View.GONE
