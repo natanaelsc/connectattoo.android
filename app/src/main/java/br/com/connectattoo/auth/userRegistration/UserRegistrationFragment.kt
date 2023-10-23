@@ -54,11 +54,13 @@ class UserRegistrationFragment : Fragment() {
         password = binding.editTextpassword
         confirmPassword = binding.editconfirmPassword
         confirmEmail = binding.editEmail
+        date = binding.editDate
 
         inputPassword()
         inputPasswordconfirm()
         dateMask()
         validateEmail()
+        validatingDate()
 
 
 
@@ -71,7 +73,7 @@ class UserRegistrationFragment : Fragment() {
             if (checkBox.isChecked) {checked = true}
             else {  checked = false }
 
-            validatingDate()
+            isValidatingDate()
             confirmPassword()
             isEmailValid()
             validPassword()
@@ -98,13 +100,29 @@ class UserRegistrationFragment : Fragment() {
     }
 
     private fun validatingDate(){
+        date.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                isValidatingDate()
+            }
+
+            override fun afterTextChanged(s: Editable?) { }
+        })
+
+    }
+
+    private fun isValidatingDate(){
         val data = binding.editDate.text.toString()
         if (data.length <10){
             binding.txtInforErrorDate.visibility = View.VISIBLE
             incorrectDate = true
+            binding.editDate.setBackgroundResource(R.drawable.bg_edit_input_invalid)
         }else{
             binding.txtInforErrorDate.visibility = View.GONE
             incorrectDate = false
+            binding.editDate.setBackgroundResource(R.drawable.bg_edit_input_valid)
         }
     }
 
