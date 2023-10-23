@@ -52,7 +52,7 @@ class UserRegistrationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         password = binding.editTextpassword
-        confirmPassword = binding.editconfirmPassword
+        confirmPassword = binding.editTexConfirmPassword
         confirmEmail = binding.editTexEmail
         date = binding.editDate
 
@@ -254,22 +254,22 @@ class UserRegistrationFragment : Fragment() {
     }
 
     private fun confirmPassword(){
-        val  confirmPassword = binding.editconfirmPassword.text.toString()
+        val  confirmPassword = binding.editTexConfirmPassword.text.toString()
         val password = binding.editTextpassword.text.toString()
         if (confirmPassword.isEmpty()){
             incorrectConfirmPassword = true
             binding.txtconfirmPasswordError.visibility = View.GONE
-            binding.editconfirmPassword.setBackgroundResource(R.drawable.bg_edit_input_invalid)
+            binding.editTexConfirmPassword.setBackgroundResource(R.drawable.bg_edit_input_invalid)
 
         }else    if (password != confirmPassword){
             incorrectConfirmPassword = true
             binding.txtconfirmPasswordError.visibility = View.VISIBLE
-            binding.editconfirmPassword.setBackgroundResource(R.drawable.bg_edit_input_invalid)
+            binding.editTexConfirmPassword.setBackgroundResource(R.drawable.bg_edit_input_invalid)
 
         }else{
             incorrectConfirmPassword = false
             binding.txtconfirmPasswordError.visibility = View.GONE
-            binding.editconfirmPassword.setBackgroundResource(R.drawable.bg_edit_input_valid)
+            binding.editTexConfirmPassword.setBackgroundResource(R.drawable.bg_edit_input_valid)
         }
     }
 
