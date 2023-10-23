@@ -77,7 +77,7 @@
                 />
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/EditTextpassword"
+                android:id="@+id/editTextpassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_edit_input_default"

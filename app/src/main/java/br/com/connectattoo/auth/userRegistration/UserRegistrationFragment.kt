@@ -51,7 +51,7 @@ class UserRegistrationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        password = binding.EditTextpassword
+        password = binding.editTextpassword
         confirmPassword = binding.editconfirmPassword
         confirmEmail = binding.editEmail
 
@@ -64,9 +64,6 @@ class UserRegistrationFragment : Fragment() {
 
         binding.btCreateAccount.setOnClickListener {
             val name = binding.editName.text.toString()
-            val email = binding.editEmail.text.toString()
-            val Password = binding.EditTextpassword.text.toString()
-            val date = binding.editDate.text.toString()
 
             val checkBox = binding.checkBox
             var checked:Boolean
@@ -77,6 +74,7 @@ class UserRegistrationFragment : Fragment() {
             validatingDate()
             confirmPassword()
             isEmailValid()
+            validPassword()
 
 
             if ((name.isEmpty()) ||  (incorrectEmail == true)  || (correctPassword == false ) ||  (checked == false) || (incorrectconfirmPassword == true) || (incorrectDate == true)){
@@ -202,6 +200,10 @@ class UserRegistrationFragment : Fragment() {
             binding.linearLayout.visibility = View.GONE
             binding.txtpasswordFeature.visibility = View.VISIBLE
             correctPassword = true
+            binding.editTextpassword.setBackgroundResource(R.drawable.bg_edit_input_valid)
+
+        }else{
+            binding.editTextpassword.setBackgroundResource(R.drawable.bg_edit_input_invalid)
         }
 
     }
@@ -235,7 +237,7 @@ class UserRegistrationFragment : Fragment() {
 
     private fun confirmPassword(){
         val  confirmPassword = binding.editconfirmPassword.text.toString()
-        val password = binding.EditTextpassword.text.toString()
+        val password = binding.editTextpassword.text.toString()
         if (confirmPassword.isEmpty()){
             incorrectconfirmPassword = true
             binding.txtconfirmPasswordError.visibility = View.GONE
