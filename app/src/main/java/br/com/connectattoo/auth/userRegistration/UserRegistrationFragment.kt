@@ -51,10 +51,10 @@ class UserRegistrationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        password = binding.editTextpassword
+        password = binding.editTextPassword
         confirmPassword = binding.editTexConfirmPassword
         confirmEmail = binding.editTexEmail
-        date = binding.editDate
+        date = binding.editTexDate
 
         inputPassword()
         inputPasswordconfirm()
@@ -114,21 +114,21 @@ class UserRegistrationFragment : Fragment() {
     }
 
     private fun isValidatingDate(){
-        val data = binding.editDate.text.toString()
+        val data = binding.editTexDate.text.toString()
         if (data.length <10){
             binding.txtInforErrorDate.visibility = View.VISIBLE
             incorrectDate = true
-            binding.editDate.setBackgroundResource(R.drawable.bg_edit_input_invalid)
+            binding.editTexDate.setBackgroundResource(R.drawable.bg_edit_input_invalid)
         }else{
             binding.txtInforErrorDate.visibility = View.GONE
             incorrectDate = false
-            binding.editDate.setBackgroundResource(R.drawable.bg_edit_input_valid)
+            binding.editTexDate.setBackgroundResource(R.drawable.bg_edit_input_valid)
         }
     }
 
 
     private fun dateMask(){
-         date = binding.editDate
+         date = binding.editTexDate
         val SimpleMaskFormatter = SimpleMaskFormatter("NN/NN/NNNN")
         val MaskTextWatcher = MaskTextWatcher(date, SimpleMaskFormatter)
         date.addTextChangedListener(MaskTextWatcher)
@@ -218,10 +218,10 @@ class UserRegistrationFragment : Fragment() {
             binding.linearLayout.visibility = View.GONE
             binding.txtpasswordFeature.visibility = View.VISIBLE
             correctPassword = true
-            binding.editTextpassword.setBackgroundResource(R.drawable.bg_edit_input_valid)
+            binding.editTextPassword.setBackgroundResource(R.drawable.bg_edit_input_valid)
 
         }else{
-            binding.editTextpassword.setBackgroundResource(R.drawable.bg_edit_input_invalid)
+            binding.editTextPassword.setBackgroundResource(R.drawable.bg_edit_input_invalid)
         }
 
     }
@@ -255,7 +255,7 @@ class UserRegistrationFragment : Fragment() {
 
     private fun confirmPassword(){
         val  confirmPassword = binding.editTexConfirmPassword.text.toString()
-        val password = binding.editTextpassword.text.toString()
+        val password = binding.editTextPassword.text.toString()
         if (confirmPassword.isEmpty()){
             incorrectConfirmPassword = true
             binding.txtconfirmPasswordError.visibility = View.GONE
