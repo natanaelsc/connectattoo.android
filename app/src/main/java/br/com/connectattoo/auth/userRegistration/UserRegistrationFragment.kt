@@ -130,8 +130,8 @@ class UserRegistrationFragment : Fragment() {
     private fun dateMask(){
          date = binding.editDate
         val SimpleMaskFormatter = SimpleMaskFormatter("NN/NN/NNNN")
-        val mtw = MaskTextWatcher(date, SimpleMaskFormatter)
-        date.addTextChangedListener(mtw)
+        val MaskTextWatcher= MaskTextWatcher(date, SimpleMaskFormatter)
+        date.addTextChangedListener(MaskTextWatcher)
     }
 
 
