@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -17,6 +18,9 @@ import br.com.connectattoo.databinding.FragmentUserRegistrationBinding
 import com.github.rtoshiro.util.format.SimpleMaskFormatter
 import com.github.rtoshiro.util.format.text.MaskTextWatcher
 import com.google.android.material.snackbar.Snackbar
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.Date
 
 
 class UserRegistrationFragment : Fragment() {
@@ -69,18 +73,19 @@ class UserRegistrationFragment : Fragment() {
 
         binding.btCreateAccount.setOnClickListener {
             val name = binding.editTexName.text.toString()
-
+            val dateConfirm = binding.editTexDate.text.toString()
             val checkBox = binding.checkBox
             var checked:Boolean
 
             if (checkBox.isChecked) {checked = true}
             else {  checked = false }
 
-            isValidatingDate()
+           isValidatingDate()
             confirmPassword()
             isEmailValid()
             validPassword()
             isValidatName()
+
 
 
             if ((name.isEmpty()) ||  (incorrectEmail == true)  || (correctPassword == false ) ||  (checked == false) || (incorrectConfirmPassword == true) || (incorrectDate == true)){
@@ -128,7 +133,6 @@ class UserRegistrationFragment : Fragment() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
                 isValidatingDate()
             }
 
@@ -137,22 +141,42 @@ class UserRegistrationFragment : Fragment() {
 
     }
 
+
     private fun isValidatingDate(){
-        val data = binding.editTexDate.text.toString()
-        if (data.length <10){
-            binding.txtInforErrorDate.visibility = View.VISIBLE
-            incorrectDate = true
-            binding.editTexDate.setBackgroundResource(R.drawable.bg_edit_input_invalid)
-        }else{
-            binding.txtInforErrorDate.visibility = View.GONE
-            incorrectDate = false
-            binding.editTexDate.setBackgroundResource(R.drawable.bg_edit_input_valid)
-        }
+
+       val date = binding.editTexDate.text.toString()
+
+            val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+            dateFormat.isLenient = false
+
+            try {
+                val parsedDate = dateFormat.parse(date)
+                if (parsedDate != null) {
+                    val currentDate = Date()
+
+                    if (!parsedDate.after(currentDate)) {
+                        binding.txtInforErrorDate.visibility = View.GONE
+                        incorrectDate = false
+                        binding.editTexDate.setBackgroundResource(R.drawable.bg_edit_input_valid)
+                    } else {
+                        binding.txtInforErrorDate.visibility = View.VISIBLE
+                        incorrectDate = true
+                        binding.editTexDate.setBackgroundResource(R.drawable.bg_edit_input_invalid)
+                    }
+                }
+            } catch (e: ParseException) {
+                binding.txtInforErrorDate.visibility = View.VISIBLE
+                incorrectDate = true
+                binding.editTexDate.setBackgroundResource(R.drawable.bg_edit_input_invalid)
+            }
+
+
     }
 
 
     private fun dateMask(){
          date = binding.editTexDate
+
         val SimpleMaskFormatter = SimpleMaskFormatter("NN/NN/NNNN")
         val MaskTextWatcher = MaskTextWatcher(date, SimpleMaskFormatter)
         date.addTextChangedListener(MaskTextWatcher)
