@@ -65,7 +65,7 @@ class UserRegistrationFragment : Fragment() {
 
 
         binding.btCreateAccount.setOnClickListener {
-            val name = binding.editName.text.toString()
+            val name = binding.editTexName.text.toString()
 
             val checkBox = binding.checkBox
             var checked:Boolean
@@ -130,7 +130,7 @@ class UserRegistrationFragment : Fragment() {
     private fun dateMask(){
          date = binding.editDate
         val SimpleMaskFormatter = SimpleMaskFormatter("NN/NN/NNNN")
-        val MaskTextWatcher= MaskTextWatcher(date, SimpleMaskFormatter)
+        val MaskTextWatcher = MaskTextWatcher(date, SimpleMaskFormatter)
         date.addTextChangedListener(MaskTextWatcher)
     }
 
