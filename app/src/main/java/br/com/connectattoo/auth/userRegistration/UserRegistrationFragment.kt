@@ -34,9 +34,10 @@ class UserRegistrationFragment : Fragment() {
     private var haslow = false
     private var hasNum = false
     private var hasSpecialSymbol = false
-    private var inforPassword = false
+    private var incorrectconfirmPassword = true
     private var correctPassword = false
     private var incorrectDate = false
+    private var incorrectEmail = true
 
 
     override fun onCreateView(
@@ -65,7 +66,6 @@ class UserRegistrationFragment : Fragment() {
             val name = binding.editName.text.toString()
             val email = binding.editEmail.text.toString()
             val Password = binding.EditTextpassword.text.toString()
-            val confirmPassword = binding.editconfirmPassword.text.toString()
             val date = binding.editDate.text.toString()
 
             val checkBox = binding.checkBox
@@ -75,9 +75,13 @@ class UserRegistrationFragment : Fragment() {
             else {  checked = false }
 
             validatingDate()
+            confirmPassword()
+            isEmailValid()
 
 
-            if ((name.isEmpty()) || (email.isEmpty()) || (Password.isEmpty()) || (confirmPassword.isEmpty()) || (date.isEmpty()) || ( correctPassword == false) || (checked == false) || (Password != confirmPassword) || (incorrectDate == true)){
+            if ((name.isEmpty()) ||  (incorrectEmail == true)  || (correctPassword == false ) ||  (checked == false) || (incorrectconfirmPassword == true) || (incorrectDate == true)){
+
+
                 val snackbar =
                     Snackbar.make(it, "verificar se todos os campos foram preenchidos corretamente!", Snackbar.LENGTH_SHORT)
                 snackbar.setTextColor(Color.WHITE)
@@ -208,11 +212,7 @@ class UserRegistrationFragment : Fragment() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 validPassword()
-                if(is8char &&  hasNum && hasSpecialSymbol && hasUpper && haslow ){
-                    binding.txtpasswordNotCharacteristics.visibility = View.GONE
-                    binding.linearLayout.visibility = View.GONE
-                    binding.txtpasswordFeature.visibility = View.VISIBLE
-                }
+
 
             }
 
@@ -237,16 +237,17 @@ class UserRegistrationFragment : Fragment() {
         val  confirmPassword = binding.editconfirmPassword.text.toString()
         val password = binding.EditTextpassword.text.toString()
         if (confirmPassword.isEmpty()){
-            inforPassword = false
+            incorrectconfirmPassword = true
             binding.txtconfirmPasswordError.visibility = View.GONE
+            binding.editconfirmPassword.setBackgroundResource(R.drawable.bg_edit_input_invalid)
 
         }else    if (password != confirmPassword){
-            inforPassword = true
+            incorrectconfirmPassword = true
             binding.txtconfirmPasswordError.visibility = View.VISIBLE
             binding.editconfirmPassword.setBackgroundResource(R.drawable.bg_edit_input_invalid)
 
         }else{
-            inforPassword = false
+            incorrectconfirmPassword = false
             binding.txtconfirmPasswordError.visibility = View.GONE
             binding.editconfirmPassword.setBackgroundResource(R.drawable.bg_edit_input_valid)
         }
@@ -269,10 +270,15 @@ class UserRegistrationFragment : Fragment() {
     fun isEmailValid() {
         val  email = binding.editEmail.text.toString()
 
-        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        if(email.isEmpty()){
             binding.editEmail.setBackgroundResource(R.drawable.bg_edit_input_invalid)
+            incorrectEmail = true
+        }else  if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            binding.editEmail.setBackgroundResource(R.drawable.bg_edit_input_invalid)
+           incorrectEmail = true
         }else{
             binding.editEmail.setBackgroundResource(R.drawable.bg_edit_input_valid)
+           incorrectEmail = false
         }
     }
 
