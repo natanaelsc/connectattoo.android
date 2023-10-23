@@ -29,7 +29,7 @@ class UserRegistrationFragment : Fragment() {
     private lateinit var date : EditText
     private lateinit var confirmEmail : EditText
 
-    private var is8char = false
+    private var isChar = false
     private var hasUpper = false
     private var haslow = false
     private var hasNum = false
@@ -141,7 +141,7 @@ class UserRegistrationFragment : Fragment() {
         val password = password.text.toString()
         if(password.length <8)
         {
-            is8char = true
+            isChar = true
             binding.txtConditionsPassword.visibility = View.VISIBLE
             binding.txtpasswordNotCharacteristics.visibility = View.VISIBLE
             binding.linearLayout.visibility = View.VISIBLE
@@ -151,7 +151,7 @@ class UserRegistrationFragment : Fragment() {
             binding.ImgCheckMinimumCharacters.visibility = View.GONE
 
         }else {
-            is8char = false
+            isChar = false
             binding.txtMinimumCharacters.setTextColor(Color.GREEN)
             binding.ImgCheckMinimumCharacters.visibility = View.VISIBLE
             binding.ImgCloseMinimumCharacters.visibility = View.GONE
@@ -212,7 +212,7 @@ class UserRegistrationFragment : Fragment() {
             binding.ImgCloseNumber.visibility = View.GONE
             binding.ImgCheckNumber.visibility = View.VISIBLE
         }
-        if(is8char == false &&  hasNum == false && hasSpecialSymbol == false && hasUpper == false && haslow == false ){
+        if(isChar == false &&  hasNum == false && hasSpecialSymbol == false && hasUpper == false && haslow == false ){
 
             binding.txtpasswordNotCharacteristics.visibility = View.GONE
             binding.linearLayout.visibility = View.GONE
