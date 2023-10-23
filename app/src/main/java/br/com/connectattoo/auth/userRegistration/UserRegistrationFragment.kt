@@ -53,7 +53,7 @@ class UserRegistrationFragment : Fragment() {
 
         password = binding.editTextpassword
         confirmPassword = binding.editconfirmPassword
-        confirmEmail = binding.editEmail
+        confirmEmail = binding.editTexEmail
         date = binding.editDate
 
         inputPassword()
@@ -288,16 +288,16 @@ class UserRegistrationFragment : Fragment() {
     }
 
     fun isEmailValid() {
-        val  email = binding.editEmail.text.toString()
+        val  email = binding.editTexEmail.text.toString()
 
         if(email.isEmpty()){
-            binding.editEmail.setBackgroundResource(R.drawable.bg_edit_input_invalid)
+            binding.editTexEmail.setBackgroundResource(R.drawable.bg_edit_input_invalid)
             incorrectEmail = true
         }else  if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            binding.editEmail.setBackgroundResource(R.drawable.bg_edit_input_invalid)
+            binding.editTexEmail.setBackgroundResource(R.drawable.bg_edit_input_invalid)
            incorrectEmail = true
         }else{
-            binding.editEmail.setBackgroundResource(R.drawable.bg_edit_input_valid)
+            binding.editTexEmail.setBackgroundResource(R.drawable.bg_edit_input_valid)
            incorrectEmail = false
         }
     }
