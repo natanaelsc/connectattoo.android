@@ -43,10 +43,10 @@
                 android:id="@+id/editName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="ex. Natan Silva"
-                android:background="@drawable/bg_edit_input_default"
                 android:layout_marginTop="4dp"
-                android:padding="15dp"/>
+                android:background="@drawable/bg_edit_input_default"
+                android:hint="ex. João Silva"
+                android:padding="15dp" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
