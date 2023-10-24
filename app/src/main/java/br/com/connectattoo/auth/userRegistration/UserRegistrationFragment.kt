@@ -61,7 +61,7 @@ class UserRegistrationFragment : Fragment() {
         confirmPassword = binding.editTexConfirmPassword
         confirmEmail = binding.editTexEmail
         date = binding.editTexDate
-        name = binding.editTexName
+        name = binding.editTextName
 
         inputPassword()
         inputPasswordconfirm()
@@ -73,7 +73,7 @@ class UserRegistrationFragment : Fragment() {
 
 
         binding.btCreateAccount.setOnClickListener {
-            val name = binding.editTexName.text.toString()
+            val name = binding.editTextName.text.toString()
             val checkBox = binding.checkBox
             var checked:Boolean
 
@@ -110,7 +110,7 @@ class UserRegistrationFragment : Fragment() {
 
 
     private fun nameFocusListener(){
-        binding.editTexName.setOnFocusChangeListener{ _,focused ->
+        binding.editTextName.setOnFocusChangeListener{ _,focused ->
             if (!focused){
                 isValidatName()
             }
@@ -119,11 +119,11 @@ class UserRegistrationFragment : Fragment() {
     }
 
     private fun isValidatName() {
-        val name = binding.editTexName.text.toString()
+        val name = binding.editTextName.text.toString()
         if (name.isEmpty()){
-            binding.editTexName.setBackgroundResource(R.drawable.bg_edit_input_invalid)
+            binding.editTextName.setBackgroundResource(R.drawable.bg_edit_input_invalid)
         }else{
-            binding.editTexName.setBackgroundResource(R.drawable.bg_edit_input_valid)
+            binding.editTextName.setBackgroundResource(R.drawable.bg_edit_input_valid)
         }
     }
 

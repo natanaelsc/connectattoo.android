@@ -47,7 +47,7 @@ class ArtistRegistrationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         password = binding.EditTextpassword
-        confirmPassword = binding.EditTexConfirmPassword
+        confirmPassword = binding.EditTextConfirmPassword
 
         inputPassword()
         inputPasswordconfirm()
@@ -56,7 +56,7 @@ class ArtistRegistrationFragment : Fragment() {
 
 
         binding.btCreateAccount.setOnClickListener {
-            val name = binding.EditTexName.text.toString()
+            val name = binding.EditTextName.text.toString()
 
             val checkBox = binding.checkBox
             var checked:Boolean
@@ -84,7 +84,7 @@ class ArtistRegistrationFragment : Fragment() {
     }
 
     private fun validatingDate(){
-        val date = binding.EditTexDate.text.toString()
+        val date = binding.EditTextDate.text.toString()
         if (date.length <10){
             binding.txtInforErrorDate.visibility = View.VISIBLE
             incorrectDate = true
@@ -96,7 +96,7 @@ class ArtistRegistrationFragment : Fragment() {
 
 
     private fun dateMask(){
-        date = binding.EditTexDate
+        date = binding.EditTextDate
         val smf = SimpleMaskFormatter("NN/NN/NNNN")
         val mtw = MaskTextWatcher(date, smf)
         date.addTextChangedListener(mtw)
@@ -223,7 +223,7 @@ class ArtistRegistrationFragment : Fragment() {
     }
 
     private fun confirmPassword(){
-        val  confirmPassword = binding.EditTexConfirmPassword.text.toString()
+        val  confirmPassword = binding.EditTextConfirmPassword.text.toString()
         val password = binding.EditTextpassword.text.toString()
         if (confirmPassword.isEmpty()){
             inforPassword = false
