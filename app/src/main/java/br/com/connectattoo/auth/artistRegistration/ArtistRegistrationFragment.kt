@@ -47,7 +47,7 @@ class ArtistRegistrationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         password = binding.EditTextpassword
-        confirmPassword = binding.editconfirmPassword
+        confirmPassword = binding.EditTexConfirmPassword
 
         inputPassword()
         inputPasswordconfirm()
@@ -227,7 +227,7 @@ class ArtistRegistrationFragment : Fragment() {
     }
 
     private fun confirmPassword(){
-        val  confirmPassword = binding.editconfirmPassword.text.toString()
+        val  confirmPassword = binding.EditTexConfirmPassword.text.toString()
         val password = binding.EditTextpassword.text.toString()
         if (confirmPassword.isEmpty()){
             inforPassword = false
