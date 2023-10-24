@@ -328,7 +328,7 @@
                 />
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTexDate"
+                android:id="@+id/editTextDate"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:hint="DD/MM/YYYY"
