@@ -1,4 +1,4 @@
-package br.com.connectattoo.auth.activity
+package br.com.connectattoo
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
