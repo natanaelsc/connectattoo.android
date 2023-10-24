@@ -88,7 +88,7 @@ class ArtistRegistrationFragment : Fragment() {
     }
 
     private fun validatingDate(){
-        val date = binding.editDate.text.toString()
+        val date = binding.EditTexDate.text.toString()
         if (date.length <10){
             binding.txtInforErrorDate.visibility = View.VISIBLE
             incorrectDate = true
@@ -100,7 +100,7 @@ class ArtistRegistrationFragment : Fragment() {
 
 
     private fun dateMask(){
-        date = binding.editDate
+        date = binding.EditTexDate
         val smf = SimpleMaskFormatter("NN/NN/NNNN")
         val mtw = MaskTextWatcher(date, smf)
         date.addTextChangedListener(mtw)
