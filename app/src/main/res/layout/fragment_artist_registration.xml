@@ -58,7 +58,7 @@
                 />
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/EditTexEmail"
+                android:id="@+id/EditTextEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="nome@email.com"
