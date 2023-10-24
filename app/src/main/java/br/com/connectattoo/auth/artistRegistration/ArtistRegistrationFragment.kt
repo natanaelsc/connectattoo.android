@@ -57,10 +57,6 @@ class ArtistRegistrationFragment : Fragment() {
 
         binding.btCreateAccount.setOnClickListener {
             val name = binding.EditTexName.text.toString()
-            val email = binding.editEmail.text.toString()
-            val Password = binding.EditTextpassword.text.toString()
-            val confirmPassword = binding.editconfirmPassword.text.toString()
-            val date = binding.editDate.text.toString()
 
             val checkBox = binding.checkBox
             var checked:Boolean
@@ -71,7 +67,7 @@ class ArtistRegistrationFragment : Fragment() {
             validatingDate()
 
 
-            if ((name.isEmpty()) || (email.isEmpty()) || (Password.isEmpty()) || (confirmPassword.isEmpty()) || (date.isEmpty()) || ( correctPassword == false) || (checked == false) || (Password != confirmPassword) || (incorrectDate == true)){
+            if ((name.isEmpty())  || ( correctPassword == false) || (checked == false) || (incorrectDate == true)){
                 val snackbar =
                     Snackbar.make(it, "verificar se todos os campos foram preenchidos corretamente!", Snackbar.LENGTH_SHORT)
                 snackbar.setTextColor(Color.WHITE)
