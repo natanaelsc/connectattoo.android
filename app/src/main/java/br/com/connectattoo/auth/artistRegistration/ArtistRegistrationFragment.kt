@@ -56,7 +56,7 @@ class ArtistRegistrationFragment : Fragment() {
 
 
         binding.btCreateAccount.setOnClickListener {
-            val name = binding.editName.text.toString()
+            val name = binding.EditTexName.text.toString()
             val email = binding.editEmail.text.toString()
             val Password = binding.EditTextpassword.text.toString()
             val confirmPassword = binding.editconfirmPassword.text.toString()
