@@ -58,9 +58,9 @@ class UserRegistrationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         password = binding.editTextPassword
-        confirmPassword = binding.editTexConfirmPassword
-        confirmEmail = binding.editTexEmail
-        date = binding.editTexDate
+        confirmPassword = binding.editTextConfirmPassword
+        confirmEmail = binding.editTextEmail
+        date = binding.editTextDate
         name = binding.editTextName
 
         inputPassword()
@@ -143,7 +143,7 @@ class UserRegistrationFragment : Fragment() {
 
     private fun isValidatingDate(){
 
-        val date = binding.editTexDate.text.toString()
+        val date = binding.editTextDate.text.toString()
 
         val dateFormat = SimpleDateFormat("dd/MM/yyyy")
         dateFormat.isLenient = false
@@ -159,7 +159,7 @@ class UserRegistrationFragment : Fragment() {
                 if (year >= 1000 && year <= currentDate.year + 1900) {
                     binding.txtInforErrorDate.visibility = View.GONE
                     incorrectDate = false
-                    binding.editTexDate.setBackgroundResource(R.drawable.bg_edit_input_valid)
+                    binding.editTextDate.setBackgroundResource(R.drawable.bg_edit_input_valid)
                 } else {
                     throw ParseException("", 0)
                 }
@@ -167,24 +167,24 @@ class UserRegistrationFragment : Fragment() {
                 if (!parsedDate.after(currentDate)) {
                     binding.txtInforErrorDate.visibility = View.GONE
                     incorrectDate = false
-                    binding.editTexDate.setBackgroundResource(R.drawable.bg_edit_input_valid)
+                    binding.editTextDate.setBackgroundResource(R.drawable.bg_edit_input_valid)
                 } else {
                     binding.txtInforErrorDate.visibility = View.VISIBLE
                     incorrectDate = true
-                    binding.editTexDate.setBackgroundResource(R.drawable.bg_edit_input_invalid)
+                    binding.editTextDate.setBackgroundResource(R.drawable.bg_edit_input_invalid)
                 }
             }
         } catch (e: ParseException) {
             binding.txtInforErrorDate.visibility = View.VISIBLE
             incorrectDate = true
-            binding.editTexDate.setBackgroundResource(R.drawable.bg_edit_input_invalid)
+            binding.editTextDate.setBackgroundResource(R.drawable.bg_edit_input_invalid)
         }
 
     }
 
 
     private fun dateMask(){
-         date = binding.editTexDate
+         date = binding.editTextDate
 
         val SimpleMaskFormatter = SimpleMaskFormatter("NN/NN/NNNN")
         val MaskTextWatcher = MaskTextWatcher(date, SimpleMaskFormatter)
@@ -311,22 +311,22 @@ class UserRegistrationFragment : Fragment() {
     }
 
     private fun confirmPassword(){
-        val  confirmPassword = binding.editTexConfirmPassword.text.toString()
+        val  confirmPassword = binding.editTextConfirmPassword.text.toString()
         val password = binding.editTextPassword.text.toString()
         if (confirmPassword.isEmpty()){
             incorrectConfirmPassword = true
             binding.txtconfirmPasswordError.visibility = View.GONE
-            binding.editTexConfirmPassword.setBackgroundResource(R.drawable.bg_edit_input_invalid)
+            binding.editTextConfirmPassword.setBackgroundResource(R.drawable.bg_edit_input_invalid)
 
         }else    if (password != confirmPassword){
             incorrectConfirmPassword = true
             binding.txtconfirmPasswordError.visibility = View.VISIBLE
-            binding.editTexConfirmPassword.setBackgroundResource(R.drawable.bg_edit_input_invalid)
+            binding.editTextConfirmPassword.setBackgroundResource(R.drawable.bg_edit_input_invalid)
 
         }else{
             incorrectConfirmPassword = false
             binding.txtconfirmPasswordError.visibility = View.GONE
-            binding.editTexConfirmPassword.setBackgroundResource(R.drawable.bg_edit_input_valid)
+            binding.editTextConfirmPassword.setBackgroundResource(R.drawable.bg_edit_input_valid)
         }
     }
 
@@ -345,16 +345,16 @@ class UserRegistrationFragment : Fragment() {
     }
 
     fun isEmailValid() {
-        val  email = binding.editTexEmail.text.toString()
+        val  email = binding.editTextEmail.text.toString()
 
         if(email.isEmpty()){
-            binding.editTexEmail.setBackgroundResource(R.drawable.bg_edit_input_invalid)
+            binding.editTextEmail.setBackgroundResource(R.drawable.bg_edit_input_invalid)
             incorrectEmail = true
         }else  if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            binding.editTexEmail.setBackgroundResource(R.drawable.bg_edit_input_invalid)
+            binding.editTextEmail.setBackgroundResource(R.drawable.bg_edit_input_invalid)
            incorrectEmail = true
         }else{
-            binding.editTexEmail.setBackgroundResource(R.drawable.bg_edit_input_valid)
+            binding.editTextEmail.setBackgroundResource(R.drawable.bg_edit_input_valid)
            incorrectEmail = false
         }
     }
