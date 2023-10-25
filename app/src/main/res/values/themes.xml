@@ -7,6 +7,7 @@
         <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
 
+
     </style>
 
     <style name="Theme.Connectattoo" parent="Base.Theme.Connectattoo" />
