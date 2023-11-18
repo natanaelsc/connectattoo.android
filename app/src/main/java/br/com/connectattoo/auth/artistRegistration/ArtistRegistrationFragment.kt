@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import br.com.connectattoo.R
 import br.com.connectattoo.databinding.FragmentArtistRegistrationBinding
@@ -78,11 +79,11 @@ class ArtistRegistrationFragment : Fragment() {
             validPassword()
             isValidatName()
 
-            if ((name.isEmpty()) ||  (incorrectEmail == true)  || (correctPassword == false ) ||  (checked == false) || (incorrectConfirmPassword == true) || (incorrectDate == true)) {
-                val snackbar = Snackbar.make(it, "verificar se todos os campos foram preenchidos corretamente!", Snackbar.LENGTH_SHORT)
-                snackbar.setTextColor(Color.WHITE)
-                snackbar.setBackgroundTint(Color.RED)
-                snackbar.show()
+            if (name.isEmpty() ||  (incorrectEmail == true)  || (correctPassword == false ) ||  (checked == false) || (incorrectConfirmPassword == true) || (incorrectDate == true)) {
+                val snackBar = Snackbar.make(it, "verificar se todos os campos foram preenchidos corretamente!", Snackbar.LENGTH_SHORT)
+                snackBar.setTextColor(Color.WHITE)
+                snackBar.setBackgroundTint(Color.RED)
+                snackBar.show()
             }
         }
 

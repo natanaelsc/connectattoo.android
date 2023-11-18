@@ -79,10 +79,10 @@ class UserRegistrationFragment : Fragment() {
             isValidatName()
 
             if ((name.isEmpty()) ||  (incorrectEmail == true)  || (correctPassword == false ) ||  (checked == false) || (incorrectConfirmPassword == true) || (incorrectDate == true)) {
-                val snackbar = Snackbar.make(it, "verificar se todos os campos foram preenchidos corretamente!", Snackbar.LENGTH_SHORT)
-                snackbar.setTextColor(Color.WHITE)
-                snackbar.setBackgroundTint(Color.RED)
-                snackbar.show()
+                val snackBar = Snackbar.make(it, "verificar se todos os campos foram preenchidos corretamente!", Snackbar.LENGTH_SHORT)
+                snackBar.setTextColor(Color.WHITE)
+                snackBar.setBackgroundTint(Color.RED)
+                snackBar.show()
             }
         }
 
