@@ -3,8 +3,9 @@
 # top-most EditorConfig file
 root = true
 
-[*.{kt,kts,java}]
+[*.{kt,kts}]
 indent_style = tab
+tab_width = 4
 end_of_line = crlf
 charset = utf-8
 trim_trailing_whitespace = true
