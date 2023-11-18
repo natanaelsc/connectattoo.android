@@ -70,10 +70,7 @@ class ArtistRegistrationFragment : Fragment() {
         binding.btCreateAccount.setOnClickListener {
             val name = binding.editTextName.text.toString()
             val checkBox = binding.checkBox
-            var checked:Boolean
-
-            if (checkBox.isChecked) {checked = true}
-            else {  checked = false }
+            var checked: Boolean = checkBox.isChecked
 
             isValidatingDate()
             confirmPassword()
@@ -86,7 +83,7 @@ class ArtistRegistrationFragment : Fragment() {
                 snackbar.setTextColor(Color.WHITE)
                 snackbar.setBackgroundTint(Color.RED)
                 snackbar.show()
-            } else {}
+            }
         }
 
         binding.btCancel.setOnClickListener {
