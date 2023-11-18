@@ -67,8 +67,6 @@ class ArtistRegistrationFragment : Fragment() {
         validatingDate()
         nameFocusListener()
 
-
-
         binding.btCreateAccount.setOnClickListener {
             val name = binding.editTextName.text.toString()
             val checkBox = binding.checkBox
@@ -83,19 +81,12 @@ class ArtistRegistrationFragment : Fragment() {
             validPassword()
             isValidatName()
 
-
-
-            if ((name.isEmpty()) ||  (incorrectEmail == true)  || (correctPassword == false ) ||  (checked == false) || (incorrectConfirmPassword == true) || (incorrectDate == true)){
-
-
-                val snackbar =
-                    Snackbar.make(it, "verificar se todos os campos foram preenchidos corretamente!", Snackbar.LENGTH_SHORT)
+            if ((name.isEmpty()) ||  (incorrectEmail == true)  || (correctPassword == false ) ||  (checked == false) || (incorrectConfirmPassword == true) || (incorrectDate == true)) {
+                val snackbar = Snackbar.make(it, "verificar se todos os campos foram preenchidos corretamente!", Snackbar.LENGTH_SHORT)
                 snackbar.setTextColor(Color.WHITE)
                 snackbar.setBackgroundTint(Color.RED)
                 snackbar.show()
-            } else {
-
-            }
+            } else {}
         }
 
         binding.btCancel.setOnClickListener {
@@ -105,10 +96,7 @@ class ArtistRegistrationFragment : Fragment() {
 
     private fun nameFocusListener(){
         binding.editTextName.setOnFocusChangeListener{ _,focused ->
-            if (!focused){
-                isValidatName()
-            }
-
+            if (!focused) isValidatName()
         }
     }
 
@@ -116,7 +104,7 @@ class ArtistRegistrationFragment : Fragment() {
         val name = binding.editTextName.text.toString()
         if (name.isEmpty()){
             binding.editTextName.setBackgroundResource(R.drawable.bg_edit_input_invalid)
-        }else{
+        } else {
             binding.editTextName.setBackgroundResource(R.drawable.bg_edit_input_valid)
         }
     }
@@ -131,7 +119,6 @@ class ArtistRegistrationFragment : Fragment() {
 
             override fun afterTextChanged(s: Editable?) { }
         })
-
     }
 
     private fun isValidatingDate(){
@@ -172,9 +159,7 @@ class ArtistRegistrationFragment : Fragment() {
             incorrectDate = true
             binding.editTextDate.setBackgroundResource(R.drawable.bg_edit_input_invalid)
         }
-
     }
-
 
     private fun dateMask(){
         date = binding.editTextDate
@@ -183,14 +168,10 @@ class ArtistRegistrationFragment : Fragment() {
         date.addTextChangedListener(mtw)
     }
 
-
     @SuppressLint("SuspiciousIndentation")
-    private fun validPassword()
-    {
-
+    private fun validPassword() {
         val password = password.text.toString()
-        if(password.length <8)
-        {
+        if (password.length <8) {
             isChar = true
             binding.txtConditionsPassword.visibility = View.VISIBLE
             binding.txtpasswordNotCharacteristics.visibility = View.VISIBLE
@@ -199,14 +180,14 @@ class ArtistRegistrationFragment : Fragment() {
             binding.txtMinimumCharacters.setTextColor(Color.RED)
             binding.ImgCloseMinimumCharacters.visibility = View.VISIBLE
             binding.ImgCheckMinimumCharacters.visibility = View.GONE
-
-        }else {
+        } else {
             isChar = false
             binding.txtMinimumCharacters.setTextColor(Color.GREEN)
             binding.ImgCheckMinimumCharacters.visibility = View.VISIBLE
             binding.ImgCloseMinimumCharacters.visibility = View.GONE
         }
-        if(!password.matches(Regex("^(?=.*[_.*=!%()$&@+-/]).*$"))) {
+
+        if (!password.matches(Regex("^(?=.*[_.*=!%()$&@+-/]).*$"))) {
             hasSpecialSymbol = true
             binding.txtpasswordNotCharacteristics.visibility = View.VISIBLE
             binding.linearLayout.visibility = View.VISIBLE
@@ -214,12 +195,13 @@ class ArtistRegistrationFragment : Fragment() {
             binding.txtSpecialSymbol.setTextColor(Color.RED)
             binding.ImgCloseSpecialSymbol.visibility = View.VISIBLE
             binding.ImgCheckSpecialSymbol.visibility = View.GONE
-        }else  {
+        } else  {
             hasSpecialSymbol = false
             binding.txtSpecialSymbol.setTextColor(Color.GREEN)
             binding.ImgCheckSpecialSymbol.visibility = View.VISIBLE
             binding.ImgCloseSpecialSymbol.visibility = View.GONE
         }
+
         if (!password.matches(".*[A-Z].*".toRegex())) {
             hasUpper = true
             binding.txtpasswordNotCharacteristics.visibility = View.VISIBLE
@@ -228,13 +210,14 @@ class ArtistRegistrationFragment : Fragment() {
             binding.txtCapitalLetter.setTextColor(Color.RED)
             binding.ImgCloseCapitalLetter.visibility = View.VISIBLE
             binding.ImgCheckCapitalLetter.visibility = View.GONE
-        }  else {
+        } else {
             hasUpper = false
             binding.txtCapitalLetter.setTextColor(Color.GREEN)
             binding.ImgCheckCapitalLetter.visibility = View.VISIBLE
             binding.ImgCloseCapitalLetter.visibility = View.GONE
         }
-        if(!password.matches(".*[a-z].*".toRegex())) {
+
+        if (!password.matches(".*[a-z].*".toRegex())) {
             hasLow = true
             binding.txtpasswordNotCharacteristics.visibility = View.VISIBLE
             binding.linearLayout.visibility = View.VISIBLE
@@ -248,7 +231,8 @@ class ArtistRegistrationFragment : Fragment() {
             binding.ImgCheckLowerCase.visibility = View.VISIBLE
             binding.ImgCloseLowerCase.visibility = View.GONE
         }
-        if (!password.matches(".*[0-9].*".toRegex())){
+
+        if (!password.matches(".*[0-9].*".toRegex())) {
             hasNum = true
             binding.txtpasswordNotCharacteristics.visibility = View.VISIBLE
             binding.linearLayout.visibility = View.VISIBLE
@@ -262,17 +246,16 @@ class ArtistRegistrationFragment : Fragment() {
             binding.ImgCloseNumber.visibility = View.GONE
             binding.ImgCheckNumber.visibility = View.VISIBLE
         }
-        if(isChar == false &&  hasNum == false && hasSpecialSymbol == false && hasUpper == false && hasLow == false ){
 
+        if (isChar == false &&  hasNum == false && hasSpecialSymbol == false && hasUpper == false && hasLow == false ) {
             binding.txtpasswordNotCharacteristics.visibility = View.GONE
             binding.linearLayout.visibility = View.GONE
             binding.txtpasswordFeature.visibility = View.VISIBLE
             correctPassword = true
             binding.editTextPassword.setBackgroundResource(R.drawable.bg_edit_input_valid)
-        }else{
+        } else {
             binding.editTextPassword.setBackgroundResource(R.drawable.bg_edit_input_invalid)
         }
-
     }
 
     private fun inputPassword()  {
@@ -281,14 +264,11 @@ class ArtistRegistrationFragment : Fragment() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 validPassword()
-
-
             }
 
             override fun afterTextChanged(s: Editable?) {}
         })
     }
-
 
     private fun inputPasswordconfirm()  {
         confirmPassword.addTextChangedListener(object : TextWatcher {
@@ -303,19 +283,17 @@ class ArtistRegistrationFragment : Fragment() {
     }
 
     private fun confirmPassword(){
-        val  confirmPassword = binding.editTextConfirmPassword.text.toString()
+        val confirmPassword = binding.editTextConfirmPassword.text.toString()
         val password = binding.editTextPassword.text.toString()
-        if (confirmPassword.isEmpty()){
+        if (confirmPassword.isEmpty()) {
             incorrectConfirmPassword = true
             binding.txtconfirmPasswordError.visibility = View.GONE
             binding.editTextConfirmPassword.setBackgroundResource(R.drawable.bg_edit_input_invalid)
-
-        }else    if (password != confirmPassword){
+        } else if (password != confirmPassword) {
             incorrectConfirmPassword = true
             binding.txtconfirmPasswordError.visibility = View.VISIBLE
             binding.editTextConfirmPassword.setBackgroundResource(R.drawable.bg_edit_input_invalid)
-
-        }else{
+        } else {
             incorrectConfirmPassword = false
             binding.txtconfirmPasswordError.visibility = View.GONE
             binding.editTextConfirmPassword.setBackgroundResource(R.drawable.bg_edit_input_valid)
@@ -327,30 +305,27 @@ class ArtistRegistrationFragment : Fragment() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
                 isEmailValid()
             }
 
             override fun afterTextChanged(s: Editable?) { }
         })
-
     }
 
     fun isEmailValid() {
-        val  email = binding.editTextEmail.text.toString()
+        val email = binding.editTextEmail.text.toString()
 
-        if(email.isEmpty()){
+        if (email.isEmpty()) {
             binding.editTextEmail.setBackgroundResource(R.drawable.bg_edit_input_invalid)
             incorrectEmail = true
-        }else  if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             binding.editTextEmail.setBackgroundResource(R.drawable.bg_edit_input_invalid)
             incorrectEmail = true
-        }else{
+        } else {
             binding.editTextEmail.setBackgroundResource(R.drawable.bg_edit_input_valid)
             incorrectEmail = false
         }
     }
-
 
     override fun onDestroy() {
         super.onDestroy()
