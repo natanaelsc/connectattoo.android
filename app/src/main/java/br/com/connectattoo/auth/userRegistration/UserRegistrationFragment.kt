@@ -136,7 +136,7 @@ class UserRegistrationFragment : Fragment() {
                 calendar.time = parsedDate
                 val year = calendar.get(Calendar.YEAR)
 
-                if (year >= 1000 && year <= currentDate.year + 1900) {
+                if (year >= 1000 && year <= (year + 1900)) {
                     binding.txtInforErrorDate.visibility = View.GONE
                     incorrectDate = false
                     binding.editTextDate.setBackgroundResource(R.drawable.bg_edit_input_valid)
