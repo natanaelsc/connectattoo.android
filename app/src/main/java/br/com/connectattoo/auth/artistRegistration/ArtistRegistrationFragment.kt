@@ -80,7 +80,7 @@ class ArtistRegistrationFragment : Fragment() {
             isValidatName()
 
             if (name.isEmpty() ||  (incorrectEmail == true)  || (correctPassword == false ) ||  (checked == false) || (incorrectConfirmPassword == true) || (incorrectDate == true)) {
-                val snackBar = Snackbar.make(it, "verificar se todos os campos foram preenchidos corretamente!", Snackbar.LENGTH_SHORT)
+                val snackBar = Snackbar.make(it, "Todos os campos devem ser preenchidos!", Snackbar.LENGTH_SHORT)
                 snackBar.setTextColor(Color.WHITE)
                 snackBar.setBackgroundTint(Color.RED)
                 snackBar.show()
