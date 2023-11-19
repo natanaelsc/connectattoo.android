@@ -82,7 +82,7 @@ class TattooClientRegistrationFragment : UserRegistration<FragmentTattooClientRe
 			binding.editTextName.setBackgroundResource(R.drawable.bg_edit_input_valid)
 		}
 	}
-    
+
     private fun validatingDate() {
         birthDay.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -94,9 +94,7 @@ class TattooClientRegistrationFragment : UserRegistration<FragmentTattooClientRe
     }
 
 	private fun isValidatingDate() {
-
 		val birthDay = binding.editTextDate.text.toString()
-
 		val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale("pt", "BR"))
 		dateFormat.isLenient = false
 
@@ -106,7 +104,7 @@ class TattooClientRegistrationFragment : UserRegistration<FragmentTattooClientRe
 				val currentDate = Date()
 				val calendar = Calendar.getInstance()
 				calendar.time = parsedDate
-				val year = calendar.get(Calendar.YEAR)
+                val year = calendar[Calendar.YEAR]
 
 				if (year >= 1000 && year <= (year + 1900)) {
 					binding.txtInforErrorDate.visibility = View.GONE

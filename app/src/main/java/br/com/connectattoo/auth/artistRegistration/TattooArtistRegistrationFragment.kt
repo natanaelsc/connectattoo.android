@@ -95,7 +95,6 @@ class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRe
 
     private fun isValidatingDate() {
 		val birthDay = binding.editTextDate.text.toString()
-
 		val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale("pt", "BR"))
         dateFormat.isLenient = false
 
@@ -105,7 +104,7 @@ class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRe
                 val currentDate = Date()
                 val calendar = Calendar.getInstance()
                 calendar.time = parsedDate
-                val year = calendar.get(Calendar.YEAR)
+                val year = calendar[Calendar.YEAR]
 
                 if (year >= 1000 && year <= (year + 1900)) {
                     binding.txtInforErrorDate.visibility = View.GONE
