@@ -18,18 +18,18 @@
     </fragment>
     <fragment
         android:id="@+id/artistRegistrationFragment"
-        android:name="br.com.connectattoo.auth.artistRegistration.ArtistRegistrationFragment"
+        android:name="br.com.connectattoo.auth.artistRegistration.TattooArtistRegistrationFragment"
         android:label="fragment_artist_registration"
-        tools:layout="@layout/fragment_artist_registration" >
+        tools:layout="@layout/fragment_tattoo_artist_registration" >
         <action
             android:id="@+id/action_artistRegistrationFragment_to_welcomeFragment"
             app:destination="@id/welcomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/userRegistrationFragment"
-        android:name="br.com.connectattoo.auth.userRegistration.UserRegistrationFragment"
+        android:name="br.com.connectattoo.auth.userRegistration.TattooClientRegistrationFragment"
         android:label="fragment_user_registration"
-        tools:layout="@layout/fragment_user_registration" >
+        tools:layout="@layout/fragment_tattoo_client_registration" >
         <action
             android:id="@+id/action_userRegistrationFragment_to_welcomeFragment"
             app:destination="@id/welcomeFragment" />

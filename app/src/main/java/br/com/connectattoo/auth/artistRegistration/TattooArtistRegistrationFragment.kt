@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import br.com.connectattoo.R
 import br.com.connectattoo.auth.UserRegistration
-import br.com.connectattoo.databinding.FragmentArtistRegistrationBinding
+import br.com.connectattoo.databinding.FragmentTattooArtistRegistrationBinding
 import com.github.rtoshiro.util.format.SimpleMaskFormatter
 import com.github.rtoshiro.util.format.text.MaskTextWatcher
 import com.google.android.material.snackbar.Snackbar
@@ -21,7 +21,7 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
-class ArtistRegistrationFragment : UserRegistration<FragmentArtistRegistrationBinding>() {
+class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRegistrationBinding>() {
 
 	override fun setupSpecificViews() {
 		name = binding.editTextName
@@ -64,8 +64,8 @@ class ArtistRegistrationFragment : UserRegistration<FragmentArtistRegistrationBi
 	override fun inflateBinding(
 		inflater: LayoutInflater,
 		container: ViewGroup?
-	): FragmentArtistRegistrationBinding {
-		return FragmentArtistRegistrationBinding.inflate(inflater, container, false)
+	): FragmentTattooArtistRegistrationBinding {
+		return FragmentTattooArtistRegistrationBinding.inflate(inflater, container, false)
 	}
 
 	private fun nameFocusListener() {
