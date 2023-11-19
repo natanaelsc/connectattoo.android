@@ -21,6 +21,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
+import java.util.Locale
 
 class ArtistRegistrationFragment : Fragment() {
 
@@ -70,7 +71,7 @@ class ArtistRegistrationFragment : Fragment() {
         binding.btCreateAccount.setOnClickListener {
             val name = binding.editTextName.text.toString()
             val checkBox = binding.checkBox
-            var checked: Boolean = checkBox.isChecked
+            val checked: Boolean = checkBox.isChecked
 
             isValidatingDate()
             confirmPassword()
@@ -91,7 +92,7 @@ class ArtistRegistrationFragment : Fragment() {
         }
     }
 
-    private fun nameFocusListener(){
+    private fun nameFocusListener() {
         binding.editTextName.setOnFocusChangeListener{ _,focused ->
             if (!focused) isValidatName()
         }
@@ -106,7 +107,7 @@ class ArtistRegistrationFragment : Fragment() {
         }
     }
 
-    private fun validatingDate(){
+    private fun validatingDate() {
         date.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
@@ -118,11 +119,11 @@ class ArtistRegistrationFragment : Fragment() {
         })
     }
 
-    private fun isValidatingDate(){
+    private fun isValidatingDate() {
 
         val date = binding.editTextDate.text.toString()
 
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+		val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale("pt", "BR"))
         dateFormat.isLenient = false
 
         try {
@@ -158,7 +159,7 @@ class ArtistRegistrationFragment : Fragment() {
         }
     }
 
-    private fun dateMask(){
+    private fun dateMask() {
         date = binding.editTextDate
         val smf = SimpleMaskFormatter("NN/NN/NNNN")
         val mtw = MaskTextWatcher(date, smf)
@@ -192,7 +193,7 @@ class ArtistRegistrationFragment : Fragment() {
             binding.txtSpecialSymbol.setTextColor(Color.RED)
             binding.ImgCloseSpecialSymbol.visibility = View.VISIBLE
             binding.ImgCheckSpecialSymbol.visibility = View.GONE
-        } else  {
+        } else {
             hasSpecialSymbol = false
             binding.txtSpecialSymbol.setTextColor(Color.GREEN)
             binding.ImgCheckSpecialSymbol.visibility = View.VISIBLE
@@ -255,7 +256,7 @@ class ArtistRegistrationFragment : Fragment() {
         }
     }
 
-    private fun inputPassword()  {
+    private fun inputPassword() {
         password.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
@@ -267,7 +268,7 @@ class ArtistRegistrationFragment : Fragment() {
         })
     }
 
-    private fun inputPasswordconfirm()  {
+    private fun inputPasswordconfirm() {
         confirmPassword.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
@@ -279,7 +280,7 @@ class ArtistRegistrationFragment : Fragment() {
         })
     }
 
-    private fun confirmPassword(){
+    private fun confirmPassword() {
         val confirmPassword = binding.editTextConfirmPassword.text.toString()
         val password = binding.editTextPassword.text.toString()
         if (confirmPassword.isEmpty()) {
@@ -297,7 +298,7 @@ class ArtistRegistrationFragment : Fragment() {
         }
     }
 
-    private fun validateEmail(){
+    private fun validateEmail() {
         confirmEmail.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 

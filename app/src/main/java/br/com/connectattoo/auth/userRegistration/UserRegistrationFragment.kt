@@ -21,6 +21,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
+import java.util.Locale
 
 class UserRegistrationFragment : Fragment() {
 
@@ -70,7 +71,7 @@ class UserRegistrationFragment : Fragment() {
         binding.btCreateAccount.setOnClickListener {
             val name = binding.editTextName.text.toString()
             val checkBox = binding.checkBox
-            var checked: Boolean = checkBox.isChecked
+            val checked: Boolean = checkBox.isChecked
 
            	isValidatingDate()
             confirmPassword()
@@ -91,7 +92,7 @@ class UserRegistrationFragment : Fragment() {
         }
     }
 
-    private fun nameFocusListener(){
+    private fun nameFocusListener() {
         binding.editTextName.setOnFocusChangeListener{ _,focused ->
             if (!focused) isValidatName()
         }
@@ -106,7 +107,7 @@ class UserRegistrationFragment : Fragment() {
         }
     }
 
-    private fun validatingDate(){
+    private fun validatingDate() {
         date.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
@@ -118,11 +119,11 @@ class UserRegistrationFragment : Fragment() {
         })
     }
 
-    private fun isValidatingDate(){
+    private fun isValidatingDate() {
 
         val date = binding.editTextDate.text.toString()
 
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale("pt", "BR"))
         dateFormat.isLenient = false
 
         try {
@@ -158,7 +159,7 @@ class UserRegistrationFragment : Fragment() {
         }
     }
 
-    private fun dateMask(){
+    private fun dateMask() {
         date = binding.editTextDate
         val SimpleMaskFormatter = SimpleMaskFormatter("NN/NN/NNNN")
         val MaskTextWatcher = MaskTextWatcher(date, SimpleMaskFormatter)
@@ -214,7 +215,7 @@ class UserRegistrationFragment : Fragment() {
             binding.ImgCloseCapitalLetter.visibility = View.GONE
         }
 
-        if(!password.matches(".*[a-z].*".toRegex())) {
+        if (!password.matches(".*[a-z].*".toRegex())) {
             hasLow = true
             binding.txtpasswordNotCharacteristics.visibility = View.VISIBLE
             binding.linearLayout.visibility = View.VISIBLE
@@ -279,7 +280,7 @@ class UserRegistrationFragment : Fragment() {
         })
     }
 
-    private fun confirmPassword(){
+    private fun confirmPassword() {
         val  confirmPassword = binding.editTextConfirmPassword.text.toString()
         val password = binding.editTextPassword.text.toString()
         if (confirmPassword.isEmpty()){
