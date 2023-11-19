@@ -82,18 +82,16 @@ class TattooClientRegistrationFragment : UserRegistration<FragmentTattooClientRe
 			binding.editTextName.setBackgroundResource(R.drawable.bg_edit_input_valid)
 		}
 	}
-
-	private fun validatingDate() {
-		birthDay.addTextChangedListener(object : TextWatcher{
-			override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-			override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-				isValidatingDate()
-			}
-
-			override fun afterTextChanged(s: Editable?) { }
-		})
-	}
+    
+    private fun validatingDate() {
+        birthDay.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                isValidatingDate()
+            }
+            override fun afterTextChanged(s: Editable?) { }
+        })
+    }
 
 	private fun isValidatingDate() {
 
