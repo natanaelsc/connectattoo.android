@@ -2,17 +2,15 @@ package br.com.connectattoo.auth.artistRegistration
 
 import android.annotation.SuppressLint
 import android.graphics.Color
-import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Patterns
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import androidx.navigation.fragment.findNavController
 import br.com.connectattoo.R
+import br.com.connectattoo.auth.UserRegistration
 import br.com.connectattoo.databinding.FragmentArtistRegistrationBinding
 import com.github.rtoshiro.util.format.SimpleMaskFormatter
 import com.github.rtoshiro.util.format.text.MaskTextWatcher
@@ -23,76 +21,54 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
-class ArtistRegistrationFragment : Fragment() {
+class ArtistRegistrationFragment : UserRegistration<FragmentArtistRegistrationBinding>() {
 
-    private var _binding: FragmentArtistRegistrationBinding? = null
-    private val binding get() = _binding!!
+	override fun setupSpecificViews() {
+		name = binding.editTextName
+		email = binding.editTextEmail
+		password = binding.editTextPassword
+		confirmPassword = binding.editTextConfirmPassword
+		birthDay = binding.editTextDate
 
-    private lateinit var password : EditText
-    private lateinit var confirmPassword : EditText
-    private lateinit var date : EditText
-    private lateinit var confirmEmail : EditText
-    private lateinit var name : EditText
+		inputPassword()
+		inputPasswordconfirm()
+		dateMask()
+		validateEmail()
+		validatingDate()
+		nameFocusListener()
 
-    private var isChar = false
-    private var hasUpper = false
-    private var hasLow = false
-    private var hasNum = false
-    private var hasSpecialSymbol = false
-    private var incorrectConfirmPassword = true
-    private var correctPassword = false
-    private var incorrectDate = false
-    private var incorrectEmail = true
+		binding.btCreateAccount.setOnClickListener {
+			val name = binding.editTextName.text.toString()
+			val checkBox = binding.checkBox
+			val checked: Boolean = checkBox.isChecked
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentArtistRegistrationBinding.inflate(inflater,container, false)
-        return binding.root
-    }
+			isValidatingDate()
+			confirmPassword()
+			isEmailValid()
+			validPassword()
+			isValidatName()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+			if (name.isEmpty() ||  (incorrectEmail == true)  || (correctPassword == false ) ||  (checked == false) || (incorrectConfirmPassword == true) || (incorrectDate == true)) {
+				val snackBar = Snackbar.make(it, "Todos os campos devem ser preenchidos!", Snackbar.LENGTH_SHORT)
+				snackBar.setTextColor(Color.WHITE)
+				snackBar.setBackgroundTint(Color.RED)
+				snackBar.show()
+			}
+		}
 
-        password = binding.editTextPassword
-        confirmPassword = binding.editTextConfirmPassword
-        confirmEmail = binding.editTextEmail
-        date = binding.editTextDate
-        name = binding.editTextName
+		binding.btCancel.setOnClickListener {
+			findNavController().navigate(R.id.action_artistRegistrationFragment_to_welcomeFragment)
+		}
+	}
 
-        inputPassword()
-        inputPasswordconfirm()
-        dateMask()
-        validateEmail()
-        validatingDate()
-        nameFocusListener()
+	override fun inflateBinding(
+		inflater: LayoutInflater,
+		container: ViewGroup?
+	): FragmentArtistRegistrationBinding {
+		return FragmentArtistRegistrationBinding.inflate(inflater, container, false)
+	}
 
-        binding.btCreateAccount.setOnClickListener {
-            val name = binding.editTextName.text.toString()
-            val checkBox = binding.checkBox
-            val checked: Boolean = checkBox.isChecked
-
-            isValidatingDate()
-            confirmPassword()
-            isEmailValid()
-            validPassword()
-            isValidatName()
-
-            if (name.isEmpty() ||  (incorrectEmail == true)  || (correctPassword == false ) ||  (checked == false) || (incorrectConfirmPassword == true) || (incorrectDate == true)) {
-                val snackBar = Snackbar.make(it, "Todos os campos devem ser preenchidos!", Snackbar.LENGTH_SHORT)
-                snackBar.setTextColor(Color.WHITE)
-                snackBar.setBackgroundTint(Color.RED)
-                snackBar.show()
-            }
-        }
-
-        binding.btCancel.setOnClickListener {
-            findNavController().navigate(R.id.action_artistRegistrationFragment_to_welcomeFragment)
-        }
-    }
-
-    private fun nameFocusListener() {
+	private fun nameFocusListener() {
         binding.editTextName.setOnFocusChangeListener{ _,focused ->
             if (!focused) isValidatName()
         }
@@ -108,7 +84,7 @@ class ArtistRegistrationFragment : Fragment() {
     }
 
     private fun validatingDate() {
-        date.addTextChangedListener(object : TextWatcher{
+        birthDay.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -120,14 +96,13 @@ class ArtistRegistrationFragment : Fragment() {
     }
 
     private fun isValidatingDate() {
-
-        val date = binding.editTextDate.text.toString()
+		val birthDay = binding.editTextDate.text.toString()
 
 		val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale("pt", "BR"))
         dateFormat.isLenient = false
 
         try {
-            val parsedDate = dateFormat.parse(date)
+            val parsedDate = dateFormat.parse(birthDay)
             if (parsedDate != null) {
                 val currentDate = Date()
                 val calendar = Calendar.getInstance()
@@ -159,11 +134,12 @@ class ArtistRegistrationFragment : Fragment() {
         }
     }
 
+    @SuppressLint("SuspiciousIndentation")
     private fun dateMask() {
-        date = binding.editTextDate
+        birthDay = binding.editTextDate
         val smf = SimpleMaskFormatter("NN/NN/NNNN")
-        val mtw = MaskTextWatcher(date, smf)
-        date.addTextChangedListener(mtw)
+        val mtw = MaskTextWatcher(birthDay, smf)
+		birthDay.addTextChangedListener(mtw)
     }
 
     @SuppressLint("SuspiciousIndentation")
@@ -299,7 +275,7 @@ class ArtistRegistrationFragment : Fragment() {
     }
 
     private fun validateEmail() {
-        confirmEmail.addTextChangedListener(object : TextWatcher{
+        email.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -313,21 +289,15 @@ class ArtistRegistrationFragment : Fragment() {
     fun isEmailValid() {
         val email = binding.editTextEmail.text.toString()
 
-        if (email.isEmpty()) {
-            binding.editTextEmail.setBackgroundResource(R.drawable.bg_edit_input_invalid)
-            incorrectEmail = true
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            binding.editTextEmail.setBackgroundResource(R.drawable.bg_edit_input_invalid)
-            incorrectEmail = true
-        } else {
-            binding.editTextEmail.setBackgroundResource(R.drawable.bg_edit_input_valid)
-            incorrectEmail = false
-        }
+		incorrectEmail = if (email.isEmpty()) {
+			binding.editTextEmail.setBackgroundResource(R.drawable.bg_edit_input_invalid)
+			true
+		} else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+			binding.editTextEmail.setBackgroundResource(R.drawable.bg_edit_input_invalid)
+			true
+		} else {
+			binding.editTextEmail.setBackgroundResource(R.drawable.bg_edit_input_valid)
+			false
+		}
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-    }
-
 }
