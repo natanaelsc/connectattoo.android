@@ -1,6 +1,5 @@
 package br.com.connectattoo.auth.userRegistration
 
-import android.annotation.SuppressLint
 import android.graphics.Color
 import android.text.Editable
 import android.text.TextWatcher
@@ -138,7 +137,6 @@ class TattooClientRegistrationFragment : UserRegistration<FragmentTattooClientRe
 		birthDay.addTextChangedListener(mtw)
 	}
 
-	@SuppressLint("SuspiciousIndentation")
 	private fun validPassword() {
 		val password = password.text.toString()
 		if (password.length <8) {

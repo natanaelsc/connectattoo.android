@@ -1,6 +1,5 @@
 package br.com.connectattoo.auth.artistRegistration
 
-import android.annotation.SuppressLint
 import android.graphics.Color
 import android.text.Editable
 import android.text.TextWatcher
@@ -131,7 +130,6 @@ class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRe
         }
     }
 
-    @SuppressLint("SuspiciousIndentation")
     private fun dateMask() {
         birthDay = binding.editTextDate
         val smf = SimpleMaskFormatter("NN/NN/NNNN")
@@ -139,7 +137,6 @@ class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRe
 		birthDay.addTextChangedListener(mtw)
     }
 
-    @SuppressLint("SuspiciousIndentation")
     private fun validPassword() {
         val password = password.text.toString()
         if (password.length <8) {
