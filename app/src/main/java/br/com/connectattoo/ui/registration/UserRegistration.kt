@@ -26,6 +26,10 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
 	protected var incorrectDate = false
 	protected var incorrectEmail = true
 
+    private fun isNameValid(name: String): Boolean {
+        return name.isNotEmpty()
+    }
+
     protected fun isEmailValid(email: String): Boolean {
         return email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
