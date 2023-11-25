@@ -1,14 +1,19 @@
 package br.com.connectattoo.ui.registration
 
+import android.graphics.Color
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Patterns
+import android.view.View
+import android.widget.CheckBox
 import android.widget.EditText
+import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
 import br.com.connectattoo.R
 import br.com.connectattoo.ui.BaseFragment
 import com.github.rtoshiro.util.format.SimpleMaskFormatter
 import com.github.rtoshiro.util.format.text.MaskTextWatcher
+import com.google.android.material.snackbar.Snackbar
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -22,6 +27,10 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
     protected lateinit var password : EditText
     protected lateinit var confirmPassword : EditText
     protected lateinit var birthDay : EditText
+    protected lateinit var terms : CheckBox
+
+    protected lateinit var btnCreateAccount : View
+    protected lateinit var btnCancel : View
 
 	protected var isChar = false
 	protected var hasUpper = false
@@ -30,10 +39,32 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
 	protected var hasSpecialSymbol = false
 	protected var incorrectConfirmPassword = true
 	protected var correctPassword = false
-	protected var incorrectDate = false
-	protected var incorrectEmail = true
+    private var incorrectDate = false
+    private var incorrectEmail = true
 
-    protected fun validateName() {
+    abstract fun setupSpecificViews()
+
+    override fun setupViews() {
+        setupSpecificViews()
+
+        name.setOnFocusChangeListener{ _, focused ->
+            if (!focused) validateName()
+        }
+
+        dateMask()
+
+        onTextChanged(email) { validateEmail() }
+
+        onTextChanged(password) { validatePassword() }
+
+        onTextChanged(confirmPassword) { validateConfirmPassword() }
+
+        onTextChanged(birthDay) { validateBirthDay() }
+
+        btnCreateAccount()
+    }
+
+    private fun validateName() {
         val name = this.name.text.toString()
         if (this.isNameValid(name)) {
             this.setBackgroundValid(this.name)
@@ -42,9 +73,9 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
         }
     }
 
-    protected fun validateEmail() {
+    private fun validateEmail() {
         val email = this.email.text.toString()
-        if (this.isEmailValid(email)) {
+        if (isEmailValid(email)) {
             this.incorrectEmail = false
             this.setBackgroundValid(this.email)
         } else {
@@ -53,7 +84,11 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
         }
     }
 
-    protected fun validateBirthDay() {
+    abstract fun validatePassword()
+
+    abstract fun validateConfirmPassword()
+
+    private fun validateBirthDay() {
         val birthDay = this.birthDay.text.toString()
         val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale("pt", "BR"))
         dateFormat.isLenient = false
@@ -86,40 +121,59 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
         }
     }
 
-    protected fun dateMask() {
+    private fun dateMask() {
         val simpleMaskFormatter = SimpleMaskFormatter("NN/NN/NNNN")
-        val maskTextWatcher = MaskTextWatcher(birthDay, simpleMaskFormatter)
-        birthDay.addTextChangedListener(maskTextWatcher)
+        val maskTextWatcher = MaskTextWatcher(this.birthDay, simpleMaskFormatter)
+        this.birthDay.addTextChangedListener(maskTextWatcher)
     }
 
-    protected fun isNameValid(name: String): Boolean {
+    private fun isNameValid(name: String): Boolean {
         return name.isNotEmpty()
     }
 
-    protected fun isEmailValid(email: String): Boolean {
+    private fun isEmailValid(email: String): Boolean {
         return email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
-    protected fun isPasswordValid(password : String): Boolean {
+    protected fun isPasswordValid(password: String): Boolean {
         return password.isNotEmpty() && password.length >= MIN_PASSWORD_LENGTH
     }
 
-    protected fun setBackgroundInvalid(editText : EditText) {
+    protected fun setBackgroundInvalid(editText: EditText) {
         editText.setBackgroundResource(R.drawable.bg_edit_input_invalid)
     }
 
-    protected fun setBackgroundValid(editText : EditText) {
+    protected fun setBackgroundValid(editText: EditText) {
         editText.setBackgroundResource(R.drawable.bg_edit_input_valid)
     }
 
-    protected fun onTextChanged(editText : EditText, function : () -> Unit) {
+    private fun onTextChanged(editText: EditText, function : () -> Unit) {
         editText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { return }
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 function()
             }
-            override fun afterTextChanged(s: Editable?) {}
+            override fun afterTextChanged(s: Editable?) { return }
         })
+    }
+
+    private fun btnCreateAccount() {
+        this.btnCreateAccount.setOnClickListener {
+            val name = this.name.text.toString()
+            val termsChecked = this.terms.isChecked
+            if (name.isEmpty() || incorrectEmail || !correctPassword || !termsChecked || incorrectConfirmPassword || incorrectDate) {
+                val snackBar = Snackbar.make(it, "Todos os campos devem ser preenchidos!", Snackbar.LENGTH_SHORT)
+                snackBar.setTextColor(Color.WHITE)
+                snackBar.setBackgroundTint(Color.RED)
+                snackBar.show()
+            }
+        }
+    }
+
+    protected fun btnCancel(action : Int) {
+        this.btnCancel.setOnClickListener {
+            findNavController().navigate(action)
+        }
     }
 
     companion object {

@@ -1,144 +1,38 @@
 package br.com.connectattoo.ui.registration
 
 import android.graphics.Color
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
 import br.com.connectattoo.R
 import br.com.connectattoo.databinding.FragmentTattooArtistRegistrationBinding
-import com.github.rtoshiro.util.format.SimpleMaskFormatter
-import com.github.rtoshiro.util.format.text.MaskTextWatcher
-import com.google.android.material.snackbar.Snackbar
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Date
-import java.util.Locale
 
 class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRegistrationBinding>() {
 
-	override fun setupViews() {
+    override fun inflateBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentTattooArtistRegistrationBinding {
+        return FragmentTattooArtistRegistrationBinding.inflate(inflater, container, false)
+    }
+
+	override fun setupSpecificViews() {
 		name = binding.editTextName
 		email = binding.editTextEmail
 		password = binding.editTextPassword
 		confirmPassword = binding.editTextConfirmPassword
 		birthDay = binding.editTextDate
+        terms = binding.checkBox
 
-		inputPassword()
-		inputPasswordconfirm()
-		dateMask()
-		validateEmail()
-		validatingDate()
-		nameFocusListener()
+        btnCreateAccount = binding.btCreateAccount
+        btnCancel = binding.btCancel
 
-		binding.btCreateAccount.setOnClickListener {
-			val name = binding.editTextName.text.toString()
-			val checkBox = binding.checkBox
-			val checked: Boolean = checkBox.isChecked
-
-			isValidatingDate()
-			confirmPassword()
-			isEmailValid()
-			validPassword()
-			isValidatName()
-
-			if (name.isEmpty() ||  (incorrectEmail == true)  || (correctPassword == false ) ||  (checked == false) || (incorrectConfirmPassword == true) || (incorrectDate == true)) {
-				val snackBar = Snackbar.make(it, "Todos os campos devem ser preenchidos!", Snackbar.LENGTH_SHORT)
-				snackBar.setTextColor(Color.WHITE)
-				snackBar.setBackgroundTint(Color.RED)
-				snackBar.show()
-			}
-		}
-
-		binding.btCancel.setOnClickListener {
-			findNavController().navigate(R.id.action_artistRegistrationFragment_to_welcomeFragment)
-		}
+        btnCancel(R.id.action_artistRegistrationFragment_to_welcomeFragment)
 	}
 
-    override fun inflateBinding(
-		inflater: LayoutInflater,
-		container: ViewGroup?
-	): FragmentTattooArtistRegistrationBinding {
-		return FragmentTattooArtistRegistrationBinding.inflate(inflater, container, false)
-	}
-
-	private fun nameFocusListener() {
-        binding.editTextName.setOnFocusChangeListener{ _,focused ->
-            if (!focused) isValidatName()
-        }
-    }
-
-    private fun isValidatName() {
-        val name = binding.editTextName.text.toString()
-        if (name.isEmpty()){
-            binding.editTextName.setBackgroundResource(R.drawable.bg_edit_input_invalid)
-        } else {
-            binding.editTextName.setBackgroundResource(R.drawable.bg_edit_input_valid)
-        }
-    }
-
-    private fun validatingDate() {
-        birthDay.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                isValidatingDate()
-            }
-            override fun afterTextChanged(s: Editable?) { }
-        })
-    }
-
-    private fun isValidatingDate() {
-		val birthDay = binding.editTextDate.text.toString()
-		val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale("pt", "BR"))
-        dateFormat.isLenient = false
-
-        try {
-            val parsedDate = dateFormat.parse(birthDay)
-            if (parsedDate != null) {
-                val currentDate = Date()
-                val calendar = Calendar.getInstance()
-                calendar.time = parsedDate
-                val year = calendar[Calendar.YEAR]
-
-                if (year >= 1000 && year <= (year + 1900)) {
-                    binding.txtInforErrorDate.visibility = View.GONE
-                    incorrectDate = false
-                    binding.editTextDate.setBackgroundResource(R.drawable.bg_edit_input_valid)
-                } else {
-                    throw ParseException("", 0)
-                }
-
-                if (!parsedDate.after(currentDate)) {
-                    binding.txtInforErrorDate.visibility = View.GONE
-                    incorrectDate = false
-                    binding.editTextDate.setBackgroundResource(R.drawable.bg_edit_input_valid)
-                } else {
-                    binding.txtInforErrorDate.visibility = View.VISIBLE
-                    incorrectDate = true
-                    binding.editTextDate.setBackgroundResource(R.drawable.bg_edit_input_invalid)
-                }
-            }
-        } catch (e: ParseException) {
-            binding.txtInforErrorDate.visibility = View.VISIBLE
-            incorrectDate = true
-            binding.editTextDate.setBackgroundResource(R.drawable.bg_edit_input_invalid)
-        }
-    }
-
-    private fun dateMask() {
-        birthDay = binding.editTextDate
-        val smf = SimpleMaskFormatter("NN/NN/NNNN")
-        val mtw = MaskTextWatcher(birthDay, smf)
-		birthDay.addTextChangedListener(mtw)
-    }
-
-    private fun validPassword() {
+    override fun validatePassword() {
         val password = password.text.toString()
-        if (password.length <8) {
+        if (!isPasswordValid(password)) {
             isChar = true
             binding.txtConditionsPassword.visibility = View.VISIBLE
             binding.txtpasswordNotCharacteristics.visibility = View.VISIBLE
@@ -154,7 +48,7 @@ class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRe
             binding.ImgCloseMinimumCharacters.visibility = View.GONE
         }
 
-        if (!password.matches(Regex("^(?=.*[_.*=!%()$&@+-/]).*$"))) {
+        if (!password.matches(HAS_SPECIAL_SYMBOL.toRegex())) {
             hasSpecialSymbol = true
             binding.txtpasswordNotCharacteristics.visibility = View.VISIBLE
             binding.linearLayout.visibility = View.VISIBLE
@@ -169,7 +63,7 @@ class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRe
             binding.ImgCloseSpecialSymbol.visibility = View.GONE
         }
 
-        if (!password.matches(".*[A-Z].*".toRegex())) {
+        if (!password.matches(HAS_UPPER_CASE.toRegex())) {
             hasUpper = true
             binding.txtpasswordNotCharacteristics.visibility = View.VISIBLE
             binding.linearLayout.visibility = View.VISIBLE
@@ -184,7 +78,7 @@ class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRe
             binding.ImgCloseCapitalLetter.visibility = View.GONE
         }
 
-        if (!password.matches(".*[a-z].*".toRegex())) {
+        if (!password.matches(HAS_LOWER_CASE.toRegex())) {
             hasLow = true
             binding.txtpasswordNotCharacteristics.visibility = View.VISIBLE
             binding.linearLayout.visibility = View.VISIBLE
@@ -199,7 +93,7 @@ class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRe
             binding.ImgCloseLowerCase.visibility = View.GONE
         }
 
-        if (!password.matches(".*[0-9].*".toRegex())) {
+        if (!password.matches(HAS_NUMBER.toRegex())) {
             hasNum = true
             binding.txtpasswordNotCharacteristics.visibility = View.VISIBLE
             binding.linearLayout.visibility = View.VISIBLE
@@ -214,83 +108,32 @@ class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRe
             binding.ImgCheckNumber.visibility = View.VISIBLE
         }
 
-        if (isChar == false &&  hasNum == false && hasSpecialSymbol == false && hasUpper == false && hasLow == false ) {
+        if (!isChar && !hasNum && !hasSpecialSymbol && !hasUpper && !hasLow) {
             binding.txtpasswordNotCharacteristics.visibility = View.GONE
             binding.linearLayout.visibility = View.GONE
             binding.txtpasswordFeature.visibility = View.VISIBLE
             correctPassword = true
-            binding.editTextPassword.setBackgroundResource(R.drawable.bg_edit_input_valid)
+            setBackgroundValid(binding.editTextPassword)
         } else {
-            binding.editTextPassword.setBackgroundResource(R.drawable.bg_edit_input_invalid)
+            setBackgroundInvalid(binding.editTextPassword)
         }
     }
 
-    private fun inputPassword() {
-        password.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                validPassword()
-            }
-
-            override fun afterTextChanged(s: Editable?) {}
-        })
-    }
-
-    private fun inputPasswordconfirm() {
-        confirmPassword.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                confirmPassword()
-            }
-
-            override fun afterTextChanged(s: Editable?) { }
-        })
-    }
-
-    private fun confirmPassword() {
+    override fun validateConfirmPassword() {
         val confirmPassword = binding.editTextConfirmPassword.text.toString()
         val password = binding.editTextPassword.text.toString()
-        if (confirmPassword.isEmpty()) {
+        if (!isPasswordValid(confirmPassword)) {
             incorrectConfirmPassword = true
             binding.txtconfirmPasswordError.visibility = View.GONE
-            binding.editTextConfirmPassword.setBackgroundResource(R.drawable.bg_edit_input_invalid)
+            setBackgroundInvalid(binding.editTextConfirmPassword)
         } else if (password != confirmPassword) {
             incorrectConfirmPassword = true
             binding.txtconfirmPasswordError.visibility = View.VISIBLE
-            binding.editTextConfirmPassword.setBackgroundResource(R.drawable.bg_edit_input_invalid)
+            setBackgroundInvalid(binding.editTextConfirmPassword)
         } else {
             incorrectConfirmPassword = false
             binding.txtconfirmPasswordError.visibility = View.GONE
-            binding.editTextConfirmPassword.setBackgroundResource(R.drawable.bg_edit_input_valid)
+            setBackgroundValid(binding.editTextConfirmPassword)
         }
-    }
-
-    private fun validateEmail() {
-        email.addTextChangedListener(object : TextWatcher{
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                isEmailValid()
-            }
-
-            override fun afterTextChanged(s: Editable?) { }
-        })
-    }
-
-    fun isEmailValid() {
-        val email = binding.editTextEmail.text.toString()
-
-		incorrectEmail = if (email.isEmpty()) {
-			binding.editTextEmail.setBackgroundResource(R.drawable.bg_edit_input_invalid)
-			true
-		} else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-			binding.editTextEmail.setBackgroundResource(R.drawable.bg_edit_input_invalid)
-			true
-		} else {
-			binding.editTextEmail.setBackgroundResource(R.drawable.bg_edit_input_valid)
-			false
-		}
     }
 }
