@@ -35,6 +35,17 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
         }
     }
 
+    protected fun validateEmail() {
+        val email = this.email.text.toString()
+        if (this.isEmailValid(email)) {
+            this.incorrectEmail = false
+            this.setBackgroundValid(this.email)
+        } else {
+            this.incorrectEmail = true
+            this.setBackgroundInvalid(this.email)
+        }
+    }
+
     protected fun isNameValid(name: String): Boolean {
         return name.isNotEmpty()
     }
