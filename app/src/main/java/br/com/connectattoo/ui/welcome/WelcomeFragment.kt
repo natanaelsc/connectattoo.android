@@ -1,33 +1,15 @@
 package br.com.connectattoo.ui.welcome
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import br.com.connectattoo.R
+import br.com.connectattoo.ui.BaseFragment
 import br.com.connectattoo.databinding.FragmentWelcomeBinding
 
-class WelcomeFragment : Fragment() {
+class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
 
-    private var _binding: FragmentWelcomeBinding? = null
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentWelcomeBinding.inflate(inflater,container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initListeners()
-    }
-
-    private fun initListeners(){
+    override fun setupViews() {
         binding.cardArtist.setOnClickListener {
             findNavController().navigate(R.id.action_welcomeFragment_to_artistRegistrationFragment)
         }
@@ -36,8 +18,10 @@ class WelcomeFragment : Fragment() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
+    override fun inflateBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentWelcomeBinding {
+        return FragmentWelcomeBinding.inflate(inflater, container, false)
     }
 }
