@@ -21,7 +21,7 @@ import java.util.Locale
 
 class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRegistrationBinding>() {
 
-	override fun setupSpecificViews() {
+	override fun setupViews() {
 		name = binding.editTextName
 		email = binding.editTextEmail
 		password = binding.editTextPassword
@@ -58,10 +58,6 @@ class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRe
 			findNavController().navigate(R.id.action_artistRegistrationFragment_to_welcomeFragment)
 		}
 	}
-
-    override fun setupViews() {
-        TODO("Not yet implemented")
-    }
 
     override fun inflateBinding(
 		inflater: LayoutInflater,

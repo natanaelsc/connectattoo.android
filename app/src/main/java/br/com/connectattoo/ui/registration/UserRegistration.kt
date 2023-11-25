@@ -26,6 +26,4 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
 	protected var correctPassword = false
 	protected var incorrectDate = false
 	protected var incorrectEmail = true
-
-    protected abstract fun setupSpecificViews()
 }
