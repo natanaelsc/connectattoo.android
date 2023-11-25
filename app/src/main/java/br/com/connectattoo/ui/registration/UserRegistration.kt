@@ -26,7 +26,16 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
 	protected var incorrectDate = false
 	protected var incorrectEmail = true
 
-    private fun isNameValid(name: String): Boolean {
+    protected fun validateName() {
+        val name = this.name.text.toString()
+        if (this.isNameValid(name)) {
+            this.setBackgroundValid(this.name)
+        } else {
+            this.setBackgroundInvalid(this.name)
+        }
+    }
+
+    protected fun isNameValid(name: String): Boolean {
         return name.isNotEmpty()
     }
 
