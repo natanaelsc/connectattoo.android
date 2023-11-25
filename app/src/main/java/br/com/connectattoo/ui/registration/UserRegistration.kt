@@ -7,6 +7,11 @@ import android.widget.EditText
 import androidx.viewbinding.ViewBinding
 import br.com.connectattoo.R
 import br.com.connectattoo.ui.BaseFragment
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
 
@@ -43,6 +48,39 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
         } else {
             this.incorrectEmail = true
             this.setBackgroundInvalid(this.email)
+        }
+    }
+
+    protected fun validateBirthDay() {
+        val birthDay = this.birthDay.text.toString()
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale("pt", "BR"))
+        dateFormat.isLenient = false
+        try {
+            val parsedDate = dateFormat.parse(birthDay)
+            if (parsedDate != null) {
+                val currentDate = Date()
+                val calendar = Calendar.getInstance()
+                calendar.time = parsedDate
+                val year = calendar[Calendar.YEAR]
+
+                if (year >= 1923 && year <= (year + 100)) {
+                    this.incorrectDate = false
+                    this.setBackgroundValid(this.birthDay)
+                } else {
+                    throw ParseException("", 0)
+                }
+
+                if (!parsedDate.after(currentDate)) {
+                    this.incorrectDate = false
+                    this.setBackgroundValid(this.birthDay)
+                } else {
+                    this.incorrectDate = true
+                    this.setBackgroundInvalid(this.birthDay)
+                }
+            }
+        } catch (e: ParseException) {
+            this.incorrectDate = true
+            this.setBackgroundInvalid(this.birthDay)
         }
     }
 
