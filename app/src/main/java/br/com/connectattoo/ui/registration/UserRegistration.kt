@@ -2,6 +2,7 @@ package br.com.connectattoo.ui.registration
 
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Patterns
 import android.widget.EditText
 import androidx.viewbinding.ViewBinding
 import br.com.connectattoo.R
@@ -25,7 +26,11 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
 	protected var incorrectDate = false
 	protected var incorrectEmail = true
 
-    private fun isPasswordValid(password : String): Boolean {
+    protected fun isEmailValid(email: String): Boolean {
+        return email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+    protected fun isPasswordValid(password : String): Boolean {
         return password.isNotEmpty() && password.length >= MIN_PASSWORD_LENGTH
     }
 
