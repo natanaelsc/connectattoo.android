@@ -59,7 +59,11 @@ class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRe
 		}
 	}
 
-	override fun inflateBinding(
+    override fun setupViews() {
+        TODO("Not yet implemented")
+    }
+
+    override fun inflateBinding(
 		inflater: LayoutInflater,
 		container: ViewGroup?
 	): FragmentTattooArtistRegistrationBinding {

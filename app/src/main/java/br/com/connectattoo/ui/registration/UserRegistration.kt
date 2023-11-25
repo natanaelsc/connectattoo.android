@@ -7,11 +7,9 @@ import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
+import br.com.connectattoo.ui.BaseFragment
 
-abstract class UserRegistration<T: ViewBinding> : Fragment() {
-
-    private var _binding: T? = null
-    protected val binding: T get() = _binding!!
+abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
 
     protected lateinit var name : EditText
     protected lateinit var email : EditText
@@ -29,31 +27,5 @@ abstract class UserRegistration<T: ViewBinding> : Fragment() {
 	protected var incorrectDate = false
 	protected var incorrectEmail = true
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = inflateBinding(inflater, container)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    	setupViews()
-        setupSpecificViews()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    protected abstract fun inflateBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    ): T
-
     protected abstract fun setupSpecificViews()
-
-    private fun setupViews() {}
 }
