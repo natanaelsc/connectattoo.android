@@ -1,11 +1,8 @@
 package br.com.connectattoo.ui.registration
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.EditText
-import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import br.com.connectattoo.ui.BaseFragment
 
@@ -26,4 +23,14 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
 	protected var correctPassword = false
 	protected var incorrectDate = false
 	protected var incorrectEmail = true
+
+    protected fun onTextChanged(editText : EditText, function : () -> Unit) {
+        editText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                function()
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
+    }
 }
