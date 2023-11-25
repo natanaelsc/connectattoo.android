@@ -7,6 +7,8 @@ import android.widget.EditText
 import androidx.viewbinding.ViewBinding
 import br.com.connectattoo.R
 import br.com.connectattoo.ui.BaseFragment
+import com.github.rtoshiro.util.format.SimpleMaskFormatter
+import com.github.rtoshiro.util.format.text.MaskTextWatcher
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -82,6 +84,12 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
             this.incorrectDate = true
             this.setBackgroundInvalid(this.birthDay)
         }
+    }
+
+    protected fun dateMask() {
+        val simpleMaskFormatter = SimpleMaskFormatter("NN/NN/NNNN")
+        val maskTextWatcher = MaskTextWatcher(birthDay, simpleMaskFormatter)
+        birthDay.addTextChangedListener(maskTextWatcher)
     }
 
     protected fun isNameValid(name: String): Boolean {
