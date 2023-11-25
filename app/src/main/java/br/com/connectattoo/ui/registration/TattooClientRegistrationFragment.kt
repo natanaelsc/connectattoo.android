@@ -1,4 +1,4 @@
-package br.com.connectattoo.auth.userRegistration
+package br.com.connectattoo.ui.registration
 
 import android.graphics.Color
 import android.text.Editable
@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import br.com.connectattoo.R
-import br.com.connectattoo.auth.UserRegistration
 import br.com.connectattoo.databinding.FragmentTattooClientRegistrationBinding
 import com.github.rtoshiro.util.format.SimpleMaskFormatter
 import com.github.rtoshiro.util.format.text.MaskTextWatcher

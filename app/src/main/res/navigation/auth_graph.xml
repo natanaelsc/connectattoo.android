@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/artistRegistrationFragment"
-        android:name="br.com.connectattoo.auth.artistRegistration.TattooArtistRegistrationFragment"
+        android:name="br.com.connectattoo.ui.registration.TattooArtistRegistrationFragment"
         android:label="fragment_artist_registration"
         tools:layout="@layout/fragment_tattoo_artist_registration" >
         <action
@@ -27,7 +27,7 @@
     </fragment>
     <fragment
         android:id="@+id/userRegistrationFragment"
-        android:name="br.com.connectattoo.auth.userRegistration.TattooClientRegistrationFragment"
+        android:name="br.com.connectattoo.ui.registration.TattooClientRegistrationFragment"
         android:label="fragment_user_registration"
         tools:layout="@layout/fragment_tattoo_client_registration" >
         <action

@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fillViewport="true"
     android:background="@color/white"
-    tools:context=".auth.artistRegistration.TattooArtistRegistrationFragment">
+    tools:context=".ui.registration.TattooArtistRegistrationFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
