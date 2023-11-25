@@ -25,6 +25,10 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
 	protected var incorrectDate = false
 	protected var incorrectEmail = true
 
+    private fun isPasswordValid(password : String): Boolean {
+        return password.isNotEmpty() && password.length >= MIN_PASSWORD_LENGTH
+    }
+
     protected fun setBackgroundInvalid(editText : EditText) {
         editText.setBackgroundResource(R.drawable.bg_edit_input_invalid)
     }
