@@ -1,4 +1,4 @@
-package br.com.connectattoo.auth.welcome
+package br.com.connectattoo.ui.welcome
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
