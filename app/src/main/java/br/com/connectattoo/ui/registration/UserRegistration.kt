@@ -4,6 +4,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
 import androidx.viewbinding.ViewBinding
+import br.com.connectattoo.R
 import br.com.connectattoo.ui.BaseFragment
 
 abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
@@ -23,6 +24,14 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
 	protected var correctPassword = false
 	protected var incorrectDate = false
 	protected var incorrectEmail = true
+
+    protected fun setBackgroundInvalid(editText : EditText) {
+        editText.setBackgroundResource(R.drawable.bg_edit_input_invalid)
+    }
+
+    protected fun setBackgroundValid(editText : EditText) {
+        editText.setBackgroundResource(R.drawable.bg_edit_input_valid)
+    }
 
     protected fun onTextChanged(editText : EditText, function : () -> Unit) {
         editText.addTextChangedListener(object : TextWatcher {
