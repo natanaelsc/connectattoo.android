@@ -26,6 +26,11 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
     protected lateinit var email : EditText
     protected lateinit var password : EditText
     protected lateinit var confirmPassword : EditText
+    protected lateinit var cep : EditText
+    protected lateinit var street : EditText
+    protected lateinit var number : EditText
+    protected lateinit var city : EditText
+    protected lateinit var state : EditText
     protected lateinit var birthDay : EditText
     protected lateinit var terms : CheckBox
 
@@ -53,11 +58,23 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
 
         dateMask()
 
+        cepMask()
+
         onTextChanged(email) { validateEmail() }
 
         onTextChanged(password) { validatePassword() }
 
         onTextChanged(confirmPassword) { validateConfirmPassword() }
+
+        onTextChanged(cep) { validateCep() }
+
+        onTextChanged(street) { validateStreet() }
+
+        onTextChanged(number) { validateNumber() }
+
+        onTextChanged(city) { validateCity() }
+
+        onTextChanged(state) { validateState() }
 
         onTextChanged(birthDay) { validateBirthDay() }
 
@@ -87,6 +104,51 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
     abstract fun validatePassword()
 
     abstract fun validateConfirmPassword()
+
+    private fun validateCep(){
+        val cep = this.cep.text.toString()
+        if(isCepValid(cep)){
+            this.setBackgroundValid(this.cep)
+        } else {
+            this.setBackgroundInvalid(this.cep)
+        }
+    }
+
+    private fun validateStreet(){
+        val street = this.street.text.toString()
+        if(isStreetValid(street)){
+            this.setBackgroundValid(this.street)
+        }else{
+            this.setBackgroundInvalid(this.street)
+        }
+    }
+
+    private fun validateNumber(){
+        val number = this.number.text.toString()
+        if(isNumberValid(number)){
+            this.setBackgroundValid(this.number)
+        }else{
+            this.setBackgroundInvalid(this.number)
+        }
+    }
+
+    private fun validateCity(){
+        val city = this.city.text.toString()
+        if(isCityValid(city)){
+            this.setBackgroundValid(this.city)
+        }else{
+            this.setBackgroundInvalid(this.city)
+        }
+    }
+
+    private fun validateState(){
+        val state = this.state.text.toString()
+        if(isStateValid(state)){
+            this.setBackgroundValid(this.state)
+        }else{
+            this.setBackgroundInvalid(this.state)
+        }
+    }
 
     private fun validateBirthDay() {
         val birthDay = this.birthDay.text.toString()
@@ -137,6 +199,59 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
 
     protected fun isPasswordValid(password: String): Boolean {
         return password.isNotEmpty() && password.length >= MIN_PASSWORD_LENGTH
+    }
+
+
+    private fun cepMask(){
+            this.cep.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+                }
+
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                    val userInput = s.toString().replace("[^\\d]".toRegex(), "") // Remover caracteres não numéricos
+
+                    // Se o texto é vazio, não faça nada
+                    if (userInput.isEmpty()) {
+                        return
+                    }
+
+                    val formattedText = when {
+                        userInput.length <= 5 -> userInput
+                        userInput.length <= 9 -> "${userInput.substring(0, 5)}-${userInput.substring(5)}"
+                        else -> "${userInput.substring(0, 5)}-${userInput.substring(5, 8)}"
+                    }
+
+                    // Evitar loop infinito
+                    if (formattedText != s.toString()) {
+                        cep.setText(formattedText)
+                        cep.setSelection(formattedText.length)
+                    }
+                }
+
+
+                override fun afterTextChanged(s: Editable?) {
+                    }
+            })
+    }
+    private fun isCepValid(cep: String): Boolean {
+        return cep.isNotEmpty()
+    }
+
+    private fun isStreetValid(street: String): Boolean{
+        return street.isNotEmpty()
+    }
+
+    private fun isNumberValid(number: String): Boolean{
+        return number.isNotEmpty()
+    }
+
+    private fun  isCityValid(city: String): Boolean{
+        return city.isNotEmpty()
+    }
+
+    private fun isStateValid(state: String): Boolean{
+        return state.isNotEmpty()
     }
 
     protected fun setBackgroundInvalid(editText: EditText) {
