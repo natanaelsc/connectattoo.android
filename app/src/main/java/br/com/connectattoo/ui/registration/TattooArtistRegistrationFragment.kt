@@ -21,6 +21,11 @@ class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRe
 		email = binding.editTextEmail
 		password = binding.editTextPassword
 		confirmPassword = binding.editTextConfirmPassword
+        cep = binding.editTextCep
+        street = binding.editTextStreet
+        number = binding.editTextNumber
+        city = binding.editTextCity
+        state = binding.editTextState
 		birthDay = binding.editTextDate
         terms = binding.checkBox
 
