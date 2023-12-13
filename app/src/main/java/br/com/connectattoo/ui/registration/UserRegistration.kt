@@ -56,7 +56,7 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
             if (!focused) validateName()
         }
 
-        dateMask()
+        mask(this.birthDay, "NN/NN/NNNN")
 
         onTextChanged(email) { validateEmail() }
 
@@ -181,10 +181,11 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
         }
     }
 
-    private fun dateMask() {
-        val simpleMaskFormatter = SimpleMaskFormatter("NN/NN/NNNN")
-        val maskTextWatcher = MaskTextWatcher(this.birthDay, simpleMaskFormatter)
-        this.birthDay.addTextChangedListener(maskTextWatcher)
+    private fun mask(editText: EditText, mask: String) {
+        val simpleMaskFormatter = SimpleMaskFormatter(mask)
+        val maskTextWatcher = MaskTextWatcher(editText, simpleMaskFormatter)
+
+        editText.addTextChangedListener(maskTextWatcher)
     }
 
     private fun isNameValid(name: String): Boolean {
