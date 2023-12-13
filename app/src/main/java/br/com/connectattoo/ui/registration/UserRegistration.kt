@@ -121,7 +121,7 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
         }
     }
 
-    private fun mask(editText: EditText, mask: String) {
+    protected fun mask(editText: EditText, mask: String) {
         val simpleMaskFormatter = SimpleMaskFormatter(mask)
         val maskTextWatcher = MaskTextWatcher(editText, simpleMaskFormatter)
 
