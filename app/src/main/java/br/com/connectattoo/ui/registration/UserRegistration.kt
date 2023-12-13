@@ -26,11 +26,6 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
     protected lateinit var email : EditText
     protected lateinit var password : EditText
     protected lateinit var confirmPassword : EditText
-    protected lateinit var cep : EditText
-    protected lateinit var street : EditText
-    protected lateinit var number : EditText
-    protected lateinit var city : EditText
-    protected lateinit var state : EditText
     protected lateinit var birthDay : EditText
     protected lateinit var terms : CheckBox
 
