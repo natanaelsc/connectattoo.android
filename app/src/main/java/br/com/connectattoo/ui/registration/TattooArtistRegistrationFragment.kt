@@ -4,11 +4,17 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import br.com.connectattoo.R
 import br.com.connectattoo.databinding.FragmentTattooArtistRegistrationBinding
 
 class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRegistrationBinding>() {
 
+    protected lateinit var cep : EditText
+    protected lateinit var street : EditText
+    protected lateinit var number : EditText
+    protected lateinit var city : EditText
+    protected lateinit var state : EditText
     override fun inflateBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -33,6 +39,8 @@ class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRe
         btnCancel = binding.btCancel
 
         btnCancel(R.id.action_artistRegistrationFragment_to_welcomeFragment)
+
+        onTextCh
 	}
 
     override fun validatePassword() {
