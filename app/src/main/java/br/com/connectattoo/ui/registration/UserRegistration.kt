@@ -64,16 +64,6 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
 
         onTextChanged(confirmPassword) { validateConfirmPassword() }
 
-        onTextChanged(cep) { validateCep() }
-
-        onTextChanged(street) { validateStreet() }
-
-        onTextChanged(number) { validateNumber() }
-
-        onTextChanged(city) { validateCity() }
-
-        onTextChanged(state) { validateState() }
-
         onTextChanged(birthDay) { validateBirthDay() }
 
         btnCreateAccount()
