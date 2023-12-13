@@ -148,7 +148,7 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
         editText.setBackgroundResource(R.drawable.bg_edit_input_valid)
     }
 
-    private fun onTextChanged(editText: EditText, function : () -> Unit) {
+    protected fun onTextChanged(editText: EditText, function : () -> Unit) {
         editText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { return }
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
