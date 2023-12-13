@@ -40,7 +40,7 @@ class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRe
 
         btnCancel(R.id.action_artistRegistrationFragment_to_welcomeFragment)
 
-        onTextCh
+
 	}
 
     override fun validatePassword() {
@@ -149,4 +149,70 @@ class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRe
             setBackgroundValid(binding.editTextConfirmPassword)
         }
     }
+
+    private fun validateCep(){
+        val cep = this.cep.text.toString()
+        if(isCepValid(cep)){
+            this.setBackgroundValid(this.cep)
+        } else {
+            this.setBackgroundInvalid(this.cep)
+        }
+    }
+
+    private fun validateStreet(){
+        val street = this.street.text.toString()
+        if(isStreetValid(street)){
+            this.setBackgroundValid(this.street)
+        }else{
+            this.setBackgroundInvalid(this.street)
+        }
+    }
+
+    private fun validateNumber(){
+        val number = this.number.text.toString()
+        if(isNumberValid(number)){
+            this.setBackgroundValid(this.number)
+        }else{
+            this.setBackgroundInvalid(this.number)
+        }
+    }
+
+    private fun validateCity(){
+        val city = this.city.text.toString()
+        if(isCityValid(city)){
+            this.setBackgroundValid(this.city)
+        }else{
+            this.setBackgroundInvalid(this.city)
+        }
+    }
+
+    private fun validateState(){
+        val state = this.state.text.toString()
+        if(isStateValid(state)){
+            this.setBackgroundValid(this.state)
+        }else{
+            this.setBackgroundInvalid(this.state)
+        }
+    }
+
+    private fun isCepValid(cep: String): Boolean {
+        return cep.isNotEmpty()
+    }
+
+    private fun isStreetValid(street: String): Boolean{
+        return street.isNotEmpty()
+    }
+
+    private fun isNumberValid(number: String): Boolean{
+        return number.isNotEmpty()
+    }
+
+    private fun  isCityValid(city: String): Boolean{
+        return city.isNotEmpty()
+    }
+
+    private fun isStateValid(state: String): Boolean{
+        return state.isNotEmpty()
+    }
+
 }
