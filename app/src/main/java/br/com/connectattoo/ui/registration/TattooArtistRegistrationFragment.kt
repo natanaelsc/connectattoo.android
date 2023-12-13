@@ -40,6 +40,17 @@ class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRe
 
         btnCancel(R.id.action_artistRegistrationFragment_to_welcomeFragment)
 
+        mask(this.cep,"NNNNN-NNN")
+
+        onTextChanged(cep) { validateCep() }
+
+        onTextChanged(street) { validateStreet() }
+
+        onTextChanged(number) { validateNumber() }
+
+        onTextChanged(city) { validateCity() }
+
+        onTextChanged(state) { validateState() }
 
 	}
 
