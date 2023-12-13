@@ -58,8 +58,6 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
 
         dateMask()
 
-        cepMask()
-
         onTextChanged(email) { validateEmail() }
 
         onTextChanged(password) { validatePassword() }
@@ -201,39 +199,6 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
         return password.isNotEmpty() && password.length >= MIN_PASSWORD_LENGTH
     }
 
-
-    private fun cepMask(){
-            this.cep.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-                }
-
-                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                    val userInput = s.toString().replace("[^\\d]".toRegex(), "") // Remover caracteres não numéricos
-
-                    // Se o texto é vazio, não faça nada
-                    if (userInput.isEmpty()) {
-                        return
-                    }
-
-                    val formattedText = when {
-                        userInput.length <= 5 -> userInput
-                        userInput.length <= 9 -> "${userInput.substring(0, 5)}-${userInput.substring(5)}"
-                        else -> "${userInput.substring(0, 5)}-${userInput.substring(5, 8)}"
-                    }
-
-                    // Evitar loop infinito
-                    if (formattedText != s.toString()) {
-                        cep.setText(formattedText)
-                        cep.setSelection(formattedText.length)
-                    }
-                }
-
-
-                override fun afterTextChanged(s: Editable?) {
-                    }
-            })
-    }
     private fun isCepValid(cep: String): Boolean {
         return cep.isNotEmpty()
     }
