@@ -324,6 +324,114 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="CEP"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"
+                />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextCep"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Pesquisar por CEP"
+                android:background="@drawable/bg_edit_input_default"
+                android:layout_marginTop="4dp"
+                android:padding="15dp"
+                android:inputType="number"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Rua"
+                    android:textStyle="bold"
+                    android:layout_marginTop="16dp"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_weight="1"
+                    android:text="Número"
+                    android:layout_marginLeft="16dp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextStreet"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Santa Catarina"
+                    android:background="@drawable/bg_edit_input_default"
+                    android:layout_marginTop="4dp"
+                    android:padding="15dp"
+                    android:layout_marginRight="16dp"
+                    android:inputType="text"/>
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextNumber"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="3223"
+                    android:background="@drawable/bg_edit_input_default"
+                    android:layout_marginTop="4dp"
+                    android:padding="15dp"
+                    android:inputType="number"/>
+
+            </LinearLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cidade"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"
+                />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="São Paulo"
+                android:background="@drawable/bg_edit_input_default"
+                android:layout_marginTop="4dp"
+                android:padding="15dp"
+                android:inputType="text"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Estado"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"
+                />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextState"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="São Paulo"
+                android:background="@drawable/bg_edit_input_default"
+                android:layout_marginTop="4dp"
+                android:padding="15dp"
+                android:inputType="text"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text="Data de Nascimento"
                 android:textStyle="bold"
                 android:layout_marginTop="16dp"
