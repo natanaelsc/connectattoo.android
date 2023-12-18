@@ -15,6 +15,7 @@ class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRe
     protected lateinit var number : EditText
     protected lateinit var city : EditText
     protected lateinit var state : EditText
+
     override fun inflateBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -209,7 +210,7 @@ class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRe
     }
 
     private fun isCepValid(cep: String): Boolean {
-        return cep.isNotEmpty()
+        return cep.isNotEmpty() && cep.length == CEP_LENGTH
     }
 
     private fun isStreetValid(street: String): Boolean {
@@ -228,4 +229,7 @@ class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRe
         return state.isNotEmpty()
     }
 
+    companion object {
+        const val CEP_LENGTH = 9
+    }
 }
