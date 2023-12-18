@@ -27,6 +27,7 @@ class TattooClientRegistrationFragment : UserRegistration<FragmentTattooClientRe
         btnCreateAccount = binding.btCreateAccount
         btnCancel = binding.btCancel
 
+        btnCreateAccount(R.id.action_userRegistrationFragment_to_confirmationFragment)
         btnCancel(R.id.action_userRegistrationFragment_to_welcomeFragment)
 	}
 

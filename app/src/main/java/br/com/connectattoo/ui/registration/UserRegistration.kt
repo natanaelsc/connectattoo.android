@@ -61,7 +61,6 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
 
         onTextChanged(birthDay) { validateBirthDay() }
 
-        btnCreateAccount()
     }
 
     private fun validateName() {
@@ -158,7 +157,7 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
         })
     }
 
-    private fun btnCreateAccount() {
+    protected fun btnCreateAccount(action : Int) {
         this.btnCreateAccount.setOnClickListener {
             val name = this.name.text.toString()
             val termsChecked = this.terms.isChecked
@@ -167,6 +166,8 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
                 snackBar.setTextColor(Color.WHITE)
                 snackBar.setBackgroundTint(Color.RED)
                 snackBar.show()
+            } else {
+                findNavController().navigate(action)
             }
         }
     }

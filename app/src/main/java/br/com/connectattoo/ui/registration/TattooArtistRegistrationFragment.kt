@@ -52,7 +52,9 @@ class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRe
 
         onTextChanged(state) { validateState() }
 
-	}
+        btnCreateAccount(R.id.action_artistRegistrationFragment_to_confirmationFragment)
+
+    }
 
     override fun validatePassword() {
         val password = password.text.toString()
