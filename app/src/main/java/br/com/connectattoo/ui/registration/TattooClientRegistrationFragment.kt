@@ -4,8 +4,10 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import br.com.connectattoo.R
 import br.com.connectattoo.databinding.FragmentTattooClientRegistrationBinding
+import com.google.android.material.snackbar.Snackbar
 
 class TattooClientRegistrationFragment : UserRegistration<FragmentTattooClientRegistrationBinding>() {
 
@@ -137,4 +139,10 @@ class TattooClientRegistrationFragment : UserRegistration<FragmentTattooClientRe
             setBackgroundValid(binding.editTextConfirmPassword)
 		}
 	}
+
+    override fun conditionChecking(view: View) {
+        val name = this.name.text.toString()
+        val termsChecked = this.terms.isChecked
+        fieldsComplete = !(name.isEmpty() || incorrectEmail || !correctPassword || !termsChecked || incorrectConfirmPassword || incorrectDate)
+    }
 }

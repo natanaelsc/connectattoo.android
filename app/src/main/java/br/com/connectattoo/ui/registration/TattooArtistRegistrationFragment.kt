@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.navigation.fragment.findNavController
 import br.com.connectattoo.R
 import br.com.connectattoo.databinding.FragmentTattooArtistRegistrationBinding
+import com.google.android.material.snackbar.Snackbar
 
 class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRegistrationBinding>() {
 
@@ -15,6 +17,7 @@ class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRe
     protected lateinit var number : EditText
     protected lateinit var city : EditText
     protected lateinit var state : EditText
+
 
     override fun inflateBinding(
         inflater: LayoutInflater,
@@ -210,7 +213,7 @@ class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRe
     }
 
     private fun isCepValid(cep: String): Boolean {
-        return cep.isNotEmpty() && cep.length == CEP_LENGTH
+        return cep.isNotEmpty()
     }
 
     private fun isStreetValid(street: String): Boolean {
@@ -229,7 +232,12 @@ class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRe
         return state.isNotEmpty()
     }
 
-    companion object {
-        const val CEP_LENGTH = 9
+    override fun conditionChecking(view: View) {
+        val name = this.name.text.toString()
+        val termsChecked = this.terms.isChecked
+        fieldsComplete = !(name.isEmpty() || incorrectEmail || !correctPassword || !termsChecked || incorrectConfirmPassword || incorrectDate
+                || !isCepValid(cep.text.toString()) || !isStreetValid(street.text.toString()) || !isNumberValid(number.text.toString())
+                || !isCityValid(city.text.toString()) || !isStateValid(state.text.toString()))
     }
+
 }
