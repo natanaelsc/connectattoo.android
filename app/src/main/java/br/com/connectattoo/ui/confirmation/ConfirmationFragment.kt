@@ -21,13 +21,4 @@ class ConfirmationFragment : BaseFragment<FragmentConfirmationBinding>() {
         return FragmentConfirmationBinding.inflate(inflater, container, false)
     }
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return inflater.inflate(R.layout.fragment_confirmation, container, false)
-    }
-
-
 }
