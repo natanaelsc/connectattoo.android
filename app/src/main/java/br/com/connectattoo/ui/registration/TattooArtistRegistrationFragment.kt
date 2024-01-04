@@ -5,10 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import androidx.navigation.fragment.findNavController
 import br.com.connectattoo.R
 import br.com.connectattoo.databinding.FragmentTattooArtistRegistrationBinding
-import com.google.android.material.snackbar.Snackbar
 
 class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRegistrationBinding>() {
 

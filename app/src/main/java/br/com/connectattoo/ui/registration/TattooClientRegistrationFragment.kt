@@ -4,10 +4,8 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
 import br.com.connectattoo.R
 import br.com.connectattoo.databinding.FragmentTattooClientRegistrationBinding
-import com.google.android.material.snackbar.Snackbar
 
 class TattooClientRegistrationFragment : UserRegistration<FragmentTattooClientRegistrationBinding>() {
 
