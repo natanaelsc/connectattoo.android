@@ -3,7 +3,6 @@ package br.com.connectattoo.ui.registration
 import android.graphics.Color
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.CheckBox
