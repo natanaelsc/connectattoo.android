@@ -27,6 +27,7 @@ class TattooClientRegistrationFragment : UserRegistration<FragmentTattooClientRe
         btnCreateAccount = binding.btCreateAccount
         btnCancel = binding.btCancel
 
+        btnCreateAccount(R.id.action_userRegistrationFragment_to_confirmationFragment)
         btnCancel(R.id.action_userRegistrationFragment_to_welcomeFragment)
 	}
 
@@ -136,4 +137,10 @@ class TattooClientRegistrationFragment : UserRegistration<FragmentTattooClientRe
             setBackgroundValid(binding.editTextConfirmPassword)
 		}
 	}
+
+    override fun conditionChecking(view: View) {
+        val name = this.name.text.toString()
+        val termsChecked = this.terms.isChecked
+        fieldsComplete = !(name.isEmpty() || incorrectEmail || !correctPassword || !termsChecked || incorrectConfirmPassword || incorrectDate)
+    }
 }

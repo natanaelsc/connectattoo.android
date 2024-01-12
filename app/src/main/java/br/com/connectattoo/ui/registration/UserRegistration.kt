@@ -39,8 +39,9 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
 	protected var hasSpecialSymbol = false
 	protected var incorrectConfirmPassword = true
 	protected var correctPassword = false
-    private var incorrectDate = false
-    private var incorrectEmail = true
+    protected var incorrectDate = false
+    protected var incorrectEmail = true
+    protected var fieldsComplete = false
 
     abstract fun setupSpecificViews()
 
@@ -61,7 +62,6 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
 
         onTextChanged(birthDay) { validateBirthDay() }
 
-        btnCreateAccount()
     }
 
     private fun validateName() {
@@ -158,15 +158,19 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
         })
     }
 
-    private fun btnCreateAccount() {
+    abstract fun conditionChecking(view: View)
+
+    protected fun btnCreateAccount(action : Int) {
         this.btnCreateAccount.setOnClickListener {
-            val name = this.name.text.toString()
-            val termsChecked = this.terms.isChecked
-            if (name.isEmpty() || incorrectEmail || !correctPassword || !termsChecked || incorrectConfirmPassword || incorrectDate) {
+            conditionChecking(it)
+            if (!fieldsComplete) {
                 val snackBar = Snackbar.make(it, "Todos os campos devem ser preenchidos!", Snackbar.LENGTH_SHORT)
                 snackBar.setTextColor(Color.WHITE)
                 snackBar.setBackgroundTint(Color.RED)
                 snackBar.show()
+            } else {
+                findNavController().navigate(action)
+                fieldsComplete = false
             }
         }
     }

@@ -15,6 +15,8 @@ class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRe
     protected lateinit var number : EditText
     protected lateinit var city : EditText
     protected lateinit var state : EditText
+
+
     override fun inflateBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -52,7 +54,9 @@ class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRe
 
         onTextChanged(state) { validateState() }
 
-	}
+        btnCreateAccount(R.id.action_artistRegistrationFragment_to_confirmationFragment)
+
+    }
 
     override fun validatePassword() {
         val password = password.text.toString()
@@ -224,6 +228,14 @@ class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRe
 
     private fun isStateValid(state: String): Boolean {
         return state.isNotEmpty()
+    }
+
+    override fun conditionChecking(view: View) {
+        val name = this.name.text.toString()
+        val termsChecked = this.terms.isChecked
+        fieldsComplete = !(name.isEmpty() || incorrectEmail || !correctPassword || !termsChecked || incorrectConfirmPassword || incorrectDate
+                || !isCepValid(cep.text.toString()) || !isStreetValid(street.text.toString()) || !isNumberValid(number.text.toString())
+                || !isCityValid(city.text.toString()) || !isStateValid(state.text.toString()))
     }
 
 }
