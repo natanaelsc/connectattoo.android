@@ -1,21 +1,33 @@
 package br.com.connectattoo.ui.registration
 
 import android.graphics.Color
+import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.CheckBox
 import android.widget.EditText
+import androidx.annotation.RequiresApi
 import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
 import br.com.connectattoo.R
+import br.com.connectattoo.api.ApiService
+import br.com.connectattoo.api.ApiUrl
+import br.com.connectattoo.data.TokenData
+import br.com.connectattoo.data.UserData
 import br.com.connectattoo.ui.BaseFragment
 import com.github.rtoshiro.util.format.SimpleMaskFormatter
 import com.github.rtoshiro.util.format.text.MaskTextWatcher
 import com.google.android.material.snackbar.Snackbar
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
@@ -31,6 +43,9 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
 
     protected lateinit var btnCreateAccount : View
     protected lateinit var btnCancel : View
+
+    private val apiService = ApiUrl.instance.create(ApiService::class.java)
+    private var token: String = ""
 
 	protected var isChar = false
 	protected var hasUpper = false
@@ -128,6 +143,15 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
         editText.addTextChangedListener(maskTextWatcher)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    protected fun formatBirthDate(birthDate: String): String{
+        val sourceFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+        val date = LocalDate.parse(birthDate, sourceFormatter)
+
+        val targetFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        return date.format(targetFormatter)
+    }
+
     private fun isNameValid(name: String): Boolean {
         return name.isNotEmpty()
     }
@@ -160,17 +184,58 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
 
     abstract fun conditionChecking(view: View)
 
+    private fun showValidationError(message: String){
+        view?.let{
+            Snackbar.make(it, message, Snackbar.LENGTH_SHORT)
+                .setTextColor(Color.WHITE)
+                .setBackgroundTint(Color.RED)
+                .show()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun validateUserRegistration(action: Int) {
+        val userRegisterData = UserData(
+            name = this.name.text.toString(),
+            email = this.email.text.toString(),
+            birthDate = formatBirthDate(this.birthDay.text.toString()),
+            password = this.password.text.toString(),
+            termsAccepted = this.terms.isChecked
+        )
+        apiService.registerUser(userRegisterData).enqueue(object : Callback<TokenData> {
+            override fun onResponse(call: Call<TokenData>, response: Response<TokenData>) {
+
+                if (response.isSuccessful) {
+                    val responseBody = response.body()
+                    Log.d("Response", "Retorno: $responseBody")
+                    if (responseBody != null) {
+                        token = responseBody.accessToken
+                        Log.d("Token", "Token: $token")
+                        response.body()?.let {
+                            findNavController().navigate(action)
+                        }
+                    }
+                } else {
+                    showValidationError("Bad Request: ${response.message()}")
+                }
+            }
+
+            override fun onFailure(call: Call<TokenData>, t: Throwable) {
+                showValidationError("Network request failed: ${t.message}")
+            }
+        })
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
     protected fun btnCreateAccount(action : Int) {
         this.btnCreateAccount.setOnClickListener {
+
             conditionChecking(it)
-            if (!fieldsComplete) {
-                val snackBar = Snackbar.make(it, "Todos os campos devem ser preenchidos!", Snackbar.LENGTH_SHORT)
-                snackBar.setTextColor(Color.WHITE)
-                snackBar.setBackgroundTint(Color.RED)
-                snackBar.show()
+
+            if (fieldsComplete) {
+                validateUserRegistration(action)
             } else {
-                findNavController().navigate(action)
-                fieldsComplete = false
+                showValidationError("Todos os campos devem ser preenchidos!")
             }
         }
     }
