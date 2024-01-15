@@ -1,6 +1,6 @@
-package br.com.connectattoo.domain
+package br.com.connectattoo.data
 
-data class UserDomain (
+data class UserData (
     val name: String,
     val email: String,
     val password: String,
