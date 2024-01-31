@@ -1,6 +1,6 @@
 package br.com.connectattoo.data
 
-data class UserData (
+data class ClientData (
     val name: String,
     val email: String,
     val password: String,
