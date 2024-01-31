@@ -1,8 +1,7 @@
 package br.com.connectattoo
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import br.com.connectattoo.R
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
 
