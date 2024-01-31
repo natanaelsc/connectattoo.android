@@ -1,7 +1,8 @@
 package br.com.connectattoo.api
 
+import br.com.connectattoo.data.ArtistData
+import br.com.connectattoo.data.ClientData
 import br.com.connectattoo.data.TokenData
-import br.com.connectattoo.data.UserData
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Headers
@@ -11,5 +12,9 @@ interface ApiService {
 
     @Headers("Content-Type: application/json")
     @POST("auth/register")
-    fun registerUser (@Body registrationData: UserData): Call<TokenData>
+    fun registerUser (@Body registrationData: ClientData): Call<TokenData>
+
+    @Headers("Content-Type: application/json")
+    @POST("auth/register/artist")
+    fun registerArtist (@Body registrationData: ArtistData): Call<TokenData>
 }
