@@ -2,7 +2,6 @@ package br.com.connectattoo.ui.registration
 
 import android.graphics.Color
 import android.os.Build
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -250,7 +249,7 @@ class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRe
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    override fun validateUserRegistration(action: Int) {
+    private fun createArtistRegisterData() : ArtistData {
         val address = AddressData (
             street = this.street.text.toString(),
             number = this.number.text.toString(),
@@ -258,8 +257,7 @@ class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRe
             state = this.state.text.toString(),
             zipCode = this.cep.text.toString()
         )
-        Log.d("Address", "DataAddress: $address")
-        val userRegisterData = ArtistData(
+        return ArtistData(
             name = this.name.text.toString(),
             email = this.email.text.toString(),
             birthDate = formatBirthDate(this.birthDay.text.toString()),
@@ -267,31 +265,19 @@ class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRe
             termsAccepted = this.terms.isChecked,
             address = address
         )
-        Log.d("User", "ClientData: $userRegisterData")
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun validateUserRegistration(action: Int) {
+        val artistRegisterData = createArtistRegisterData()
 
-        apiService.registerArtist(userRegisterData).enqueue(object : Callback<TokenData> {
+        apiService.registerArtist(artistRegisterData).enqueue(object : Callback<TokenData> {
             override fun onResponse(call: Call<TokenData>, response: Response<TokenData>) {
-
-                Log.d("Response", "Response: $response")
-                if (response.isSuccessful) {
-                    val responseBody = response.body()
-                    Log.d("Response", "Retorno: $responseBody")
-                    if (responseBody != null) {
-                        token = responseBody.accessToken
-                        Log.d("Token", "Token: $token")
-                        response.body()?.let {
-                            findNavController().navigate(action)
-                        }
-                    }
-                } else {
-                    when (response.code()){
-                        404 -> showValidationError("A URL de destino não foi encontrada.")
-                        409 -> showValidationError("Email já cadastrado!!!")
-                        else -> showValidationError("Erro: ${response.code()}")
+                registrationResponse(action, response) {
+                    response.body()?.let {
+                        findNavController().navigate(action)
                     }
                 }
             }
-
             override fun onFailure(call: Call<TokenData>, t: Throwable) {
                 showValidationError("Falha na conexão com a internet")
             }

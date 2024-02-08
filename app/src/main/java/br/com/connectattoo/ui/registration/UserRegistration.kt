@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.CheckBox
@@ -14,10 +15,12 @@ import androidx.viewbinding.ViewBinding
 import br.com.connectattoo.R
 import br.com.connectattoo.api.ApiService
 import br.com.connectattoo.api.ApiUrl
+import br.com.connectattoo.data.TokenData
 import br.com.connectattoo.ui.BaseFragment
 import com.github.rtoshiro.util.format.SimpleMaskFormatter
 import com.github.rtoshiro.util.format.text.MaskTextWatcher
 import com.google.android.material.snackbar.Snackbar
+import retrofit2.Response
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -187,6 +190,29 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
         }
     }
 
+    protected fun registrationResponse(
+        action: Int,
+        response: Response<TokenData>,
+        onSuccess: () -> Unit
+    ) {
+        if (response.isSuccessful) {
+            val responseBody = response.body()
+            Log.d("Response", "Retorno: $responseBody")
+            if (responseBody != null) {
+                token = responseBody.accessToken
+                Log.d("Token", "Token: $token")
+                response.body()?.let {
+                    findNavController().navigate(action)
+                }
+            }
+        } else {
+            when (response.code()){
+                404 -> showValidationError("A URL de destino não foi encontrada.")
+                409 -> showValidationError("Email já cadastrado!!!")
+                else -> showValidationError("Erro: ${response.code()}")
+            }
+        }
+    }
     abstract fun validateUserRegistration(action: Int)
 
     @RequiresApi(Build.VERSION_CODES.O)
