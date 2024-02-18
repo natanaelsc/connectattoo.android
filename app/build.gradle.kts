@@ -24,19 +24,26 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "BASE_URL", "\"${System.getenv("API_URL")}\"")
+        }
+        debug {
+            buildConfigField("String", "BASE_URL", "\"${System.getenv("API_URL") ?: "http://localhost:3000/api/v1/"}\"")
         }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
 
     buildFeatures {
+        buildConfig = true
         viewBinding = true
     }
+
     buildToolsVersion = "34.0.0"
 }
 

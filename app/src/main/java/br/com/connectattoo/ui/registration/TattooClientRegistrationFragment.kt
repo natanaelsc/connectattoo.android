@@ -1,11 +1,19 @@
 package br.com.connectattoo.ui.registration
 
 import android.graphics.Color
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
+import androidx.navigation.fragment.findNavController
 import br.com.connectattoo.R
+import br.com.connectattoo.data.ClientData
+import br.com.connectattoo.data.TokenData
 import br.com.connectattoo.databinding.FragmentTattooClientRegistrationBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class TattooClientRegistrationFragment : UserRegistration<FragmentTattooClientRegistrationBinding>() {
 
@@ -16,7 +24,8 @@ class TattooClientRegistrationFragment : UserRegistration<FragmentTattooClientRe
         return FragmentTattooClientRegistrationBinding.inflate(inflater, container, false)
     }
 
-	override fun setupSpecificViews() {
+	@RequiresApi(Build.VERSION_CODES.O)
+    override fun setupSpecificViews() {
         name = binding.editTextName
         email = binding.editTextEmail
         password = binding.editTextPassword
@@ -143,4 +152,33 @@ class TattooClientRegistrationFragment : UserRegistration<FragmentTattooClientRe
         val termsChecked = this.terms.isChecked
         fieldsComplete = !(name.isEmpty() || incorrectEmail || !correctPassword || !termsChecked || incorrectConfirmPassword || incorrectDate)
     }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun createRegisterUserData() : ClientData {
+        return ClientData(
+            name = this.name.text.toString(),
+            email = this.email.text.toString(),
+            birthDate = formatBirthDate(this.birthDay.text.toString()),
+            password = this.password.text.toString(),
+            termsAccepted = this.terms.isChecked
+        )
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun validateUserRegistration(action: Int) {
+        val userRegisterData = createRegisterUserData()
+
+        apiService.registerUser(userRegisterData).enqueue(object : Callback<TokenData> {
+            override fun onResponse(call: Call<TokenData>, response: Response<TokenData>) {
+                registrationResponse(action, response) {
+                    response.body()?.let {
+                        findNavController().navigate(action)
+                    }
+                }
+            }
+            override fun onFailure(call: Call<TokenData>, t: Throwable) {
+                showValidationError("Falha na conexão com a internet")
+            }
+        })
+    }
+
 }

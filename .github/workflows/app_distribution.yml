@@ -1,4 +1,4 @@
-name: Firebase App Distribution 
+name: Firebase App Distribution
 
 on:
   pull_request:
@@ -26,6 +26,8 @@ jobs:
 
     - name: Build release
       run: ./gradlew assembleDebug
+      env:
+        API_URL: ${{ secrets.API_URL }}
 
     - name: Upload artifact to Firebase App Distribution
       uses: wzieba/Firebase-Distribution-Github-Action@v1.7.0
