@@ -24,7 +24,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "BASE_URL", "\"${System.getenv("API_URL") ?: "https://connectattoo-api-staging.up.railway.app/api/v1/"}\"")
+            buildConfigField("String", "BASE_URL", "\"${System.getenv("API_URL")}\"")
         }
         debug {
             buildConfigField("String", "BASE_URL", "\"${System.getenv("API_URL") ?: "http://localhost:3000/api/v1/"}\"")
