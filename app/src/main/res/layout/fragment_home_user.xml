@@ -84,7 +84,7 @@
         android:layout_marginTop="15dp"/>
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/txtTitlEnearbyArtists"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
@@ -103,6 +103,24 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="15dp"/>
 
+    <com.google.android.material.textview.MaterialTextView
 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="23dp"
+        android:fontFamily="@font/raleway_extrabold"
+        android:text="Encontre inspiração em cada detalhe"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/txtName"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycle_listOfRandomTattoos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"/>
 
 </LinearLayout>
