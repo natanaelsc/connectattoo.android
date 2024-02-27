@@ -3,5 +3,6 @@
     <array name="preloaded_fonts" translatable="false">
         <item>@font/raleway_extrabold</item>
         <item>@font/raleway_medium</item>
+        <item>@font/raleway_semibold</item>
     </array>
 </resources>
