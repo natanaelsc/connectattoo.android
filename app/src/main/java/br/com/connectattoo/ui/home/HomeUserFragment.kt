@@ -7,26 +7,24 @@ import android.view.View
 import android.view.ViewGroup
 import br.com.connectattoo.R
 import br.com.connectattoo.databinding.FragmentHomeUserBinding
+import br.com.connectattoo.ui.BaseFragment
 
 
-class HomeUserFragment : Fragment() {
+class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
 
-    private var _binding: FragmentHomeUserBinding? = null
-    private val binding get() = _binding!!
-
-
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentHomeUserBinding.inflate(inflater,container, false)
-        return binding.root
+    override fun inflateBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentHomeUserBinding {
+        return FragmentHomeUserBinding.inflate(inflater, container, false)
     }
 
+    override fun setupViews() {}
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-    }
+
+
+
+
+
+
 }

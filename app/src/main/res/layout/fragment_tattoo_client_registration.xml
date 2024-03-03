@@ -422,7 +422,7 @@
                 android:background="@drawable/bg_butao_cancelar"
                 app:backgroundTint="@null"
                 android:text="Cancelar"
-                android:textColor="@color/DeepPurple"/>
+                android:textColor="@color/deepPurple"/>
 
         </LinearLayout>
 

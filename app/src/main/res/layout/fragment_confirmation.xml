@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:text="@string/txt_confirmation_title"
             android:fontFamily="@font/raleway_black"
-            android:textColor="@color/Purple500"
+            android:textColor="@color/purple500"
             android:textSize="35sp"
             android:textStyle="bold"
             android:textAlignment="center"
