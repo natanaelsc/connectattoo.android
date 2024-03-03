@@ -10,29 +10,18 @@ import br.com.connectattoo.R
 import br.com.connectattoo.adapter.AdapterListOfTattoosBasedOnTags
 import br.com.connectattoo.data.TagBasedTattoos
 import br.com.connectattoo.databinding.FragmentHomeUserBinding
+import br.com.connectattoo.databinding.FragmentWelcomeBinding
+import br.com.connectattoo.ui.BaseFragment
 import com.bumptech.glide.Glide
 
 
-class HomeUserFragment : Fragment() {
+class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
 
-    private var _binding: FragmentHomeUserBinding? = null
-    private val binding get() = _binding!!
+
 
     private lateinit var adapterListOfTattoosBasedOnTags:AdapterListOfTattoosBasedOnTags
     private val listOfTattoosBasedOnTags:MutableList<TagBasedTattoos> = mutableListOf()
-
-
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentHomeUserBinding.inflate(inflater,container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun setupViews() {
 
         val recycleViewListOfTattoosBasedOnTags = binding.recycleListOfTattoosBasedOnTags
         recycleViewListOfTattoosBasedOnTags.layoutManager = LinearLayoutManager(context,
@@ -41,6 +30,13 @@ class HomeUserFragment : Fragment() {
         adapterListOfTattoosBasedOnTags = AdapterListOfTattoosBasedOnTags(requireContext(),listOfTattoosBasedOnTags)
         recycleViewListOfTattoosBasedOnTags.adapter = adapterListOfTattoosBasedOnTags
         listOfTattoosBasedOnTags()
+    }
+
+    override fun inflateBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentHomeUserBinding {
+        return FragmentHomeUserBinding.inflate(inflater, container, false)
     }
 
     fun listOfTattoosBasedOnTags(){
@@ -68,8 +64,5 @@ class HomeUserFragment : Fragment() {
     }
 
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-    }
+
 }
