@@ -67,8 +67,8 @@
                     app:cardElevation="7dp"
                     android:orientation="vertical"
                     android:layout_marginTop="20dp"
-                    android:backgroundTint="@color/Purple500"
-                    android:background="@color/Purple500">
+                    android:backgroundTint="@color/purple500"
+                    android:background="@color/purple500">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -102,7 +102,7 @@
                     android:orientation="vertical"
                     android:layout_marginTop="20dp"
                     android:layout_marginStart="10dp"
-                    android:backgroundTint="@color/Purple500"
+                    android:backgroundTint="@color/purple500"
                     android:background="@null">
                     <LinearLayout
                         android:layout_width="match_parent"
