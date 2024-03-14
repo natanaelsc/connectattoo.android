@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_welcomeFragment_to_userRegistrationFragment"
             app:destination="@id/userRegistrationFragment" />
+        <action
+            android:id="@+id/action_welcomeFragment_to_homeUserFragment2"
+            app:destination="@id/homeUserFragment2" />
     </fragment>
     <fragment
         android:id="@+id/artistRegistrationFragment"
@@ -45,4 +48,9 @@
         android:name="br.com.connectattoo.ui.confirmation.ConfirmationFragment"
         android:label="fragment_confirmation"
         tools:layout="@layout/fragment_confirmation" />
+    <fragment
+        android:id="@+id/homeUserFragment2"
+        android:name="br.com.connectattoo.ui.home.HomeUserFragment"
+        android:label="fragment_home_user"
+        tools:layout="@layout/fragment_home_user" />
 </navigation>
