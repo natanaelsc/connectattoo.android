@@ -419,7 +419,7 @@
                 android:layout_marginBottom="10dp"
                 android:textStyle="bold"
                 android:textSize="18sp"
-                android:background="@drawable/bg_butao_cancelar"
+                android:background="@drawable/bg_cancel_button"
                 app:backgroundTint="@null"
                 android:text="Cancelar"
                 android:textColor="@color/deepPurple"/>
