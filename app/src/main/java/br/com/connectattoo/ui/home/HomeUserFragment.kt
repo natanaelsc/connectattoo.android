@@ -1,18 +1,21 @@
 package br.com.connectattoo.ui.home
-
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import br.com.connectattoo.adapter.AdapterListOfNearbyTattooartists
 import br.com.connectattoo.adapter.AdapterListOfTattoosBasedOnTags
+import br.com.connectattoo.data.NearbyTattooArtists
 import br.com.connectattoo.data.TagBasedTattoos
 import br.com.connectattoo.databinding.FragmentHomeUserBinding
 import br.com.connectattoo.ui.BaseFragment
-
 class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
 
-    private lateinit var adapterListOfTattoosBasedOnTags : AdapterListOfTattoosBasedOnTags
-    private val listOfTattoosBasedOnTags : MutableList<TagBasedTattoos> = mutableListOf()
+    private lateinit var adapterListOfTattoosBasedOnTags: AdapterListOfTattoosBasedOnTags
+    private val listOfTattoosBasedOnTags: MutableList<TagBasedTattoos> = mutableListOf()
     private val tag = "Colorida"
+
+    private lateinit var adapterListOfNearbyTattooartists: AdapterListOfNearbyTattooartists
+    private val listOfNearbyTattooartists: MutableList<NearbyTattooArtists> = mutableListOf()
 
     private val tattooUrl = mutableListOf(
         "https://s3-alpha-sig.figma.com/img/f5bc/bd49/a9723f878130f017973e9a92b5c4fc28?Expires=1710115200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=SIrz~DVdxLfDEIfz1~YhhWnDjii~VhFetuEYi4YciGTpkisxaItbq6vGTwJH2xYhhZb-hn~lu5yLXJ8nZoFIO7wuDkRdRL6pbQhvHld1SgRT4EONDmMwxtvAghW0QVpJM2JErkaqImLQoExyOyXdHg~Mb3s2GCWOWFs3QB3WWdXQ9buT5GfrXWS6-FQuUmEw3OQxGeY2rru03GQDVO9--crXol5dAxh0vlWrD6DMBmpUxzrOx4A-cwoMnFAWDjxo7QJx3YhKZL1Cx9L7O52YoCXyQqRHUymvQuk5VBVNThLtVXANd3ahpUXdANELwPCstL2oQF470fP1CLCW0kHUqg__",
@@ -21,14 +24,36 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         "https://s3-alpha-sig.figma.com/img/19d7/20ab/1d9a013eab27809957f0ff62b3be5223?Expires=1710115200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=fJWSBg8ImN-MkK4Kdnrgm~lmvbTtwkr5RoNFX2Aft~Te0pi0bRAMrP0YDg09NdhH7vystNlIv9U0z4F1j8QTl9uCgGTSeOsyuaZMuwoeICRbPkcQzk0cfcADnDD6tXH4X1VY-zOB8RiYq~0-TVnKFlj9oNhRPxZgEKTXeSGfb91K4zIMYzOBz9Mb8NZvt9eXytZYqh8fKfXs-noAP~HCqufHUsZXSpa56nuPKOCjZh7lYxxn5Ebb7N9b-yOr8cTE-KaH35XYD~gK4Yi5G3eZLWSvVJUpIPMKlQr050lTOoQMOlFwABzS8HHHwQYC4IWGsI-xF8hQswvligYjf4WnZw__",
         "https://s3-alpha-sig.figma.com/img/e486/b093/be0e43ff116ed1cef753f0a03cf8d90c?Expires=1710115200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=GEh925InrUia~yo9P1nCG6pkFowQkwo1RreeJIlxH6Nt1d56noxQi7SkfKwycqMIX2~YnrRoAXzTgGkZ1bswVIAO1QFKacvJ79I5wSIUdlIWTlReuw3nPrJVsper2Xzk8UgZ01WdfJdCROZPs-jJq95NFKa5Jz9QQtGS8iczgeu44r40gbReL-xOXcgsdcxTMAvIrV8di3~~RKZHqSKd2VfFqYn4OIdg53gH7TyMQopSqREgdi3C59CT9USvIPOIGNe1McPNhcyHBEQLfttb9~XGdErWUNE6kxtr4UmloRnja7PlmpRbJXFhZN9A1dhstD-CpLxY7sI0tOgUNIKXMA__"
     )
+
+    private val profileImage = mutableListOf(
+        "https://s3-alpha-sig.figma.com/img/6090/ae16/268a0c3f24ae8c3bf1ad6f0bac7cbd79?Expires=1710115200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=N-j4UegxorxDeEToWwmSuW~drOxbAEvrijImeSN1HyRW~IaTWbQ7xqzRQS-1IlbY8QWz7Bu9qPPY7zei43x2q6UplBEGg5Rf4lMeaSCAMxxZxNBdZr80Axezriv35Yqg3ibNVWh2txkcIXqaXm7X3SKA0dBq52-Sw92Tu5qoDveLSEEETL7bSmeaRV85W1hw91g~4DjMYpb70-4BXb~DAhP1trTN-BisAai9H1EQecfZ7CeHLhIPOw-XjK1ihcDD5uJS58vhWkCgEZ2vYVIZujE6I-TfIjG-ZYXUyrwNGCnE0OAE2E4n3eHkoA~rD8QOjeD4BdxjMrpOoXwvfD5RxQ__",
+        "https://s3-alpha-sig.figma.com/img/eb3c/6be2/11db8a98f2353624477e310200a4e401?Expires=1710115200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=B448DRSAXb6gw2ZqTja1ssX0eBsgwo9uxg4cLHDlBL9eeQsYlQ9S~Sh3s5lQ91fnhhkIGvLImJOk39nffwn0jAjpvjiagqNB6nCW4xrLQX8Owf5c0r0TYbTIH7iWtRbyScKJlk6IH7BbShzpDuRMp7Qp9ak65oTxQd6ujphncPeqa35Wqd6jzVfGC5CTQt2-5SFD3B3t0T3WSg4Bh94U9b7jjx1wWZHMZkgkTyABBul9Vkl7e9yyARki2hHKPTAdkU27K3KsSmU9EcAX3P742~o~ETsEAA5Ia2L5OnBxxfqJcgTSMa77kl6IacNeDKmlRQXw5gTF-~~26lPjRrYqrA__",
+        "https://s3-alpha-sig.figma.com/img/76a2/c62e/be70d16d697e187131884dce35888e36?Expires=1710115200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=gM1QgIEaTzI9sQIIKWmP5Zc-oa8wX7p-31ei~8oX56G5qjKus9OwsjfGV4LIOLneu3UExL6fQoKTtnVUuMRdj3pAjWTzFOyLMF-WdZn2yFjuRPeUpEEsmjlIzjMPBmoPIELVwndZim6FXC7DV2P1loMbOVy3in21j4lH7asc19ojFJGzLYhuNtEWx0lcEUzIU1oE~jfmsfcULV93EdqtMEtZ20NbvRRtGsbkaMCKVCzZvU37ISTSyW6WR91aqnaqa8UI40Fc4A02WftIvUEez6gvHdcijceDa5M5SHkl4x0z5Gv0IlygLmaI2rsF7HQ8HuOFo6ExZRudkRZS~~JP3A__",
+        "https://s3-alpha-sig.figma.com/img/38ab/233e/d540c618577c001b3a4a83f67e35158a?Expires=1710115200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=QVNXzJNYu7PO9-OruBrQl260yAU8iIu~jkB4T8R8vvs7yTmqtU4aEiMm-KLem8N6jgowvVGqV0UkaCaIqPPhKD-FH7hrdGFx21OKMe57hcrY1S2HEtgGZzu0wxBNNIlWJjJXzfWe0k9EJS5LXGgCI3knoLCoY1oGwdwyRD4dE3ZXZedPgE-B9X9gEns7znXcHGbpzAysZ5~h1xN2fu9w~SRKLm6rM8Vgo0Xw1YSZS275pRIKsOimm7SmYjjD03OJlH1He~2kdAlOQRGgEIdkCwb9Dlntjy1pJCsdp69UzKDDXA4tC8kcPpgnSh2nF2aVQ8RvfY~ndq4W8iK5vQPQPw__",
+        "https://s3-alpha-sig.figma.com/img/613e/697c/19a9e525817c00a0f009e8cd39f955d4?Expires=1710115200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=eHBEGuMPpjim35m4PYOPCQ5k0Yk8eL2lcZUtoxf1sBVCXTXRKmFkalvVyETbaKUOnz61Mu6A5YmhMEXffLdwumzQFS6seZXdmf55rOV8Js2z-GRY4ZfN9SJmfMy6smX0DsGQ2JngwlpgkohlQ0maZ7qt2~iSUvfJnvxt7Ud5Qz8f2BX~C2~YHyAKS4nzvnkXQWu~yPYYgreICHbDycsEwUuYWeD1DGxt-iqbFQZjy9XNKuizdyGwWcPGDHs0~d8~obZNT-8znEQR6pxibacyioE4AQiG1jf9PF~LBqi-LsL7MKD6v7iFof2Cm4RG87sKlx1oRyQaqfKeKQDubS4Idg__"
+    )
     override fun setupViews() {
         val recycleViewListOfTattoosBasedOnTags = binding.recycleListOfTattoosBasedOnTags
-        recycleViewListOfTattoosBasedOnTags.layoutManager = LinearLayoutManager(context,
-            LinearLayoutManager.HORIZONTAL,false)
+        recycleViewListOfTattoosBasedOnTags.layoutManager = LinearLayoutManager(
+            context,
+            LinearLayoutManager.HORIZONTAL, false
+        )
         recycleViewListOfTattoosBasedOnTags.setHasFixedSize(true)
-        adapterListOfTattoosBasedOnTags = AdapterListOfTattoosBasedOnTags(requireContext(),listOfTattoosBasedOnTags)
+        adapterListOfTattoosBasedOnTags =
+            AdapterListOfTattoosBasedOnTags(requireContext(), listOfTattoosBasedOnTags)
         recycleViewListOfTattoosBasedOnTags.adapter = adapterListOfTattoosBasedOnTags
         listOfTattoosBasedOnTags()
+
+        val recycleListOfNearbyTattooartists = binding.recycleListOfNearbyTattooartists
+        recycleListOfNearbyTattooartists.layoutManager = LinearLayoutManager(
+            context,
+            LinearLayoutManager.HORIZONTAL, false
+        )
+        recycleListOfNearbyTattooartists.setHasFixedSize(true)
+        adapterListOfNearbyTattooartists =
+            AdapterListOfNearbyTattooartists(requireContext(), listOfNearbyTattooartists)
+        recycleListOfNearbyTattooartists.adapter = adapterListOfNearbyTattooartists
+        listOfNearbyTattooartists()
     }
     override fun inflateBinding(
         inflater: LayoutInflater,
@@ -38,19 +63,66 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
     }
     private fun listOfTattoosBasedOnTags() {
 
-        val tattooBasedOnTags1 = TagBasedTattoos(tattooUrl[0],tag)
+        val tattooBasedOnTags1 = TagBasedTattoos(tattooUrl[0], tag)
         listOfTattoosBasedOnTags.add(tattooBasedOnTags1)
 
-        val tattooBasedOnTags2 = TagBasedTattoos(tattooUrl[1],tag)
+        val tattooBasedOnTags2 = TagBasedTattoos(tattooUrl[1], tag)
         listOfTattoosBasedOnTags.add(tattooBasedOnTags2)
 
-        val tattooBasedOnTags3 = TagBasedTattoos(tattooUrl[2],tag)
+        val tattooBasedOnTags3 = TagBasedTattoos(tattooUrl[2], tag)
         listOfTattoosBasedOnTags.add(tattooBasedOnTags3)
 
-        val tattooBasedOnTags4 = TagBasedTattoos(tattooUrl[3],tag)
+        val tattooBasedOnTags4 = TagBasedTattoos(tattooUrl[3], tag)
         listOfTattoosBasedOnTags.add(tattooBasedOnTags4)
 
-        val tattooBasedOnTags5 = TagBasedTattoos(tattooUrl[4],tag)
+        val tattooBasedOnTags5 = TagBasedTattoos(tattooUrl[4], tag)
         listOfTattoosBasedOnTags.add(tattooBasedOnTags5)
+    }
+    fun listOfNearbyTattooartists() {
+
+        val nearbyTattooartists = NearbyTattooArtists(
+            tattooUrl[0],
+            "Larissa Dias",
+            "4,7",
+            "São Paulo, Rua Calixto da M...",
+            profileImage[0]
+        )
+        listOfNearbyTattooartists.add(nearbyTattooartists)
+
+        val nearbyTattooartists2 = NearbyTattooArtists(
+            tattooUrl[1],
+            "Marcus Freites",
+            "4,9",
+            "São Paulo, Rua Dr. Neto de Ara...",
+            profileImage[2]
+        )
+        listOfNearbyTattooartists.add(nearbyTattooartists2)
+
+        val nearbyTattooartists3 = NearbyTattooArtists(
+            tattooUrl[2],
+            "Tatiana Oliveira",
+            "4,8",
+            "portugal, Rua Calixto da M...",
+            profileImage[2]
+        )
+        listOfNearbyTattooartists.add(nearbyTattooartists3)
+
+        val nearbyTattooartists4 = NearbyTattooArtists(
+            tattooUrl[3],
+            "Maria Carla   ",
+            "4,6",
+            "fortaleza, Rua Dr. Neto de Ara...",
+            profileImage[3]
+        )
+        listOfNearbyTattooartists.add(nearbyTattooartists4)
+
+        val nearbyTattooartists5 = NearbyTattooArtists(
+            tattooUrl[4],
+            "Sarah Ferreira",
+            "4,5",
+            "Rio, Rua Calixto da M...",
+            profileImage[4]
+        )
+        listOfNearbyTattooartists.add(nearbyTattooartists5)
     }
 }
