@@ -20,12 +20,12 @@ class AdapterListOfTattoosBasedOnTags(private val context:Context, private val l
     override fun getItemCount() = listOfTattoosBasedOnTags.size
 
     override fun onBindViewHolder(holder: TagBasedTattoosViewHolder, position: Int) {
-        Glide.with(context).load(listOfTattoosBasedOnTags[position].tatto).into(holder.imageTatto)
+        Glide.with(context).load(listOfTattoosBasedOnTags[position].tattoo).into(holder.imageTattoo)
         holder.txtTag.text = listOfTattoosBasedOnTags[position].tags
     }
 
     inner class TagBasedTattoosViewHolder(binding: TagbasedtattoosItemBinding):RecyclerView.ViewHolder(binding.root){
-        val imageTatto = binding.imageTatto
+        val imageTattoo = binding.imageTattoo
         val txtTag = binding.tag
     }
 }
