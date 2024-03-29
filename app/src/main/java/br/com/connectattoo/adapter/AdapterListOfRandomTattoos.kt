@@ -23,32 +23,32 @@ RecyclerView.Adapter<AdapterListOfRandomTattoos.RandomTattoosViewHolder>(){
 
     override fun onBindViewHolder(holder: RandomTattoosViewHolder, position: Int) {
 
-        val tatto = listOfRandomTattoos[position]
+        val tattoo = listOfRandomTattoos[position]
 
-        Glide.with(context).load(listOfRandomTattoos[position].tatto).into(holder.tatto)
+        Glide.with(context).load(listOfRandomTattoos[position].tattoo).into(holder.tattoo)
         holder.txtName.text = listOfRandomTattoos[position].name
         Glide.with(context).load(listOfRandomTattoos[position].profileImage).into(holder.profileImage)
 
         holder.save.setOnClickListener {
 
-            if (tatto.save == false) {
+            if (tattoo.save == false) {
                 holder.save.setImageResource(R.drawable.save_icon_true2)
-                tatto.save = true
-            } else if(tatto.save == true) {
+                tattoo.save = true
+            } else if(tattoo.save == true) {
                 holder.save.setImageResource(R.drawable.save_icon)
-                tatto.save  = false
+                tattoo.save  = false
             }
         }
 
         holder.like.setOnClickListener {
 
             // Atualize a imagem do íconeCurti com base no estado atual
-            if (tatto.like == false) {
+            if (tattoo.like == false) {
                 holder.like.setImageResource(R.drawable.like_icon_true)
-                tatto.like = true
-            } else if (tatto.like == true)  {
+                tattoo.like = true
+            } else if (tattoo.like == true)  {
                 holder.like.setImageResource(R.drawable.like_icon)
-                tatto.like = false
+                tattoo.like = false
             }
         }
 
@@ -56,7 +56,7 @@ RecyclerView.Adapter<AdapterListOfRandomTattoos.RandomTattoosViewHolder>(){
     }
 
     inner class RandomTattoosViewHolder(binding: RandomTattoosItemBinding):RecyclerView.ViewHolder(binding.root){
-        val tatto = binding.tatto
+        val tattoo = binding.tattoo
         val txtName = binding.txtName
         val profileImage= binding.profileImage
         var like = binding.likeIcon
