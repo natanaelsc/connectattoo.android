@@ -1,16 +1,15 @@
 package br.com.connectattoo.ui.confirmation
 
-
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import br.com.connectattoo.HomeUserActivity
-import br.com.connectattoo.api.ApiService
-import br.com.connectattoo.api.ApiUrl
 import br.com.connectattoo.databinding.FragmentConfirmationBinding
 import br.com.connectattoo.repository.AuthRepository
 import br.com.connectattoo.ui.BaseFragment
@@ -19,8 +18,8 @@ import kotlinx.coroutines.launch
 
 class ConfirmationFragment : BaseFragment<FragmentConfirmationBinding>() {
 
-    private val apiService: ApiService = ApiUrl.instance.create(ApiService::class.java)
-    private val repository: AuthRepository = AuthRepository()
+    private lateinit var repository: AuthRepository
+
     override fun inflateBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -30,37 +29,59 @@ class ConfirmationFragment : BaseFragment<FragmentConfirmationBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         verifyUserConfirmation()
+        swipeRefresh()
     }
 
     private fun verifyUserConfirmation() {
+        repository = AuthRepository()
         val token = arguments?.getString("token")
         Log.i("token_confirm", token ?: "")
         viewLifecycleOwner.lifecycleScope.launch {
             try {
-                val result = apiService.verifyUserConfirmation("Bearer $token")
+                val result = repository.verifyUserConfirmation("Bearer $token")
 
                 if (result.isSuccessful) {
                     if (result.body()?.emailConfirmed == true) {
                         startActivity(Intent(requireContext(), HomeUserActivity::class.java))
+                        binding.swipeRefreshConfirmationScreen.isRefreshing = false
+                        findNavController().popBackStack()
                     } else {
-                        Snackbar.make(binding.root, result.message(), Snackbar.ANIMATION_MODE_SLIDE).show()
+                        binding.swipeRefreshConfirmationScreen.isRefreshing = false
                     }
-
-
+                } else {
+                    when (result.code()) {
+                        404 -> showValidationError("A URL de destino não foi encontrada.")
+                        401 -> showValidationError("Erro de Autenticação!!!")
+                        else -> showValidationError("Erro: ${result.code()}")
+                    }
+                    binding.swipeRefreshConfirmationScreen.isRefreshing = false
                 }
             } catch (e: Exception) {
-                Snackbar.make(binding.root, "Erro na requisição", Snackbar.ANIMATION_MODE_SLIDE).show()
+                showValidationError("Erro de conexão com a internet!")
+                binding.swipeRefreshConfirmationScreen.isRefreshing = false
             }
 
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        verifyUserConfirmation()
+    private fun showValidationError(message: String) {
+        view?.let {
+            Snackbar.make(it, message, Snackbar.LENGTH_SHORT)
+                .setTextColor(Color.WHITE)
+                .setBackgroundTint(Color.RED)
+                .show()
+        }
+    }
+
+    private fun swipeRefresh() {
+        binding.swipeRefreshConfirmationScreen.setOnRefreshListener {
+            verifyUserConfirmation()
+        }
     }
 
     override fun setupViews() {
+
     }
 }

@@ -1,4 +1,4 @@
-package br.com.connectattoo.data
+package br.com.connectattoo.data.response
 
 import com.google.gson.annotations.SerializedName
 

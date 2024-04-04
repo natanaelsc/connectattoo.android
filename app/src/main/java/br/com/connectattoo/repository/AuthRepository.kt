@@ -2,8 +2,7 @@ package br.com.connectattoo.repository
 
 import br.com.connectattoo.api.ApiService
 import br.com.connectattoo.api.ApiUrl
-import br.com.connectattoo.data.ApiConfirmationResponse
-import kotlinx.coroutines.flow.Flow
+import br.com.connectattoo.data.response.ApiConfirmationResponse
 import retrofit2.Response
 
 class AuthRepository {

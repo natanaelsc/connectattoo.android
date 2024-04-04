@@ -1,10 +1,9 @@
 package br.com.connectattoo.api
 
-import br.com.connectattoo.data.ApiConfirmationResponse
+import br.com.connectattoo.data.response.ApiConfirmationResponse
 import br.com.connectattoo.data.ArtistData
 import br.com.connectattoo.data.ClientData
 import br.com.connectattoo.data.TokenData
-import kotlinx.coroutines.flow.Flow
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
