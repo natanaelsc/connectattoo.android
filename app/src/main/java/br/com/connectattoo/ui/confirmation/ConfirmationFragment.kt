@@ -8,18 +8,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import br.com.connectattoo.HomeUserActivity
 import br.com.connectattoo.databinding.FragmentConfirmationBinding
 import br.com.connectattoo.repository.AuthRepository
 import br.com.connectattoo.ui.BaseFragment
+import br.com.connectattoo.util.Constants.API_TOKEN
+import br.com.connectattoo.util.DataStoreManager
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
 class ConfirmationFragment : BaseFragment<FragmentConfirmationBinding>() {
 
     private lateinit var repository: AuthRepository
-
     override fun inflateBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -44,9 +44,9 @@ class ConfirmationFragment : BaseFragment<FragmentConfirmationBinding>() {
 
                 if (result.isSuccessful) {
                     if (result.body()?.emailConfirmed == true) {
-                        startActivity(Intent(requireContext(), HomeUserActivity::class.java))
                         binding.swipeRefreshConfirmationScreen.isRefreshing = false
-                        findNavController().popBackStack()
+                        saveTokenApi(token)
+                        startActivity(Intent(requireContext(), HomeUserActivity::class.java))
                     } else {
                         binding.swipeRefreshConfirmationScreen.isRefreshing = false
                     }
@@ -63,6 +63,14 @@ class ConfirmationFragment : BaseFragment<FragmentConfirmationBinding>() {
                 binding.swipeRefreshConfirmationScreen.isRefreshing = false
             }
 
+        }
+    }
+
+    private fun saveTokenApi(token: String?) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            if (token != null) {
+                DataStoreManager.saveToken(requireContext(), API_TOKEN, token)
+            }
         }
     }
 
