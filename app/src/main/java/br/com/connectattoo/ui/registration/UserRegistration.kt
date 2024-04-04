@@ -2,6 +2,7 @@ package br.com.connectattoo.ui.registration
 
 import android.graphics.Color
 import android.os.Build
+import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -10,6 +11,7 @@ import android.view.View
 import android.widget.CheckBox
 import android.widget.EditText
 import androidx.annotation.RequiresApi
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
 import br.com.connectattoo.R
@@ -202,7 +204,8 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
                 token = responseBody.accessToken
                 Log.d("Token", "Token: $token")
                 response.body()?.let {
-                    findNavController().navigate(action)
+                    val bundle = bundleOf("token" to token)
+                    findNavController().navigate(action, bundle)
                 }
             }
         } else {

@@ -16,3 +16,10 @@
 .cxx
 local.properties
 /node_modules
+.idea/vcs.xml
+.idea/deploymentTargetDropDown.xml
+.idea/vcs.xml
+.idea/deploymentTargetDropDown.xml
+.idea/appInsightsSettings.xml
+.idea/deploymentTargetDropDown.xml
+.idea/vcs.xml
