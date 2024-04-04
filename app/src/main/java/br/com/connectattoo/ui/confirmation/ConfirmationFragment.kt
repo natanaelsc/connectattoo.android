@@ -47,6 +47,7 @@ class ConfirmationFragment : BaseFragment<FragmentConfirmationBinding>() {
                         binding.swipeRefreshConfirmationScreen.isRefreshing = false
                         saveTokenApi(token)
                         startActivity(Intent(requireContext(), HomeUserActivity::class.java))
+                        requireActivity().finish()
                     } else {
                         binding.swipeRefreshConfirmationScreen.isRefreshing = false
                     }
