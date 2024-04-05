@@ -2,10 +2,7 @@ package br.com.connectattoo.ui.confirmation
 
 import android.content.Intent
 import android.graphics.Color
-import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import br.com.connectattoo.HomeUserActivity
@@ -27,25 +24,23 @@ class ConfirmationFragment : BaseFragment<FragmentConfirmationBinding>() {
         return FragmentConfirmationBinding.inflate(inflater, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun setupViews() {
         verifyUserConfirmation()
         swipeRefresh()
     }
 
     private fun verifyUserConfirmation() {
         repository = AuthRepository()
-        val token = arguments?.getString("token")
-        Log.i("token_confirm", token ?: "")
+
         viewLifecycleOwner.lifecycleScope.launch {
+            val token = DataStoreManager.getStringToken(requireContext(), API_TOKEN)
+
             try {
                 val result = repository.verifyUserConfirmation("Bearer $token")
 
                 if (result.isSuccessful) {
                     if (result.body()?.emailConfirmed == true) {
                         binding.swipeRefreshConfirmationScreen.isRefreshing = false
-                        saveTokenApi(token)
                         startActivity(Intent(requireContext(), HomeUserActivity::class.java))
                         requireActivity().finish()
                     } else {
@@ -67,13 +62,6 @@ class ConfirmationFragment : BaseFragment<FragmentConfirmationBinding>() {
         }
     }
 
-    private fun saveTokenApi(token: String?) {
-        viewLifecycleOwner.lifecycleScope.launch {
-            if (token != null) {
-                DataStoreManager.saveToken(requireContext(), API_TOKEN, token)
-            }
-        }
-    }
 
     private fun showValidationError(message: String) {
         view?.let {
@@ -90,7 +78,5 @@ class ConfirmationFragment : BaseFragment<FragmentConfirmationBinding>() {
         }
     }
 
-    override fun setupViews() {
 
-    }
 }
