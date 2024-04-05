@@ -2,7 +2,6 @@ package br.com.connectattoo.ui.welcome
 
 import android.content.Intent
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
@@ -20,9 +19,8 @@ import kotlinx.coroutines.launch
 class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
     private lateinit var repository: AuthRepository
     override fun setupViews() {
-
+        repository = AuthRepository()
         verifyTokenApi()
-
         binding.cardArtist.setOnClickListener {
             findNavController().navigate(R.id.action_welcomeFragment_to_artistRegistrationFragment)
         }
@@ -40,14 +38,11 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
     }
 
     private fun verifyTokenApi() {
-        repository = AuthRepository()
         viewLifecycleOwner.lifecycleScope.launch {
             val token = DataStoreManager.getStringToken(requireContext(), API_TOKEN)
-            Log.i("test", token)
             if (token.isNotEmpty()) {
                 try {
                     val result = repository.verifyUserConfirmation("Bearer $token")
-
                     if (result.isSuccessful) {
                         if (result.body()?.emailConfirmed == true) {
                             startActivity(Intent(requireContext(), HomeUserActivity::class.java))
@@ -61,16 +56,13 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
                             401 -> {
                                 showValidationError("Token Expirou, Faça o cadastro novamente!!!")
                                 DataStoreManager.deleteApiKey(requireContext(), API_TOKEN)
-                            }
-
-                            else -> showValidationError("Erro: ${result.code()}")
+                            }else -> showValidationError("Erro: ${result.code()}")
                         }
                     }
                 } catch (e: Exception) {
                     showValidationError("Erro de conexão com a internet!")
                 }
             }
-
         }
     }
 

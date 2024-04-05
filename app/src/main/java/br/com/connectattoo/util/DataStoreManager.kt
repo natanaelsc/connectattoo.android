@@ -14,9 +14,8 @@ val Context.userSettingsDataStore: DataStore<Preferences> by preferencesDataStor
 object DataStoreManager {
     suspend fun saveToken(context: Context, key: String, value: String) {
 
-        val wrappedKey = stringPreferencesKey(key)
         context.userSettingsDataStore.edit {
-            it[wrappedKey] = value
+            it[stringPreferencesKey(key)] = value
         }
 
     }
