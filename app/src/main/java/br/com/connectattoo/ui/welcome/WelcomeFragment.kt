@@ -38,37 +38,6 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
         return FragmentWelcomeBinding.inflate(inflater, container, false)
 
     }
-    /*
-    private fun verifyTokenApi() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            val token = DataStoreManager.getStringToken(requireContext(), API_TOKEN)
-            if (token.isNotEmpty()) {
-                try {
-                    val result = repository.verifyUserConfirmation("Bearer $token")
-                    if (result.isSuccessful) {
-                        if (result.body()?.emailConfirmed == true) {
-                            startActivity(Intent(requireContext(), HomeUserActivity::class.java))
-                            requireActivity().finish()
-                        } else {
-                            findNavController().navigate(R.id.action_welcomeFragment_to_confirmationFragment)
-                        }
-                    } else {
-                        when (result.code()) {
-                            404 -> showValidationError("A URL de destino não foi encontrada.")
-                            401 -> {
-                                showValidationError("Token Expirou, Faça o cadastro novamente!!!")
-                                DataStoreManager.deleteApiKey(requireContext(), API_TOKEN)
-                            }else -> showValidationError("Erro: ${result.code()}")
-                        }
-                    }
-                } catch (e: Exception) {
-                    showValidationError("Erro de conexão com a internet!")
-                }
-            }
-        }
-    }
-
-     */
     private fun verifyTokenApi() {
         viewLifecycleOwner.lifecycleScope.launch {
             val token = DataStoreManager.getStringToken(requireContext(), API_TOKEN)
