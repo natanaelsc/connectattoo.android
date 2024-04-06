@@ -19,11 +19,11 @@ import retrofit2.Response
 
 class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRegistrationBinding>() {
 
-    protected lateinit var cep : EditText
-    protected lateinit var street : EditText
-    protected lateinit var number : EditText
-    protected lateinit var city : EditText
-    protected lateinit var state : EditText
+    private lateinit var cep : EditText
+    private lateinit var street : EditText
+    private lateinit var number : EditText
+    private lateinit var city : EditText
+    private lateinit var state : EditText
 
 
     override fun inflateBinding(
