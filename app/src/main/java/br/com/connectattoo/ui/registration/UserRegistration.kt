@@ -29,28 +29,28 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
-abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
+abstract class UserRegistration<T : ViewBinding> : BaseFragment<T>() {
 
-    protected lateinit var name : EditText
-    protected lateinit var email : EditText
-    protected lateinit var password : EditText
-    protected lateinit var confirmPassword : EditText
-    protected lateinit var birthDay : EditText
-    protected lateinit var terms : CheckBox
+    protected lateinit var name: EditText
+    protected lateinit var email: EditText
+    protected lateinit var password: EditText
+    protected lateinit var confirmPassword: EditText
+    protected lateinit var birthDay: EditText
+    protected lateinit var terms: CheckBox
 
-    protected lateinit var btnCreateAccount : View
-    protected lateinit var btnCancel : View
+    protected lateinit var btnCreateAccount: View
+    protected lateinit var btnCancel: View
 
     protected val apiService: ApiService = ApiUrl.instance.create(ApiService::class.java)
     protected var token: String = ""
 
-	protected var isChar = false
-	protected var hasUpper = false
-	protected var hasLow = false
-	protected var hasNum = false
-	protected var hasSpecialSymbol = false
-	protected var incorrectConfirmPassword = true
-	protected var correctPassword = false
+    protected var isChar = false
+    protected var hasUpper = false
+    protected var hasLow = false
+    protected var hasNum = false
+    protected var hasSpecialSymbol = false
+    protected var incorrectConfirmPassword = true
+    protected var correctPassword = false
     protected var incorrectDate = false
     protected var incorrectEmail = true
     protected var fieldsComplete = false
@@ -60,7 +60,7 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
     override fun setupViews() {
         setupSpecificViews()
 
-        name.setOnFocusChangeListener{ _, focused ->
+        name.setOnFocusChangeListener { _, focused ->
             if (!focused) validateName()
         }
 
@@ -142,11 +142,11 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     protected fun formatBirthDate(birthDate: String): String {
-            val sourceFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-            val date = LocalDate.parse(birthDate, sourceFormatter)
+        val sourceFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+        val date = LocalDate.parse(birthDate, sourceFormatter)
 
-            val targetFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-            return date.format(targetFormatter)
+        val targetFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        return date.format(targetFormatter)
     }
 
     private fun isNameValid(name: String): Boolean {
@@ -169,20 +169,26 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
         editText.setBackgroundResource(R.drawable.bg_edit_input_valid)
     }
 
-    protected fun onTextChanged(editText: EditText, function : () -> Unit) {
+    protected fun onTextChanged(editText: EditText, function: () -> Unit) {
         editText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { return }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                return
+            }
+
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 function()
             }
-            override fun afterTextChanged(s: Editable?) { return }
+
+            override fun afterTextChanged(s: Editable?) {
+                return
+            }
         })
     }
 
     abstract fun conditionChecking(view: View)
 
-    protected fun showValidationError(message: String){
-        view?.let{
+    protected fun showValidationError(message: String) {
+        view?.let {
             Snackbar.make(it, message, Snackbar.LENGTH_SHORT)
                 .setTextColor(Color.WHITE)
                 .setBackgroundTint(Color.RED)
@@ -193,7 +199,7 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
     protected fun registrationResponse(
         action: Int,
         response: Response<TokenData>,
-        onSuccess: () -> Unit
+        function: () -> Unit?,
     ) {
         if (response.isSuccessful) {
             val responseBody = response.body()
@@ -206,17 +212,18 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
                 }
             }
         } else {
-            when (response.code()){
+            when (response.code()) {
                 404 -> showValidationError("A URL de destino não foi encontrada.")
                 409 -> showValidationError("Email já cadastrado!!!")
                 else -> showValidationError("Erro: ${response.code()}")
             }
         }
     }
+
     abstract fun validateUserRegistration(action: Int)
 
     @RequiresApi(Build.VERSION_CODES.O)
-    protected fun btnCreateAccount(action : Int) {
+    protected fun btnCreateAccount(action: Int) {
         this.btnCreateAccount.setOnClickListener {
 
             conditionChecking(it)
@@ -229,7 +236,7 @@ abstract class UserRegistration<T: ViewBinding> : BaseFragment<T>() {
         }
     }
 
-    protected fun btnCancel(action : Int) {
+    protected fun btnCancel(action: Int) {
         this.btnCancel.setOnClickListener {
             findNavController().navigate(action)
         }

@@ -8,11 +8,19 @@ import br.com.connectattoo.data.NearbyTattooArtists
 import br.com.connectattoo.databinding.NearbyTattooArtistsItemBinding
 import com.bumptech.glide.Glide
 
-class AdapterListOfNearbyTattooArtists(private val context: Context, private val listOfNearbyTattooArtists: MutableList<NearbyTattooArtists>):
-RecyclerView.Adapter<AdapterListOfNearbyTattooArtists.NearbyTattooArtistsViewHolder>(){
+class AdapterListOfNearbyTattooArtists(
+    private val context: Context,
+    private val listOfNearbyTattooArtists: MutableList<NearbyTattooArtists>
+) :
+    RecyclerView.Adapter<AdapterListOfNearbyTattooArtists.NearbyTattooArtistsViewHolder>() {
 
-    override fun onCreateViewHolder( parent: ViewGroup,viewType: Int): NearbyTattooArtistsViewHolder {
-        val itemList = NearbyTattooArtistsItemBinding.inflate(LayoutInflater.from(context), parent,false)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): NearbyTattooArtistsViewHolder {
+        val itemList = NearbyTattooArtistsItemBinding.inflate(
+            LayoutInflater.from(context), parent, false
+        )
         return NearbyTattooArtistsViewHolder(itemList)
     }
 
@@ -23,11 +31,13 @@ RecyclerView.Adapter<AdapterListOfNearbyTattooArtists.NearbyTattooArtistsViewHol
         holder.txtName.text = listOfNearbyTattooArtists[position].name
         holder.txtAssessment.text = listOfNearbyTattooArtists[position].assessment
         holder.txtAddress.text = listOfNearbyTattooArtists[position].address
-        Glide.with(context).load(listOfNearbyTattooArtists[position].profileImage).into(holder.profileImage)
+        Glide.with(context).load(listOfNearbyTattooArtists[position].profileImage)
+            .into(holder.profileImage)
 
     }
 
-    inner class NearbyTattooArtistsViewHolder(binding: NearbyTattooArtistsItemBinding): RecyclerView.ViewHolder(binding.root){
+    inner class NearbyTattooArtistsViewHolder(binding: NearbyTattooArtistsItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         val tattoo = binding.tattoo
         val txtName = binding.txtName
         val txtAssessment = binding.txtassessment

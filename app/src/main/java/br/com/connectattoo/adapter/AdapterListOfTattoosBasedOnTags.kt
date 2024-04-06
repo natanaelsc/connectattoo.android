@@ -8,12 +8,16 @@ import br.com.connectattoo.data.TagBasedTattoos
 import br.com.connectattoo.databinding.TagbasedtattoosItemBinding
 import com.bumptech.glide.Glide
 
-class AdapterListOfTattoosBasedOnTags(private val context:Context, private val listOfTattoosBasedOnTags: MutableList<TagBasedTattoos>):
+class AdapterListOfTattoosBasedOnTags(
+    private val context: Context,
+    private val listOfTattoosBasedOnTags: MutableList<TagBasedTattoos>
+) :
     RecyclerView.Adapter<AdapterListOfTattoosBasedOnTags.TagBasedTattoosViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TagBasedTattoosViewHolder {
-        val itemList = TagbasedtattoosItemBinding.inflate(LayoutInflater.from(context), parent,false)
+        val itemList =
+            TagbasedtattoosItemBinding.inflate(LayoutInflater.from(context), parent, false)
         return TagBasedTattoosViewHolder(itemList)
     }
 
@@ -24,7 +28,8 @@ class AdapterListOfTattoosBasedOnTags(private val context:Context, private val l
         holder.txtTag.text = listOfTattoosBasedOnTags[position].tags
     }
 
-    inner class TagBasedTattoosViewHolder(binding: TagbasedtattoosItemBinding):RecyclerView.ViewHolder(binding.root){
+    inner class TagBasedTattoosViewHolder(binding: TagbasedtattoosItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         val imageTattoo = binding.imageTattoo
         val txtTag = binding.tag
     }

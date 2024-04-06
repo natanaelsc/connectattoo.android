@@ -17,13 +17,14 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRegistrationBinding>() {
+class TattooArtistRegistrationFragment :
+    UserRegistration<FragmentTattooArtistRegistrationBinding>() {
 
-    private lateinit var cep : EditText
-    private lateinit var street : EditText
-    private lateinit var number : EditText
-    private lateinit var city : EditText
-    private lateinit var state : EditText
+    private lateinit var cep: EditText
+    private lateinit var street: EditText
+    private lateinit var number: EditText
+    private lateinit var city: EditText
+    private lateinit var state: EditText
 
 
     override fun inflateBinding(
@@ -33,18 +34,18 @@ class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRe
         return FragmentTattooArtistRegistrationBinding.inflate(inflater, container, false)
     }
 
-	@RequiresApi(Build.VERSION_CODES.O)
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupSpecificViews() {
-		name = binding.editTextName
-		email = binding.editTextEmail
-		password = binding.editTextPassword
-		confirmPassword = binding.editTextConfirmPassword
+        name = binding.editTextName
+        email = binding.editTextEmail
+        password = binding.editTextPassword
+        confirmPassword = binding.editTextConfirmPassword
         cep = binding.editTextCep
         street = binding.editTextStreet
         number = binding.editTextNumber
         city = binding.editTextCity
         state = binding.editTextState
-		birthDay = binding.editTextDate
+        birthDay = binding.editTextDate
         terms = binding.checkBox
 
         btnCreateAccount = binding.btCreateAccount
@@ -52,7 +53,7 @@ class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRe
 
         btnCancel(R.id.action_artistRegistrationFragment_to_welcomeFragment)
 
-        mask(this.cep,"NNNNN-NNN")
+        mask(this.cep, "NNNNN-NNN")
 
         onTextChanged(cep) { validateCep() }
 
@@ -232,7 +233,7 @@ class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRe
         return number.isNotEmpty()
     }
 
-    private fun  isCityValid(city: String): Boolean {
+    private fun isCityValid(city: String): Boolean {
         return city.isNotEmpty()
     }
 
@@ -243,14 +244,19 @@ class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRe
     override fun conditionChecking(view: View) {
         val name = this.name.text.toString()
         val termsChecked = this.terms.isChecked
-        fieldsComplete = !(name.isEmpty() || incorrectEmail || !correctPassword || !termsChecked || incorrectConfirmPassword || incorrectDate
-                || !isCepValid(cep.text.toString()) || !isStreetValid(street.text.toString()) || !isNumberValid(number.text.toString())
+        fieldsComplete =
+            !(name.isEmpty() || incorrectEmail || !correctPassword || !termsChecked
+                || incorrectConfirmPassword || incorrectDate
+                || !isCepValid(cep.text.toString()) || !isStreetValid(street.text.toString())
+                || !isNumberValid(
+                number.text.toString()
+            )
                 || !isCityValid(city.text.toString()) || !isStateValid(state.text.toString()))
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun createArtistRegisterData() : ArtistData {
-        val address = AddressData (
+    private fun createArtistRegisterData(): ArtistData {
+        val address = AddressData(
             street = this.street.text.toString(),
             number = this.number.text.toString(),
             city = this.city.text.toString(),
@@ -266,6 +272,7 @@ class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRe
             address = address
         )
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun validateUserRegistration(action: Int) {
         val artistRegisterData = createArtistRegisterData()
@@ -278,6 +285,7 @@ class TattooArtistRegistrationFragment : UserRegistration<FragmentTattooArtistRe
                     }
                 }
             }
+
             override fun onFailure(call: Call<TokenData>, t: Throwable) {
                 showValidationError("Falha na conexão com a internet")
             }

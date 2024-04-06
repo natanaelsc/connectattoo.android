@@ -8,6 +8,7 @@ import br.com.connectattoo.ui.BaseFragment
 
 class ConfirmationFragment : BaseFragment<FragmentConfirmationBinding>() {
 
+    @Suppress("EmptyFunctionBlock")
     override fun setupViews() {
     }
 
