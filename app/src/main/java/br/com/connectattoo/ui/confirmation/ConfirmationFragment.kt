@@ -34,7 +34,6 @@ class ConfirmationFragment : BaseFragment<FragmentConfirmationBinding>() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             val token = DataStoreManager.getStringToken(requireContext(), API_TOKEN)
-
             try {
                 val result = repository.verifyUserConfirmation("Bearer $token")
 
