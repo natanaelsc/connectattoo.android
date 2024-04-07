@@ -132,7 +132,7 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         listOfRandomTattoos()
     }
 
-    @Suppress("MagicNumber")
+
     private fun listOfTattoosBasedOnTags() {
 
         val tattooBasedOnTags1 = TagBasedTattoos(tattooUrl[0], tag)
@@ -151,7 +151,7 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         listOfTattoosBasedOnTags.add(tattooBasedOnTags5)
     }
 
-    @Suppress("MagicNumber")
+
     private fun listOfNearbyTattooArtists() {
 
         val nearbyTattooArtists = NearbyTattooArtists(
@@ -199,8 +199,7 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         )
         listOfNearbyTattooArtists.add(nearbyTattooartists5)
     }
-
-    @Suppress("MagicNumber")
+    
     private fun listOfRandomTattoos() {
 
         val randomTattoos = RandomTattoos(
