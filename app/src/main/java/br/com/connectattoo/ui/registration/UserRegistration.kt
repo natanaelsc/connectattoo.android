@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.CheckBox
 import android.widget.EditText
 import androidx.annotation.RequiresApi
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
 import br.com.connectattoo.R
@@ -17,9 +18,12 @@ import br.com.connectattoo.api.ApiService
 import br.com.connectattoo.api.ApiUrl
 import br.com.connectattoo.data.TokenData
 import br.com.connectattoo.ui.BaseFragment
+import br.com.connectattoo.util.Constants.API_TOKEN
+import br.com.connectattoo.util.DataStoreManager
 import com.github.rtoshiro.util.format.SimpleMaskFormatter
 import com.github.rtoshiro.util.format.text.MaskTextWatcher
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -42,7 +46,6 @@ abstract class UserRegistration<T : ViewBinding> : BaseFragment<T>() {
     protected lateinit var btnCancel: View
 
     protected val apiService: ApiService = ApiUrl.instance.create(ApiService::class.java)
-    protected var token: String = ""
 
     protected var isChar = false
     protected var hasUpper = false
@@ -205,9 +208,10 @@ abstract class UserRegistration<T : ViewBinding> : BaseFragment<T>() {
             val responseBody = response.body()
             Log.d("Response", "Retorno: $responseBody")
             if (responseBody != null) {
-                token = responseBody.accessToken
+                val token = responseBody.accessToken
                 Log.d("Token", "Token: $token")
                 response.body()?.let {
+                    saveTokenApi(token)
                     findNavController().navigate(action)
                 }
             }
@@ -219,7 +223,13 @@ abstract class UserRegistration<T : ViewBinding> : BaseFragment<T>() {
             }
         }
     }
-
+    private fun saveTokenApi(token: String?) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            if (token != null) {
+                DataStoreManager.saveToken(requireContext(), API_TOKEN, token)
+            }
+        }
+    }
     abstract fun validateUserRegistration(action: Int)
 
     @RequiresApi(Build.VERSION_CODES.O)

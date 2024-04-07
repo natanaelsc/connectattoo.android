@@ -18,6 +18,11 @@
         <action
             android:id="@+id/action_welcomeFragment_to_homeUserFragment2"
             app:destination="@id/homeUserFragment2" />
+        <action
+            android:id="@+id/action_welcomeFragment_to_confirmationFragment"
+            app:destination="@id/confirmationFragment"
+            app:popUpTo="@id/welcomeFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/artistRegistrationFragment"
