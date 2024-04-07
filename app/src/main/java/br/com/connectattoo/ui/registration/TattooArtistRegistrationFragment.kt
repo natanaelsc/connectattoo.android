@@ -17,6 +17,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+@Suppress("TooManyFunctions")
 class TattooArtistRegistrationFragment :
     UserRegistration<FragmentTattooArtistRegistrationBinding>() {
 
@@ -73,13 +74,16 @@ class TattooArtistRegistrationFragment :
         val password = password.text.toString()
         if (!isPasswordValid(password)) {
             isChar = true
-            binding.txtConditionsPassword.visibility = View.VISIBLE
-            binding.txtpasswordNotCharacteristics.visibility = View.VISIBLE
-            binding.linearLayout.visibility = View.VISIBLE
-            binding.txtpasswordFeature.visibility = View.GONE
-            binding.txtMinimumCharacters.setTextColor(Color.RED)
-            binding.ImgCloseMinimumCharacters.visibility = View.VISIBLE
-            binding.ImgCheckMinimumCharacters.visibility = View.GONE
+            binding.run {
+                txtConditionsPassword.visibility = View.VISIBLE
+                txtpasswordNotCharacteristics.visibility = View.VISIBLE
+                linearLayout.visibility = View.VISIBLE
+                txtpasswordFeature.visibility = View.GONE
+                txtMinimumCharacters.setTextColor(Color.RED)
+                ImgCloseMinimumCharacters.visibility = View.VISIBLE
+                ImgCheckMinimumCharacters.visibility = View.GONE
+            }
+
         } else {
             isChar = false
             binding.txtMinimumCharacters.setTextColor(Color.GREEN)

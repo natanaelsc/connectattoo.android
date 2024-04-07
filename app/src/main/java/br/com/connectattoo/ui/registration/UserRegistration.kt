@@ -19,6 +19,8 @@ import br.com.connectattoo.api.ApiUrl
 import br.com.connectattoo.data.TokenData
 import br.com.connectattoo.ui.BaseFragment
 import br.com.connectattoo.util.Constants.API_TOKEN
+import br.com.connectattoo.util.Constants.CODE_ERROR_404
+import br.com.connectattoo.util.Constants.CODE_ERROR_409
 import br.com.connectattoo.util.DataStoreManager
 import com.github.rtoshiro.util.format.SimpleMaskFormatter
 import com.github.rtoshiro.util.format.text.MaskTextWatcher
@@ -33,6 +35,7 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
+@Suppress("TooManyFunctions")
 abstract class UserRegistration<T : ViewBinding> : BaseFragment<T>() {
 
     protected lateinit var name: EditText
@@ -103,6 +106,7 @@ abstract class UserRegistration<T : ViewBinding> : BaseFragment<T>() {
 
     abstract fun validateConfirmPassword()
 
+    @Suppress("MagicNumber")
     private fun validateBirthDay() {
         val birthDay = this.birthDay.text.toString()
         val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale("pt", "BR"))
@@ -217,8 +221,8 @@ abstract class UserRegistration<T : ViewBinding> : BaseFragment<T>() {
             }
         } else {
             when (response.code()) {
-                404 -> showValidationError("A URL de destino não foi encontrada.")
-                409 -> showValidationError("Email já cadastrado!!!")
+                CODE_ERROR_404 -> showValidationError("A URL de destino não foi encontrada.")
+                CODE_ERROR_409 -> showValidationError("Email já cadastrado!!!")
                 else -> showValidationError("Erro: ${response.code()}")
             }
         }

@@ -1,7 +1,9 @@
+
 apply plugin: "io.gitlab.arturbosch.detekt"
 tasks.named("preBuild") {
     dependsOn("detekt")
 }
+
 detekt {
 
     toolVersion = "1.23.3"

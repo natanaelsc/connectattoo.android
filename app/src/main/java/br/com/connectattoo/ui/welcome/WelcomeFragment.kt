@@ -13,6 +13,8 @@ import br.com.connectattoo.databinding.FragmentWelcomeBinding
 import br.com.connectattoo.repository.AuthRepository
 import br.com.connectattoo.ui.BaseFragment
 import br.com.connectattoo.util.Constants.API_TOKEN
+import br.com.connectattoo.util.Constants.CODE_ERROR_401
+import br.com.connectattoo.util.Constants.CODE_ERROR_404
 import br.com.connectattoo.util.DataStoreManager
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
@@ -45,7 +47,7 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
                 try {
                     verifyUserConfirmation("Bearer $token")
                 } catch (e: IOException) {
-                    showValidationError("Erro de conexão com a internet!")
+                    showValidationError("Erro: ${e.message}")
                 }
             }
         }
@@ -71,11 +73,11 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
 
     private suspend fun handleErrorResponse(code: Int) {
         when (code) {
-            404 -> {
+            CODE_ERROR_404 -> {
                 showValidationError("A URL de destino não foi encontrada.")
                 DataStoreManager.deleteApiKey(requireContext(), API_TOKEN)
             }
-            401 -> {
+            CODE_ERROR_401 -> {
                 showValidationError("Token Expirou, Faça o cadastro novamente!!!")
                 DataStoreManager.deleteApiKey(requireContext(), API_TOKEN)
             }
