@@ -5,6 +5,8 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.navigation.fragment.findNavController
 import br.com.connectattoo.R
@@ -43,92 +45,62 @@ class TattooClientRegistrationFragment :
 
     override fun validatePassword() {
         val password = password.text.toString()
-        if (!isPasswordValid(password)) {
-            isChar = true
-            binding.txtConditionsPassword.visibility = View.VISIBLE
-            binding.txtpasswordNotCharacteristics.visibility = View.VISIBLE
-            binding.linearLayout.visibility = View.VISIBLE
-            binding.txtpasswordFeature.visibility = View.GONE
-            binding.txtMinimumCharacters.setTextColor(Color.RED)
-            binding.ImgCloseMinimumCharacters.visibility = View.VISIBLE
-            binding.ImgCheckMinimumCharacters.visibility = View.GONE
-        } else {
-            isChar = false
-            binding.txtMinimumCharacters.setTextColor(Color.GREEN)
-            binding.ImgCheckMinimumCharacters.visibility = View.VISIBLE
-            binding.ImgCloseMinimumCharacters.visibility = View.GONE
+        val validationResults = listOf(
+            Validation(
+                HAS_SPECIAL_SYMBOL.toRegex(),
+                binding.txtSpecialSymbol,
+                binding.ImgCheckSpecialSymbol,
+                binding.ImgCloseSpecialSymbol
+            ),
+            Validation(
+                HAS_UPPER_CASE.toRegex(),
+                binding.txtCapitalLetter,
+                binding.ImgCheckCapitalLetter,
+                binding.ImgCloseCapitalLetter
+            ),
+            Validation(
+                HAS_LOWER_CASE.toRegex(),
+                binding.txtLowerCase,
+                binding.ImgCheckLowerCase,
+                binding.ImgCloseLowerCase
+            ),
+            Validation(
+                HAS_NUMBER.toRegex(),
+                binding.txtNumber,
+                binding.ImgCheckNumber,
+                binding.ImgCloseNumber
+            )
+        )
+
+        var hasErrors = false
+        for ((regex, textView, checkImage, closeImage) in validationResults) {
+            val isValid = password.matches(regex)
+            textView.setTextColor(if (isValid) Color.GREEN else Color.RED)
+            checkImage.visibility = if (isValid) View.VISIBLE else View.GONE
+            closeImage.visibility = if (isValid) View.GONE else View.VISIBLE
+            if (!isValid) hasErrors = true
         }
 
-        if (!password.matches(HAS_SPECIAL_SYMBOL.toRegex())) {
-            hasSpecialSymbol = true
-            binding.txtpasswordNotCharacteristics.visibility = View.VISIBLE
-            binding.linearLayout.visibility = View.VISIBLE
-            binding.txtpasswordFeature.visibility = View.GONE
-            binding.txtSpecialSymbol.setTextColor(Color.RED)
-            binding.ImgCloseSpecialSymbol.visibility = View.VISIBLE
-            binding.ImgCheckSpecialSymbol.visibility = View.GONE
-        } else {
-            hasSpecialSymbol = false
-            binding.txtSpecialSymbol.setTextColor(Color.GREEN)
-            binding.ImgCheckSpecialSymbol.visibility = View.VISIBLE
-            binding.ImgCloseSpecialSymbol.visibility = View.GONE
-        }
+        binding.txtConditionsPassword.visibility = if (!isPasswordValid(password))
+            View.VISIBLE else View.GONE
+        binding.txtpasswordNotCharacteristics.visibility = if (hasErrors)
+            View.VISIBLE else View.GONE
+        binding.linearLayout.visibility = if (hasErrors) View.VISIBLE else View.GONE
+        binding.txtpasswordFeature.visibility = if (hasErrors) View.GONE else View.VISIBLE
 
-        if (!password.matches(HAS_UPPER_CASE.toRegex())) {
-            hasUpper = true
-            binding.txtpasswordNotCharacteristics.visibility = View.VISIBLE
-            binding.linearLayout.visibility = View.VISIBLE
-            binding.txtpasswordFeature.visibility = View.GONE
-            binding.txtCapitalLetter.setTextColor(Color.RED)
-            binding.ImgCloseCapitalLetter.visibility = View.VISIBLE
-            binding.ImgCheckCapitalLetter.visibility = View.GONE
+        if (!isPasswordValid(password) || hasErrors) {
+            correctPassword = false
+            setBackgroundInvalid(binding.editTextPassword)
         } else {
-            hasUpper = false
-            binding.txtCapitalLetter.setTextColor(Color.GREEN)
-            binding.ImgCheckCapitalLetter.visibility = View.VISIBLE
-            binding.ImgCloseCapitalLetter.visibility = View.GONE
-        }
-
-        if (!password.matches(HAS_LOWER_CASE.toRegex())) {
-            hasLow = true
-            binding.txtpasswordNotCharacteristics.visibility = View.VISIBLE
-            binding.linearLayout.visibility = View.VISIBLE
-            binding.txtpasswordFeature.visibility = View.GONE
-            binding.txtLowerCase.setTextColor(Color.RED)
-            binding.ImgCloseLowerCase.visibility = View.VISIBLE
-            binding.ImgCheckLowerCase.visibility = View.GONE
-        } else {
-            hasLow = false
-            binding.txtLowerCase.setTextColor(Color.GREEN)
-            binding.ImgCheckLowerCase.visibility = View.VISIBLE
-            binding.ImgCloseLowerCase.visibility = View.GONE
-        }
-
-        if (!password.matches(HAS_NUMBER.toRegex())) {
-            hasNum = true
-            binding.txtpasswordNotCharacteristics.visibility = View.VISIBLE
-            binding.linearLayout.visibility = View.VISIBLE
-            binding.txtpasswordFeature.visibility = View.GONE
-            binding.txtNumber.setTextColor(Color.RED)
-            binding.ImgCloseNumber.visibility = View.VISIBLE
-            binding.ImgCheckNumber.visibility = View.GONE
-        } else {
-            hasNum = false
-            binding.txtNumber.setTextColor(Color.GREEN)
-            binding.ImgCloseNumber.visibility = View.GONE
-            binding.ImgCheckNumber.visibility = View.VISIBLE
-        }
-
-        if (!isChar && !hasNum && !hasSpecialSymbol && !hasUpper && !hasLow) {
-            binding.txtpasswordNotCharacteristics.visibility = View.GONE
-            binding.linearLayout.visibility = View.GONE
-            binding.txtpasswordFeature.visibility = View.VISIBLE
             correctPassword = true
             setBackgroundValid(binding.editTextPassword)
-        } else {
-            setBackgroundInvalid(binding.editTextPassword)
         }
     }
+
+    data class Validation(
+        val regex: Regex, val textView: TextView, val checkImage: ImageView,
+        val closeImage: ImageView
+    )
 
     override fun validateConfirmPassword() {
         val confirmPassword = binding.editTextConfirmPassword.text.toString()
