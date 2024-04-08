@@ -3,6 +3,9 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 
+apply(from = "../config/detekt/detekt.gradle")
+
+
 android {
     namespace = "br.com.connectattoo"
     compileSdk = 34

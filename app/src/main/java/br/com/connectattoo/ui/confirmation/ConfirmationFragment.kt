@@ -10,9 +10,12 @@ import br.com.connectattoo.databinding.FragmentConfirmationBinding
 import br.com.connectattoo.repository.AuthRepository
 import br.com.connectattoo.ui.BaseFragment
 import br.com.connectattoo.util.Constants.API_TOKEN
+import br.com.connectattoo.util.Constants.CODE_ERROR_401
+import br.com.connectattoo.util.Constants.CODE_ERROR_404
 import br.com.connectattoo.util.DataStoreManager
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 class ConfirmationFragment : BaseFragment<FragmentConfirmationBinding>() {
 
@@ -47,14 +50,14 @@ class ConfirmationFragment : BaseFragment<FragmentConfirmationBinding>() {
                     }
                 } else {
                     when (result.code()) {
-                        404 -> showValidationError("A URL de destino não foi encontrada.")
-                        401 -> showValidationError("Erro de Autenticação!!!")
+                        CODE_ERROR_404 -> showValidationError("A URL de destino não foi encontrada.")
+                        CODE_ERROR_401 -> showValidationError("Erro de Autenticação!!!")
                         else -> showValidationError("Erro: ${result.code()}")
                     }
                     binding.swipeRefreshConfirmationScreen.isRefreshing = false
                 }
-            } catch (e: Exception) {
-                showValidationError("Erro de conexão com a internet!")
+            } catch (error: IOException) {
+                showValidationError("Erro ${error.message}")
                 binding.swipeRefreshConfirmationScreen.isRefreshing = false
             }
 
