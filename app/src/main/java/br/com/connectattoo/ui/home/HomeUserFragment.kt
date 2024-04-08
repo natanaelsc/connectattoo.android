@@ -1,8 +1,28 @@
 package br.com.connectattoo.ui.home
 
+import android.Manifest
+import android.app.Activity
+import android.content.Context
+import android.content.Context.LOCATION_SERVICE
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Color
+import android.location.LocationManager
+import android.os.Build
+import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.location.LocationManagerCompat
+import androidx.core.location.LocationManagerCompat.isLocationEnabled
 import androidx.recyclerview.widget.LinearLayoutManager
+import br.com.connectattoo.R
 import br.com.connectattoo.adapter.AdapterListOfNearbyTattooArtists
 import br.com.connectattoo.adapter.AdapterListOfRandomTattoos
 import br.com.connectattoo.adapter.AdapterListOfTattoosBasedOnTags
@@ -11,8 +31,29 @@ import br.com.connectattoo.data.RandomTattoos
 import br.com.connectattoo.data.TagBasedTattoos
 import br.com.connectattoo.databinding.FragmentHomeUserBinding
 import br.com.connectattoo.ui.BaseFragment
+import br.com.connectattoo.util.Constants.REQUEST_ENABLE_LOCATION
+import com.google.android.gms.common.api.ResolvableApiException
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.LocationSettingsRequest
+import com.google.android.gms.location.Priority
+import com.google.android.gms.tasks.CancellationTokenSource
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 
 class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
+
+    private val enableLocationActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            if (isLocationEnable()) {
+                isLocationEnable()
+            } else {
+                Toast.makeText(requireContext(), "Localização não ativada!", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     private lateinit var adapterListOfTattoosBasedOnTags: AdapterListOfTattoosBasedOnTags
     private val listOfTattoosBasedOnTags: MutableList<TagBasedTattoos> = mutableListOf()
@@ -98,6 +139,8 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
     }
 
     override fun setupViews() {
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+        getLocationUser()
         val recycleViewListOfTattoosBasedOnTags = binding.recycleListOfTattoosBasedOnTags
         recycleViewListOfTattoosBasedOnTags.layoutManager = LinearLayoutManager(
             context,
@@ -199,7 +242,7 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         )
         listOfNearbyTattooArtists.add(nearbyTattooartists5)
     }
-    
+
     private fun listOfRandomTattoos() {
 
         val randomTattoos = RandomTattoos(
@@ -228,4 +271,102 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         listOfRandomTattoos.add(randomTattoos4)
     }
 
+    private fun getLocationUser() {
+        val locationPermissionRequest = registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                when {
+                    permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION,
+                        false)
+                        || permissions.getOrDefault(
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                        false
+                    ) -> {
+                        if (isLocationEnable()) {
+                            if (ContextCompat.checkSelfPermission(
+                                    requireContext(),
+                                    Manifest.permission.ACCESS_FINE_LOCATION
+                                ) == PackageManager.PERMISSION_GRANTED
+                            ) {
+                                val result = fusedLocationClient.getCurrentLocation(
+                                    Priority.PRIORITY_BALANCED_POWER_ACCURACY,
+                                    CancellationTokenSource().token
+                                )
+                                result.addOnCompleteListener {
+                                    val location = "Latitude: " + it.result.latitude + "\n" +
+                                        "Longitude: " + it.result.longitude
+                                    Log.i("location", location)
+                                }
+                            } else {
+                                Snackbar.make(
+                                    binding.txtName,
+                                    "Please tur on the location",
+                                    Snackbar.LENGTH_LONG
+                                ).show()
+                                createLocationRequest()
+                            }
+                        }else{
+                            showEnableLocationDialog()
+                        }
+                    }
+
+                    else -> {
+                        Snackbar.make(
+                            binding.txtName,
+                            "Localização Negada!",
+                            Snackbar.LENGTH_LONG
+                        ).setBackgroundTint(Color.RED).show()
+
+                    }
+                }
+            }
+        }
+        locationPermissionRequest.launch(
+            arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+        )
+    }
+
+    private fun isLocationEnable(): Boolean {
+        val locationManager = context?.getSystemService(LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+    }
+    private fun showEnableLocationDialog() {
+        val alertDialog = MaterialAlertDialogBuilder(requireContext(),
+            com.google.android.material.R.style.AlertDialog_AppCompat_Light)
+            .setMessage("Serviço de localização desabilitado quer habilitar?")
+            .setNeutralButton("Cancelar") { dialog, _ ->
+                dialog.cancel()
+            }
+            .setPositiveButton("Sim") { dialog, _ ->
+                val enableLocationIntent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                enableLocationActivityResult.launch(enableLocationIntent)
+                dialog.dismiss()
+            }.show()
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)?.setTextColor(resources.getColor(R.color.black))
+        alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL)?.setTextColor(resources.getColor(R.color.black))
+    }
+    private fun createLocationRequest(){
+        val locationRequest = LocationRequest.Builder(
+            Priority.PRIORITY_HIGH_ACCURACY, 10000
+        ).setMinUpdateIntervalMillis(5000).build()
+
+        val builder = LocationSettingsRequest.Builder().addLocationRequest (locationRequest)
+        val client = LocationServices.getSettingsClient (requireContext())
+        val task = client.checkLocationSettings(builder.build())
+        task.addOnSuccessListener {
+        }
+        task.addOnFailureListener {exeption ->
+            if (exeption is ResolvableApiException){
+                try {
+                    exeption.startResolutionForResult(requireActivity(),100)
+                }catch (sendEX: java.lang.Exception){
+
+                }
+            }
+        }
+    }
 }
