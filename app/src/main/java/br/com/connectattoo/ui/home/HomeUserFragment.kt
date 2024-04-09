@@ -3,25 +3,19 @@ package br.com.connectattoo.ui.home
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
 import android.content.Context.LOCATION_SERVICE
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
-import android.location.Location
 import android.location.LocationManager
 import android.os.Build
-import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.connectattoo.R
@@ -44,7 +38,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 
 class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
-
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var checkLocation = false
     private val enableLocationActivityResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -57,33 +51,7 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
                 }
             }
         }
-
-
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
-        getLocationUser()
-
-    }
-
-    @SuppressLint("MissingPermission")
-    override fun onResume() {
-        super.onResume()
-        if (checkLocation) {
-            if (isLocationEnable()) {
-                val result = fusedLocationClient.getCurrentLocation(
-                    Priority.PRIORITY_BALANCED_POWER_ACCURACY,
-                    CancellationTokenSource().token
-                )
-                result.addOnCompleteListener {
-                    val location = "Latitude: " + it.result.latitude + "\n" +
-                        "Longitude: " + it.result.longitude
-                    Log.i("location", location)
-                }
-            }
-        }
-    }
+    
 
     private lateinit var adapterListOfTattoosBasedOnTags: AdapterListOfTattoosBasedOnTags
     private val listOfTattoosBasedOnTags: MutableList<TagBasedTattoos> = mutableListOf()
@@ -165,13 +133,14 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentHomeUserBinding {
-
         return FragmentHomeUserBinding.inflate(inflater, container, false)
 
     }
 
 
     override fun setupViews() {
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+        getLocationUser()
         val recycleViewListOfTattoosBasedOnTags = binding.recycleListOfTattoosBasedOnTags
         recycleViewListOfTattoosBasedOnTags.layoutManager = LinearLayoutManager(
             context,
@@ -404,6 +373,23 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
                     exeption.startResolutionForResult(requireActivity(), 100)
                 } catch (sendEX: java.lang.Exception) {
 
+                }
+            }
+        }
+    }
+    @SuppressLint("MissingPermission")
+    override fun onResume() {
+        super.onResume()
+        if (checkLocation) {
+            if (isLocationEnable()) {
+                val result = fusedLocationClient.getCurrentLocation(
+                    Priority.PRIORITY_BALANCED_POWER_ACCURACY,
+                    CancellationTokenSource().token
+                )
+                result.addOnCompleteListener {
+                    val location = "Latitude: " + it.result.latitude + "\n" +
+                        "Longitude: " + it.result.longitude
+                    Log.i("location", location)
                 }
             }
         }
