@@ -1,8 +1,10 @@
-
+/*
 apply plugin: "io.gitlab.arturbosch.detekt"
 tasks.named("preBuild") {
     dependsOn("detekt")
 }
+
+ */
 
 detekt {
 

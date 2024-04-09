@@ -2,6 +2,7 @@ package br.com.connectattoo.ui.confirmation
 
 import android.content.Intent
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
@@ -37,6 +38,7 @@ class ConfirmationFragment : BaseFragment<FragmentConfirmationBinding>() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             val token = DataStoreManager.getStringToken(requireContext(), API_TOKEN)
+            Log.i("token", token)
             try {
                 val result = repository.verifyUserConfirmation("Bearer $token")
 

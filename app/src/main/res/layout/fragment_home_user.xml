@@ -16,7 +16,7 @@
             android:id="@+id/txtHello"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Olá"
+            android:text="Olá, "
             android:textSize="15sp"
             android:layout_marginStart="25dp"
             android:layout_marginTop="23dp"
@@ -28,7 +28,6 @@
             android:id="@+id/txtName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="João"
             android:textStyle="bold"
             android:textSize="15sp"
             android:layout_marginStart="28dp"
@@ -36,6 +35,7 @@
             android:fontFamily="@font/raleway_extrabold"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="@id/txtHello"
+            tools:text="João"
             />
 
         <com.google.android.material.textview.MaterialTextView
@@ -45,7 +45,7 @@
             android:layout_marginStart="35dp"
             android:layout_marginTop="23dp"
             android:fontFamily="@font/raleway_medium"
-            android:text=", vamos encontrar"
+            android:text="   vamos encontrar"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/txtName"

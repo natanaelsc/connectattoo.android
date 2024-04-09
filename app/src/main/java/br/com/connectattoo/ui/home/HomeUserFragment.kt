@@ -1,8 +1,12 @@
 package br.com.connectattoo.ui.home
 
+import android.content.Intent
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import br.com.connectattoo.HomeUserActivity
 import br.com.connectattoo.adapter.AdapterListOfNearbyTattooArtists
 import br.com.connectattoo.adapter.AdapterListOfRandomTattoos
 import br.com.connectattoo.adapter.AdapterListOfTattoosBasedOnTags
@@ -10,7 +14,13 @@ import br.com.connectattoo.data.NearbyTattooArtists
 import br.com.connectattoo.data.RandomTattoos
 import br.com.connectattoo.data.TagBasedTattoos
 import br.com.connectattoo.databinding.FragmentHomeUserBinding
+import br.com.connectattoo.repository.UserRepository
 import br.com.connectattoo.ui.BaseFragment
+import br.com.connectattoo.util.Constants
+import br.com.connectattoo.util.DataStoreManager
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
+import java.io.IOException
 
 class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
 
@@ -20,7 +30,7 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
 
     private lateinit var adapterListOfNearbyTattooartists: AdapterListOfNearbyTattooArtists
     private val listOfNearbyTattooArtists: MutableList<NearbyTattooArtists> = mutableListOf()
-
+    private lateinit var userRepository: UserRepository
     private val tattooUrl = mutableListOf(
         "https://s3-alpha-sig.figma.com/img/f5bc/bd49/a9723f878130f017973e9a92b5c4fc28?Expires=" +
             "1710115200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=SIrz~DVdxLfDEIfz1~YhhWnDjii~" +
@@ -130,8 +140,43 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
             AdapterListOfRandomTattoos(requireContext(), listOfRandomTattoos)
         recycleListOfRandomTattoos.adapter = adapterListOfRandomTattoos
         listOfRandomTattoos()
+        userRepository = UserRepository()
+        getUserName()
     }
 
+    private fun getUserName() {
+        viewLifecycleOwner.lifecycleScope.launch {
+
+            val token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyMjA2YmZlOS1hNGU3LTQ3M2UtOTBmMy1iZTk0Y2ZhYWQxZjMiLCJwcm9maWxlSWQiOiIxZTc3MmE2ZC0yOTBlLTQyZTUtODg2MS0yYjJkNGM0Y2EzZDAiLCJlbWFpbCI6ImpvcmdlQGdtYWlsLmNvbSIsImlzRW1haWxDb25maXJtZWQiOmZhbHNlLCJpc0FydGlzdCI6ZmFsc2UsImlhdCI6MTcxMjY5MTc4NSwiZXhwIjoxNzEyNjkzNTg1fQ.TAugoLctRBuwQHrdhFoopO49ZTi-RpF1IXTskEtVvuA"
+                //DataStoreManager.getStringToken(requireContext(), Constants.API_TOKEN)
+            try {
+                val result = userRepository.getProfileUser("Bearer $token")
+
+                if (result.isSuccessful) {
+                    result.body().let { profileUser ->
+                        binding.txtName.text = " ${profileUser?.username}, "
+                    }
+                } else {
+                    when (result.code()) {
+                        Constants.CODE_ERROR_404 -> showValidationError("A URL de destino não foi encontrada.")
+                        Constants.CODE_ERROR_401 -> showValidationError("Erro de Autenticação!!!")
+                        else -> showValidationError("Erro: ${result.code()}")
+                    }
+                }
+            } catch (error: IOException) {
+                showValidationError("Erro ${error.message}")
+            }
+        }
+    }
+
+    private fun showValidationError(message: String) {
+        view?.let {
+            Snackbar.make(it, message, Snackbar.LENGTH_SHORT)
+                .setTextColor(Color.WHITE)
+                .setBackgroundTint(Color.RED)
+                .show()
+        }
+    }
 
     private fun listOfTattoosBasedOnTags() {
 
@@ -199,7 +244,7 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         )
         listOfNearbyTattooArtists.add(nearbyTattooartists5)
     }
-    
+
     private fun listOfRandomTattoos() {
 
         val randomTattoos = RandomTattoos(
