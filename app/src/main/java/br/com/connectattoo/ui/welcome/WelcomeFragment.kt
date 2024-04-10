@@ -1,7 +1,6 @@
 package br.com.connectattoo.ui.welcome
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -18,9 +17,7 @@ import br.com.connectattoo.util.Constants.API_USER_NAME
 import br.com.connectattoo.util.Constants.CODE_ERROR_401
 import br.com.connectattoo.util.Constants.CODE_ERROR_404
 import br.com.connectattoo.util.DataStoreManager
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
-import java.io.IOException
 
 class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
     private lateinit var repository: AuthRepository
@@ -43,15 +40,12 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
         return FragmentWelcomeBinding.inflate(inflater, container, false)
 
     }
+
     private fun verifyTokenApi() {
         viewLifecycleOwner.lifecycleScope.launch {
             val token = DataStoreManager.getUserSettings(requireContext(), API_TOKEN)
             if (token.isNotEmpty()) {
-                try {
-                    verifyUserConfirmation(token)
-                } catch (e: IOException) {
-                    showValidationError("Erro: ${e.message}")
-                }
+                verifyUserConfirmation(token)
             }
         }
     }
@@ -71,32 +65,27 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
             requireActivity().finish()
         } else {
             val bundle = Bundle().apply { putString("token", token) }
-            findNavController().navigate(R.id.action_welcomeFragment_to_confirmationFragment, bundle)
+            findNavController().navigate(
+                R.id.action_welcomeFragment_to_confirmationFragment,
+                bundle
+            )
         }
     }
 
     private suspend fun handleErrorResponse(code: Int) {
         when (code) {
             CODE_ERROR_404 -> {
-                showValidationError("A URL de destino não foi encontrada.")
-                DataStoreManager.deleteApiKey(requireContext(), API_TOKEN)
-                DataStoreManager.deleteApiKey(requireContext(), API_USER_NAME)
+                deleteUserInfoDataStore()
             }
+
             CODE_ERROR_401 -> {
-                showValidationError("Token Expirou, Faça o cadastro novamente!!!")
-                DataStoreManager.deleteApiKey(requireContext(), API_TOKEN)
-                DataStoreManager.deleteApiKey(requireContext(), API_USER_NAME)
+                deleteUserInfoDataStore()
             }
-            else -> showValidationError("Erro: $code")
         }
     }
 
-    private fun showValidationError(message: String) {
-        view?.let {
-            Snackbar.make(it, message, Snackbar.LENGTH_SHORT)
-                .setTextColor(Color.WHITE)
-                .setBackgroundTint(Color.RED)
-                .show()
-        }
+    private suspend fun deleteUserInfoDataStore() {
+        DataStoreManager.deleteApiKey(requireContext(), API_TOKEN)
+        DataStoreManager.deleteApiKey(requireContext(), API_USER_NAME)
     }
 }

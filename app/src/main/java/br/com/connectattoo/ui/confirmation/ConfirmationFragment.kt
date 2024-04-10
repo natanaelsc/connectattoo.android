@@ -1,7 +1,8 @@
 package br.com.connectattoo.ui.confirmation
 
+import android.content.ContentValues.TAG
 import android.content.Intent
-import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
@@ -9,9 +10,10 @@ import br.com.connectattoo.HomeUserActivity
 import br.com.connectattoo.databinding.FragmentConfirmationBinding
 import br.com.connectattoo.repository.AuthRepository
 import br.com.connectattoo.ui.BaseFragment
+import br.com.connectattoo.util.Constants
 import br.com.connectattoo.util.Constants.CODE_ERROR_401
 import br.com.connectattoo.util.Constants.CODE_ERROR_404
-import com.google.android.material.snackbar.Snackbar
+import br.com.connectattoo.util.DataStoreManager
 import kotlinx.coroutines.launch
 import java.io.IOException
 
@@ -48,28 +50,21 @@ class ConfirmationFragment : BaseFragment<FragmentConfirmationBinding>() {
                     }
                 } else {
                     when (result.code()) {
-                        CODE_ERROR_404 -> showValidationError("A URL de destino não foi encontrada.")
-                        CODE_ERROR_401 -> showValidationError("Erro de Autenticação!!!")
-                        else -> showValidationError("Erro: ${result.code()}")
+                        CODE_ERROR_404 -> deleteUserInfoDataStore()
+                        CODE_ERROR_401 -> deleteUserInfoDataStore()
                     }
                     binding.swipeRefreshConfirmationScreen.isRefreshing = false
                 }
             } catch (error: IOException) {
-                showValidationError("Erro ${error.message}")
+                Log.i(TAG, error.message.toString())
                 binding.swipeRefreshConfirmationScreen.isRefreshing = false
             }
 
         }
     }
-
-
-    private fun showValidationError(message: String) {
-        view?.let {
-            Snackbar.make(it, message, Snackbar.LENGTH_SHORT)
-                .setTextColor(Color.WHITE)
-                .setBackgroundTint(Color.RED)
-                .show()
-        }
+    private suspend fun deleteUserInfoDataStore() {
+        DataStoreManager.deleteApiKey(requireContext(), Constants.API_TOKEN)
+        DataStoreManager.deleteApiKey(requireContext(), Constants.API_USER_NAME)
     }
 
     private fun swipeRefresh() {
