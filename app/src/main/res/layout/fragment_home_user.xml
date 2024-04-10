@@ -34,7 +34,6 @@
             android:text="vamos encontrar"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/txtName"
             app:layout_constraintStart_toEndOf="@+id/txtName"
             app:layout_constraintTop_toTopOf="@+id/txtName"
@@ -49,7 +48,6 @@
             android:text="a sua tatuagem perfeita!"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtTitle"
             tools:visibility="visible" />

@@ -1,10 +1,10 @@
 package br.com.connectattoo.ui.home
 
+import android.content.ContentValues.TAG
 import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.connectattoo.R
@@ -152,33 +152,24 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
             val nameUser = DataStoreManager.getUserSettings(requireContext(), API_USER_NAME)
             if (nameUser.isEmpty()) {
                 val token = DataStoreManager.getUserSettings(requireContext(), API_TOKEN)
-                Log.i("res", "$token $nameUser")
                 try {
                     val result = userRepository.getProfileUser("Bearer $token")
 
                     if (result.isSuccessful) {
                         result.body().let { profileUser ->
-
                             if (profileUser != null) {
                                 DataStoreManager.saveUserSettings(
                                     requireContext(), API_USER_NAME,
                                     profileUser.username
                                 )
+
                                 setNameUser(profileUser.username)
                             }
                         }
                     } else {
                         when (result.code()) {
-                            Constants.CODE_ERROR_404 -> {
-                                showValidationError("A URL de destino não foi encontrada.")
-                                setNameUser("")
-                            }
-
-                            Constants.CODE_ERROR_401 -> {
-                                showValidationError("Erro de Autenticação!!!")
-                                setNameUser("")
-                            }
-
+                            Constants.CODE_ERROR_404 -> setNameUser("")
+                            Constants.CODE_ERROR_401 -> setNameUser("")
                             else -> {
                                 showValidationError("Erro: ${result.code()}")
                                 setNameUser("")
@@ -186,7 +177,8 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
                         }
                     }
                 } catch (error: IOException) {
-                    showValidationError("Erro ${error.message}")
+                    Log.i(TAG, error.message.toString())
+                    setNameUser("")
                 }
             } else {
                 setNameUser(nameUser)
@@ -196,10 +188,9 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
     }
 
     private fun setNameUser(name: String) {
+
         if (name.isNotEmpty()) {
             binding.txtName.text = getString(R.string.txt_hello_user_home, name)
-            binding.txtTitle.isVisible = true
-            binding.txtCaption.isVisible = true
         } else {
             binding.txtName.text = getString(R.string.txt_hello_user_home_error)
         }
