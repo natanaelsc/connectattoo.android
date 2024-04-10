@@ -144,50 +144,58 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         recycleListOfRandomTattoos.adapter = adapterListOfRandomTattoos
         listOfRandomTattoos()
         userRepository = UserRepository()
-        getUserName()
+        setUserName()
     }
 
-    private fun getUserName() {
+    private fun setUserName() {
         viewLifecycleOwner.lifecycleScope.launch {
             val nameUser = DataStoreManager.getUserSettings(requireContext(), API_USER_NAME)
             if (nameUser.isEmpty()) {
                 val token = DataStoreManager.getUserSettings(requireContext(), API_TOKEN)
-                try {
-                    val result = userRepository.getProfileUser("Bearer $token")
-
-                    if (result.isSuccessful) {
-                        result.body().let { profileUser ->
-                            if (profileUser != null) {
-                                DataStoreManager.saveUserSettings(
-                                    requireContext(), API_USER_NAME,
-                                    profileUser.username
-                                )
-
-                                setNameUser(profileUser.username)
-                            }
-                        }
-                    } else {
-                        when (result.code()) {
-                            Constants.CODE_ERROR_404 -> setNameUser("")
-                            Constants.CODE_ERROR_401 -> setNameUser("")
-                            else -> {
-                                showValidationError("Erro: ${result.code()}")
-                                setNameUser("")
-                            }
-                        }
-                    }
-                } catch (error: IOException) {
-                    Log.i(TAG, error.message.toString())
-                    setNameUser("")
-                }
+                getUserNameFromApi(token)
             } else {
-                setNameUser(nameUser)
+                showUserName(nameUser)
             }
 
         }
     }
 
-    private fun setNameUser(name: String) {
+    private suspend fun getUserNameFromApi(token: String) {
+        try {
+            apiRequest(token)
+        } catch (error: IOException) {
+            Log.i(TAG, error.message.toString())
+            showUserName("")
+        }
+    }
+
+    private suspend fun apiRequest(token: String) {
+        val result = userRepository.getProfileUser("Bearer $token")
+
+        if (result.isSuccessful) {
+            result.body().let { profileUser ->
+                if (profileUser != null) {
+                    DataStoreManager.saveUserSettings(
+                        requireContext(), API_USER_NAME,
+                        profileUser.username
+                    )
+
+                    showUserName(profileUser.username)
+                }
+            }
+        } else {
+            when (result.code()) {
+                Constants.CODE_ERROR_404 -> showUserName("")
+                Constants.CODE_ERROR_401 -> showUserName("")
+                else -> {
+                    showValidationError("Erro: ${result.code()}")
+                    showUserName("")
+                }
+            }
+        }
+    }
+
+    private fun showUserName(name: String) {
 
         if (name.isNotEmpty()) {
             binding.txtName.text = getString(R.string.txt_hello_user_home, name)
