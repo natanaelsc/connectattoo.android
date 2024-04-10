@@ -27,10 +27,8 @@ import com.google.android.gms.location.LocationSettingsRequest
 import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 
 object PermissionUtils {
-    @Suppress("LongMethod")
     fun getPermissionAndLocationUser(
         activity: FragmentActivity,
         context: Context,
@@ -42,18 +40,14 @@ object PermissionUtils {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 when {
                     permissions.getOrDefault(
-                        Manifest.permission.ACCESS_FINE_LOCATION,
-                        false
-                    )
+                        Manifest.permission.ACCESS_FINE_LOCATION, false)
                         || permissions.getOrDefault(
-                        Manifest.permission.ACCESS_COARSE_LOCATION,
-                        false
+                        Manifest.permission.ACCESS_COARSE_LOCATION, false
                     ) -> {
                         if (isLocationEnabled(activity)) {
-                            if (ContextCompat.checkSelfPermission(
-                                    activity,
-                                    Manifest.permission.ACCESS_FINE_LOCATION
-                                ) == PackageManager.PERMISSION_GRANTED
+                            if (ContextCompat.checkSelfPermission(activity,
+                                    Manifest.permission.ACCESS_FINE_LOCATION)
+                                == PackageManager.PERMISSION_GRANTED
                             ) {
                                 val fusedLocationClient =
                                     LocationServices.getFusedLocationProviderClient(activity)
@@ -67,37 +61,19 @@ object PermissionUtils {
                                     Log.i("location", location)
                                 }
                             } else {
-                                Snackbar.make(
-                                    activity.findViewById(android.R.id.content),
-                                    "Por favor ative a localização para uma melhor experiencia",
-                                    Snackbar.LENGTH_LONG
-                                ).show()
                                 createLocationRequest(activity)
                             }
                         } else {
                             showEnableLocationDialog(
                                 context = context,
-                                enableLocationActivityResult = enableLocationActivityResult
-                            )
+                                enableLocationActivityResult = enableLocationActivityResult)
                         }
-                    }
-
-                    else -> {
-                        Snackbar.make(
-                            activity.findViewById(android.R.id.content),
-                            "Localização Negada!", Snackbar.LENGTH_LONG
-                        )
-                            .setBackgroundTint(Color.RED).show()
-                    }
+                    }else -> {}
                 }
             }
         }
-        locationPermissionRequest.launch(
-            arrayOf(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            )
-        )
+        locationPermissionRequest.launch(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION))
     }
 
     fun isLocationEnabled(context: Context): Boolean {

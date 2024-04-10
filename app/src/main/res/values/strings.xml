@@ -7,5 +7,5 @@
     <string name="txt_confirmation_title">SUA CONTA ESTÁ QUASE PRONTA!</string>
     <string name="txt_request_location">Serviço de localização desabilitado quer habilitar?</string>
     <string name="txt_enable_now">Habilitar</string>
-    <string name="txt_calcel">Cancrela</string>
+    <string name="txt_calcel">Cancelar</string>
 </resources>
