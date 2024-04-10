@@ -2,6 +2,7 @@ package br.com.connectattoo.ui.registration
 
 import android.graphics.Color
 import android.os.Build
+import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -206,34 +207,43 @@ abstract class UserRegistration<T : ViewBinding> : BaseFragment<T>() {
     protected fun registrationResponse(
         action: Int,
         response: Response<TokenData>,
-        function: () -> Unit?,
+        function: () -> Unit?
     ) {
         if (response.isSuccessful) {
-            val responseBody = response.body()
-            Log.d("Response", "Retorno: $responseBody")
-            if (responseBody != null) {
-                val token = responseBody.accessToken
-                Log.d("Token", "Token: $token")
-                response.body()?.let {
-                    saveTokenApi(token)
-                    findNavController().navigate(action)
-                }
-            }
+            handleSuccessfulResponse(action, response)
         } else {
-            when (response.code()) {
-                CODE_ERROR_404 -> showValidationError("A URL de destino não foi encontrada.")
-                CODE_ERROR_409 -> showValidationError("Email já cadastrado!!!")
-                else -> showValidationError("Erro: ${response.code()}")
-            }
+            handleErrorResponse(response)
         }
     }
+
+    private fun handleSuccessfulResponse(action: Int, response: Response<TokenData>) {
+        val responseBody = response.body()
+        Log.d("Response", "Retorno: $responseBody")
+        responseBody?.let {
+            val token = it.accessToken
+            Log.d("Token", "Token: $token")
+            saveTokenApi(token)
+            val bundle = Bundle().apply { putString("token", token) }
+            findNavController().navigate(action, bundle)
+        }
+    }
+
+    private fun handleErrorResponse(response: Response<TokenData>) {
+        when (response.code()) {
+            CODE_ERROR_404 -> showValidationError("A URL de destino não foi encontrada.")
+            CODE_ERROR_409 -> showValidationError("Email já cadastrado!!!")
+            else -> showValidationError("Erro: ${response.code()}")
+        }
+    }
+
     private fun saveTokenApi(token: String?) {
         viewLifecycleOwner.lifecycleScope.launch {
             if (token != null) {
-                DataStoreManager.saveToken(requireContext(), API_TOKEN, token)
+                DataStoreManager.saveUserSettings(requireContext(), API_TOKEN, token)
             }
         }
     }
+
     abstract fun validateUserRegistration(action: Int)
 
     @RequiresApi(Build.VERSION_CODES.O)

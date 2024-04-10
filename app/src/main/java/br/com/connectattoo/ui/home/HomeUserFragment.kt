@@ -1,12 +1,13 @@
 package br.com.connectattoo.ui.home
 
-import android.content.Intent
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import br.com.connectattoo.HomeUserActivity
+import br.com.connectattoo.R
 import br.com.connectattoo.adapter.AdapterListOfNearbyTattooArtists
 import br.com.connectattoo.adapter.AdapterListOfRandomTattoos
 import br.com.connectattoo.adapter.AdapterListOfTattoosBasedOnTags
@@ -17,6 +18,8 @@ import br.com.connectattoo.databinding.FragmentHomeUserBinding
 import br.com.connectattoo.repository.UserRepository
 import br.com.connectattoo.ui.BaseFragment
 import br.com.connectattoo.util.Constants
+import br.com.connectattoo.util.Constants.API_TOKEN
+import br.com.connectattoo.util.Constants.API_USER_NAME
 import br.com.connectattoo.util.DataStoreManager
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
@@ -146,26 +149,59 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
 
     private fun getUserName() {
         viewLifecycleOwner.lifecycleScope.launch {
+            val nameUser = DataStoreManager.getUserSettings(requireContext(), API_USER_NAME)
+            if (nameUser.isEmpty()) {
+                val token = DataStoreManager.getUserSettings(requireContext(), API_TOKEN)
+                Log.i("res", "$token $nameUser")
+                try {
+                    val result = userRepository.getProfileUser("Bearer $token")
 
-            val token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyMjA2YmZlOS1hNGU3LTQ3M2UtOTBmMy1iZTk0Y2ZhYWQxZjMiLCJwcm9maWxlSWQiOiIxZTc3MmE2ZC0yOTBlLTQyZTUtODg2MS0yYjJkNGM0Y2EzZDAiLCJlbWFpbCI6ImpvcmdlQGdtYWlsLmNvbSIsImlzRW1haWxDb25maXJtZWQiOmZhbHNlLCJpc0FydGlzdCI6ZmFsc2UsImlhdCI6MTcxMjY5MTc4NSwiZXhwIjoxNzEyNjkzNTg1fQ.TAugoLctRBuwQHrdhFoopO49ZTi-RpF1IXTskEtVvuA"
-                //DataStoreManager.getStringToken(requireContext(), Constants.API_TOKEN)
-            try {
-                val result = userRepository.getProfileUser("Bearer $token")
+                    if (result.isSuccessful) {
+                        result.body().let { profileUser ->
 
-                if (result.isSuccessful) {
-                    result.body().let { profileUser ->
-                        binding.txtName.text = " ${profileUser?.username}, "
+                            if (profileUser != null) {
+                                DataStoreManager.saveUserSettings(
+                                    requireContext(), API_USER_NAME,
+                                    profileUser.username
+                                )
+                                setNameUser(profileUser.username)
+                            }
+                        }
+                    } else {
+                        when (result.code()) {
+                            Constants.CODE_ERROR_404 -> {
+                                showValidationError("A URL de destino não foi encontrada.")
+                                setNameUser("")
+                            }
+
+                            Constants.CODE_ERROR_401 -> {
+                                showValidationError("Erro de Autenticação!!!")
+                                setNameUser("")
+                            }
+
+                            else -> {
+                                showValidationError("Erro: ${result.code()}")
+                                setNameUser("")
+                            }
+                        }
                     }
-                } else {
-                    when (result.code()) {
-                        Constants.CODE_ERROR_404 -> showValidationError("A URL de destino não foi encontrada.")
-                        Constants.CODE_ERROR_401 -> showValidationError("Erro de Autenticação!!!")
-                        else -> showValidationError("Erro: ${result.code()}")
-                    }
+                } catch (error: IOException) {
+                    showValidationError("Erro ${error.message}")
                 }
-            } catch (error: IOException) {
-                showValidationError("Erro ${error.message}")
+            } else {
+                setNameUser(nameUser)
             }
+
+        }
+    }
+
+    private fun setNameUser(name: String) {
+        if (name.isNotEmpty()) {
+            binding.txtName.text = getString(R.string.txt_hello_user_home, name)
+            binding.txtTitle.isVisible = true
+            binding.txtCaption.isVisible = true
+        } else {
+            binding.txtName.text = getString(R.string.txt_hello_user_home_error)
         }
     }
 

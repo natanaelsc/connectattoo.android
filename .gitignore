@@ -17,7 +17,6 @@
 local.properties
 /node_modules
 .idea/appInsightsSettings.xml
-.idea/deploymentTargetDropDown.xml
 .idea/vcs.xml
-
 .idea/.name
+.idea/deploymentTargetDropDown.xml
