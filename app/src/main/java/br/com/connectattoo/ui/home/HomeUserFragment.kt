@@ -175,12 +175,13 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         if (result.isSuccessful) {
             result.body().let { profileUser ->
                 if (profileUser != null) {
+                    val firstName = profileUser.displayName.split(" ")[0]
                     DataStoreManager.saveUserSettings(
                         requireContext(), API_USER_NAME,
-                        profileUser.displayName
+                        firstName
                     )
 
-                    showUserName(profileUser.displayName)
+                    showUserName(firstName)
                 }
             }
         } else {
