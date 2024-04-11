@@ -170,17 +170,17 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
     }
 
     private suspend fun apiRequest(token: String) {
-        val result = userRepository.getProfileUser("Bearer $token")
+        val result = userRepository.getProfileUser(token)
 
         if (result.isSuccessful) {
             result.body().let { profileUser ->
                 if (profileUser != null) {
                     DataStoreManager.saveUserSettings(
                         requireContext(), API_USER_NAME,
-                        profileUser.username
+                        profileUser.displayName
                     )
 
-                    showUserName(profileUser.username)
+                    showUserName(profileUser.displayName)
                 }
             }
         } else {

@@ -38,7 +38,7 @@ class ConfirmationFragment : BaseFragment<FragmentConfirmationBinding>() {
         viewLifecycleOwner.lifecycleScope.launch {
             val token = arguments?.getString("token")
             try {
-                val result = repository.verifyUserConfirmation("Bearer $token")
+                val result = repository.verifyUserConfirmation(token ?: "")
 
                 if (result.isSuccessful) {
                     if (result.body()?.emailConfirmed == true) {

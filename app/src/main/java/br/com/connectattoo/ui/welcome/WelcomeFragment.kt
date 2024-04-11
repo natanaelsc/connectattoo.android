@@ -51,7 +51,7 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
     }
 
     private suspend fun verifyUserConfirmation(token: String) {
-        val result = repository.verifyUserConfirmation("Bearer $token")
+        val result = repository.verifyUserConfirmation(token)
         if (result.isSuccessful) {
             handleSuccessfulResponse(result.body(), token)
         } else {

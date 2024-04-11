@@ -7,7 +7,8 @@ import retrofit2.Response
 
 class UserRepository {
     suspend fun getProfileUser(token: String): Response<ProfileUserResponse>{
+        val bearerToken = "Bearer $token"
         val apiService = ApiUrl.instance.create(ApiService::class.java)
-        return apiService.getProfileUser(token)
+        return apiService.getProfileUser(bearerToken)
     }
 }
