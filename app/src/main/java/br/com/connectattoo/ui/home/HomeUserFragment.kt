@@ -1,7 +1,12 @@
 package br.com.connectattoo.ui.home
 
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.connectattoo.adapter.AdapterListOfNearbyTattooArtists
 import br.com.connectattoo.adapter.AdapterListOfRandomTattoos
@@ -11,8 +16,27 @@ import br.com.connectattoo.data.RandomTattoos
 import br.com.connectattoo.data.TagBasedTattoos
 import br.com.connectattoo.databinding.FragmentHomeUserBinding
 import br.com.connectattoo.ui.BaseFragment
+import br.com.connectattoo.util.PermissionUtils
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
+import com.google.android.gms.tasks.CancellationTokenSource
 
 class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private var checkLocation = false
+    private val enableLocationActivityResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_CANCELED) {
+                if (PermissionUtils.isLocationEnabled(requireContext())) {
+                    checkLocation = true
+                } else {
+                    Toast.makeText(requireContext(), "Localização não ativada!", Toast.LENGTH_LONG)
+                        .show()
+                }
+            }
+        }
+
 
     private lateinit var adapterListOfTattoosBasedOnTags: AdapterListOfTattoosBasedOnTags
     private val listOfTattoosBasedOnTags: MutableList<TagBasedTattoos> = mutableListOf()
@@ -59,9 +83,18 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         container: ViewGroup?
     ): FragmentHomeUserBinding {
         return FragmentHomeUserBinding.inflate(inflater, container, false)
+
     }
 
+
     override fun setupViews() {
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+        PermissionUtils.getPermissionAndLocationUser(
+            requireActivity(),
+            requireContext(),
+            enableLocationActivityResult
+        )
+        //getLocationUser()
         val recycleViewListOfTattoosBasedOnTags = binding.recycleListOfTattoosBasedOnTags
         recycleViewListOfTattoosBasedOnTags.layoutManager = LinearLayoutManager(
             context,
@@ -188,6 +221,29 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
             like = true, save = true
         )
         listOfRandomTattoos.add(randomTattoos5)
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        requestLocationUser()
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun requestLocationUser() {
+        if (checkLocation) {
+            if (PermissionUtils.isLocationEnabled(requireContext())) {
+                val result = fusedLocationClient.getCurrentLocation(
+                    Priority.PRIORITY_BALANCED_POWER_ACCURACY,
+                    CancellationTokenSource().token
+                )
+                result.addOnCompleteListener {
+                    val location = "Latitude: " + it.result.latitude + "\n" +
+                        "Longitude: " + it.result.longitude
+                    Log.i("location", location)
+                }
+            }
+        }
     }
 
 }
