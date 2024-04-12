@@ -38,23 +38,26 @@ class ConfirmationFragment : BaseFragment<FragmentConfirmationBinding>() {
         viewLifecycleOwner.lifecycleScope.launch {
             val token = arguments?.getString("token")
             try {
-                val result = repository.verifyUserConfirmation(token ?: "")
+                if (token != null){
+                    val result = repository.verifyUserConfirmation(token)
 
-                if (result.isSuccessful) {
-                    if (result.body()?.emailConfirmed == true) {
-                        binding.swipeRefreshConfirmationScreen.isRefreshing = false
-                        startActivity(Intent(requireContext(), HomeUserActivity::class.java))
-                        requireActivity().finish()
+                    if (result.isSuccessful) {
+                        if (result.body()?.emailConfirmed == true) {
+                            binding.swipeRefreshConfirmationScreen.isRefreshing = false
+                            startActivity(Intent(requireContext(), HomeUserActivity::class.java))
+                            requireActivity().finish()
+                        } else {
+                            binding.swipeRefreshConfirmationScreen.isRefreshing = false
+                        }
                     } else {
+                        when (result.code()) {
+                            CODE_ERROR_404 -> deleteUserInfoDataStore()
+                            CODE_ERROR_401 -> deleteUserInfoDataStore()
+                        }
                         binding.swipeRefreshConfirmationScreen.isRefreshing = false
                     }
-                } else {
-                    when (result.code()) {
-                        CODE_ERROR_404 -> deleteUserInfoDataStore()
-                        CODE_ERROR_401 -> deleteUserInfoDataStore()
-                    }
-                    binding.swipeRefreshConfirmationScreen.isRefreshing = false
                 }
+
             } catch (error: IOException) {
                 Log.i(TAG, error.message.toString())
                 binding.swipeRefreshConfirmationScreen.isRefreshing = false
