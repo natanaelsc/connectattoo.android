@@ -34,6 +34,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationTokenSource
 
+@Suppress("TooManyFunctions")
 class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var checkLocation = false
