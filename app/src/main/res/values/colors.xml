@@ -6,7 +6,10 @@
     <color name="white">#FFFFFFFF</color>
     <color name="red">#EF5350</color>
     <color name="deepPurple">#673AB7</color>
+    <color name="purple100">#ebd7ff</color>
     <color name="purple500">#7A32C1</color>
+    <color name="purple800">#460d7d</color>
+    <color name="purple900">#30045c</color>
     <color name="gray400">#cbc9ca</color>
     <color name="green">#037D00</color>
     <color name="black25">#efefef</color>

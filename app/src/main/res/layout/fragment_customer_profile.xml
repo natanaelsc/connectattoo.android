@@ -24,7 +24,7 @@
             android:layout_marginHorizontal="@dimen/margin_16dp"
             android:layout_marginVertical="@dimen/margin_16dp"
             android:background="@drawable/circular_image_user_profile"
-            android:contentDescription="@string/content_description_imagem_de_perfil_do_usuario"
+            android:contentDescription="@string/content_description_user_profile_image"
             android:src="@drawable/icon_person_profile"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -91,7 +91,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:fontFamily="@font/raleway_extrabold"
-        android:text="@string/txt_meus_interesses"
+        android:text="@string/txt_my_interests"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
@@ -103,16 +103,175 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="13dp"
         android:fontFamily="@font/raleway_regular"
-        android:foreground="?attr/selectableItemBackground"
         android:padding="0dp"
         android:soundEffectsEnabled="true"
-        android:text="@string/btn_gerenciar"
+        android:text="@string/btn_to_manage"
         android:textColor="@color/black500"
         android:textSize="@dimen/txt_size_11sp"
         app:layout_constraintBottom_toBottomOf="@+id/txtMyInterests"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txtMyInterests"
-        tools:targetApi="m" />
+        app:layout_constraintTop_toTopOf="@+id/txtMyInterests" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvTagsInterests"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtMyInterests"
+        tools:listitem="@layout/item_tags_my_interests" />
+
+    <TextView
+        android:id="@+id/txtNextAppointment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/raleway_extrabold"
+        android:text="@string/txt_next_scheduling"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@+id/rvTagsInterests"
+        app:layout_constraintTop_toBottomOf="@+id/rvTagsInterests" />
+
+    <Button
+        android:id="@+id/btnManageNextAppointment"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="13dp"
+        android:fontFamily="@font/raleway_regular"
+        android:padding="0dp"
+        android:soundEffectsEnabled="true"
+        android:text="@string/btn_view_more"
+        android:textColor="@color/black500"
+        android:textSize="@dimen/txt_size_11sp"
+        app:layout_constraintBottom_toBottomOf="@+id/txtNextAppointment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txtNextAppointment" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginHorizontal="@dimen/margin_16dp"
+        android:backgroundTint="@color/purple100"
+        app:cardCornerRadius="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnManageNextAppointment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:id="@+id/txt_new_tattoo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/raleway_regular"
+                android:text="@string/txt_your_next_tattoo_is_coming"
+                android:textColor="@color/purple800"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/btnMoreInfo"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:backgroundTint="@color/purple100"
+                android:src="@drawable/icon_info"
+                app:layout_constraintBottom_toBottomOf="@+id/txt_new_tattoo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/txt_new_tattoo" />
+
+            <ImageView
+                android:id="@+id/ivImageTattooArtist"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/circular_image_user_profile_border_purple"
+                android:contentDescription="@string/content_description_tattoo_artist"
+                android:src="@drawable/icon_person_profile"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_new_tattoo" />
+
+            <TextView
+                android:id="@+id/txtNameTattooArtist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/raleway_extrabold"
+                android:text="Larissa Diniz"
+                android:textColor="@color/purple500"
+                app:layout_constraintStart_toEndOf="@+id/ivImageTattooArtist"
+                app:layout_constraintTop_toTopOf="@+id/ivImageTattooArtist" />
+
+            <TextView
+                android:id="@+id/txtTattoArtistProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/raleway_regular"
+                android:text="@lari_tattoo"
+                android:textColor="@color/purple900"
+                app:layout_constraintStart_toStartOf="@+id/txtNameTattooArtist"
+                app:layout_constraintTop_toBottomOf="@+id/txtNameTattooArtist" />
+
+            <ImageButton
+                android:id="@+id/btn_calendar"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="16dp"
+                android:backgroundTint="@color/purple100"
+                android:contentDescription="@string/content_description_btn_calendar"
+                android:src="@drawable/icon_calendar"
+                app:layout_constraintBottom_toBottomOf="@+id/txtTattoArtistProfile"
+                app:layout_constraintStart_toEndOf="@+id/txtNameTattooArtist"
+                app:layout_constraintTop_toTopOf="@+id/txtNameTattooArtist" />
+
+            <TextView
+                android:id="@+id/txtScheduleTomorrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/raleway_extrabold"
+                android:text="@string/txt_tomorrow"
+                android:textColor="@color/purple500"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_calendar"
+                app:layout_constraintStart_toEndOf="@+id/btn_calendar"
+                app:layout_constraintTop_toTopOf="@+id/btn_calendar" />
+
+            <ImageButton
+                android:id="@+id/btn_clock"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:backgroundTint="@color/purple100"
+                android:contentDescription="@string/content_description_btn_clock"
+                android:src="@drawable/icon_calendar"
+                app:layout_constraintBottom_toBottomOf="@+id/txtScheduleTomorrow"
+                app:layout_constraintStart_toEndOf="@+id/txtScheduleTomorrow"
+                app:layout_constraintTop_toTopOf="@+id/txtScheduleTomorrow" />
+
+            <TextView
+                android:id="@+id/txtScheduleHour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/raleway_extrabold"
+                android:text="11:30"
+                android:textColor="@color/purple500"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_clock"
+                app:layout_constraintStart_toEndOf="@+id/btn_clock"
+                app:layout_constraintTop_toTopOf="@+id/btn_clock" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
