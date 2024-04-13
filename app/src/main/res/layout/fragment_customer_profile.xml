@@ -153,6 +153,7 @@
         app:layout_constraintTop_toTopOf="@+id/txtNextAppointment" />
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_marginHorizontal="@dimen/margin_16dp"
@@ -272,6 +273,49 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/txtMyGallery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/raleway_extrabold"
+        android:text="@string/txt_my_galleries"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@+id/cardView"
+        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+    <Button
+        android:id="@+id/btnManageGallery"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="13dp"
+        android:fontFamily="@font/raleway_regular"
+        android:padding="0dp"
+        android:soundEffectsEnabled="true"
+        android:text="@string/btn_to_manage"
+        android:textColor="@color/black500"
+        android:textSize="@dimen/txt_size_11sp"
+        app:layout_constraintBottom_toBottomOf="@+id/txtMyGallery"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txtMyGallery" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="0dp"
+        android:layout_height="217dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtMyGallery"
+        app:spanCount="2"
+        tools:listitem="@layout/item_my_gallery" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

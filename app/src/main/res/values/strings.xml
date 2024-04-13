@@ -18,5 +18,6 @@
     <string name="content_description_btn_calendar">Botão de Calendário</string>
     <string name="content_description_btn_clock">Botão de horário</string>
     <string name="txt_tomorrow">Amanhã</string>
+    <string name="txt_my_galleries">Minhas Galerias</string>
 
 </resources>
