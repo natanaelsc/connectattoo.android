@@ -45,15 +45,21 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
     private lateinit var adapterListOfNearbyTattooartists: AdapterListOfNearbyTattooArtists
     private val listOfNearbyTattooArtists: MutableList<NearbyTattooArtists> = mutableListOf()
 
-    private val tattooUrl = mutableListOf(
+    private val tattooByTagsUrl = mutableListOf(
         "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst_carousel%2Ftattoo_tesoura.png",
         "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst_carousel%2Ftattoo_cartas.png",
         "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst_carousel%2Ftattoo_passaro_na_mao.png",
         "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst_carousel%2Ftattoo_calavera.png",
-        "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst_carousel%2Ftattoo_borboleta.png",
-        "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst_carousel%2Ftattoo_lion.png",
-        "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst_carousel%2Ftattoo_tartaruga.png",
-        "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst_carousel%2Ftattoo_Pezkoi.png",
+    )
+
+    private val tattooByNearbyArtistsUrl = mutableListOf(
+        "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Fsecond_carousel%2Ftattoo_borboleta.png",
+        "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Fsecond_carousel%2Ftattoo_lion.png",
+        "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Fsecond_carousel%2Ftattoo_tartaruga.png",
+        "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Fsecond_carousel%2Ftattoo_Pezkoi.png",
+    )
+
+    private val randomTattoosUrl = mutableListOf(
         "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Fthird_carousel%2Ftattoo_rosto_cobras.png",
         "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Fthird_carousel%2Ftattoo_escorpiao.png",
         "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Fthird_carousel%2Ftattoo_olho.png",
@@ -64,18 +70,21 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
     private lateinit var adapterListOfRandomTattoos: AdapterListOfRandomTattoos
     private val listOfRandomTattoos: MutableList<RandomTattoos> = mutableListOf()
 
-    private val profileImage = mutableListOf(
+    private val nearbyProfileImage = mutableListOf(
         "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Fsecond_carousel%2Favatar%2Favatar_larissa_dias.png",
         "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/" +
             "home%2Fsecond_carousel%2Favatar%2Favatar_marcus_freites.png",
-        "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/" +
-            "home%2Fsecond_carousel%2Favatar%2Favatar_tatiana_oliveira.png",
-        "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/" +
-            "home%2Fsecond_carousel%2Favatar%2Favatar_diogo_almeida.png",
+        "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home" +
+            "%2Fsecond_carousel%2Favatar%2Favatar_tatiana_oliveira.png",
+        "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Fsecond_carousel%2Favatar%2Favatar_diogo_almeida.png"
+    )
+
+    private val randomProfileImage = mutableListOf(
         "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Fthird_carousel%2Favatar%2Favatar_maria_carla.png",
         "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Fthird_carousel%2Favatar%2Favatar_sara_ferreira.png",
         "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Fthird_carousel%2Favatar%2Favatar_maya_tattoo.png",
-        "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Fthird_carousel%2Favatar%2Favatar_jose_fernades.png"
+        "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Fthird_carousel%2Favatar%2Favatar_jose_fernades.png",
+        "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Fsecond_carousel%2Favatar%2Favatar_diogo_almeida.png"
     )
 
     override fun inflateBinding(
@@ -132,58 +141,56 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
 
     private fun listOfTattoosBasedOnTags() {
 
-        val tattooBasedOnTags1 = TagBasedTattoos(tattooUrl[0], tag)
+        val tattooBasedOnTags1 = TagBasedTattoos(tattooByTagsUrl[0], tag)
         listOfTattoosBasedOnTags.add(tattooBasedOnTags1)
 
-        val tattooBasedOnTags2 = TagBasedTattoos(tattooUrl[1], tag)
+        val tattooBasedOnTags2 = TagBasedTattoos(tattooByTagsUrl[1], tag)
         listOfTattoosBasedOnTags.add(tattooBasedOnTags2)
 
-        val tattooBasedOnTags3 = TagBasedTattoos(tattooUrl[2], tag)
+        val tattooBasedOnTags3 = TagBasedTattoos(tattooByTagsUrl[2], tag)
         listOfTattoosBasedOnTags.add(tattooBasedOnTags3)
 
-        val tattooBasedOnTags4 = TagBasedTattoos(tattooUrl[3], tag)
+        val tattooBasedOnTags4 = TagBasedTattoos(tattooByTagsUrl[3], tag)
         listOfTattoosBasedOnTags.add(tattooBasedOnTags4)
 
-        val tattooBasedOnTags5 = TagBasedTattoos(tattooUrl[4], tag)
-        listOfTattoosBasedOnTags.add(tattooBasedOnTags5)
     }
 
 
     private fun listOfNearbyTattooArtists() {
 
         val nearbyTattooArtists = NearbyTattooArtists(
-            tattooUrl[1],
+            tattooByNearbyArtistsUrl[0],
             "Larissa Dias",
             "4,7",
             "São Paulo, Rua Calixto da M...",
-            profileImage[0]
+            nearbyProfileImage[0]
         )
         listOfNearbyTattooArtists.add(nearbyTattooArtists)
 
         val nearbyTattooartists2 = NearbyTattooArtists(
-            tattooUrl[2],
+            tattooByNearbyArtistsUrl[1],
             "Marcus Freites",
             "4,9",
             "São Paulo, Rua Dr. Neto de Ara...",
-            profileImage[1]
+            nearbyProfileImage[1]
         )
         listOfNearbyTattooArtists.add(nearbyTattooartists2)
 
         val nearbyTattooartists3 = NearbyTattooArtists(
-            tattooUrl[3],
+            tattooByNearbyArtistsUrl[2],
             "Tatiana Oliveira",
             "4,8",
             "portugal, Rua Calixto da M...",
-            profileImage[2]
+            nearbyProfileImage[2]
         )
         listOfNearbyTattooArtists.add(nearbyTattooartists3)
 
         val nearbyTattooartists4 = NearbyTattooArtists(
-            tattooUrl[4],
-            "Maria Carla",
-            "4,6",
-            "fortaleza, Rua Dr. Neto de Ara...",
-            profileImage[4]
+            tattooByNearbyArtistsUrl[3],
+            "Diogo Almeida",
+            "4,5",
+            "São Paulo, Rua Baltazar Lisb...",
+            nearbyProfileImage[3]
         )
         listOfNearbyTattooArtists.add(nearbyTattooartists4)
 
@@ -192,33 +199,33 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
     private fun listOfRandomTattoos() {
 
         val randomTattoos = RandomTattoos(
-            tattooUrl[0], "Maria Carla", profileImage[4],
-            like = true, save = true
+            randomTattoosUrl[0], "Maria Carla",
+            randomProfileImage[0], like = true, save = true
         )
         listOfRandomTattoos.add(randomTattoos)
 
         val randomTattoos2 =
             RandomTattoos(
-                tattooUrl[1], "Sarah Ferreira",
-                profileImage[5], like = true, save = true
+                randomTattoosUrl[1], "Sarah Ferreira",
+                randomProfileImage[1], like = true, save = true
             )
         listOfRandomTattoos.add(randomTattoos2)
 
         val randomTattoos3 = RandomTattoos(
-            tattooUrl[2], "Maya Tattoo", profileImage[6],
-            like = true, save = true
+            randomTattoosUrl[2], "Maya Tattoo",
+            randomProfileImage[2], like = true, save = true
         )
         listOfRandomTattoos.add(randomTattoos3)
 
         val randomTattoos4 = RandomTattoos(
-            tattooUrl[3], "José Fer", profileImage[7],
-            like = true, save = true
+            randomTattoosUrl[3], "José Fer",
+            randomProfileImage[3], like = true, save = true
         )
         listOfRandomTattoos.add(randomTattoos4)
 
         val randomTattoos5 = RandomTattoos(
-            tattooUrl[5], "Diogo Almeida", profileImage[3],
-            like = true, save = true
+            randomTattoosUrl[4], "Diogo Almeida",
+            randomProfileImage[4], like = true, save = true
         )
         listOfRandomTattoos.add(randomTattoos5)
     }
