@@ -3,11 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/user_page_navigation_graph"
-    app:startDestination="@id/homeUserFragment">
+    app:startDestination="@id/clientUserProfileFragment">
 
     <fragment
         android:id="@+id/homeUserFragment"
         android:name="br.com.connectattoo.ui.home.HomeUserFragment"
         android:label="fragment_home_user"
         tools:layout="@layout/fragment_home_user" />
+    <fragment
+        android:id="@+id/clientUserProfileFragment"
+        android:name="br.com.connectattoo.ui.customerprofile.CustomerProfileFragment"
+        android:label="fragment_client_user_profile"
+        tools:layout="@layout/fragment_customer_profile" />
 </navigation>
