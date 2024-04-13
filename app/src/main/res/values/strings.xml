@@ -8,4 +8,8 @@
     <string name="txt_request_location">Serviço de localização desabilitado quer habilitar?</string>
     <string name="txt_enable_now">Habilitar</string>
     <string name="txt_calcel">Cancelar</string>
+    <string name="content_description_imagem_de_perfil_do_usuario">Imagem de perfil do usuário</string>
+    <string name="txt_meus_interesses">Meus Interesses</string>
+    <string name="btn_gerenciar"><u>Gerenciar</u></string>
+
 </resources>
