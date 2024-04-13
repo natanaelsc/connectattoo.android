@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:layout_marginHorizontal="@dimen/margin_16dp"
         android:background="@drawable/bg_shape_customer_profile_top"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,8 +19,8 @@
 
         <ImageButton
             android:id="@+id/btn_user_image"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:layout_marginHorizontal="@dimen/margin_16dp"
             android:layout_marginVertical="@dimen/margin_16dp"
             android:background="@drawable/circular_image_user_profile"
@@ -34,14 +34,14 @@
             android:id="@+id/txtNameUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/raleway_extrabold"
-            android:text="João Silva"
             android:textColor="@color/white"
             android:textSize="@dimen/txt_size_18sp"
             app:layout_constraintStart_toEndOf="@+id/btn_user_image"
-            app:layout_constraintTop_toTopOf="@+id/btn_user_image" />
+            app:layout_constraintTop_toTopOf="@+id/btn_user_image"
+            tools:text="João Silva" />
 
         <TextView
             android:id="@+id/txtAgeAndEmail"
@@ -49,35 +49,36 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/raleway_regular"
+            android:maxWidth="190dp"
             android:maxLines="1"
-            android:text="32 Anos | @joaosilva@gmail.com"
             android:textColor="@color/white"
             android:textSize="11sp"
             app:layout_constraintStart_toStartOf="@+id/txtNameUser"
-            app:layout_constraintTop_toBottomOf="@+id/txtNameUser" />
+            app:layout_constraintTop_toBottomOf="@+id/txtNameUser"
+            tools:text="32 Anos | @joaosilva@gmail.comaaaaaaaaaaaaaaaaa" />
 
         <ImageButton
             android:id="@+id/btnSettings"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="26dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_marginEnd="16dp"
-            android:backgroundTint="@color/deepPurple"
+            android:backgroundTint="@color/purple500"
+            android:contentDescription="@string/content_description_user_settings_button"
             android:src="@drawable/icon_settings"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/btn_user_image" />
 
         <Button
             android:id="@+id/btnEditProfile"
             style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="-4dp"
+            android:layout_marginStart="-4dp"
             android:fontFamily="@font/raleway_extrabold"
             android:padding="0dp"
-            android:text="Editar Perfil"
+            android:text="@string/btn_edit_profile"
             android:textColor="@color/white"
-            android:textSize="@dimen/txt_size_14sp"
+            android:textSize="@dimen/txt_size_12sp"
             app:layout_constraintStart_toStartOf="@+id/txtAgeAndEmail"
             app:layout_constraintTop_toBottomOf="@+id/txtAgeAndEmail" />
 
@@ -182,9 +183,10 @@
 
             <ImageButton
                 android:id="@+id/btnMoreInfo"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:backgroundTint="@color/purple100"
+                android:contentDescription="@string/content_description_next_appointment_information_button"
                 android:src="@drawable/icon_info"
                 app:layout_constraintBottom_toBottomOf="@+id/txt_new_tattoo"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -210,10 +212,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/raleway_extrabold"
-                android:text="Larissa Diniz"
                 android:textColor="@color/purple500"
                 app:layout_constraintStart_toEndOf="@+id/ivImageTattooArtist"
-                app:layout_constraintTop_toTopOf="@+id/ivImageTattooArtist" />
+                app:layout_constraintTop_toTopOf="@+id/ivImageTattooArtist"
+                tools:text="Larissa Diniz" />
 
             <TextView
                 android:id="@+id/txtTattoArtistProfile"
@@ -222,6 +224,7 @@
                 android:fontFamily="@font/raleway_regular"
                 android:text="@lari_tattoo"
                 android:textColor="@color/purple900"
+                app:layout_constraintBottom_toBottomOf="@+id/ivImageTattooArtist"
                 app:layout_constraintStart_toStartOf="@+id/txtNameTattooArtist"
                 app:layout_constraintTop_toBottomOf="@+id/txtNameTattooArtist" />
 
@@ -235,7 +238,8 @@
                 android:src="@drawable/icon_calendar"
                 app:layout_constraintBottom_toBottomOf="@+id/txtTattoArtistProfile"
                 app:layout_constraintStart_toEndOf="@+id/txtNameTattooArtist"
-                app:layout_constraintTop_toTopOf="@+id/txtNameTattooArtist" />
+                app:layout_constraintTop_toTopOf="@+id/txtNameTattooArtist"
+                tools:ignore="TouchTargetSizeCheck" />
 
             <TextView
                 android:id="@+id/txtScheduleTomorrow"
@@ -255,21 +259,22 @@
                 android:layout_marginStart="8dp"
                 android:backgroundTint="@color/purple100"
                 android:contentDescription="@string/content_description_btn_clock"
-                android:src="@drawable/icon_calendar"
+                android:src="@drawable/icon_clock"
                 app:layout_constraintBottom_toBottomOf="@+id/txtScheduleTomorrow"
                 app:layout_constraintStart_toEndOf="@+id/txtScheduleTomorrow"
-                app:layout_constraintTop_toTopOf="@+id/txtScheduleTomorrow" />
+                app:layout_constraintTop_toTopOf="@+id/txtScheduleTomorrow"
+                tools:ignore="TouchTargetSizeCheck" />
 
             <TextView
                 android:id="@+id/txtScheduleHour"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/raleway_extrabold"
-                android:text="11:30"
                 android:textColor="@color/purple500"
                 app:layout_constraintBottom_toBottomOf="@+id/btn_clock"
                 app:layout_constraintStart_toEndOf="@+id/btn_clock"
-                app:layout_constraintTop_toTopOf="@+id/btn_clock" />
+                app:layout_constraintTop_toTopOf="@+id/btn_clock"
+                tools:text="11:30" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
@@ -302,12 +307,11 @@
         app:layout_constraintTop_toTopOf="@+id/txtMyGallery" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/rv_my_galleries"
         android:layout_width="0dp"
         android:layout_height="217dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"

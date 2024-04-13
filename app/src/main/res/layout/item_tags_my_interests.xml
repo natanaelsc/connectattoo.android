@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/purple100"
-        android:fontFamily="@font/raleway_semibold"
+        android:fontFamily="@font/raleway_extrabold"
         android:textAllCaps="false"
         android:textColor="@color/purple800"
         android:textSize="@dimen/txt_size_16sp"
