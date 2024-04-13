@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">Connectattoo</string>
-
     <string name="txt_welcome"><P /> Nos ajude a direcionar sua jornada. <b><font color="#FF000000">Você é um tatuador</font></b> em busca de novos clientes <b> <font color="#FF000000">ou um cliente</font></b> em busca do tatuador ideal?</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="txt_confirmation">Verifique seu <b><font color="#FF000000">e-mail</font></b> e confirme sua conta para desbloquear todas as funcionalidades do <b><font color="#FF000000">Connectattoo.</font></b></string>
     <string name="txt_confirmation_title">SUA CONTA ESTÁ QUASE PRONTA!</string>
+    <string name="txt_hello_user_home">Olá, %s, </string>
+    <string name="txt_hello_user_home_error">Olá, </string>
     <string name="txt_request_location">Serviço de localização desabilitado quer habilitar?</string>
     <string name="txt_enable_now">Habilitar</string>
     <string name="txt_calcel">Cancelar</string>

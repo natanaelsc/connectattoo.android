@@ -7,7 +7,8 @@ import retrofit2.Response
 
 class AuthRepository {
     suspend fun verifyUserConfirmation(token: String) : Response<ApiConfirmationResponse>{
+        val bearerToken = "Bearer $token"
          val apiService: ApiService =  ApiUrl.instance.create(ApiService::class.java)
-        return apiService.verifyUserConfirmation(token)
+        return apiService.verifyUserConfirmation(bearerToken)
     }
 }
