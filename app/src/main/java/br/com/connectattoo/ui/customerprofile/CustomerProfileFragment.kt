@@ -1,8 +1,9 @@
 package br.com.connectattoo.ui.customerprofile
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import br.com.connectattoo.adapter.AdapterListMyGalleries
@@ -36,14 +37,12 @@ class CustomerProfileFragment : BaseFragment<FragmentCustomerProfileBinding>() {
             adapter = adapterListTagsProfile
         }
         adapterListTagsProfile.listenerTagProfile = { tagCustomerProfile ->
-
-            Toast.makeText(requireContext(), tagCustomerProfile.tag, Toast.LENGTH_SHORT).show()
+            Log.i(TAG, tagCustomerProfile.toString())
         }
         binding.rvMyGalleries.run {
             setHasFixedSize(true)
             adapter = adapterListMyGalleries
         }
-
 
     }
 
