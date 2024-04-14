@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.map
 val Context.userSettingsDataStore: DataStore<Preferences> by preferencesDataStore(name = "user_settings")
 
 object DataStoreManager {
-    suspend fun saveToken(context: Context, key: String, value: String) {
+    suspend fun saveUserSettings(context: Context, key: String, value: String) {
 
         context.userSettingsDataStore.edit {
             it[stringPreferencesKey(key)] = value
@@ -20,7 +20,7 @@ object DataStoreManager {
 
     }
 
-    suspend fun getStringToken(context: Context, key: String): String {
+    suspend fun getUserSettings(context: Context, key: String): String {
 
         return context.userSettingsDataStore.data.map { preferences ->
             preferences[stringPreferencesKey(key)]
