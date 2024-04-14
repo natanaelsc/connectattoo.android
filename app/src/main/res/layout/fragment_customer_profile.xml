@@ -18,7 +18,7 @@
 
 
         <ImageButton
-            android:id="@+id/btn_user_image"
+            android:id="@+id/btnUserImage"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_marginHorizontal="@dimen/margin_16dp"
@@ -39,8 +39,8 @@
             android:fontFamily="@font/raleway_extrabold"
             android:textColor="@color/white"
             android:textSize="@dimen/txt_size_18sp"
-            app:layout_constraintStart_toEndOf="@+id/btn_user_image"
-            app:layout_constraintTop_toTopOf="@+id/btn_user_image"
+            app:layout_constraintStart_toEndOf="@+id/btnUserImage"
+            app:layout_constraintTop_toTopOf="@+id/btnUserImage"
             tools:text="João Silva" />
 
         <TextView
@@ -66,14 +66,14 @@
             android:contentDescription="@string/content_description_user_settings_button"
             android:src="@drawable/icon_settings"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/btn_user_image" />
+            app:layout_constraintTop_toTopOf="@+id/btnUserImage" />
 
         <Button
             android:id="@+id/btnEditProfile"
             style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="-4dp"
+            android:layout_marginStart="-10dp"
             android:fontFamily="@font/raleway_extrabold"
             android:padding="0dp"
             android:text="@string/btn_edit_profile"
@@ -170,7 +170,7 @@
 
 
             <TextView
-                android:id="@+id/txt_new_tattoo"
+                android:id="@+id/txtNewTattoo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -182,15 +182,15 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
-                android:id="@+id/btnMoreInfo"
+                android:id="@+id/btnMoreInfoNextScheduling"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:backgroundTint="@color/purple100"
                 android:contentDescription="@string/content_description_next_appointment_information_button"
                 android:src="@drawable/icon_info"
-                app:layout_constraintBottom_toBottomOf="@+id/txt_new_tattoo"
+                app:layout_constraintBottom_toBottomOf="@+id/txtNewTattoo"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/txt_new_tattoo" />
+                app:layout_constraintTop_toTopOf="@+id/txtNewTattoo" />
 
             <ImageView
                 android:id="@+id/ivImageTattooArtist"
@@ -204,7 +204,7 @@
                 android:src="@drawable/icon_person_profile"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txt_new_tattoo" />
+                app:layout_constraintTop_toBottomOf="@+id/txtNewTattoo" />
 
             <TextView
                 android:id="@+id/txtNameTattooArtist"
@@ -229,7 +229,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/txtNameTattooArtist" />
 
             <ImageButton
-                android:id="@+id/btn_calendar"
+                android:id="@+id/btnCalendar"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="16dp"
@@ -246,11 +246,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/raleway_extrabold"
-                android:text="@string/txt_tomorrow"
+                tools:text="Amanhã"
                 android:textColor="@color/purple500"
-                app:layout_constraintBottom_toBottomOf="@+id/btn_calendar"
-                app:layout_constraintStart_toEndOf="@+id/btn_calendar"
-                app:layout_constraintTop_toTopOf="@+id/btn_calendar" />
+                app:layout_constraintBottom_toBottomOf="@+id/btnCalendar"
+                app:layout_constraintStart_toEndOf="@+id/btnCalendar"
+                app:layout_constraintTop_toTopOf="@+id/btnCalendar" />
 
             <ImageButton
                 android:id="@+id/btn_clock"
