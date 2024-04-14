@@ -61,14 +61,12 @@ class CustomerProfileFragment : BaseFragment<FragmentCustomerProfileBinding>() {
         }
 
         binding.run {
-            //btnUserImage.setImageBitmap()
             txtNameUser.text = viewModel.state.txtNameUser
             txtAgeAndEmail.text = viewModel.state.txtAgeAndEmail
             txtNameTattooArtist.text = viewModel.state.txtNameTattooArtist
             txtTattoArtistProfile.text = viewModel.state.txtTattooArtistProfile
             txtScheduleTomorrow.text = viewModel.state.txtScheduleTomorrow
             txtScheduleHour.text = viewModel.state.txtScheduleHour
-            //ivImageTattooArtist.setBackgroundResource()
         }
     }
 

@@ -11,5 +11,7 @@ data class CustomerProfileState(
     val txtScheduleTomorrow: String? = null,
     val txtScheduleHour: String? = null,
     val listTagsCustomerProfile: List<TagCustomerProfile>? = listOf(),
-    val listGalleriesCustomerProfile: List<MyGalleryProfile>? = listOf()
+    val listGalleriesCustomerProfile: List<MyGalleryProfile>? = listOf(),
+    val userImage: String? = null,
+    val imageTattooArtist: String? = null
 )

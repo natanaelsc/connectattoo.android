@@ -5,11 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import br.com.connectattoo.data.MyGalleryProfile
-import br.com.connectattoo.data.TagCustomerProfile
 import br.com.connectattoo.databinding.ItemMyGalleryBinding
-import br.com.connectattoo.databinding.ItemTagsMyInterestsBinding
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 
 class AdapterListMyGalleries :
     androidx.recyclerview.widget.ListAdapter<MyGalleryProfile, AdapterListMyGalleries.ListGalleriesProfileViewHolder>(
