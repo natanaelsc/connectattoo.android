@@ -10,6 +10,7 @@ import br.com.connectattoo.adapter.AdapterListMyGalleries
 import br.com.connectattoo.adapter.AdapterListTagsProfile
 import br.com.connectattoo.databinding.FragmentCustomerProfileBinding
 import br.com.connectattoo.ui.BaseFragment
+import com.bumptech.glide.Glide
 import kotlinx.coroutines.launch
 
 
@@ -60,6 +61,14 @@ class CustomerProfileFragment : BaseFragment<FragmentCustomerProfileBinding>() {
         }
 
         binding.run {
+            Glide.with(btnUserImage)
+                .load(viewModel.state.userImage)
+                .circleCrop()
+                .into(btnUserImage)
+            Glide.with(ivImageTattooArtist)
+                .load(viewModel.state.imageTattooArtist)
+                .circleCrop()
+                .into(ivImageTattooArtist)
             txtNameUser.text = viewModel.state.txtNameUser
             txtAgeAndEmail.text = viewModel.state.txtAgeAndEmail
             txtNameTattooArtist.text = viewModel.state.txtNameTattooArtist
