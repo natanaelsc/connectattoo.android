@@ -35,7 +35,6 @@ class AdapterListTagsProfile :
                     listenerTagProfile(tagCustomerProfile)
                 }
                 btnTagMyInterests.text = tagCustomerProfile.tag
-
             }
 
         }
@@ -47,6 +46,6 @@ class DiffCallbackTagsProfile : DiffUtil.ItemCallback<TagCustomerProfile>() {
         oldItem == newItem
 
     override fun areContentsTheSame(oldItem: TagCustomerProfile, newItem: TagCustomerProfile) =
-        oldItem.tag == newItem.tag
+        oldItem.id == newItem.id
 
 }

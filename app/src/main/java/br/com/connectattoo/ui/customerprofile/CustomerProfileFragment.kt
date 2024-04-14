@@ -4,12 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import br.com.connectattoo.adapter.AdapterListMyGalleries
 import br.com.connectattoo.adapter.AdapterListTagsProfile
-import br.com.connectattoo.data.MyGalleryProfile
-import br.com.connectattoo.data.TagCustomerProfile
 import br.com.connectattoo.databinding.FragmentCustomerProfileBinding
 import br.com.connectattoo.ui.BaseFragment
+import kotlinx.coroutines.launch
 
 
 class CustomerProfileFragment : BaseFragment<FragmentCustomerProfileBinding>() {
@@ -25,7 +25,6 @@ class CustomerProfileFragment : BaseFragment<FragmentCustomerProfileBinding>() {
 
     override fun setupViews() {
         setupRecyclerView()
-        dataFake()
         insertInformationCustomerInitial()
         setupBtnClicks()
     }
@@ -49,15 +48,26 @@ class CustomerProfileFragment : BaseFragment<FragmentCustomerProfileBinding>() {
     }
 
     private fun insertInformationCustomerInitial() {
-        viewModel.getUserInformation()
+        viewLifecycleOwner.lifecycleScope.launch {
+            val listTagsProfile = viewModel.state.listTagsCustomerProfile
+
+            adapterListTagsProfile.submitList(listTagsProfile)
+
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            val listMyGalleries = viewModel.state.listGalleriesCustomerProfile
+            adapterListMyGalleries.submitList(listMyGalleries)
+
+        }
+
         binding.run {
             //btnUserImage.setImageBitmap()
-            txtNameUser.text = "João Silva"
-            txtAgeAndEmail.text = "32 Anos | @joaosilva@gmail.com"
-            txtNameTattooArtist.text = "Larissa Diniz"
-            txtTattoArtistProfile.text = "@lari_tattoo"
-            txtScheduleTomorrow.text = "Amanhã"
-            txtScheduleHour.text = "11:45"
+            txtNameUser.text = viewModel.state.txtNameUser
+            txtAgeAndEmail.text = viewModel.state.txtAgeAndEmail
+            txtNameTattooArtist.text = viewModel.state.txtNameTattooArtist
+            txtTattoArtistProfile.text = viewModel.state.txtTattooArtistProfile
+            txtScheduleTomorrow.text = viewModel.state.txtScheduleTomorrow
+            txtScheduleHour.text = viewModel.state.txtScheduleHour
             //ivImageTattooArtist.setBackgroundResource()
         }
     }
@@ -83,67 +93,4 @@ class CustomerProfileFragment : BaseFragment<FragmentCustomerProfileBinding>() {
 
     }
 
-    private fun dataFake() {
-        val listTags = listOf(
-            TagCustomerProfile(tag = "Preto e branco"),
-            TagCustomerProfile(tag = "Tag 2"),
-            TagCustomerProfile(tag = "Tag e branco"),
-            TagCustomerProfile(tag = "Tag e sinza"),
-            TagCustomerProfile(tag = "Tag e 3")
-        )
-
-        adapterListTagsProfile.submitList(listTags)
-
-        val listImages = listOf(
-            MyGalleryProfile(1,
-                title = "Galeria 1",
-                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst" +
-                "_carousel%2Ftattoo_cartas.png",
-                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst" +
-                    "_carousel%2Ftattoo_cartas.png",
-                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst" +
-                    "_carousel%2Ftattoo_cartas.png",
-                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst" +
-                    "_carousel%2Ftattoo_cartas.png"
-
-            ),
-            MyGalleryProfile(2,
-                title = "Galeria 2",
-                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst" +
-                    "_carousel%2Ftattoo_cartas.png",
-                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst" +
-                    "_carousel%2Ftattoo_cartas.png",
-                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst" +
-                    "_carousel%2Ftattoo_cartas.png",
-                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst" +
-                    "_carousel%2Ftattoo_cartas.png"
-
-            ),
-            MyGalleryProfile(3,
-                title = "Galeria 3",
-                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst" +
-                    "_carousel%2Ftattoo_cartas.png",
-                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst" +
-                    "_carousel%2Ftattoo_cartas.png",
-                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst" +
-                    "_carousel%2Ftattoo_cartas.png",
-                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst" +
-                    "_carousel%2Ftattoo_cartas.png"
-
-            ),
-            MyGalleryProfile(4,
-                title = "Galeria 4",
-                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst" +
-                    "_carousel%2Ftattoo_cartas.png",
-                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst" +
-                    "_carousel%2Ftattoo_cartas.png",
-                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst" +
-                    "_carousel%2Ftattoo_cartas.png",
-                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst" +
-                    "_carousel%2Ftattoo_cartas.png"
-
-            ),
-        )
-        adapterListMyGalleries.submitList(listImages)
-    }
 }
