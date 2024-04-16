@@ -9,4 +9,18 @@
     <string name="txt_request_location">Serviço de localização desabilitado quer habilitar?</string>
     <string name="txt_enable_now">Habilitar</string>
     <string name="txt_calcel">Cancelar</string>
+    <string name="content_description_user_profile_image">Imagem de perfil do usuário</string>
+    <string name="txt_my_interests">Meus Interesses</string>
+    <string name="btn_to_manage"><u>Gerenciar</u></string>
+    <string name="btn_view_more"><u>Ver mais</u></string>
+    <string name="txt_next_scheduling">Próximo agendamento</string>
+    <string name="txt_your_next_tattoo_is_coming">Sua próxima tatuagem está chegando</string>
+    <string name="content_description_tattoo_artist">Imagem tatuador</string>
+    <string name="content_description_btn_calendar">Botão de Calendário</string>
+    <string name="content_description_btn_clock">Botão de horário</string>
+    <string name="txt_my_galleries">Minhas Galerias</string>
+    <string name="content_description_user_settings_button">Botão de configurações do usuário</string>
+    <string name="content_description_next_appointment_information_button">Botão de informações sobre proximo agendamento</string>
+    <string name="btn_edit_profile">Editar Perfil</string>
+
 </resources>
