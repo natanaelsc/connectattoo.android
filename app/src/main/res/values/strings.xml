@@ -22,5 +22,8 @@
     <string name="content_description_user_settings_button">Botão de configurações do usuário</string>
     <string name="content_description_next_appointment_information_button">Botão de informações sobre proximo agendamento</string>
     <string name="btn_edit_profile">Editar Perfil</string>
+    <string name="txt_these_are_the_tattoo_artists_closest_to_you">Estes são os tatuadores mais próximos de você</string>
+    <string name="txt_find_inspiration_in_every_detail">Encontre inspiração em cada detalhe</string>
+    <string name="txt_your_perfect_tattoo">a sua tatuagem perfeita!</string>
 
 </resources>

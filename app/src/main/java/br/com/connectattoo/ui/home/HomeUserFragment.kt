@@ -1,16 +1,18 @@
 package br.com.connectattoo.ui.home
 
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.lifecycle.lifecycleScope
-import android.annotation.SuppressLint
-import android.app.Activity
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import br.com.connectattoo.R
 import br.com.connectattoo.adapter.AdapterListOfNearbyTattooArtists
 import br.com.connectattoo.adapter.AdapterListOfRandomTattoos
@@ -25,14 +27,15 @@ import br.com.connectattoo.util.Constants
 import br.com.connectattoo.util.Constants.API_TOKEN
 import br.com.connectattoo.util.Constants.API_USER_NAME
 import br.com.connectattoo.util.DataStoreManager
-import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.launch
-import java.io.IOException
 import br.com.connectattoo.util.PermissionUtils
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationTokenSource
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
+import java.io.IOException
+
 
 @Suppress("TooManyFunctions")
 class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
@@ -57,7 +60,7 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
 
     private lateinit var adapterListOfNearbyTattooartists: AdapterListOfNearbyTattooArtists
     private val listOfNearbyTattooArtists: MutableList<NearbyTattooArtists> = mutableListOf()
-    
+
     private lateinit var userRepository: UserRepository
 
     private val tattooByTagsUrl = mutableListOf(
@@ -110,7 +113,6 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
 
     }
 
-
     override fun setupViews() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         PermissionUtils.getPermissionAndLocationUser(
@@ -118,41 +120,38 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
             requireContext(),
             enableLocationActivityResult
         )
-        //getLocationUser()
-        val recycleViewListOfTattoosBasedOnTags = binding.recycleListOfTattoosBasedOnTags
-        recycleViewListOfTattoosBasedOnTags.layoutManager = LinearLayoutManager(
-            context,
-            LinearLayoutManager.HORIZONTAL, false
-        )
-        recycleViewListOfTattoosBasedOnTags.setHasFixedSize(true)
-        adapterListOfTattoosBasedOnTags =
-            AdapterListOfTattoosBasedOnTags(requireContext(), listOfTattoosBasedOnTags)
-        recycleViewListOfTattoosBasedOnTags.adapter = adapterListOfTattoosBasedOnTags
-        listOfTattoosBasedOnTags()
 
-        val recycleListOfNearbyTattooartists = binding.recycleListOfNearbyTattooartists
-        recycleListOfNearbyTattooartists.layoutManager = LinearLayoutManager(
-            context,
-            LinearLayoutManager.HORIZONTAL, false
-        )
-        recycleListOfNearbyTattooartists.setHasFixedSize(true)
-        adapterListOfNearbyTattooartists =
-            AdapterListOfNearbyTattooArtists(requireContext(), listOfNearbyTattooArtists)
-        recycleListOfNearbyTattooartists.adapter = adapterListOfNearbyTattooartists
-        listOfNearbyTattooArtists()
-
-        val recycleListOfRandomTattoos = binding.recycleListOfRandomTattoos
-        recycleListOfRandomTattoos.layoutManager = LinearLayoutManager(
-            context,
-            LinearLayoutManager.HORIZONTAL, false
-        )
-        recycleListOfRandomTattoos.setHasFixedSize(true)
-        adapterListOfRandomTattoos =
-            AdapterListOfRandomTattoos(requireContext(), listOfRandomTattoos)
-        recycleListOfRandomTattoos.adapter = adapterListOfRandomTattoos
-        listOfRandomTattoos()
+        setRecyclerView()
         userRepository = UserRepository()
         setUserName()
+    }
+
+    private fun setRecyclerView(){
+        binding.recycleListOfTattoosBasedOnTags.run {
+            setHasFixedSize(true)
+            adapterListOfTattoosBasedOnTags =
+                AdapterListOfTattoosBasedOnTags(requireContext(), listOfTattoosBasedOnTags)
+            adapter = adapterListOfTattoosBasedOnTags
+            listOfTattoosBasedOnTags()
+        }
+
+        binding.recycleListOfNearbyTattooartists.run {
+
+            setHasFixedSize(true)
+            adapterListOfNearbyTattooartists =
+                AdapterListOfNearbyTattooArtists(requireContext(), listOfNearbyTattooArtists)
+            adapter = adapterListOfNearbyTattooartists
+            listOfNearbyTattooArtists()
+        }
+
+
+        binding.recycleListOfRandomTattoos.run {
+            setHasFixedSize(true)
+            adapterListOfRandomTattoos =
+                AdapterListOfRandomTattoos(requireContext(), listOfRandomTattoos)
+            adapter = adapterListOfRandomTattoos
+            listOfRandomTattoos()
+        }
     }
 
     private fun setUserName() {
