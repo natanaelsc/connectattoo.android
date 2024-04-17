@@ -84,11 +84,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
-            android:layout_marginTop="23dp"
+            android:layout_marginTop="@dimen/margin_16dp"
             android:fontFamily="@font/raleway_extrabold"
+            android:textColor="@color/black"
+            android:textSize="@dimen/txt_size_12sp"
             android:text="@string/txt_these_are_the_tattoo_artists_closest_to_you"
-            android:textSize="14sp"
-            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/txtName"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -109,11 +109,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
-            android:layout_marginTop="23dp"
             android:fontFamily="@font/raleway_extrabold"
             android:text="@string/txt_find_inspiration_in_every_detail"
-            android:textSize="14sp"
-            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="@dimen/txt_size_12sp"
             app:layout_constraintStart_toStartOf="@id/txtName"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -123,6 +122,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:clipToPadding="false"
+            android:layout_marginBottom="@dimen/margin_16dp"
             android:orientation="horizontal"
             android:paddingHorizontal="@dimen/margin_22dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
