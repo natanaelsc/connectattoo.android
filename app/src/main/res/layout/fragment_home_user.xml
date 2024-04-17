@@ -87,7 +87,7 @@
             android:layout_marginTop="@dimen/margin_16dp"
             android:fontFamily="@font/raleway_extrabold"
             android:textColor="@color/black"
-            android:textSize="@dimen/txt_size_12sp"
+            android:textSize="@dimen/txt_size_14sp"
             android:text="@string/txt_these_are_the_tattoo_artists_closest_to_you"
             app:layout_constraintStart_toStartOf="@id/txtName"
             app:layout_constraintTop_toTopOf="parent" />
@@ -112,7 +112,7 @@
             android:fontFamily="@font/raleway_extrabold"
             android:text="@string/txt_find_inspiration_in_every_detail"
             android:textColor="@color/black"
-            android:textSize="@dimen/txt_size_12sp"
+            android:textSize="@dimen/txt_size_14sp"
             app:layout_constraintStart_toStartOf="@id/txtName"
             app:layout_constraintTop_toTopOf="parent" />
 
