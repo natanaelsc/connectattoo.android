@@ -16,6 +16,7 @@ import br.com.connectattoo.adapter.AdapterListOfRandomTattoos
 import br.com.connectattoo.adapter.AdapterListOfTattoosBasedOnTags
 import br.com.connectattoo.data.NearbyTattooArtists
 import br.com.connectattoo.data.RandomTattoos
+import br.com.connectattoo.data.Tag
 import br.com.connectattoo.data.TagBasedTattoos
 import br.com.connectattoo.databinding.FragmentHomeUserBinding
 import br.com.connectattoo.repository.UserRepository
@@ -53,7 +54,7 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
 
     private lateinit var adapterListOfTattoosBasedOnTags: AdapterListOfTattoosBasedOnTags
     private val listOfTattoosBasedOnTags: MutableList<TagBasedTattoos> = mutableListOf()
-    private val tag = "Colorida"
+    //private val tag = "Colorida"
 
     private lateinit var adapterListOfNearbyTattooartists: AdapterListOfNearbyTattooArtists
     private val listOfNearbyTattooArtists: MutableList<NearbyTattooArtists> = mutableListOf()
@@ -117,19 +118,19 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
             requireContext(),
             enableLocationActivityResult
         )
-
+        listOfTattoosBasedOnTags()
         setRecyclerView()
         userRepository = UserRepository()
         setUserName()
     }
 
-    private fun setRecyclerView(){
+    private fun setRecyclerView() {
         binding.recycleListOfTattoosBasedOnTags.run {
             setHasFixedSize(true)
-            adapterListOfTattoosBasedOnTags =
-                AdapterListOfTattoosBasedOnTags(requireContext(), listOfTattoosBasedOnTags)
+            adapterListOfTattoosBasedOnTags = AdapterListOfTattoosBasedOnTags()
             adapter = adapterListOfTattoosBasedOnTags
-            listOfTattoosBasedOnTags()
+            adapterListOfTattoosBasedOnTags.submitList(listOfTattoosBasedOnTags)
+
         }
 
         binding.recycleListOfNearbyTattooartists.run {
@@ -220,18 +221,44 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
 
     private fun listOfTattoosBasedOnTags() {
 
-        val tattooBasedOnTags1 = TagBasedTattoos(tattooByTagsUrl[0], tag)
+        val listTags = nearbyTags1()
+        val tattooBasedOnTags1 = TagBasedTattoos(id = 1, tattooByTagsUrl[0], listTags)
         listOfTattoosBasedOnTags.add(tattooBasedOnTags1)
 
-        val tattooBasedOnTags2 = TagBasedTattoos(tattooByTagsUrl[1], tag)
+        val tattooBasedOnTags2 = TagBasedTattoos(id = 2, tattooByTagsUrl[1], listTags)
         listOfTattoosBasedOnTags.add(tattooBasedOnTags2)
 
-        val tattooBasedOnTags3 = TagBasedTattoos(tattooByTagsUrl[2], tag)
+        val tattooBasedOnTags3 = TagBasedTattoos(id = 3, tattooByTagsUrl[2], listTags)
         listOfTattoosBasedOnTags.add(tattooBasedOnTags3)
 
-        val tattooBasedOnTags4 = TagBasedTattoos(tattooByTagsUrl[3], tag)
+        val tattooBasedOnTags4 = TagBasedTattoos(id = 4, tattooByTagsUrl[3], listTags)
         listOfTattoosBasedOnTags.add(tattooBasedOnTags4)
 
+    }
+
+    private fun nearbyTags1(): List<Tag> {
+        return listOf(
+            Tag(
+                id = 1,
+                title = "Colorida",
+                background = true
+            ),
+            Tag(
+                id = 2,
+                title = "Old",
+                background = false
+            ),
+            Tag(
+                id = 3,
+                title = "Color",
+                background = false
+            ),
+            Tag(
+                id = 4,
+                title = "School",
+                background = false
+            )
+        )
     }
 
 
