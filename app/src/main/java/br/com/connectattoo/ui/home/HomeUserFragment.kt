@@ -221,17 +221,20 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
 
     private fun listOfTattoosBasedOnTags() {
 
-        val listTags = nearbyTags1()
-        val tattooBasedOnTags1 = TagBasedTattoos(id = 1, tattooByTagsUrl[0], listTags)
+        val listTags1 = nearbyTags1()
+        val listTags2 = nearbyTags2()
+        val listTags3 = nearbyTags3()
+        val listTags4 = nearbyTags4()
+        val tattooBasedOnTags1 = TagBasedTattoos(id = 1, tattooByTagsUrl[0], listTags1)
         listOfTattoosBasedOnTags.add(tattooBasedOnTags1)
 
-        val tattooBasedOnTags2 = TagBasedTattoos(id = 2, tattooByTagsUrl[1], listTags)
+        val tattooBasedOnTags2 = TagBasedTattoos(id = 2, tattooByTagsUrl[1], listTags2)
         listOfTattoosBasedOnTags.add(tattooBasedOnTags2)
 
-        val tattooBasedOnTags3 = TagBasedTattoos(id = 3, tattooByTagsUrl[2], listTags)
+        val tattooBasedOnTags3 = TagBasedTattoos(id = 3, tattooByTagsUrl[2], listTags3)
         listOfTattoosBasedOnTags.add(tattooBasedOnTags3)
 
-        val tattooBasedOnTags4 = TagBasedTattoos(id = 4, tattooByTagsUrl[3], listTags)
+        val tattooBasedOnTags4 = TagBasedTattoos(id = 4, tattooByTagsUrl[3], listTags4)
         listOfTattoosBasedOnTags.add(tattooBasedOnTags4)
 
     }
@@ -240,18 +243,65 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         return listOf(
             Tag(
                 id = 1,
-                title = "Colorida",
-                backgroundDeepPurple = true
-            ),
-            Tag(
-                id = 2,
                 title = "Old",
                 backgroundDeepPurple = false
             ),
             Tag(
-                id = 3,
+                id = 2,
                 title = "Color",
+                backgroundDeepPurple = true
+            ),
+            Tag(
+                id = 3,
+                title = "Classic",
+                backgroundDeepPurple = true
+            )
+        )
+    }
+    private fun nearbyTags2(): List<Tag> {
+        return listOf(
+            Tag(
+                id = 1,
+                title = "Old School",
                 backgroundDeepPurple = false
+            ),
+            Tag(
+                id = 2,
+                title = "Color",
+                backgroundDeepPurple = true
+            ),
+            Tag(
+                id = 3,
+                title = "Classic",
+                backgroundDeepPurple = true
+            )
+        )
+    }
+    private fun nearbyTags3(): List<Tag> {
+        return listOf(
+            Tag(
+                id = 3,
+                title = "PB",
+                backgroundDeepPurple = false
+            ),
+            Tag(
+                id = 4,
+                title = "Nature",
+                backgroundDeepPurple = true
+            )
+        )
+    }
+    private fun nearbyTags4(): List<Tag> {
+        return listOf(
+            Tag(
+                id = 3,
+                title = "Nature Classic",
+                backgroundDeepPurple = false
+            ),
+            Tag(
+                id = 4,
+                title = "Nature",
+                backgroundDeepPurple = true
             )
         )
     }

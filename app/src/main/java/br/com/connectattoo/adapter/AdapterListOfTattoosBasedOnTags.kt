@@ -54,10 +54,9 @@ private fun setStyleTags(binding: TagbasedtattoosItemBinding, tagBasedTattoos: T
     binding.run {
         tagBasedTattoos.tags?.forEach { tag ->
             if (tag.id == 1) {
+                tag1.visibility = View.VISIBLE
                 tag1.text = tag.title
                 if (tag.backgroundDeepPurple) {
-                    tag1.visibility = View.VISIBLE
-                } else {
                     tag1.setBackgroundResource(
                         R.drawable.bg_tag_home_circular_purple100
                     )
@@ -66,39 +65,34 @@ private fun setStyleTags(binding: TagbasedtattoosItemBinding, tagBasedTattoos: T
                 }
             }
             if (tag.id == 2) {
+                tag2.visibility = View.VISIBLE
                 tag2.text = tag.title
                 if (tag.backgroundDeepPurple) {
-                    tag2.visibility = View.VISIBLE
-                } else {
                     tag2.setBackgroundResource(
                         R.drawable.bg_tag_home_circular_purple100
                     )
                     tag2.setTextColor(Color.parseColor(colorPurple900))
-                    tag2.visibility = View.VISIBLE
                 }
             }
             if (tag.id == 3) {
+                tag3.visibility = View.VISIBLE
                 tag3.text = tag.title
                 if (tag.backgroundDeepPurple) {
-                    tag3.visibility = View.VISIBLE
-                } else {
+
                     tag3.setBackgroundResource(
                         R.drawable.bg_tag_home_circular_purple100
                     )
                     tag3.setTextColor(Color.parseColor(colorPurple900))
-                    tag3.visibility = View.VISIBLE
                 }
             }
             if (tag.id == 4) {
+                tag4.visibility = View.VISIBLE
                 tag4.text = tag.title
                 if (tag.backgroundDeepPurple) {
-                    tag4.visibility = View.VISIBLE
-                } else {
                     tag4.setBackgroundResource(
                         R.drawable.bg_tag_home_circular_purple100
                     )
                     tag4.setTextColor(Color.parseColor(colorPurple900))
-                    tag4.visibility = View.VISIBLE
                 }
             }
         }
