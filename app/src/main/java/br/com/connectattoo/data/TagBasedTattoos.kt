@@ -9,6 +9,6 @@ data class TagBasedTattoos(
 data class Tag(
     val id: Int? = null,
     val title: String? = null,
-    val background: Boolean = false,
+    val backgroundDeepPurple: Boolean = false,
     val titleColor: Int? = null
 )

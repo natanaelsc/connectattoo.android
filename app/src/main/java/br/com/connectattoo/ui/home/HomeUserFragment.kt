@@ -241,22 +241,17 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
             Tag(
                 id = 1,
                 title = "Colorida",
-                background = true
+                backgroundDeepPurple = true
             ),
             Tag(
                 id = 2,
                 title = "Old",
-                background = false
+                backgroundDeepPurple = false
             ),
             Tag(
                 id = 3,
                 title = "Color",
-                background = false
-            ),
-            Tag(
-                id = 4,
-                title = "School",
-                background = false
+                backgroundDeepPurple = false
             )
         )
     }

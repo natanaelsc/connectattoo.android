@@ -2,6 +2,7 @@ package br.com.connectattoo.adapter
 
 import android.graphics.Color
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -31,8 +32,7 @@ class AdapterListOfTattoosBasedOnTags :
     inner class TagBasedTattoosViewHolder(private val binding: TagbasedtattoosItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        val colorWhite = "#FFFFFFFF"
-        val colorPurple900 = "#30045c"
+
         fun bind(tagBasedTattoos: TagBasedTattoos) {
 
             binding.run {
@@ -40,61 +40,70 @@ class AdapterListOfTattoosBasedOnTags :
                     listener(tagBasedTattoos)
                 }
                 Glide.with(imageTattoo).load(tagBasedTattoos.imageTattoo).into(imageTattoo)
-
-                tagBasedTattoos.tags?.get(0).let { tag ->
-                    if (tag != null) {
-                        tag1.text = tag.title
-                        if (tag.background) {
-                            tag1.setBackgroundResource(R.drawable.bg_butao_criar_conta)
-                            tag1.setTextColor(Color.parseColor(colorWhite))
-                        } else {
-                            tag1.setBackgroundResource(
-                                R.drawable.bg_butao_criar_conta
-                            )
-                            tag1.setTextColor(Color.parseColor(colorPurple900))
-                        }
-                    }
-                }
-                tagBasedTattoos.tags?.get(1).let { tag ->
-                    if (tag != null) {
-                        tag2.text = tag.title
-                        if (tag.background) {
-                            tag2.setBackgroundResource(R.drawable.bg_butao_criar_conta)
-                            tag2.setTextColor(Color.parseColor(colorWhite))
-                        } else tag2.setBackgroundResource(
-                            R.drawable.bg_tag_home_circular_purple100
-                        )
-                        tag1.setTextColor(Color.parseColor(colorPurple900))
-                    }
-                }
-                tagBasedTattoos.tags?.get(2).let { tag ->
-                    if (tag != null) {
-                        tag3.text = tag.title
-                        if (tag.background) {
-                            tag3.setBackgroundResource(R.drawable.bg_butao_criar_conta)
-                            tag3.setTextColor(Color.parseColor(colorWhite))
-                        } else tag3.setBackgroundResource(
-                            R.drawable.bg_tag_home_circular_purple100
-                        )
-                        tag1.setTextColor(Color.parseColor(colorPurple900))
-                    }
-                }
-                tagBasedTattoos.tags?.get(3).let { tag ->
-                    if (tag != null) {
-                        tag4.text = tag.title
-                        if (tag.background) {
-                            tag4.setBackgroundResource(R.drawable.bg_butao_criar_conta)
-                            tag2.setTextColor(Color.parseColor(colorWhite))
-                        } else tag4.setBackgroundResource(
-                            R.drawable.bg_tag_home_circular_purple100
-                        )
-                        tag1.setTextColor(Color.parseColor(colorWhite))
-                    }
-                }
+                setStyleTags(this, tagBasedTattoos)
             }
 
+
+        }
+
+    }
+}
+
+private fun setStyleTags(binding: TagbasedtattoosItemBinding, tagBasedTattoos: TagBasedTattoos) {
+    val colorPurple900 = "#30045c"
+    binding.run {
+        tagBasedTattoos.tags?.forEach { tag ->
+            if (tag.id == 1) {
+                tag1.text = tag.title
+                if (tag.backgroundDeepPurple) {
+                    tag1.visibility = View.VISIBLE
+                } else {
+                    tag1.setBackgroundResource(
+                        R.drawable.bg_tag_home_circular_purple100
+                    )
+                    tag1.setTextColor(Color.parseColor(colorPurple900))
+                    tag1.visibility = View.VISIBLE
+                }
+            }
+            if (tag.id == 2) {
+                tag2.text = tag.title
+                if (tag.backgroundDeepPurple) {
+                    tag2.visibility = View.VISIBLE
+                } else {
+                    tag2.setBackgroundResource(
+                        R.drawable.bg_tag_home_circular_purple100
+                    )
+                    tag2.setTextColor(Color.parseColor(colorPurple900))
+                    tag2.visibility = View.VISIBLE
+                }
+            }
+            if (tag.id == 3) {
+                tag3.text = tag.title
+                if (tag.backgroundDeepPurple) {
+                    tag3.visibility = View.VISIBLE
+                } else {
+                    tag3.setBackgroundResource(
+                        R.drawable.bg_tag_home_circular_purple100
+                    )
+                    tag3.setTextColor(Color.parseColor(colorPurple900))
+                    tag3.visibility = View.VISIBLE
+                }
+            }
+            if (tag.id == 4) {
+                tag4.text = tag.title
+                if (tag.backgroundDeepPurple) {
+                    tag4.visibility = View.VISIBLE
+                } else {
+                    tag4.setBackgroundResource(
+                        R.drawable.bg_tag_home_circular_purple100
+                    )
+                    tag4.setTextColor(Color.parseColor(colorPurple900))
+                    tag4.visibility = View.VISIBLE
+                }
+            }
         }
     }
+
 }
 
 class DiffCallbackListOfTattoosBasedOnTags : DiffUtil.ItemCallback<TagBasedTattoos>() {
