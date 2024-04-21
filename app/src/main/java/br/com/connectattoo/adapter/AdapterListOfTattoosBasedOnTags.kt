@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import br.com.connectattoo.adapter.model.ListTattoosAndTagsHomeScreenRv
+import br.com.connectattoo.data.ListTattoosAndTagsHomeScreenRv
 import br.com.connectattoo.databinding.ItemMoreHomeScreenBinding
 import br.com.connectattoo.databinding.TagbasedtattoosItemBinding
-import br.com.connectattoo.util.Constants.TYPE_MORE_ITEMS
+import br.com.connectattoo.util.Constants.TYPE_MORE_ITEMS_TAG_BASED_TATTOOS
 import br.com.connectattoo.util.Constants.TYPE_TAG_BASED_TATTOOS
 import java.lang.IllegalArgumentException
 
@@ -28,7 +28,7 @@ class AdapterListOfTattoosBasedOnTags : RecyclerView.Adapter<TagBasedTattoosView
                     .inflate(LayoutInflater.from(parent.context), parent, false)
             )
 
-            TYPE_MORE_ITEMS -> TagBasedTattoosViewHolder.MoreItemsIcon(
+            TYPE_MORE_ITEMS_TAG_BASED_TATTOOS -> TagBasedTattoosViewHolder.MoreItemsIcon(
                 ItemMoreHomeScreenBinding
                     .inflate(LayoutInflater.from(parent.context), parent, false)
             )
@@ -39,7 +39,7 @@ class AdapterListOfTattoosBasedOnTags : RecyclerView.Adapter<TagBasedTattoosView
     }
     override fun getItemViewType(position: Int): Int = when (list[position]) {
         is ListTattoosAndTagsHomeScreenRv.TagBasedTattoos -> TYPE_TAG_BASED_TATTOOS
-        is ListTattoosAndTagsHomeScreenRv.MoreItens -> TYPE_MORE_ITEMS
+        is ListTattoosAndTagsHomeScreenRv.MoreItens -> TYPE_MORE_ITEMS_TAG_BASED_TATTOOS
 
     }
     override fun getItemCount(): Int = list.size
@@ -50,6 +50,7 @@ class AdapterListOfTattoosBasedOnTags : RecyclerView.Adapter<TagBasedTattoosView
                 as ListTattoosAndTagsHomeScreenRv.TagBasedTattoos)
             is TagBasedTattoosViewHolder.MoreItemsIcon -> holder.bind(list[position]
                 as ListTattoosAndTagsHomeScreenRv.MoreItens)
+
         }
     }
 }

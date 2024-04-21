@@ -14,8 +14,8 @@ import br.com.connectattoo.R
 import br.com.connectattoo.adapter.AdapterListOfNearbyTattooArtists
 import br.com.connectattoo.adapter.AdapterListOfRandomTattoos
 import br.com.connectattoo.adapter.AdapterListOfTattoosBasedOnTags
-import br.com.connectattoo.adapter.model.ListTattoosAndTagsHomeScreenRv
-import br.com.connectattoo.data.NearbyTattooArtists
+import br.com.connectattoo.data.ListTattoosAndTagsHomeScreenRv
+import br.com.connectattoo.data.NearbyTattooArtistsAndItemMore
 import br.com.connectattoo.data.RandomTattoos
 import br.com.connectattoo.data.TagHomeScreen
 import br.com.connectattoo.databinding.FragmentHomeUserBinding
@@ -57,7 +57,7 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
     //private val tag = "Colorida"
 
     private lateinit var adapterListOfNearbyTattooartists: AdapterListOfNearbyTattooArtists
-    private val listOfNearbyTattooArtists: MutableList<NearbyTattooArtists> = mutableListOf()
+    private val listOfNearbyTattooArtists: MutableList<NearbyTattooArtistsAndItemMore> = mutableListOf()
 
     private lateinit var userRepository: UserRepository
 
@@ -119,6 +119,7 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
             enableLocationActivityResult
         )
         listOfTattoosBasedOnTags()
+        listOfNearbyTattooArtists()
         setRecyclerView()
         userRepository = UserRepository()
         setUserName()
@@ -135,12 +136,11 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         }
 
         binding.recycleListOfNearbyTattooartists.run {
-
             setHasFixedSize(true)
             adapterListOfNearbyTattooartists =
-                AdapterListOfNearbyTattooArtists(requireContext(), listOfNearbyTattooArtists)
+                AdapterListOfNearbyTattooArtists()
             adapter = adapterListOfNearbyTattooartists
-            listOfNearbyTattooArtists()
+            adapterListOfNearbyTattooartists.setData(listOfNearbyTattooArtists)
         }
 
 
@@ -317,7 +317,7 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
 
     private fun listOfNearbyTattooArtists() {
 
-        val nearbyTattooArtists = NearbyTattooArtists(
+        val nearbyTattooArtists = NearbyTattooArtistsAndItemMore.NearbyTattooArtists(
             tattooByNearbyArtistsUrl[0],
             "Larissa Dias",
             "4,7",
@@ -326,7 +326,7 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         )
         listOfNearbyTattooArtists.add(nearbyTattooArtists)
 
-        val nearbyTattooartists2 = NearbyTattooArtists(
+        val nearbyTattooartists2 = NearbyTattooArtistsAndItemMore.NearbyTattooArtists(
             tattooByNearbyArtistsUrl[1],
             "Marcus Freites",
             "4,9",
@@ -335,7 +335,7 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         )
         listOfNearbyTattooArtists.add(nearbyTattooartists2)
 
-        val nearbyTattooartists3 = NearbyTattooArtists(
+        val nearbyTattooartists3 = NearbyTattooArtistsAndItemMore.NearbyTattooArtists(
             tattooByNearbyArtistsUrl[2],
             "Tatiana Oliveira",
             "4,8",
@@ -344,7 +344,7 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         )
         listOfNearbyTattooArtists.add(nearbyTattooartists3)
 
-        val nearbyTattooartists4 = NearbyTattooArtists(
+        val nearbyTattooartists4 = NearbyTattooArtistsAndItemMore.NearbyTattooArtists(
             tattooByNearbyArtistsUrl[3],
             "Diogo Almeida",
             "4,5",
@@ -353,6 +353,8 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         )
         listOfNearbyTattooArtists.add(nearbyTattooartists4)
 
+        val nearbyTattooartists5 = NearbyTattooArtistsAndItemMore.MoreItems(id = 1, title = "Tatuadores")
+        listOfNearbyTattooArtists.add(nearbyTattooartists5)
     }
 
     private fun listOfRandomTattoos() {

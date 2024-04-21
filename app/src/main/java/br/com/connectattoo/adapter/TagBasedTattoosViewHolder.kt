@@ -5,7 +5,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import br.com.connectattoo.R
-import br.com.connectattoo.adapter.model.ListTattoosAndTagsHomeScreenRv
+import br.com.connectattoo.data.ListTattoosAndTagsHomeScreenRv
 import br.com.connectattoo.data.TagHomeScreen
 import br.com.connectattoo.databinding.ItemMoreHomeScreenBinding
 import br.com.connectattoo.databinding.TagbasedtattoosItemBinding
@@ -99,7 +99,7 @@ sealed class TagBasedTattoosViewHolder(binding: ViewBinding) :
 
             binding.run {
                 cardMoraItems.setOnClickListener {
-                    //listener(tagBasedTattoos)
+
                 }
                 txtMoreItensList.text = moreItems.title
             }

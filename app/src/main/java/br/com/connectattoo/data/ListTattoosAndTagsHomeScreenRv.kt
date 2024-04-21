@@ -1,6 +1,4 @@
-package br.com.connectattoo.adapter.model
-
-import br.com.connectattoo.data.TagHomeScreen
+package br.com.connectattoo.data
 
 sealed class ListTattoosAndTagsHomeScreenRv {
     class MoreItens(
