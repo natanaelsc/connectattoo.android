@@ -35,7 +35,7 @@ sealed class TagBasedTattoosViewHolder(binding: ViewBinding) :
             binding: TagbasedtattoosItemBinding,
             tagBasedTattoos: ListOfTattoosBasedOnTagsAndItemMore.TagBasedOfTattoos
         ) {
-            val colorPurple900 = "#30045c"
+            val colorPurple900 = "#460d7d"
             binding.run {
                 tagBasedTattoos.tagHomeScreens?.forEach { tag ->
                     setStyle(tag, colorPurple900)
