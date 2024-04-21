@@ -2,19 +2,23 @@ package br.com.connectattoo.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import br.com.connectattoo.adapter.model.ListTattoosAndTagsHomeScreenRv
 import br.com.connectattoo.databinding.ItemMoreHomeScreenBinding
 import br.com.connectattoo.databinding.TagbasedtattoosItemBinding
+import br.com.connectattoo.util.Constants.TYPE_MORE_ITEMS
+import br.com.connectattoo.util.Constants.TYPE_TAG_BASED_TATTOOS
 import java.lang.IllegalArgumentException
 
 class AdapterListOfTattoosBasedOnTags : RecyclerView.Adapter<TagBasedTattoosViewHolder>() {
 
-    //var listener: (TagBasedTattoos) -> Unit = {}
     private var list = mutableListOf<ListTattoosAndTagsHomeScreenRv>()
-    fun setData(listTattoosAndTags: MutableList<ListTattoosAndTagsHomeScreenRv>){
-        list = listTattoosAndTags
-        notifyDataSetChanged()
+    fun setData(newList: List<ListTattoosAndTagsHomeScreenRv>) {
+        val diffResult = DiffUtil.calculateDiff(ListTattoosDiffCallback(list, newList))
+        list.clear()
+        list.addAll(newList)
+        diffResult.dispatchUpdatesTo(this)
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TagBasedTattoosViewHolder {
 
@@ -46,9 +50,21 @@ class AdapterListOfTattoosBasedOnTags : RecyclerView.Adapter<TagBasedTattoosView
             is TagBasedTattoosViewHolder.MoreItemsIcon -> holder.bind(list[position] as ListTattoosAndTagsHomeScreenRv.MoreItens)
         }
     }
+}
 
-    companion object {
-        const val TYPE_TAG_BASED_TATTOOS = 0
-        const val TYPE_MORE_ITEMS = 1
+class ListTattoosDiffCallback(
+    private val oldList: List<ListTattoosAndTagsHomeScreenRv>,
+    private val newList: List<ListTattoosAndTagsHomeScreenRv>
+) : DiffUtil.Callback() {
+
+    override fun getOldListSize(): Int = oldList.size
+    override fun getNewListSize(): Int = newList.size
+
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition] == newList[newItemPosition]
+    }
+
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition] == newList[newItemPosition]
     }
 }

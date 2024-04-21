@@ -21,7 +21,7 @@ sealed class TagBasedTattoosViewHolder(binding: ViewBinding) :
 
             binding.run {
                 cardTagBasedTattoos.setOnClickListener {
-                    //listener(tagBasedTattoos)
+                    
                 }
                 Glide.with(imageTattoo).load(tagBasedTattoos.imageTattoo).into(imageTattoo)
                 setStyleTags(this, tagBasedTattoos)
