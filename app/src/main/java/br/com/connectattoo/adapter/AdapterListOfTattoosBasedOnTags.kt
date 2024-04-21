@@ -46,8 +46,10 @@ class AdapterListOfTattoosBasedOnTags : RecyclerView.Adapter<TagBasedTattoosView
 
     override fun onBindViewHolder(holder: TagBasedTattoosViewHolder, position: Int) {
         when (holder) {
-            is TagBasedTattoosViewHolder.TagViewHolder -> holder.bind(list[position] as ListTattoosAndTagsHomeScreenRv.TagBasedTattoos)
-            is TagBasedTattoosViewHolder.MoreItemsIcon -> holder.bind(list[position] as ListTattoosAndTagsHomeScreenRv.MoreItens)
+            is TagBasedTattoosViewHolder.TagViewHolder -> holder.bind(list[position]
+                as ListTattoosAndTagsHomeScreenRv.TagBasedTattoos)
+            is TagBasedTattoosViewHolder.MoreItemsIcon -> holder.bind(list[position]
+                as ListTattoosAndTagsHomeScreenRv.MoreItens)
         }
     }
 }
