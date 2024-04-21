@@ -1,14 +1,14 @@
 package br.com.connectattoo.data
 
-sealed class ListTattoosAndTagsHomeScreenRv {
-    class MoreItens(
+sealed class ListOfTattoosBasedOnTagsAndItemMore {
+    class MoreItems(
         val id: Int? = null,
         val title: String? = null
-    ) : ListTattoosAndTagsHomeScreenRv()
+    ) : ListOfTattoosBasedOnTagsAndItemMore()
 
-    class TagBasedTattoos(
+    class TagBasedOfTattoos(
         val id: Int? = null,
         val imageTattoo: String? = null,
         val tagHomeScreens: List<TagHomeScreen>? = null
-    ) : ListTattoosAndTagsHomeScreenRv()
+    ) : ListOfTattoosBasedOnTagsAndItemMore()
 }

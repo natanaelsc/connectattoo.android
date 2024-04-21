@@ -5,7 +5,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import br.com.connectattoo.R
-import br.com.connectattoo.data.ListTattoosAndTagsHomeScreenRv
+import br.com.connectattoo.data.ListOfTattoosBasedOnTagsAndItemMore
 import br.com.connectattoo.data.TagHomeScreen
 import br.com.connectattoo.databinding.ItemMoreHomeScreenBinding
 import br.com.connectattoo.databinding.TagbasedtattoosItemBinding
@@ -18,7 +18,7 @@ sealed class TagBasedTattoosViewHolder(binding: ViewBinding) :
     class TagViewHolder(
         private val binding: TagbasedtattoosItemBinding,
     ) : TagBasedTattoosViewHolder(binding) {
-        fun bind(tagBasedTattoos: ListTattoosAndTagsHomeScreenRv.TagBasedTattoos) {
+        fun bind(tagBasedTattoos: ListOfTattoosBasedOnTagsAndItemMore.TagBasedOfTattoos) {
 
             binding.run {
                 cardTagBasedTattoos.setOnClickListener {
@@ -33,7 +33,7 @@ sealed class TagBasedTattoosViewHolder(binding: ViewBinding) :
 
         private fun setStyleTags(
             binding: TagbasedtattoosItemBinding,
-            tagBasedTattoos: ListTattoosAndTagsHomeScreenRv.TagBasedTattoos
+            tagBasedTattoos: ListOfTattoosBasedOnTagsAndItemMore.TagBasedOfTattoos
         ) {
             val colorPurple900 = "#30045c"
             binding.run {
@@ -95,7 +95,7 @@ sealed class TagBasedTattoosViewHolder(binding: ViewBinding) :
     class MoreItemsIcon(
         private val binding: ItemMoreHomeScreenBinding
     ) : TagBasedTattoosViewHolder(binding) {
-        fun bind(moreItems: ListTattoosAndTagsHomeScreenRv.MoreItens) {
+        fun bind(moreItems: ListOfTattoosBasedOnTagsAndItemMore.MoreItems) {
 
             binding.run {
                 cardMoraItems.setOnClickListener {

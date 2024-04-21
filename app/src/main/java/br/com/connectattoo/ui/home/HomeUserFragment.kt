@@ -14,7 +14,7 @@ import br.com.connectattoo.R
 import br.com.connectattoo.adapter.AdapterListOfNearbyTattooArtists
 import br.com.connectattoo.adapter.AdapterListOfRandomTattoos
 import br.com.connectattoo.adapter.AdapterListOfTattoosBasedOnTags
-import br.com.connectattoo.data.ListTattoosAndTagsHomeScreenRv
+import br.com.connectattoo.data.ListOfTattoosBasedOnTagsAndItemMore
 import br.com.connectattoo.data.NearbyTattooArtistsAndItemMore
 import br.com.connectattoo.data.RandomTattoosAndItemMore
 import br.com.connectattoo.data.TagHomeScreen
@@ -53,7 +53,7 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
 
 
     private lateinit var adapterListOfTattoosBasedOnTags: AdapterListOfTattoosBasedOnTags
-    private val listOfTattoosBasedOnTags: MutableList<ListTattoosAndTagsHomeScreenRv> = mutableListOf()
+    private val listOfTattoosBasedOnTags: MutableList<ListOfTattoosBasedOnTagsAndItemMore> = mutableListOf()
     //private val tag = "Colorida"
 
     private lateinit var adapterListOfNearbyTattooartists: AdapterListOfNearbyTattooArtists
@@ -229,22 +229,22 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         val listTags3 = nearbyTags3()
         val listTags4 = nearbyTags4()
         val tattooBasedOnTags1 =
-            ListTattoosAndTagsHomeScreenRv.TagBasedTattoos(id = 1, tattooByTagsUrl[0], listTags1)
+            ListOfTattoosBasedOnTagsAndItemMore.TagBasedOfTattoos(id = 1, tattooByTagsUrl[0], listTags1)
         listOfTattoosBasedOnTags.add(tattooBasedOnTags1)
 
         val tattooBasedOnTags2 =
-            ListTattoosAndTagsHomeScreenRv.TagBasedTattoos(id = 2, tattooByTagsUrl[1], listTags2)
+            ListOfTattoosBasedOnTagsAndItemMore.TagBasedOfTattoos(id = 2, tattooByTagsUrl[1], listTags2)
         listOfTattoosBasedOnTags.add(tattooBasedOnTags2)
 
         val tattooBasedOnTags3 =
-            ListTattoosAndTagsHomeScreenRv.TagBasedTattoos(id = 3, tattooByTagsUrl[2], listTags3)
+            ListOfTattoosBasedOnTagsAndItemMore.TagBasedOfTattoos(id = 3, tattooByTagsUrl[2], listTags3)
         listOfTattoosBasedOnTags.add(tattooBasedOnTags3)
 
         val tattooBasedOnTags4 =
-            ListTattoosAndTagsHomeScreenRv.TagBasedTattoos(id = 4, tattooByTagsUrl[3], listTags4)
+            ListOfTattoosBasedOnTagsAndItemMore.TagBasedOfTattoos(id = 4, tattooByTagsUrl[3], listTags4)
         listOfTattoosBasedOnTags.add(tattooBasedOnTags4)
         val tattooBasedOnTags5 =
-            ListTattoosAndTagsHomeScreenRv.MoreItens(id = 1, title = "Referências")
+            ListOfTattoosBasedOnTagsAndItemMore.MoreItems(id = 1, title = "Referências")
         listOfTattoosBasedOnTags.add(tattooBasedOnTags5)
 
     }
@@ -253,17 +253,17 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         return listOf(
             TagHomeScreen(
                 id = 1,
-                title = "Old",
+                title = "PB",
                 backgroundDeepPurple = false
             ),
             TagHomeScreen(
                 id = 2,
-                title = "Color",
-                backgroundDeepPurple = true
+                title = "Engraved",
+                backgroundDeepPurple = false
             ),
             TagHomeScreen(
                 id = 3,
-                title = "Classic",
+                title = "Surrealism",
                 backgroundDeepPurple = true
             )
         )
@@ -304,13 +304,18 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
     private fun nearbyTags4(): List<TagHomeScreen> {
         return listOf(
             TagHomeScreen(
-                id = 3,
-                title = "Nature Classic",
+                id = 1,
+                title = "PB",
                 backgroundDeepPurple = false
             ),
             TagHomeScreen(
-                id = 4,
-                title = "Nature",
+                id = 2,
+                title = "Realism",
+                backgroundDeepPurple = false
+            ),
+            TagHomeScreen(
+                id = 3,
+                title = "Skull",
                 backgroundDeepPurple = true
             )
         )

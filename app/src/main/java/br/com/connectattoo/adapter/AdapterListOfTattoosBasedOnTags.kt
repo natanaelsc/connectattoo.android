@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import br.com.connectattoo.data.ListTattoosAndTagsHomeScreenRv
+import br.com.connectattoo.data.ListOfTattoosBasedOnTagsAndItemMore
 import br.com.connectattoo.databinding.ItemMoreHomeScreenBinding
 import br.com.connectattoo.databinding.TagbasedtattoosItemBinding
 import br.com.connectattoo.util.Constants.TYPE_MORE_ITEMS_TAG_BASED_TATTOOS
@@ -13,9 +13,9 @@ import java.lang.IllegalArgumentException
 
 class AdapterListOfTattoosBasedOnTags : RecyclerView.Adapter<TagBasedTattoosViewHolder>() {
 
-    private var list = mutableListOf<ListTattoosAndTagsHomeScreenRv>()
-    fun setData(newList: List<ListTattoosAndTagsHomeScreenRv>) {
-        val diffResult = DiffUtil.calculateDiff(ListTattoosDiffCallback(list, newList))
+    private var list = mutableListOf<ListOfTattoosBasedOnTagsAndItemMore>()
+    fun setData(newList: List<ListOfTattoosBasedOnTagsAndItemMore>) {
+        val diffResult = DiffUtil.calculateDiff(ListOfTattoosBasedOnTagsDiffCallback(list, newList))
         list.clear()
         list.addAll(newList)
         diffResult.dispatchUpdatesTo(this)
@@ -38,8 +38,8 @@ class AdapterListOfTattoosBasedOnTags : RecyclerView.Adapter<TagBasedTattoosView
         }
     }
     override fun getItemViewType(position: Int): Int = when (list[position]) {
-        is ListTattoosAndTagsHomeScreenRv.TagBasedTattoos -> TYPE_TAG_BASED_TATTOOS
-        is ListTattoosAndTagsHomeScreenRv.MoreItens -> TYPE_MORE_ITEMS_TAG_BASED_TATTOOS
+        is ListOfTattoosBasedOnTagsAndItemMore.TagBasedOfTattoos -> TYPE_TAG_BASED_TATTOOS
+        is ListOfTattoosBasedOnTagsAndItemMore.MoreItems -> TYPE_MORE_ITEMS_TAG_BASED_TATTOOS
 
     }
     override fun getItemCount(): Int = list.size
@@ -47,17 +47,17 @@ class AdapterListOfTattoosBasedOnTags : RecyclerView.Adapter<TagBasedTattoosView
     override fun onBindViewHolder(holder: TagBasedTattoosViewHolder, position: Int) {
         when (holder) {
             is TagBasedTattoosViewHolder.TagViewHolder -> holder.bind(list[position]
-                as ListTattoosAndTagsHomeScreenRv.TagBasedTattoos)
+                as ListOfTattoosBasedOnTagsAndItemMore.TagBasedOfTattoos)
             is TagBasedTattoosViewHolder.MoreItemsIcon -> holder.bind(list[position]
-                as ListTattoosAndTagsHomeScreenRv.MoreItens)
+                as ListOfTattoosBasedOnTagsAndItemMore.MoreItems)
 
         }
     }
 }
 
-class ListTattoosDiffCallback(
-    private val oldList: List<ListTattoosAndTagsHomeScreenRv>,
-    private val newList: List<ListTattoosAndTagsHomeScreenRv>
+class ListOfTattoosBasedOnTagsDiffCallback(
+    private val oldList: List<ListOfTattoosBasedOnTagsAndItemMore>,
+    private val newList: List<ListOfTattoosBasedOnTagsAndItemMore>
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int = oldList.size
