@@ -16,7 +16,7 @@ import br.com.connectattoo.adapter.AdapterListOfRandomTattoos
 import br.com.connectattoo.adapter.AdapterListOfTattoosBasedOnTags
 import br.com.connectattoo.data.ListTattoosAndTagsHomeScreenRv
 import br.com.connectattoo.data.NearbyTattooArtistsAndItemMore
-import br.com.connectattoo.data.RandomTattoos
+import br.com.connectattoo.data.RandomTattoosAndItemMore
 import br.com.connectattoo.data.TagHomeScreen
 import br.com.connectattoo.databinding.FragmentHomeUserBinding
 import br.com.connectattoo.repository.UserRepository
@@ -84,7 +84,7 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
     )
 
     private lateinit var adapterListOfRandomTattoos: AdapterListOfRandomTattoos
-    private val listOfRandomTattoos: MutableList<RandomTattoos> = mutableListOf()
+    private val listOfRandomTattoos: MutableList<RandomTattoosAndItemMore> = mutableListOf()
 
     private val nearbyProfileImage = mutableListOf(
         "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Fsecond_carousel%2Favatar%2Favatar_larissa_dias.png",
@@ -120,6 +120,7 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         )
         listOfTattoosBasedOnTags()
         listOfNearbyTattooArtists()
+        listOfRandomTattoos()
         setRecyclerView()
         userRepository = UserRepository()
         setUserName()
@@ -147,9 +148,10 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         binding.recycleListOfRandomTattoos.run {
             setHasFixedSize(true)
             adapterListOfRandomTattoos =
-                AdapterListOfRandomTattoos(requireContext(), listOfRandomTattoos)
+                AdapterListOfRandomTattoos()
             adapter = adapterListOfRandomTattoos
-            listOfRandomTattoos()
+            adapterListOfRandomTattoos.setData(listOfRandomTattoos)
+
         }
     }
 
@@ -359,36 +361,39 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
 
     private fun listOfRandomTattoos() {
 
-        val randomTattoos = RandomTattoos(
+        val randomTattoos = RandomTattoosAndItemMore.RandomTattoos(
             randomTattoosUrl[0], "Maria Carla",
             randomProfileImage[0], like = true, save = true
         )
         listOfRandomTattoos.add(randomTattoos)
 
         val randomTattoos2 =
-            RandomTattoos(
+            RandomTattoosAndItemMore.RandomTattoos(
                 randomTattoosUrl[1], "Sarah Ferreira",
                 randomProfileImage[1], like = true, save = true
             )
         listOfRandomTattoos.add(randomTattoos2)
 
-        val randomTattoos3 = RandomTattoos(
+        val randomTattoos3 = RandomTattoosAndItemMore.RandomTattoos(
             randomTattoosUrl[2], "Maya Tattoo",
             randomProfileImage[2], like = true, save = true
         )
         listOfRandomTattoos.add(randomTattoos3)
 
-        val randomTattoos4 = RandomTattoos(
+        val randomTattoos4 = RandomTattoosAndItemMore.RandomTattoos(
             randomTattoosUrl[3], "José Fer",
             randomProfileImage[3], like = true, save = true
         )
         listOfRandomTattoos.add(randomTattoos4)
 
-        val randomTattoos5 = RandomTattoos(
+        val randomTattoos5 = RandomTattoosAndItemMore.RandomTattoos(
             randomTattoosUrl[4], "Diogo Almeida",
             randomProfileImage[4], like = true, save = true
         )
         listOfRandomTattoos.add(randomTattoos5)
+
+        val randomTattoos6 = RandomTattoosAndItemMore.MoreItems(id= 1, "Referências")
+        listOfRandomTattoos.add(randomTattoos6)
     }
 
 

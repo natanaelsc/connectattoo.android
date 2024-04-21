@@ -13,4 +13,6 @@ object Constants {
     const val TYPE_MORE_ITEMS_TAG_BASED_TATTOOS = 1
     const val TYPE_NEARBY_TATOOO_ARTISTS = 2
     const val TYPE_MORE_ITEMS_NEARBY_TATOOO_ARTISTS = 3
+    const val TYPE_RANDOM_TATTOOS  = 4
+    const val TYPE_MORE_ITEMS_RANDOM_TATTOOS = 5
 }
