@@ -14,10 +14,10 @@ import br.com.connectattoo.R
 import br.com.connectattoo.adapter.AdapterListOfNearbyTattooArtists
 import br.com.connectattoo.adapter.AdapterListOfRandomTattoos
 import br.com.connectattoo.adapter.AdapterListOfTattoosBasedOnTags
+import br.com.connectattoo.adapter.model.ListTattoosAndTagsHomeScreenRv
 import br.com.connectattoo.data.NearbyTattooArtists
 import br.com.connectattoo.data.RandomTattoos
-import br.com.connectattoo.data.Tag
-import br.com.connectattoo.data.TagBasedTattoos
+import br.com.connectattoo.data.TagHomeScreen
 import br.com.connectattoo.databinding.FragmentHomeUserBinding
 import br.com.connectattoo.repository.UserRepository
 import br.com.connectattoo.ui.BaseFragment
@@ -53,7 +53,7 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
 
 
     private lateinit var adapterListOfTattoosBasedOnTags: AdapterListOfTattoosBasedOnTags
-    private val listOfTattoosBasedOnTags: MutableList<TagBasedTattoos> = mutableListOf()
+    private val listOfTattoosBasedOnTags: MutableList<ListTattoosAndTagsHomeScreenRv> = mutableListOf()
     //private val tag = "Colorida"
 
     private lateinit var adapterListOfNearbyTattooartists: AdapterListOfNearbyTattooArtists
@@ -129,7 +129,8 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
             setHasFixedSize(true)
             adapterListOfTattoosBasedOnTags = AdapterListOfTattoosBasedOnTags()
             adapter = adapterListOfTattoosBasedOnTags
-            adapterListOfTattoosBasedOnTags.submitList(listOfTattoosBasedOnTags)
+            adapterListOfTattoosBasedOnTags.setData(listOfTattoosBasedOnTags)
+
 
         }
 
@@ -225,80 +226,87 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         val listTags2 = nearbyTags2()
         val listTags3 = nearbyTags3()
         val listTags4 = nearbyTags4()
-        val tattooBasedOnTags1 = TagBasedTattoos(id = 1, tattooByTagsUrl[0], listTags1)
+        val tattooBasedOnTags1 =
+            ListTattoosAndTagsHomeScreenRv.TagBasedTattoos(id = 1, tattooByTagsUrl[0], listTags1)
         listOfTattoosBasedOnTags.add(tattooBasedOnTags1)
 
-        val tattooBasedOnTags2 = TagBasedTattoos(id = 2, tattooByTagsUrl[1], listTags2)
+        val tattooBasedOnTags2 =
+            ListTattoosAndTagsHomeScreenRv.TagBasedTattoos(id = 2, tattooByTagsUrl[1], listTags2)
         listOfTattoosBasedOnTags.add(tattooBasedOnTags2)
 
-        val tattooBasedOnTags3 = TagBasedTattoos(id = 3, tattooByTagsUrl[2], listTags3)
+        val tattooBasedOnTags3 =
+            ListTattoosAndTagsHomeScreenRv.TagBasedTattoos(id = 3, tattooByTagsUrl[2], listTags3)
         listOfTattoosBasedOnTags.add(tattooBasedOnTags3)
 
-        val tattooBasedOnTags4 = TagBasedTattoos(id = 4, tattooByTagsUrl[3], listTags4)
+        val tattooBasedOnTags4 =
+            ListTattoosAndTagsHomeScreenRv.TagBasedTattoos(id = 4, tattooByTagsUrl[3], listTags4)
         listOfTattoosBasedOnTags.add(tattooBasedOnTags4)
+        val tattooBasedOnTags5 =
+            ListTattoosAndTagsHomeScreenRv.MoreItens(id = 1, title = "Referências")
+        listOfTattoosBasedOnTags.add(tattooBasedOnTags5)
 
     }
 
-    private fun nearbyTags1(): List<Tag> {
+    private fun nearbyTags1(): List<TagHomeScreen> {
         return listOf(
-            Tag(
+            TagHomeScreen(
                 id = 1,
                 title = "Old",
                 backgroundDeepPurple = false
             ),
-            Tag(
+            TagHomeScreen(
                 id = 2,
                 title = "Color",
                 backgroundDeepPurple = true
             ),
-            Tag(
+            TagHomeScreen(
                 id = 3,
                 title = "Classic",
                 backgroundDeepPurple = true
             )
         )
     }
-    private fun nearbyTags2(): List<Tag> {
+    private fun nearbyTags2(): List<TagHomeScreen> {
         return listOf(
-            Tag(
+            TagHomeScreen(
                 id = 1,
                 title = "Old School",
                 backgroundDeepPurple = false
             ),
-            Tag(
+            TagHomeScreen(
                 id = 2,
                 title = "Color",
                 backgroundDeepPurple = true
             ),
-            Tag(
+            TagHomeScreen(
                 id = 3,
                 title = "Classic",
                 backgroundDeepPurple = true
             )
         )
     }
-    private fun nearbyTags3(): List<Tag> {
+    private fun nearbyTags3(): List<TagHomeScreen> {
         return listOf(
-            Tag(
+            TagHomeScreen(
                 id = 3,
                 title = "PB",
                 backgroundDeepPurple = false
             ),
-            Tag(
+            TagHomeScreen(
                 id = 4,
                 title = "Nature",
                 backgroundDeepPurple = true
             )
         )
     }
-    private fun nearbyTags4(): List<Tag> {
+    private fun nearbyTags4(): List<TagHomeScreen> {
         return listOf(
-            Tag(
+            TagHomeScreen(
                 id = 3,
                 title = "Nature Classic",
                 backgroundDeepPurple = false
             ),
-            Tag(
+            TagHomeScreen(
                 id = 4,
                 title = "Nature",
                 backgroundDeepPurple = true

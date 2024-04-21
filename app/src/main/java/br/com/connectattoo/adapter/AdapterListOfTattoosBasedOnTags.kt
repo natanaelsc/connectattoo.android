@@ -1,110 +1,54 @@
 package br.com.connectattoo.adapter
 
-import android.graphics.Color
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import br.com.connectattoo.R
-import br.com.connectattoo.data.TagBasedTattoos
+import br.com.connectattoo.adapter.model.ListTattoosAndTagsHomeScreenRv
+import br.com.connectattoo.databinding.ItemMoreHomeScreenBinding
 import br.com.connectattoo.databinding.TagbasedtattoosItemBinding
-import com.bumptech.glide.Glide
+import java.lang.IllegalArgumentException
 
-class AdapterListOfTattoosBasedOnTags :
-    ListAdapter<TagBasedTattoos, AdapterListOfTattoosBasedOnTags.TagBasedTattoosViewHolder>(
-        DiffCallbackListOfTattoosBasedOnTags()
-    ) {
+class AdapterListOfTattoosBasedOnTags : RecyclerView.Adapter<TagBasedTattoosViewHolder>() {
 
-    var listener: (TagBasedTattoos) -> Unit = {}
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TagBasedTattoosViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        val binding = TagbasedtattoosItemBinding.inflate(inflater, parent, false)
-        return TagBasedTattoosViewHolder(binding)
+    //var listener: (TagBasedTattoos) -> Unit = {}
+    private var list = mutableListOf<ListTattoosAndTagsHomeScreenRv>()
+    fun setData(listTattoosAndTags: MutableList<ListTattoosAndTagsHomeScreenRv>){
+        list = listTattoosAndTags
+        notifyDataSetChanged()
     }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TagBasedTattoosViewHolder {
+
+        return when (viewType) {
+            TYPE_TAG_BASED_TATTOOS -> TagBasedTattoosViewHolder.TagViewHolder(
+                TagbasedtattoosItemBinding
+                    .inflate(LayoutInflater.from(parent.context), parent, false)
+            )
+
+            TYPE_MORE_ITEMS -> TagBasedTattoosViewHolder.MoreItemsIcon(
+                ItemMoreHomeScreenBinding
+                    .inflate(LayoutInflater.from(parent.context), parent, false)
+            )
+
+            else -> throw IllegalArgumentException("")
+
+        }
+    }
+    override fun getItemViewType(position: Int): Int = when (list[position]) {
+        is ListTattoosAndTagsHomeScreenRv.TagBasedTattoos -> TYPE_TAG_BASED_TATTOOS
+        is ListTattoosAndTagsHomeScreenRv.MoreItens -> TYPE_MORE_ITEMS
+
+    }
+    override fun getItemCount(): Int = list.size
 
     override fun onBindViewHolder(holder: TagBasedTattoosViewHolder, position: Int) {
-        holder.bind(getItem(position))
-    }
-
-    inner class TagBasedTattoosViewHolder(private val binding: TagbasedtattoosItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-
-        fun bind(tagBasedTattoos: TagBasedTattoos) {
-
-            binding.run {
-                cardTagBasedTattoos.setOnClickListener {
-                    listener(tagBasedTattoos)
-                }
-                Glide.with(imageTattoo).load(tagBasedTattoos.imageTattoo).into(imageTattoo)
-                setStyleTags(this, tagBasedTattoos)
-            }
-
-
-        }
-
-    }
-}
-
-private fun setStyleTags(binding: TagbasedtattoosItemBinding, tagBasedTattoos: TagBasedTattoos) {
-    val colorPurple900 = "#30045c"
-    binding.run {
-        tagBasedTattoos.tags?.forEach { tag ->
-            if (tag.id == 1) {
-                tag1.visibility = View.VISIBLE
-                tag1.text = tag.title
-                if (tag.backgroundDeepPurple) {
-                    tag1.setBackgroundResource(
-                        R.drawable.bg_tag_home_circular_purple100
-                    )
-                    tag1.setTextColor(Color.parseColor(colorPurple900))
-                    tag1.visibility = View.VISIBLE
-                }
-            }
-            if (tag.id == 2) {
-                tag2.visibility = View.VISIBLE
-                tag2.text = tag.title
-                if (tag.backgroundDeepPurple) {
-                    tag2.setBackgroundResource(
-                        R.drawable.bg_tag_home_circular_purple100
-                    )
-                    tag2.setTextColor(Color.parseColor(colorPurple900))
-                }
-            }
-            if (tag.id == 3) {
-                tag3.visibility = View.VISIBLE
-                tag3.text = tag.title
-                if (tag.backgroundDeepPurple) {
-
-                    tag3.setBackgroundResource(
-                        R.drawable.bg_tag_home_circular_purple100
-                    )
-                    tag3.setTextColor(Color.parseColor(colorPurple900))
-                }
-            }
-            if (tag.id == 4) {
-                tag4.visibility = View.VISIBLE
-                tag4.text = tag.title
-                if (tag.backgroundDeepPurple) {
-                    tag4.setBackgroundResource(
-                        R.drawable.bg_tag_home_circular_purple100
-                    )
-                    tag4.setTextColor(Color.parseColor(colorPurple900))
-                }
-            }
+        when (holder) {
+            is TagBasedTattoosViewHolder.TagViewHolder -> holder.bind(list[position] as ListTattoosAndTagsHomeScreenRv.TagBasedTattoos)
+            is TagBasedTattoosViewHolder.MoreItemsIcon -> holder.bind(list[position] as ListTattoosAndTagsHomeScreenRv.MoreItens)
         }
     }
 
-}
-
-class DiffCallbackListOfTattoosBasedOnTags : DiffUtil.ItemCallback<TagBasedTattoos>() {
-    override fun areItemsTheSame(oldItem: TagBasedTattoos, newItem: TagBasedTattoos) =
-        oldItem == newItem
-
-    override fun areContentsTheSame(oldItem: TagBasedTattoos, newItem: TagBasedTattoos) =
-        oldItem.id == newItem.id
-
+    companion object {
+        const val TYPE_TAG_BASED_TATTOOS = 0
+        const val TYPE_MORE_ITEMS = 1
+    }
 }
