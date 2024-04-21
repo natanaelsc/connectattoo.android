@@ -54,7 +54,6 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
 
     private lateinit var adapterListOfTattoosBasedOnTags: AdapterListOfTattoosBasedOnTags
     private val listOfTattoosBasedOnTags: MutableList<ListOfTattoosBasedOnTagsAndItemMore> = mutableListOf()
-    //private val tag = "Colorida"
 
     private lateinit var adapterListOfNearbyTattooartists: AdapterListOfNearbyTattooArtists
     private val listOfNearbyTattooArtists: MutableList<NearbyTattooArtistsAndItemMore> = mutableListOf()
