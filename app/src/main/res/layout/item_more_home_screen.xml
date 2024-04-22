@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_mora_items"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="@dimen/margin_13dp">
+
+
+    <ImageView
+        android:layout_marginTop="40dp"
+        android:id="@+id/fb_more_itens"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_weight="1"
+        android:background="@drawable/bg_icon_add_home_screen_deep_purple"
+        android:clickable="true"
+        android:contentDescription="Botão de ver mais imagens na lista"
+        android:focusable="true"
+        android:src="@drawable/ic_add" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/raleway_medium"
+        android:text="@string/icon_more_itens_list"
+        android:textColor="@color/purple900"
+        android:textSize="@dimen/txt_size_11sp" />
+
+    <TextView
+        android:id="@+id/txt_more_itens_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/raleway_medium"
+        android:textColor="@color/purple900"
+        android:textSize="@dimen/txt_size_11sp"
+        tools:text="Referências" />
+
+</LinearLayout>
