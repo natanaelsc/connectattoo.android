@@ -9,4 +9,10 @@ object Constants {
     const val INTERVAL_TIME_MILLIS_10000 = 10000L
     const val INTERVAL_TIME_MILLIS_5000 = 5000L
     const val REQUEST_CODE_100 = 100
+    const val TYPE_TAG_BASED_TATTOOS = 0
+    const val TYPE_MORE_ITEMS_TAG_BASED_TATTOOS = 1
+    const val TYPE_NEARBY_TATOOO_ARTISTS = 2
+    const val TYPE_MORE_ITEMS_NEARBY_TATOOO_ARTISTS = 3
+    const val TYPE_RANDOM_TATTOOS  = 4
+    const val TYPE_MORE_ITEMS_RANDOM_TATTOOS = 5
 }
