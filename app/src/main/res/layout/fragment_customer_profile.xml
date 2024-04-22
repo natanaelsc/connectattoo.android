@@ -133,9 +133,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_24dp"
+        android:layout_marginStart="@dimen/margin_16dp"
         android:fontFamily="@font/raleway_extrabold"
         android:text="@string/txt_next_scheduling"
         android:textColor="@color/black"
+        android:textSize="@dimen/txt_size_14sp"
         app:layout_constraintStart_toStartOf="@+id/rvTagsInterests"
         app:layout_constraintTop_toBottomOf="@+id/rvTagsInterests" />
 

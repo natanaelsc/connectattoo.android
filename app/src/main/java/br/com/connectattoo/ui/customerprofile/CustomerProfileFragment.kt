@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import br.com.connectattoo.R
 import br.com.connectattoo.adapter.AdapterListMyGalleries
 import br.com.connectattoo.adapter.AdapterListTagsProfile
 import br.com.connectattoo.databinding.FragmentCustomerProfileBinding
@@ -64,6 +65,7 @@ class CustomerProfileFragment : BaseFragment<FragmentCustomerProfileBinding>() {
             Glide.with(btnUserImage)
                 .load(viewModel.state.userImage)
                 .circleCrop()
+                .placeholder(R.drawable.icon_person_profile)
                 .into(btnUserImage)
             Glide.with(ivImageTattooArtist)
                 .load(viewModel.state.imageTattooArtist)
@@ -75,6 +77,11 @@ class CustomerProfileFragment : BaseFragment<FragmentCustomerProfileBinding>() {
             txtTattoArtistProfile.text = viewModel.state.txtTattooArtistProfile
             txtScheduleTomorrow.text = viewModel.state.txtScheduleTomorrow
             txtScheduleHour.text = viewModel.state.txtScheduleHour
+
+            Glide.with(ivImageTattooArtist).load(viewModel.state.imageTattooArtist).circleCrop()
+                .placeholder(R.drawable.icon_person_profile)
+                .into(ivImageTattooArtist)
+
         }
     }
 
