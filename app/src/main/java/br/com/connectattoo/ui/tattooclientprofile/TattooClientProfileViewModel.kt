@@ -10,9 +10,9 @@ class TattooClientProfileViewModel : ViewModel() {
     val state: TattooClientProfileState get() = _state
 
     init {
-        getInitialInformationCustomer()
-        getListGalleriesCustomerProfile()
-        getListTagsCustomerProfile()
+        getListTagsTattooClientProfile()
+        getListGalleriesTattooClientProfile()
+        getInitialInformationTattooClientProfile()
         getImageTattooArtistNextAppointment()
     }
 

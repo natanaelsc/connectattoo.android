@@ -9,7 +9,7 @@ import br.com.connectattoo.data.TagTattooClientProfile
 import br.com.connectattoo.databinding.ItemTagsMyInterestsBinding
 
 class AdapterListTagsProfile :
-    ListAdapter<TagCustomerProfile, AdapterListTagsProfile.ListTagsProfileViewHolder>(
+    ListAdapter<TagTattooClientProfile, AdapterListTagsProfile.ListTagsProfileViewHolder>(
         DiffCallbackTagsProfile()
     ) {
     var listenerTagProfile: (TagTattooClientProfile) -> Unit = {}
