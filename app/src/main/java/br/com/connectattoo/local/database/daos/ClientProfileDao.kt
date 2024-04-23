@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import br.com.connectattoo.local.database.entitys.ClientProfileEntity
+import br.com.connectattoo.local.database.entitys.ClientProfileTag
 
 @Dao
 interface ClientProfileDao {
@@ -15,5 +16,18 @@ interface ClientProfileDao {
 
     @Query("DELETE FROM clientProfile")
     suspend fun dellClientProfile()
+
+    @Insert
+    suspend fun insertClientProfileTag(clientProfileTags: ClientProfileEntity)
+    @Query("SELECT * FROM client_profile_tags")
+    suspend fun getClientProfileTags(): ClientProfileTag?
+
+    /*
+
+
+        @Query("DELETE FROM clientProfile")
+        suspend fun dellClientProfile()
+
+     */
 
 }

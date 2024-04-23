@@ -3,6 +3,7 @@ package br.com.connectattoo.repository
 import br.com.connectattoo.api.ApiService
 import br.com.connectattoo.api.ApiUrl
 import br.com.connectattoo.api.response.ClientProfileResponse
+import br.com.connectattoo.api.response.ClientProfileTagsResponse
 import br.com.connectattoo.core.ResourceResult
 import br.com.connectattoo.local.database.daos.ClientProfileDao
 import br.com.connectattoo.util.Converters.toClientProfileResponse
@@ -35,4 +36,30 @@ class UserRepository (private val clientProfileDao: ClientProfileDao){
         }
         return (ResourceResult.Success(data?.toClientProfileResponse()))
     }
+
+
+    fun getClientProfileTags(token: String): Flow<ResourceResult<ClientProfileTagsResponse>> = flow {
+        emit(fetchTagsFromDBAndAPI("Bearer $token"))
+    }
+
+    private suspend fun fetchTagsFromDBAndAPI(token: String): ResourceResult<ClientProfileTagsResponse>{
+
+        var data = clientProfileDao.getClientProfile()
+
+        try {
+            with(apiService.getProfileUser(token)){
+                val clientProfile = this.body()
+                if (this.isSuccessful && clientProfile != null){
+                    clientProfileDao.dellClientProfile()
+                    clientProfileDao.insertClientProfile(clientProfile.toEntity())
+                }
+                data = clientProfileDao.getClientProfile()
+            }
+        } catch (error: Throwable) {
+            return (ResourceResult.Error(data?.toClientProfileResponse(), error))
+        }
+        return (ResourceResult.Success(data?.toClientProfileResponse()))
+    }
+
+
 }
