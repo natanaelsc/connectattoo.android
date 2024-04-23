@@ -19,6 +19,7 @@ import br.com.connectattoo.data.NearbyTattooArtistsAndItemMore
 import br.com.connectattoo.data.RandomTattoosAndItemMore
 import br.com.connectattoo.data.TagHomeScreen
 import br.com.connectattoo.databinding.FragmentHomeUserBinding
+import br.com.connectattoo.local.database.AppDatabase
 import br.com.connectattoo.repository.UserRepository
 import br.com.connectattoo.ui.BaseFragment
 import br.com.connectattoo.util.Constants
@@ -121,7 +122,10 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         listOfNearbyTattooArtists()
         listOfRandomTattoos()
         setRecyclerView()
-        userRepository = UserRepository()
+
+        val database = AppDatabase.getInstance(requireContext())
+        val clientProfileDao = database.clientProfileDao()
+        userRepository = UserRepository(clientProfileDao)
         setUserName()
     }
 
@@ -157,6 +161,8 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
     private fun setUserName() {
         viewLifecycleOwner.lifecycleScope.launch {
             val nameUser = DataStoreManager.getUserSettings(requireContext(), API_USER_NAME)
+            val token = DataStoreManager.getUserSettings(requireContext(), API_TOKEN)
+            getUserNameFromApi(token)
             if (nameUser.isEmpty()) {
                 val token = DataStoreManager.getUserSettings(requireContext(), API_TOKEN)
                 getUserNameFromApi(token)
@@ -178,7 +184,8 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
 
     private suspend fun apiRequest(token: String) {
         val result = userRepository.getProfileUser(token)
-
+        //Log.i("result", result.data .toString())
+        /*
         if (result.isSuccessful) {
             result.body().let { profileUser ->
                 if (profileUser != null) {
@@ -201,6 +208,10 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
                 }
             }
         }
+
+         */
+
+
     }
 
     private fun showUserName(name: String) {

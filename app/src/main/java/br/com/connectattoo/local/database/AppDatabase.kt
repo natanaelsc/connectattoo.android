@@ -4,11 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import br.com.connectattoo.local.database.daos.ClientProfileDao
 import br.com.connectattoo.local.database.entitys.ClientProfileEntity
 
 @Database(entities = [ClientProfileEntity::class], version = 1)
 abstract class AppDatabase : RoomDatabase(){
-
+    abstract fun clientProfileDao() : ClientProfileDao
     companion object {
 
         private const val DATABASE_NAME: String = "connectattoo-database"

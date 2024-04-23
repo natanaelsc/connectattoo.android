@@ -4,12 +4,18 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import br.com.connectattoo.local.database.entitys.ClientProfileEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ClientProfileDao {
     @Insert
     suspend fun insertClientProfile(clientProfile: ClientProfileEntity)
 
+
+    @Query("SELECT * FROM clientProfile WHERE id = :clientId")
+    suspend fun getClientProfile(clientId: Long): Flow<ClientProfileEntity>
+
     @Query("DELETE FROM clientProfile")
-    suspend fun delAllInformationClientProfile()
+    suspend fun dellClientProfile()
+
 }
