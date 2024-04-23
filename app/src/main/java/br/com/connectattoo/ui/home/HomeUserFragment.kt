@@ -39,6 +39,7 @@ import java.io.IOException
 @Suppress("TooManyFunctions")
 class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var viewModel: HomeUserViewModel
     private var checkLocation = false
     private val enableLocationActivityResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -114,6 +115,7 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
     }
 
     override fun setupViews() {
+        viewModel = HomeUserViewModel()
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         PermissionUtils.getPermissionAndLocationUser(
             requireActivity(),
@@ -184,17 +186,10 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         }
     }
 
-    private suspend fun apiRequest(token: String) {
+    private fun apiRequest(token: String) {
 
                 lifecycleScope.launch {
-                    val result = userRepository.getProfileUser(token)
-
-                    result.collect {
-                        if (it.error != null) {
-                            Log.i("result", it.data.toString())
-
-                        }
-                    }
+                    viewModel.getClientProfile(userRepository, token)
                 }
         /*
                         //
