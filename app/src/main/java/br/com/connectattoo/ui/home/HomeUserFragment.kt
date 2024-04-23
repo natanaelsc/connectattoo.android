@@ -2,7 +2,6 @@ package br.com.connectattoo.ui.home
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -30,7 +29,6 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationTokenSource
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
 
@@ -182,15 +180,6 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         }
     }
 
-    private fun showValidationError(message: String) {
-        view?.let {
-            Snackbar.make(it, message, Snackbar.LENGTH_SHORT)
-                .setTextColor(Color.WHITE)
-                .setBackgroundTint(Color.RED)
-                .show()
-        }
-    }
-
     private fun observerViewModel() {
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -201,7 +190,6 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
                         }
 
                         HomeUserViewModel.UiState.Error -> {
-                            showValidationError(viewModel.state.stateError.toString())
                         }
 
                         HomeUserViewModel.UiState.Loading -> {
