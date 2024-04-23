@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import br.com.connectattoo.local.database.entitys.ClientProfileEntity
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ClientProfileDao {

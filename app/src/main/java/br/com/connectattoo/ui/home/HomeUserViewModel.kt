@@ -1,6 +1,5 @@
 package br.com.connectattoo.ui.home
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.connectattoo.repository.UserRepository

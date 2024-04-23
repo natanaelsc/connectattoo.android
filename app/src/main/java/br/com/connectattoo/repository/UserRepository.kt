@@ -1,6 +1,5 @@
 package br.com.connectattoo.repository
 
-import android.util.Log
 import br.com.connectattoo.api.ApiService
 import br.com.connectattoo.api.ApiUrl
 import br.com.connectattoo.api.response.ClientProfileResponse
@@ -9,7 +8,6 @@ import br.com.connectattoo.local.database.daos.ClientProfileDao
 import br.com.connectattoo.util.Converters.toClientProfileResponse
 import br.com.connectattoo.util.Converters.toEntity
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 
 @Suppress("TooGenericExceptionCaught")
