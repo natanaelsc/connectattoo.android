@@ -5,14 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import br.com.connectattoo.data.TagCustomerProfile
+import br.com.connectattoo.data.TagTattooClientProfile
 import br.com.connectattoo.databinding.ItemTagsMyInterestsBinding
 
 class AdapterListTagsProfile :
-    ListAdapter<TagCustomerProfile, AdapterListTagsProfile.ListTagsProfileViewHolder>(
+    ListAdapter<TagTattooClientProfile, AdapterListTagsProfile.ListTagsProfileViewHolder>(
         DiffCallbackTagsProfile()
     ) {
-    var listenerTagProfile: (TagCustomerProfile) -> Unit = {}
+    var listenerTagProfile: (TagTattooClientProfile) -> Unit = {}
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListTagsProfileViewHolder {
@@ -29,24 +29,24 @@ class AdapterListTagsProfile :
     inner class ListTagsProfileViewHolder(
         private val binding: ItemTagsMyInterestsBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(tagCustomerProfile: TagCustomerProfile) {
+        fun bind(tagTattooClientProfile: TagTattooClientProfile) {
             binding.run {
 
                 btnTagMyInterests.setOnClickListener {
-                    listenerTagProfile(tagCustomerProfile)
+                    listenerTagProfile(tagTattooClientProfile)
                 }
-                btnTagMyInterests.text = tagCustomerProfile.tag
+                btnTagMyInterests.text = tagTattooClientProfile.tag
             }
 
         }
     }
 }
 
-class DiffCallbackTagsProfile : DiffUtil.ItemCallback<TagCustomerProfile>() {
-    override fun areItemsTheSame(oldItem: TagCustomerProfile, newItem: TagCustomerProfile) =
+class DiffCallbackTagsProfile : DiffUtil.ItemCallback<TagTattooClientProfile>() {
+    override fun areItemsTheSame(oldItem: TagTattooClientProfile, newItem: TagTattooClientProfile) =
         oldItem == newItem
 
-    override fun areContentsTheSame(oldItem: TagCustomerProfile, newItem: TagCustomerProfile) =
+    override fun areContentsTheSame(oldItem: TagTattooClientProfile, newItem: TagTattooClientProfile) =
         oldItem.id == newItem.id
 
 }

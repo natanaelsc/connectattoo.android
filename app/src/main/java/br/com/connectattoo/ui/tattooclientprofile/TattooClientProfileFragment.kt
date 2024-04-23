@@ -1,4 +1,4 @@
-package br.com.connectattoo.ui.customerprofile
+package br.com.connectattoo.ui.tattooclientprofile
 
 import android.content.ContentValues.TAG
 import android.util.Log
@@ -9,26 +9,26 @@ import androidx.lifecycle.lifecycleScope
 import br.com.connectattoo.R
 import br.com.connectattoo.adapter.AdapterListMyGalleries
 import br.com.connectattoo.adapter.AdapterListTagsProfile
-import br.com.connectattoo.databinding.FragmentCustomerProfileBinding
+import br.com.connectattoo.databinding.FragmentTattooClientProfileBinding
 import br.com.connectattoo.ui.BaseFragment
 import com.bumptech.glide.Glide
 import kotlinx.coroutines.launch
 
 
-class CustomerProfileFragment : BaseFragment<FragmentCustomerProfileBinding>() {
+class TattooClientProfileFragment : BaseFragment<FragmentTattooClientProfileBinding>() {
     private lateinit var adapterListTagsProfile: AdapterListTagsProfile
     private var adapterListMyGalleries = AdapterListMyGalleries()
-    private val viewModel: CustomerProfileFragmentViewModel by viewModels()
+    private val viewModel: TattooClientProfileViewModel by viewModels()
     override fun inflateBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentCustomerProfileBinding {
-        return FragmentCustomerProfileBinding.inflate(inflater, container, false)
+    ): FragmentTattooClientProfileBinding {
+        return FragmentTattooClientProfileBinding.inflate(inflater, container, false)
     }
 
     override fun setupViews() {
         setupRecyclerView()
-        insertInformationCustomerInitial()
+        insertInformationTattooClientProfile()
         setupBtnClicks()
     }
 
@@ -38,8 +38,8 @@ class CustomerProfileFragment : BaseFragment<FragmentCustomerProfileBinding>() {
             setHasFixedSize(true)
             adapter = adapterListTagsProfile
         }
-        adapterListTagsProfile.listenerTagProfile = { tagCustomerProfile ->
-            Log.i(TAG, tagCustomerProfile.toString())
+        adapterListTagsProfile.listenerTagProfile = { tagTattooClientProfile ->
+            Log.i(TAG, tagTattooClientProfile.toString())
         }
         binding.rvMyGalleries.run {
             setHasFixedSize(true)
@@ -48,15 +48,15 @@ class CustomerProfileFragment : BaseFragment<FragmentCustomerProfileBinding>() {
 
     }
 
-    private fun insertInformationCustomerInitial() {
+    private fun insertInformationTattooClientProfile() {
         viewLifecycleOwner.lifecycleScope.launch {
-            val listTagsProfile = viewModel.state.listTagsCustomerProfile
+            val listTagsProfile = viewModel.state.listTagsTattooClientProfile
 
             adapterListTagsProfile.submitList(listTagsProfile)
 
         }
         viewLifecycleOwner.lifecycleScope.launch {
-            val listMyGalleries = viewModel.state.listGalleriesCustomerProfile
+            val listMyGalleries = viewModel.state.listGalleriesTattooClientProfile
             adapterListMyGalleries.submitList(listMyGalleries)
 
         }

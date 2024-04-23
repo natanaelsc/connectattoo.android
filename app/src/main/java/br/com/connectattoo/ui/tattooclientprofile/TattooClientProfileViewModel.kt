@@ -1,33 +1,33 @@
-package br.com.connectattoo.ui.customerprofile
+package br.com.connectattoo.ui.tattooclientprofile
 
 import androidx.lifecycle.ViewModel
 import br.com.connectattoo.data.MyGalleryProfile
-import br.com.connectattoo.data.TagCustomerProfile
+import br.com.connectattoo.data.TagTattooClientProfile
 
-class CustomerProfileFragmentViewModel : ViewModel() {
+class TattooClientProfileViewModel : ViewModel() {
 
-    private var _state: CustomerProfileState = CustomerProfileState()
-    val state: CustomerProfileState get() = _state
+    private var _state: TattooClientProfileState = TattooClientProfileState()
+    val state: TattooClientProfileState get() = _state
 
     init {
-        getInitialInformationCustomer()
-        getListGalleriesCustomerProfile()
-        getListTagsCustomerProfile()
+        getListTagsTattooClientProfile()
+        getListGalleriesTattooClientProfile()
+        getInitialInformationTattooClientProfile()
         getImageTattooArtistNextAppointment()
     }
 
-    private fun getListTagsCustomerProfile() {
+    private fun getListTagsTattooClientProfile() {
         val listTags = listOf(
-            TagCustomerProfile(tag = "Old School"),
-            TagCustomerProfile(tag = "Preto e branco"),
-            TagCustomerProfile(tag = "Geométrico"),
-            TagCustomerProfile(tag = "Geométrico 2"),
-            TagCustomerProfile(tag = "Geométrico 3")
+            TagTattooClientProfile(tag = "Old School"),
+            TagTattooClientProfile(tag = "Preto e branco"),
+            TagTattooClientProfile(tag = "Geométrico"),
+            TagTattooClientProfile(tag = "Geométrico 2"),
+            TagTattooClientProfile(tag = "Geométrico 3")
         )
-        _state = _state.copy(listTagsCustomerProfile = listTags)
+        _state = _state.copy(listTagsTattooClientProfile = listTags)
     }
 
-    private fun getListGalleriesCustomerProfile() {
+    private fun getListGalleriesTattooClientProfile() {
         val listImages = listOf(
             MyGalleryProfile(
                 1,
@@ -82,10 +82,10 @@ class CustomerProfileFragmentViewModel : ViewModel() {
 
             ),
         )
-        _state = _state.copy(listGalleriesCustomerProfile = listImages)
+        _state = _state.copy(listGalleriesTattooClientProfile = listImages)
     }
 
-    private fun getInitialInformationCustomer() {
+    private fun getInitialInformationTattooClientProfile() {
 
         _state = _state.copy(
             txtNameUser = "João Silva",
