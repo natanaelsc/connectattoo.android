@@ -2,14 +2,15 @@ package br.com.connectattoo.ui.home
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.ContentValues.TAG
 import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import br.com.connectattoo.R
 import br.com.connectattoo.adapter.AdapterListOfNearbyTattooArtists
 import br.com.connectattoo.adapter.AdapterListOfRandomTattoos
@@ -22,9 +23,7 @@ import br.com.connectattoo.databinding.FragmentHomeUserBinding
 import br.com.connectattoo.local.database.AppDatabase
 import br.com.connectattoo.repository.UserRepository
 import br.com.connectattoo.ui.BaseFragment
-import br.com.connectattoo.util.Constants
 import br.com.connectattoo.util.Constants.API_TOKEN
-import br.com.connectattoo.util.Constants.API_USER_NAME
 import br.com.connectattoo.util.DataStoreManager
 import br.com.connectattoo.util.PermissionUtils
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -33,7 +32,6 @@ import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
-import java.io.IOException
 
 
 @Suppress("TooManyFunctions")
@@ -126,6 +124,7 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         listOfNearbyTattooArtists()
         listOfRandomTattoos()
         setRecyclerView()
+        observerViewModel()
 
         val database = AppDatabase.getInstance(requireContext())
         val clientProfileDao = database.clientProfileDao()
@@ -164,66 +163,19 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
 
     private fun setUserName() {
         viewLifecycleOwner.lifecycleScope.launch {
-            val nameUser = DataStoreManager.getUserSettings(requireContext(), API_USER_NAME)
             val token = DataStoreManager.getUserSettings(requireContext(), API_TOKEN)
-            getUserNameFromApi(token)
-            if (nameUser.isEmpty()) {
-                //val token = DataStoreManager.getUserSettings(requireContext(), API_TOKEN)
-                getUserNameFromApi(token)
-            } else {
-                showUserName(nameUser)
-            }
-
+            getUserName(token)
         }
     }
 
-    private suspend fun getUserNameFromApi(token: String) {
-        try {
-            apiRequest(token)
-        } catch (error: IOException) {
-            Log.i(TAG, error.message.toString())
-            showUserName("")
+    private fun getUserName(token: String) {
+
+        lifecycleScope.launch {
+            viewModel.getClientProfile(userRepository, token)
         }
-    }
-
-    private fun apiRequest(token: String) {
-
-                lifecycleScope.launch {
-                    viewModel.getClientProfile(userRepository, token)
-                }
-        /*
-                        //
-
-                        if (result.isSuccessful) {
-                            result.body().let { profileUser ->
-                                if (profileUser != null) {
-                                    val firstName = profileUser.displayName.split(" ")[0]
-                                    DataStoreManager.saveUserSettings(
-                                        requireContext(), API_USER_NAME,
-                                        firstName
-                                    )
-
-                                    showUserName(firstName)
-                                }
-                            }
-                        } else {
-                            when (result.code()) {
-                                Constants.CODE_ERROR_404 -> showUserName("")
-                                Constants.CODE_ERROR_401 -> showUserName("")
-                                else -> {
-                                    showValidationError("Erro: ${result.code()}")
-                                    showUserName("")
-                                }
-                            }
-                        }
-
-                         */
-
-
     }
 
     private fun showUserName(name: String) {
-
         if (name.isNotEmpty()) {
             binding.txtName.text = getString(R.string.txt_hello_user_home, name)
         } else {
@@ -237,6 +189,32 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
                 .setTextColor(Color.WHITE)
                 .setBackgroundTint(Color.RED)
                 .show()
+        }
+    }
+
+    private fun observerViewModel() {
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiStateFlow.collect { uiState ->
+                    when (uiState) {
+                        HomeUserViewModel.UiState.Success -> {
+                            showUserName(viewModel.state.displayName.toString())
+                        }
+
+                        HomeUserViewModel.UiState.Error -> {
+                            showValidationError(viewModel.state.stateError.toString())
+                        }
+
+                        HomeUserViewModel.UiState.Loading -> {
+
+                        }
+
+                        else -> {
+
+                        }
+                    }
+                }
+            }
         }
     }
 
