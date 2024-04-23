@@ -169,8 +169,7 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
     }
 
     private fun getUserName(token: String) {
-
-        lifecycleScope.launch {
+       viewLifecycleOwner.lifecycleScope.launch {
             viewModel.getClientProfile(userRepository, token)
         }
     }

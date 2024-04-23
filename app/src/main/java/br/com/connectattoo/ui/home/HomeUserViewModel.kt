@@ -39,10 +39,10 @@ class HomeUserViewModel: ViewModel() {
             }
         }
     }
-    sealed class UiState() {
-        object Success : UiState()
-        object Error : UiState()
-        object Loading : UiState()
-        object Initial : UiState()
+    sealed class UiState {
+        data object Success : UiState()
+        data object Error : UiState()
+        data object Loading : UiState()
+        data object Initial : UiState()
     }
 }
