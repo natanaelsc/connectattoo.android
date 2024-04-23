@@ -3,12 +3,13 @@ package br.com.connectattoo.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import br.com.connectattoo.data.TagTattooClientProfile
 import br.com.connectattoo.databinding.ItemTagsMyInterestsBinding
 
 class AdapterListTagsProfile :
-    androidx.recyclerview.widget.ListAdapter<TagTattooClientProfile, AdapterListTagsProfile.ListTagsProfileViewHolder>(
+    ListAdapter<TagCustomerProfile, AdapterListTagsProfile.ListTagsProfileViewHolder>(
         DiffCallbackTagsProfile()
     ) {
     var listenerTagProfile: (TagTattooClientProfile) -> Unit = {}

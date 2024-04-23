@@ -10,9 +10,10 @@ class TattooClientProfileViewModel : ViewModel() {
     val state: TattooClientProfileState get() = _state
 
     init {
-        getInitialInformationTattooClientProfile()
-        getListGalleriesTattooClientProfile()
-        getListTagsTattooClientProfile()
+        getInitialInformationCustomer()
+        getListGalleriesCustomerProfile()
+        getListTagsCustomerProfile()
+        getImageTattooArtistNextAppointment()
     }
 
     private fun getListTagsTattooClientProfile() {
@@ -98,6 +99,10 @@ class TattooClientProfileViewModel : ViewModel() {
             imageTattooArtist = "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/" +
                 "home%2Fthird_carousel%2Favatar%2Favatar_maria_carla.png"
         )
+    }
+    private fun getImageTattooArtistNextAppointment(){
+        _state = _state.copy(imageTattooArtist = "https://pub-777ce89a8a3641429d92a32c49eac191.r2" +
+            ".dev/tattoo_client_profile%2Favatar%2FLarissa_Dias_tatuadora.png")
     }
 
 }

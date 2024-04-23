@@ -1,47 +1,73 @@
 package br.com.connectattoo.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import br.com.connectattoo.data.NearbyTattooArtists
+import br.com.connectattoo.data.NearbyTattooArtistsAndItemMore
+import br.com.connectattoo.databinding.ItemMoreHomeScreenBinding
 import br.com.connectattoo.databinding.NearbyTattooArtistsItemBinding
-import com.bumptech.glide.Glide
+import br.com.connectattoo.util.Constants.TYPE_MORE_ITEMS_NEARBY_TATOOO_ARTISTS
+import br.com.connectattoo.util.Constants.TYPE_NEARBY_TATOOO_ARTISTS
 
-class AdapterListOfNearbyTattooArtists(
-    private val context: Context,
-    private val listOfNearbyTattooArtists: MutableList<NearbyTattooArtists>
-) :
-    RecyclerView.Adapter<AdapterListOfNearbyTattooArtists.NearbyTattooArtistsViewHolder>() {
-
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): NearbyTattooArtistsViewHolder {
-        val itemList = NearbyTattooArtistsItemBinding.inflate(
-            LayoutInflater.from(context), parent, false
-        )
-        return NearbyTattooArtistsViewHolder(itemList)
+class AdapterListOfNearbyTattooArtists : RecyclerView.Adapter<NearbyTattooArtistsAndItemMoreViewHolder>() {
+    private var list = mutableListOf<NearbyTattooArtistsAndItemMore>()
+    fun setData(newList: List<NearbyTattooArtistsAndItemMore>) {
+        val diffResult =
+            DiffUtil.calculateDiff(ListOfNearbyTattooArtistsDiffCallback(list, newList))
+        list.clear()
+        list.addAll(newList)
+        diffResult.dispatchUpdatesTo(this)
     }
 
-    override fun getItemCount() = listOfNearbyTattooArtists.size
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int
+    ): NearbyTattooArtistsAndItemMoreViewHolder {
+        return when (viewType) {
+            TYPE_NEARBY_TATOOO_ARTISTS -> NearbyTattooArtistsAndItemMoreViewHolder.NearbyTattooArtistsViewHolder(
+                NearbyTattooArtistsItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            )
 
-    override fun onBindViewHolder(holder: NearbyTattooArtistsViewHolder, position: Int) {
-        Glide.with(context).load(listOfNearbyTattooArtists[position].tattoo).into(holder.tattoo)
-        holder.txtName.text = listOfNearbyTattooArtists[position].name
-        holder.txtAssessment.text = listOfNearbyTattooArtists[position].assessment
-        holder.txtAddress.text = listOfNearbyTattooArtists[position].address
-        Glide.with(context).load(listOfNearbyTattooArtists[position].profileImage)
-            .into(holder.profileImage)
+            TYPE_MORE_ITEMS_NEARBY_TATOOO_ARTISTS -> NearbyTattooArtistsAndItemMoreViewHolder
+                .NearbyTattooArtistsMoreItemsViewHolder(ItemMoreHomeScreenBinding
+                    .inflate(LayoutInflater.from(parent.context), parent, false)
+            )
 
+            else -> throw java.lang.IllegalArgumentException("")
+
+        }
     }
 
-    inner class NearbyTattooArtistsViewHolder(binding: NearbyTattooArtistsItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        val tattoo = binding.tattoo
-        val txtName = binding.txtName
-        val txtAssessment = binding.txtassessment
-        val txtAddress = binding.txtaddress
-        val profileImage = binding.profileImage
+    override fun getItemViewType(position: Int): Int = when (list[position]) {
+        is NearbyTattooArtistsAndItemMore.NearbyTattooArtists -> TYPE_NEARBY_TATOOO_ARTISTS
+        is NearbyTattooArtistsAndItemMore.MoreItems -> TYPE_MORE_ITEMS_NEARBY_TATOOO_ARTISTS
+    }
+
+    override fun getItemCount() = list.size
+
+    override fun onBindViewHolder(holder: NearbyTattooArtistsAndItemMoreViewHolder, position: Int) {
+        when (holder) {
+            is NearbyTattooArtistsAndItemMoreViewHolder.NearbyTattooArtistsViewHolder ->
+                holder.bind(list[position] as NearbyTattooArtistsAndItemMore.NearbyTattooArtists)
+
+            is NearbyTattooArtistsAndItemMoreViewHolder.NearbyTattooArtistsMoreItemsViewHolder ->
+                holder.bind(list[position] as NearbyTattooArtistsAndItemMore.MoreItems)
+        }
+    }
+}
+
+class ListOfNearbyTattooArtistsDiffCallback(
+    private val oldList: List<NearbyTattooArtistsAndItemMore>,
+    private val newList: List<NearbyTattooArtistsAndItemMore>
+) : DiffUtil.Callback() {
+
+    override fun getOldListSize(): Int = oldList.size
+    override fun getNewListSize(): Int = newList.size
+
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition] == newList[newItemPosition]
+    }
+
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition] == newList[newItemPosition]
     }
 }
