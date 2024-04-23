@@ -11,9 +11,8 @@ interface ClientProfileDao {
     @Insert
     suspend fun insertClientProfile(clientProfile: ClientProfileEntity)
 
-
-    @Query("SELECT * FROM clientProfile WHERE id = :clientId")
-    suspend fun getClientProfile(clientId: Long): Flow<ClientProfileEntity>
+    @Query("SELECT * FROM clientProfile LIMIT 1")
+    suspend fun getClientProfile(): ClientProfileEntity?
 
     @Query("DELETE FROM clientProfile")
     suspend fun dellClientProfile()

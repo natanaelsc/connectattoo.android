@@ -15,15 +15,13 @@ import kotlinx.coroutines.flow.flow
 @Suppress("TooGenericExceptionCaught")
 class UserRepository (private val clientProfileDao: ClientProfileDao){
     private val apiService: ApiService = ApiUrl.instance.create(ApiService::class.java)
-
-
-    suspend fun getProfileUser(token: String): Flow<ResourceResult<ClientProfileResponse>> {
-        val bearerToken = "Bearer $token"
-        return networkBoundResource(bearerToken)
+    fun getProfileUser(token: String): Flow<ResourceResult<ClientProfileResponse>> = flow{
+       emit(networkBoundResource("Bearer $token"))
     }
-    private fun networkBoundResource(token: String): Flow<ResourceResult<ClientProfileResponse>> = flow {
 
-        var data = clientProfileDao.getClientProfile(7).first()
+    private suspend fun networkBoundResource(token: String): ResourceResult<ClientProfileResponse>{
+
+        var data = clientProfileDao.getClientProfile()
 
         try {
             with(apiService.getProfileUser(token)){
@@ -32,11 +30,11 @@ class UserRepository (private val clientProfileDao: ClientProfileDao){
                     clientProfileDao.dellClientProfile()
                     clientProfileDao.insertClientProfile(clientProfile.toEntity())
                 }
-                data = clientProfileDao.getClientProfile(7).first()
+                data = clientProfileDao.getClientProfile()
             }
         } catch (error: Throwable) {
-           emit(ResourceResult.Error(data.toClientProfileResponse(), error))
+           return (ResourceResult.Error(data?.toClientProfileResponse(), error))
         }
-        emit(ResourceResult.Success(data.toClientProfileResponse()))
+        return (ResourceResult.Success(data?.toClientProfileResponse()))
     }
 }

@@ -54,10 +54,12 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
 
 
     private lateinit var adapterListOfTattoosBasedOnTags: AdapterListOfTattoosBasedOnTags
-    private val listOfTattoosBasedOnTags: MutableList<ListOfTattoosBasedOnTagsAndItemMore> = mutableListOf()
+    private val listOfTattoosBasedOnTags: MutableList<ListOfTattoosBasedOnTagsAndItemMore> =
+        mutableListOf()
 
     private lateinit var adapterListOfNearbyTattooartists: AdapterListOfNearbyTattooArtists
-    private val listOfNearbyTattooArtists: MutableList<NearbyTattooArtistsAndItemMore> = mutableListOf()
+    private val listOfNearbyTattooArtists: MutableList<NearbyTattooArtistsAndItemMore> =
+        mutableListOf()
 
     private lateinit var userRepository: UserRepository
 
@@ -164,7 +166,7 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
             val token = DataStoreManager.getUserSettings(requireContext(), API_TOKEN)
             getUserNameFromApi(token)
             if (nameUser.isEmpty()) {
-                val token = DataStoreManager.getUserSettings(requireContext(), API_TOKEN)
+                //val token = DataStoreManager.getUserSettings(requireContext(), API_TOKEN)
                 getUserNameFromApi(token)
             } else {
                 showUserName(nameUser)
@@ -183,33 +185,44 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
     }
 
     private suspend fun apiRequest(token: String) {
-        val result = userRepository.getProfileUser(token)
-        //Log.i("result", result.data .toString())
+
+                lifecycleScope.launch {
+                    val result = userRepository.getProfileUser(token)
+
+                    result.collect {
+                        if (it.error != null) {
+                            Log.i("result", it.data.toString())
+
+                        }
+                    }
+                }
         /*
-        if (result.isSuccessful) {
-            result.body().let { profileUser ->
-                if (profileUser != null) {
-                    val firstName = profileUser.displayName.split(" ")[0]
-                    DataStoreManager.saveUserSettings(
-                        requireContext(), API_USER_NAME,
-                        firstName
-                    )
+                        //
 
-                    showUserName(firstName)
-                }
-            }
-        } else {
-            when (result.code()) {
-                Constants.CODE_ERROR_404 -> showUserName("")
-                Constants.CODE_ERROR_401 -> showUserName("")
-                else -> {
-                    showValidationError("Erro: ${result.code()}")
-                    showUserName("")
-                }
-            }
-        }
+                        if (result.isSuccessful) {
+                            result.body().let { profileUser ->
+                                if (profileUser != null) {
+                                    val firstName = profileUser.displayName.split(" ")[0]
+                                    DataStoreManager.saveUserSettings(
+                                        requireContext(), API_USER_NAME,
+                                        firstName
+                                    )
 
-         */
+                                    showUserName(firstName)
+                                }
+                            }
+                        } else {
+                            when (result.code()) {
+                                Constants.CODE_ERROR_404 -> showUserName("")
+                                Constants.CODE_ERROR_401 -> showUserName("")
+                                else -> {
+                                    showValidationError("Erro: ${result.code()}")
+                                    showUserName("")
+                                }
+                            }
+                        }
+
+                         */
 
 
     }
@@ -239,19 +252,35 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         val listTags3 = nearbyTags3()
         val listTags4 = nearbyTags4()
         val tattooBasedOnTags1 =
-            ListOfTattoosBasedOnTagsAndItemMore.TagBasedOfTattoos(id = 1, tattooByTagsUrl[0], listTags1)
+            ListOfTattoosBasedOnTagsAndItemMore.TagBasedOfTattoos(
+                id = 1,
+                tattooByTagsUrl[0],
+                listTags1
+            )
         listOfTattoosBasedOnTags.add(tattooBasedOnTags1)
 
         val tattooBasedOnTags2 =
-            ListOfTattoosBasedOnTagsAndItemMore.TagBasedOfTattoos(id = 2, tattooByTagsUrl[1], listTags2)
+            ListOfTattoosBasedOnTagsAndItemMore.TagBasedOfTattoos(
+                id = 2,
+                tattooByTagsUrl[1],
+                listTags2
+            )
         listOfTattoosBasedOnTags.add(tattooBasedOnTags2)
 
         val tattooBasedOnTags3 =
-            ListOfTattoosBasedOnTagsAndItemMore.TagBasedOfTattoos(id = 3, tattooByTagsUrl[2], listTags3)
+            ListOfTattoosBasedOnTagsAndItemMore.TagBasedOfTattoos(
+                id = 3,
+                tattooByTagsUrl[2],
+                listTags3
+            )
         listOfTattoosBasedOnTags.add(tattooBasedOnTags3)
 
         val tattooBasedOnTags4 =
-            ListOfTattoosBasedOnTagsAndItemMore.TagBasedOfTattoos(id = 4, tattooByTagsUrl[3], listTags4)
+            ListOfTattoosBasedOnTagsAndItemMore.TagBasedOfTattoos(
+                id = 4,
+                tattooByTagsUrl[3],
+                listTags4
+            )
         listOfTattoosBasedOnTags.add(tattooBasedOnTags4)
         val tattooBasedOnTags5 =
             ListOfTattoosBasedOnTagsAndItemMore.MoreItems(id = 1, title = "Referências")
@@ -278,6 +307,7 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
             )
         )
     }
+
     private fun nearbyTags2(): List<TagHomeScreen> {
         return listOf(
             TagHomeScreen(
@@ -297,6 +327,7 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
             )
         )
     }
+
     private fun nearbyTags3(): List<TagHomeScreen> {
         return listOf(
             TagHomeScreen(
@@ -311,6 +342,7 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
             )
         )
     }
+
     private fun nearbyTags4(): List<TagHomeScreen> {
         return listOf(
             TagHomeScreen(
@@ -370,7 +402,8 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         )
         listOfNearbyTattooArtists.add(nearbyTattooartists4)
 
-        val nearbyTattooartists5 = NearbyTattooArtistsAndItemMore.MoreItems(id = 1, title = "Tatuadores")
+        val nearbyTattooartists5 =
+            NearbyTattooArtistsAndItemMore.MoreItems(id = 1, title = "Tatuadores")
         listOfNearbyTattooArtists.add(nearbyTattooartists5)
     }
 
@@ -407,7 +440,7 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         )
         listOfRandomTattoos.add(randomTattoos5)
 
-        val randomTattoos6 = RandomTattoosAndItemMore.MoreItems(id= 1, "Referências")
+        val randomTattoos6 = RandomTattoosAndItemMore.MoreItems(id = 1, "Referências")
         listOfRandomTattoos.add(randomTattoos6)
     }
 
