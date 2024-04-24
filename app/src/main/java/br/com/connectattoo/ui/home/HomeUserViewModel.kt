@@ -27,8 +27,9 @@ class HomeUserViewModel: ViewModel() {
                     _uiStateFlow.value = UiState.Error
                 }
                 it.data?.let {clientProfile ->
+                    val firstName = clientProfile.displayName?.split(" ")?.get(0)
                     _state = _state.copy(
-                        displayName = clientProfile.displayName,
+                        displayName = firstName,
                         username = clientProfile.username,
                         birthDate = clientProfile.birthDate,
                         imageProfile = clientProfile.imageProfile,

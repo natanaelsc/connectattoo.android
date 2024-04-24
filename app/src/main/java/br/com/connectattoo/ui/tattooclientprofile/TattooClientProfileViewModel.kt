@@ -112,14 +112,13 @@ class TattooClientProfileViewModel : ViewModel() {
 
                     if (clientProfile.birthDate != null) {
                         val age = calculateDateBirth(clientProfile.birthDate)
-
                         _state = _state.copy(txtAgeAndEmail = "$age | ")
                     }
-
-
+                    
                     if (clientProfile.imageProfile != null) {
                         _state = _state.copy(userImage = clientProfile.imageProfile)
                     }
+
                     _state = _state.copy(
                         txtNameUser = "@${clientProfile.displayName}",
                     )
