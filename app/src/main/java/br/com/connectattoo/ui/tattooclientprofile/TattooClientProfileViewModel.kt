@@ -113,22 +113,15 @@ class TattooClientProfileViewModel : ViewModel() {
                     if (clientProfile.birthDate != null) {
                         val age = calculateDateBirth(clientProfile.birthDate)
 
-                        _state = _state.copy(txtAgeAndEmail = "$age")
+                        _state = _state.copy(txtAgeAndEmail = "$age | ")
                     }
 
 
                     if (clientProfile.imageProfile != null) {
                         _state = _state.copy(userImage = clientProfile.imageProfile)
                     }
-
                     _state = _state.copy(
                         txtNameUser = "@${clientProfile.username}",
-                        txtNameTattooArtist = "Larissa Diniz",
-                        txtTattooArtistProfile = "@lari_tattoo",
-                        txtScheduleTomorrow = "Amanhã",
-                        txtScheduleHour = "11:45",
-                        imageTattooArtist = "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/" +
-                            "home%2Fthird_carousel%2Favatar%2Favatar_maria_carla.png"
                     )
                     _uiStateFlow.value = UiState.Success
                 }
@@ -152,6 +145,10 @@ class TattooClientProfileViewModel : ViewModel() {
 
     private fun getImageTattooArtistNextAppointment() {
         _state = _state.copy(
+            txtNameTattooArtist = "Larissa Diniz",
+            txtTattooArtistProfile = "@lari_tattoo",
+            txtScheduleTomorrow = "Amanhã",
+            txtScheduleHour = "11:45",
             imageTattooArtist = "https://pub-777ce89a8a3641429d92a32c49eac191.r2" +
                 ".dev/tattoo_client_profile%2Favatar%2FLarissa_Dias_tatuadora.png"
         )
