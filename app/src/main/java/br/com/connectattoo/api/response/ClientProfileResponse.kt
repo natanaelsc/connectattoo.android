@@ -12,24 +12,10 @@ data class ClientProfileResponse(
     val imageProfile: String? = "",
     val tags: List<String> = emptyList()
 ){
-    fun mapStringsToTags(tagNames: List<String>): List<ClientProfileTag> {
-        return tagNames.map { ClientProfileTag(name = it) }
+    fun mapStringsToTags(tagNames: List<String>): List<ClientProfileTagEntity> {
+        return tagNames.map { ClientProfileTagEntity(name = it) }
     }
     /*
-    fun mapResponseToProfile(response: ClientProfileResponse): ClientProfile {
-        val tagList = mutableListOf<ClientProfileTag>()
-        for (tagResponse in response.tags) {
-            val tag = ClientProfileTag(name = tagResponse)
-            tagList.add(tag)
-        }
-        return ClientProfile(
-            displayName = response.displayName,
-            username = response.username,
-            birthDate = response.birthDate,
-            imageProfile = response.imageProfile,
-            tags = tagList
-        )
-    }
 
     fun toClientProfile(): ClientProfile {
         return ClientProfile(
@@ -41,18 +27,20 @@ data class ClientProfileResponse(
         )
     }
 
+     */
+
     fun toClientProfileEntity(): ClientProfileEntity {
         return ClientProfileEntity(
             displayName = this.displayName ?: "",
             username = this.username ?: "",
             birthDate = this.birthDate ?: "",
             imageProfile = this.imageProfile ?: "",
-            tags = this.tags
+            tags = mapStringsToTags(this.tags)
         )
     }
 
 
-     */
+
 }
 
 

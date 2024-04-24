@@ -31,7 +31,8 @@ class HomeUserViewModel: ViewModel() {
                         displayName = clientProfile.displayName,
                         username = clientProfile.username,
                         birthDate = clientProfile.birthDate,
-                        imageProfile = clientProfile.imageProfile
+                        imageProfile = clientProfile.imageProfile,
+                        tags = clientProfile.tags
                     )
                     _uiStateFlow.value = UiState.Success
                 }

@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
-import br.com.connectattoo.api.response.ClientProfileResponse
 import br.com.connectattoo.data.ClientProfile
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -18,18 +17,15 @@ data class ClientProfileEntity(
     @ColumnInfo(name = "image_profile") val imageProfile: String? = "",
     var tags: List<ClientProfileTagEntity> = emptyList()
 ) {
-    /*
+
     fun toClientProfile(): ClientProfile =
         ClientProfile(
             displayName = this.displayName ?: "",
             username = this.username ?: "",
             birthDate = this.birthDate ?: "",
             imageProfile = this.imageProfile ?: "",
-            tags = this.tags.toClientProfileTagResponse()
+            tags = this.tags.toClientProfileTag()
         )
-
-     */
-
 }
 class ClientProfileConverters {
     @TypeConverter
