@@ -1,6 +1,5 @@
 package br.com.connectattoo.repository
 
-import android.util.Log
 import br.com.connectattoo.api.ApiService
 import br.com.connectattoo.api.ApiUrl
 import br.com.connectattoo.core.ResourceResult
@@ -15,7 +14,6 @@ class UserRepository(private val clientProfileDao: ClientProfileDao) {
     fun getProfileUser(token: String): Flow<ResourceResult<ClientProfile>> = flow {
         emit(networkBoundResource("Bearer $token"))
     }
-
     private suspend fun networkBoundResource(token: String): ResourceResult<ClientProfile> {
         var data = clientProfileDao.getClientProfile()
 
@@ -27,12 +25,10 @@ class UserRepository(private val clientProfileDao: ClientProfileDao) {
                     clientProfileDao.insertClientProfile(clientProfile.toClientProfileEntity())
                 }
                 data = clientProfileDao.getClientProfile()
-                Log.i("data", data.toString())
             }
         } catch (error: Throwable) {
             return (ResourceResult.Error(data?.toClientProfile(), error))
         }
-        Log.i("data", data.toString())
         return (ResourceResult.Success(data?.toClientProfile()))
     }
 }

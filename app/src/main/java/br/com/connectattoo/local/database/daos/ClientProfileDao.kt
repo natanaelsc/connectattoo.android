@@ -16,18 +16,4 @@ interface ClientProfileDao {
     @Query("DELETE FROM clientProfile")
     suspend fun dellClientProfile()
 
-    /*
-    @Insert
-    suspend fun insertClientProfileTag(clientProfileTags: ClientProfileEntity)
-    @Query("SELECT * FROM client_profile_tags")
-    suspend fun getClientProfileTags(): ClientProfileTag?
-
-
-
-
-        @Query("DELETE FROM clientProfile")
-        suspend fun dellClientProfile()
-
-     */
-
 }
