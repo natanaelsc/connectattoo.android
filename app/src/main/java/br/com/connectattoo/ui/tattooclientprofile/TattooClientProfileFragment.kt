@@ -109,7 +109,7 @@ class TattooClientProfileFragment : BaseFragment<FragmentTattooClientProfileBind
                 .circleCrop()
                 .into(ivImageTattooArtist)
             txtNameUser.text = viewModel.state.txtNameUser
-            txtAgeAndEmail.text = viewModel.state.txtAgeAndEmail
+            txtAgeAndDisplayName.text = viewModel.state.txtAgeAndEmail
             txtNameTattooArtist.text = viewModel.state.txtNameTattooArtist
             txtTattoArtistProfile.text = viewModel.state.txtTattooArtistProfile
             txtScheduleTomorrow.text = viewModel.state.txtScheduleTomorrow
