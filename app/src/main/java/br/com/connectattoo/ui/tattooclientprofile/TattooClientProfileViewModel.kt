@@ -121,7 +121,7 @@ class TattooClientProfileViewModel : ViewModel() {
                         _state = _state.copy(userImage = clientProfile.imageProfile)
                     }
                     _state = _state.copy(
-                        txtNameUser = "@${clientProfile.username}",
+                        txtNameUser = "@${clientProfile.displayName}",
                     )
                     _uiStateFlow.value = UiState.Success
                 }
