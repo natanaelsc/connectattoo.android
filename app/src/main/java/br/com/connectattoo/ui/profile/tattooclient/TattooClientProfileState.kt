@@ -1,4 +1,4 @@
-package br.com.connectattoo.ui.tattooclientprofile
+package br.com.connectattoo.ui.profile.tattooclient
 
 import br.com.connectattoo.data.TattooClientProfile
 import br.com.connectattoo.data.Tag

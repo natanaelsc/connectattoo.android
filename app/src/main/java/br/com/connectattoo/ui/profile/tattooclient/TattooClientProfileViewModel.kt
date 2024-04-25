@@ -1,4 +1,4 @@
-package br.com.connectattoo.ui.tattooclientprofile
+package br.com.connectattoo.ui.profile.tattooclient
 
 import android.os.Build
 import androidx.annotation.RequiresApi
