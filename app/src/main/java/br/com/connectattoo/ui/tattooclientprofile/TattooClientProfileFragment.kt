@@ -15,7 +15,7 @@ import br.com.connectattoo.R
 import br.com.connectattoo.adapter.AdapterListMyGalleries
 import br.com.connectattoo.adapter.AdapterListTagsProfile
 import br.com.connectattoo.databinding.FragmentTattooClientProfileBinding
-import br.com.connectattoo.repository.UserRepository
+import br.com.connectattoo.repository.ProfileRepository
 import br.com.connectattoo.ui.BaseFragment
 import com.bumptech.glide.Glide
 import kotlinx.coroutines.launch
@@ -25,7 +25,7 @@ class TattooClientProfileFragment : BaseFragment<FragmentTattooClientProfileBind
     private lateinit var adapterListTagsProfile: AdapterListTagsProfile
     private var adapterListMyGalleries = AdapterListMyGalleries()
     private val viewModel: TattooClientProfileViewModel by viewModels()
-    private lateinit var userRepository: UserRepository
+    private lateinit var profileRepository: ProfileRepository
     override fun inflateBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -36,9 +36,9 @@ class TattooClientProfileFragment : BaseFragment<FragmentTattooClientProfileBind
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         val database = (requireActivity().application as ConnectattooApplication).database
-        val clientProfileDao = database.TattooClientProfileDao()
-        userRepository = UserRepository(clientProfileDao)
-        viewModel.getInitialInformationTattooClientProfile(userRepository)
+        val clientProfileDao = database.tattooClientProfileDao()
+        profileRepository = ProfileRepository(clientProfileDao)
+        viewModel.getInitialInformationTattooClientProfile(profileRepository)
         setupRecyclerView()
         setupBtnClicks()
         observerViewModel()
@@ -109,7 +109,7 @@ class TattooClientProfileFragment : BaseFragment<FragmentTattooClientProfileBind
                 .circleCrop()
                 .into(ivImageTattooArtist)
             txtNameUser.text = viewModel.state.txtNameUser
-            txtAgeAndDisplayName.text = viewModel.state.txtAgeAndEmail
+            txtAgeAndDisplayName.text = viewModel.state.txtAgeAndDisplayName
             txtNameTattooArtist.text = viewModel.state.txtNameTattooArtist
             txtTattoArtistProfile.text = viewModel.state.txtTattooArtistProfile
             txtScheduleTomorrow.text = viewModel.state.txtScheduleTomorrow

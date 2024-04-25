@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.connectattoo.data.MyGalleryProfile
 import br.com.connectattoo.data.Tag
-import br.com.connectattoo.repository.UserRepository
+import br.com.connectattoo.repository.ProfileRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -98,10 +98,10 @@ class TattooClientProfileViewModel : ViewModel() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun getInitialInformationTattooClientProfile(userRepository: UserRepository) {
+    fun getInitialInformationTattooClientProfile(profileRepository: ProfileRepository) {
         _uiStateFlow.value = UiState.Loading
         viewModelScope.launch {
-            val result = userRepository.getClientProfileRoom()
+            val result = profileRepository.getClientProfileRoom()
 
             result.collect {
                 if (it.error != null) {
@@ -112,7 +112,7 @@ class TattooClientProfileViewModel : ViewModel() {
 
                     if (clientProfile.birthDate != null) {
                         val age = calculateDateBirth(clientProfile.birthDate)
-                        _state = _state.copy(txtAgeAndEmail = "$age | @${clientProfile.username}")
+                        _state = _state.copy(txtAgeAndDisplayName = "$age | @${clientProfile.username}")
                     }
 
                     if (clientProfile.imageProfile != null) {

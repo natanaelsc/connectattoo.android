@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.io.IOException
 
-class UserRepository(private val tattooClientProfileDao: TattooClientProfileDao) {
+class ProfileRepository(private val tattooClientProfileDao: TattooClientProfileDao) {
     private val apiService: ApiService = ApiUrl.instance.create(ApiService::class.java)
     fun getProfileUser(token: String): Flow<ResourceResult<TattooClientProfile>> = flow {
         emit(networkBoundResource("Bearer $token"))

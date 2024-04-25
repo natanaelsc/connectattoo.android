@@ -13,7 +13,7 @@ import br.com.connectattoo.local.database.entitys.TagEntity
 @Database(entities = [TattooClientProfileEntity::class, TagEntity::class], version = 1, exportSchema = false)
 @TypeConverters(TattooClientProfileConverters::class)
 abstract class AppDatabase : RoomDatabase(){
-    abstract fun TattooClientProfileDao() : TattooClientProfileDao
+    abstract fun tattooClientProfileDao() : TattooClientProfileDao
     companion object {
 
         private const val DATABASE_NAME: String = "connectattoo-database"

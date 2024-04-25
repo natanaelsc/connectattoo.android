@@ -20,7 +20,7 @@ import br.com.connectattoo.data.NearbyTattooArtistsAndItemMore
 import br.com.connectattoo.data.RandomTattoosAndItemMore
 import br.com.connectattoo.data.TagHomeScreen
 import br.com.connectattoo.databinding.FragmentHomeUserBinding
-import br.com.connectattoo.repository.UserRepository
+import br.com.connectattoo.repository.ProfileRepository
 import br.com.connectattoo.ui.BaseFragment
 import br.com.connectattoo.util.Constants.API_TOKEN
 import br.com.connectattoo.util.DataStoreManager
@@ -58,7 +58,7 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
     private val listOfNearbyTattooArtists: MutableList<NearbyTattooArtistsAndItemMore> =
         mutableListOf()
 
-    private lateinit var userRepository: UserRepository
+    private lateinit var profileRepository: ProfileRepository
 
     private val tattooByTagsUrl = mutableListOf(
         "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst_carousel%2Ftattoo_tesoura.png",
@@ -125,8 +125,8 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         observerViewModel()
 
         val database = (requireActivity().application as ConnectattooApplication).database
-        val clientProfileDao = database.TattooClientProfileDao()
-        userRepository = UserRepository(clientProfileDao)
+        val clientProfileDao = database.tattooClientProfileDao()
+        profileRepository = ProfileRepository(clientProfileDao)
         setUserName()
     }
 
@@ -168,7 +168,7 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
 
     private fun getUserName(token: String) {
        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.getClientProfile(userRepository, token)
+            viewModel.getClientProfile(profileRepository, token)
         }
     }
 

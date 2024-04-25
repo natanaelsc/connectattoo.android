@@ -2,7 +2,7 @@ package br.com.connectattoo.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.connectattoo.repository.UserRepository
+import br.com.connectattoo.repository.ProfileRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -15,11 +15,11 @@ class HomeUserViewModel: ViewModel() {
     private val _uiStateFlow = MutableStateFlow<UiState>(UiState.Initial)
     val uiStateFlow: StateFlow<UiState> get() = _uiStateFlow
 
-    fun getClientProfile(userRepository: UserRepository, token: String){
+    fun getClientProfile(profileRepository: ProfileRepository, token: String){
 
         viewModelScope.launch {
             _uiStateFlow.value = UiState.Loading
-            val result = userRepository.getProfileUser(token)
+            val result = profileRepository.getProfileUser(token)
 
             result.collect {
                 if (it.error != null){
