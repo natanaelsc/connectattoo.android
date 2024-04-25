@@ -1,6 +1,6 @@
 package br.com.connectattoo.ui.home
 
-import br.com.connectattoo.data.ClientProfileTag
+import br.com.connectattoo.data.Tag
 
 data class HomeUserState(
     val displayName: String? = "",
@@ -8,5 +8,5 @@ data class HomeUserState(
     val birthDate: String? = "",
     val imageProfile: String? = "",
     val stateError: String? = "",
-    val tags: List<ClientProfileTag>? = emptyList()
+    val tags: List<Tag>? = emptyList()
 )

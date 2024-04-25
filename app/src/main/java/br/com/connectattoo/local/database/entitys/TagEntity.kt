@@ -3,21 +3,21 @@ package br.com.connectattoo.local.database.entitys
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import br.com.connectattoo.data.ClientProfileTag
+import br.com.connectattoo.data.Tag
 
 @Entity(tableName = "client_profile_tags")
-data class ClientProfileTagEntity(
+data class TagEntity(
     @PrimaryKey(autoGenerate = true) val idRoom: Long = 0,
     @ColumnInfo("id_api") val id: String? = "",
     @ColumnInfo("tag_name") val name: String? = ""
 ) {
-    fun toClientProfileTagResponse(): ClientProfileTag = ClientProfileTag(
+    fun toTagResponse(): Tag = Tag(
         id = id,
         name = name
     )
 }
 
-fun List<ClientProfileTagEntity>.toClientProfileTag(): List<ClientProfileTag> =
+fun List<TagEntity>.toTag(): List<Tag> =
     this.map {
-        it.toClientProfileTagResponse()
+        it.toTagResponse()
     }

@@ -36,7 +36,7 @@ class TattooClientProfileFragment : BaseFragment<FragmentTattooClientProfileBind
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         val database = (requireActivity().application as MyApplication).database
-        val clientProfileDao = database.clientProfileDao()
+        val clientProfileDao = database.TattooClientProfileDao()
         userRepository = UserRepository(clientProfileDao)
         viewModel.getInitialInformationTattooClientProfile(userRepository)
         setupRecyclerView()

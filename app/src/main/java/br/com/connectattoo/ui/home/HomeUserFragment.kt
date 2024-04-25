@@ -125,7 +125,7 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         observerViewModel()
 
         val database = (requireActivity().application as MyApplication).database
-        val clientProfileDao = database.clientProfileDao()
+        val clientProfileDao = database.TattooClientProfileDao()
         userRepository = UserRepository(clientProfileDao)
         setUserName()
     }
