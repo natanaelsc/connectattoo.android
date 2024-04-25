@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import br.com.connectattoo.MyApplication
+import br.com.connectattoo.ConnectattooApplication
 import br.com.connectattoo.R
 import br.com.connectattoo.adapter.AdapterListMyGalleries
 import br.com.connectattoo.adapter.AdapterListTagsProfile
@@ -35,7 +35,7 @@ class TattooClientProfileFragment : BaseFragment<FragmentTattooClientProfileBind
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
-        val database = (requireActivity().application as MyApplication).database
+        val database = (requireActivity().application as ConnectattooApplication).database
         val clientProfileDao = database.TattooClientProfileDao()
         userRepository = UserRepository(clientProfileDao)
         viewModel.getInitialInformationTattooClientProfile(userRepository)
@@ -75,8 +75,8 @@ class TattooClientProfileFragment : BaseFragment<FragmentTattooClientProfileBind
             setHasFixedSize(true)
             adapter = adapterListTagsProfile
         }
-        adapterListTagsProfile.listenerTagProfile = { tagTattooClientProfile ->
-            Log.i(TAG, tagTattooClientProfile.toString())
+        adapterListTagsProfile.listenerTagProfile = { Tag ->
+            Log.i(TAG, Tag.toString())
         }
         binding.rvMyGalleries.run {
             setHasFixedSize(true)

@@ -5,7 +5,7 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.connectattoo.data.MyGalleryProfile
-import br.com.connectattoo.data.TagTattooClientProfile
+import br.com.connectattoo.data.Tag
 import br.com.connectattoo.repository.UserRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -30,11 +30,11 @@ class TattooClientProfileViewModel : ViewModel() {
 
     private fun getListTagsTattooClientProfile() {
         val listTags = listOf(
-            TagTattooClientProfile(tag = "Old School"),
-            TagTattooClientProfile(tag = "Preto e branco"),
-            TagTattooClientProfile(tag = "Geométrico"),
-            TagTattooClientProfile(tag = "Geométrico 2"),
-            TagTattooClientProfile(tag = "Geométrico 3")
+            Tag(name = "Old School"),
+            Tag(name = "Preto e branco"),
+            Tag(name = "Geométrico"),
+            Tag(name = "Geométrico 2"),
+            Tag(name = "Geométrico 3")
         )
         _state = _state.copy(listTagsTattooClientProfile = listTags)
     }

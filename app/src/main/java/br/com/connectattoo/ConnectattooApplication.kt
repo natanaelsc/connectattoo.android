@@ -3,7 +3,7 @@ package br.com.connectattoo
 import android.app.Application
 import br.com.connectattoo.local.database.AppDatabase
 
-class MyApplication: Application() {
+class ConnectattooApplication: Application() {
     lateinit var database: AppDatabase
         private set
 

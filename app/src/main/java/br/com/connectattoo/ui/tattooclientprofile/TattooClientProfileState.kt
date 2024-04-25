@@ -3,7 +3,6 @@ package br.com.connectattoo.ui.tattooclientprofile
 import br.com.connectattoo.data.TattooClientProfile
 import br.com.connectattoo.data.Tag
 import br.com.connectattoo.data.MyGalleryProfile
-import br.com.connectattoo.data.TagTattooClientProfile
 
 data class TattooClientProfileState(
     val txtNameUser: String? = null,
@@ -12,7 +11,7 @@ data class TattooClientProfileState(
     val txtTattooArtistProfile: String? = null,
     val txtScheduleTomorrow: String? = null,
     val txtScheduleHour: String? = null,
-    val listTagsTattooClientProfile: List<TagTattooClientProfile>? = listOf(),
+    val listTagsTattooClientProfile: List<Tag>? = listOf(),
     val listGalleriesTattooClientProfile: List<MyGalleryProfile>? = listOf(),
     val userImage: String? = null,
     val imageTattooArtist: String? = null,

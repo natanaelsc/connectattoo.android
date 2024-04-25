@@ -10,7 +10,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import br.com.connectattoo.MyApplication
+import br.com.connectattoo.ConnectattooApplication
 import br.com.connectattoo.R
 import br.com.connectattoo.adapter.AdapterListOfNearbyTattooArtists
 import br.com.connectattoo.adapter.AdapterListOfRandomTattoos
@@ -124,7 +124,7 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         setRecyclerView()
         observerViewModel()
 
-        val database = (requireActivity().application as MyApplication).database
+        val database = (requireActivity().application as ConnectattooApplication).database
         val clientProfileDao = database.TattooClientProfileDao()
         userRepository = UserRepository(clientProfileDao)
         setUserName()

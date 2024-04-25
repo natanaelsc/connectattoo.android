@@ -14,7 +14,7 @@ data class TattooClientProfileResponse(
         return tagNames.map { TagEntity(name = it) }
     }
 
-    fun toClientProfileEntity(): TattooClientProfileEntity {
+    fun toTattooClientProfileEntityEntity(): TattooClientProfileEntity {
         return TattooClientProfileEntity(
             displayName = this.displayName ?: "",
             username = this.username ?: "",
