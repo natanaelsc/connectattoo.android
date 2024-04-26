@@ -5,14 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import br.com.connectattoo.data.TagTattooClientProfile
+import br.com.connectattoo.data.Tag
 import br.com.connectattoo.databinding.ItemTagsMyInterestsBinding
 
 class AdapterListTagsProfile :
-    ListAdapter<TagTattooClientProfile, AdapterListTagsProfile.ListTagsProfileViewHolder>(
+    ListAdapter<Tag, AdapterListTagsProfile.ListTagsProfileViewHolder>(
         DiffCallbackTagsProfile()
     ) {
-    var listenerTagProfile: (TagTattooClientProfile) -> Unit = {}
+    var listenerTagProfile: (Tag) -> Unit = {}
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListTagsProfileViewHolder {
@@ -29,24 +29,24 @@ class AdapterListTagsProfile :
     inner class ListTagsProfileViewHolder(
         private val binding: ItemTagsMyInterestsBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(tagTattooClientProfile: TagTattooClientProfile) {
+        fun bind(tag: Tag) {
             binding.run {
 
                 btnTagMyInterests.setOnClickListener {
-                    listenerTagProfile(tagTattooClientProfile)
+                    listenerTagProfile(tag)
                 }
-                btnTagMyInterests.text = tagTattooClientProfile.tag
+                btnTagMyInterests.text = tag.name
             }
 
         }
     }
 }
 
-class DiffCallbackTagsProfile : DiffUtil.ItemCallback<TagTattooClientProfile>() {
-    override fun areItemsTheSame(oldItem: TagTattooClientProfile, newItem: TagTattooClientProfile) =
+class DiffCallbackTagsProfile : DiffUtil.ItemCallback<Tag>() {
+    override fun areItemsTheSame(oldItem: Tag, newItem: Tag) =
         oldItem == newItem
 
-    override fun areContentsTheSame(oldItem: TagTattooClientProfile, newItem: TagTattooClientProfile) =
+    override fun areContentsTheSame(oldItem: Tag, newItem: Tag) =
         oldItem.id == newItem.id
 
 }

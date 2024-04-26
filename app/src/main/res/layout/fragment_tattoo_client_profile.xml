@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.tattooclientprofile.TattooClientProfileFragment">
+    tools:context=".ui.profile.tattooclient.TattooClientProfileFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout2"
@@ -45,7 +45,7 @@
             tools:text="João Silva" />
 
         <TextView
-            android:id="@+id/txtAgeAndEmail"
+            android:id="@+id/txtAgeAndDisplayName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_8dp"
@@ -80,8 +80,8 @@
             android:text="@string/btn_edit_profile"
             android:textColor="@color/white"
             android:textSize="@dimen/txt_size_12sp"
-            app:layout_constraintStart_toStartOf="@+id/txtAgeAndEmail"
-            app:layout_constraintTop_toBottomOf="@+id/txtAgeAndEmail" />
+            app:layout_constraintStart_toStartOf="@+id/txtAgeAndDisplayName"
+            app:layout_constraintTop_toBottomOf="@+id/txtAgeAndDisplayName" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

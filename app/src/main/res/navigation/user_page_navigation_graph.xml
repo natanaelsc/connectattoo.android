@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/user_page_navigation_graph"
-    app:startDestination="@id/homeUserFragment">
+    app:startDestination="@id/clientUserProfileFragment">
 
     <fragment
         android:id="@+id/homeUserFragment"
@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_home_user" />
     <fragment
         android:id="@+id/clientUserProfileFragment"
-        android:name="br.com.connectattoo.ui.tattooclientprofile.TattooClientProfileFragment"
+        android:name="br.com.connectattoo.ui.profile.tattooclient.TattooClientProfileFragment"
         android:label="fragment_client_user_profile"
         tools:layout="@layout/fragment_tattoo_client_profile" />
 </navigation>

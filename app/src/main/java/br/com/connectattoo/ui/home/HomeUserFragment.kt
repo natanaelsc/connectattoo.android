@@ -2,14 +2,15 @@ package br.com.connectattoo.ui.home
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.ContentValues.TAG
-import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import br.com.connectattoo.ConnectattooApplication
 import br.com.connectattoo.R
 import br.com.connectattoo.adapter.AdapterListOfNearbyTattooArtists
 import br.com.connectattoo.adapter.AdapterListOfRandomTattoos
@@ -19,25 +20,22 @@ import br.com.connectattoo.data.NearbyTattooArtistsAndItemMore
 import br.com.connectattoo.data.RandomTattoosAndItemMore
 import br.com.connectattoo.data.TagHomeScreen
 import br.com.connectattoo.databinding.FragmentHomeUserBinding
-import br.com.connectattoo.repository.UserRepository
+import br.com.connectattoo.repository.ProfileRepository
 import br.com.connectattoo.ui.BaseFragment
-import br.com.connectattoo.util.Constants
 import br.com.connectattoo.util.Constants.API_TOKEN
-import br.com.connectattoo.util.Constants.API_USER_NAME
 import br.com.connectattoo.util.DataStoreManager
 import br.com.connectattoo.util.PermissionUtils
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationTokenSource
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
-import java.io.IOException
 
 
 @Suppress("TooManyFunctions")
 class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var viewModel: HomeUserViewModel
     private var checkLocation = false
     private val enableLocationActivityResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -53,12 +51,14 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
 
 
     private lateinit var adapterListOfTattoosBasedOnTags: AdapterListOfTattoosBasedOnTags
-    private val listOfTattoosBasedOnTags: MutableList<ListOfTattoosBasedOnTagsAndItemMore> = mutableListOf()
+    private val listOfTattoosBasedOnTags: MutableList<ListOfTattoosBasedOnTagsAndItemMore> =
+        mutableListOf()
 
     private lateinit var adapterListOfNearbyTattooartists: AdapterListOfNearbyTattooArtists
-    private val listOfNearbyTattooArtists: MutableList<NearbyTattooArtistsAndItemMore> = mutableListOf()
+    private val listOfNearbyTattooArtists: MutableList<NearbyTattooArtistsAndItemMore> =
+        mutableListOf()
 
-    private lateinit var userRepository: UserRepository
+    private lateinit var profileRepository: ProfileRepository
 
     private val tattooByTagsUrl = mutableListOf(
         "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst_carousel%2Ftattoo_tesoura.png",
@@ -111,6 +111,7 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
     }
 
     override fun setupViews() {
+        viewModel = HomeUserViewModel()
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         PermissionUtils.getPermissionAndLocationUser(
             requireActivity(),
@@ -121,7 +122,11 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         listOfNearbyTattooArtists()
         listOfRandomTattoos()
         setRecyclerView()
-        userRepository = UserRepository()
+        observerViewModel()
+
+        val database = (requireActivity().application as ConnectattooApplication).database
+        val clientProfileDao = database.tattooClientProfileDao()
+        profileRepository = ProfileRepository(clientProfileDao)
         setUserName()
     }
 
@@ -156,55 +161,18 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
 
     private fun setUserName() {
         viewLifecycleOwner.lifecycleScope.launch {
-            val nameUser = DataStoreManager.getUserSettings(requireContext(), API_USER_NAME)
-            if (nameUser.isEmpty()) {
-                val token = DataStoreManager.getUserSettings(requireContext(), API_TOKEN)
-                getUserNameFromApi(token)
-            } else {
-                showUserName(nameUser)
-            }
-
+            val token = DataStoreManager.getUserSettings(requireContext(), API_TOKEN)
+            getUserName(token)
         }
     }
 
-    private suspend fun getUserNameFromApi(token: String) {
-        try {
-            apiRequest(token)
-        } catch (error: IOException) {
-            Log.i(TAG, error.message.toString())
-            showUserName("")
-        }
-    }
-
-    private suspend fun apiRequest(token: String) {
-        val result = userRepository.getProfileUser(token)
-
-        if (result.isSuccessful) {
-            result.body().let { profileUser ->
-                if (profileUser != null) {
-                    val firstName = profileUser.displayName.split(" ")[0]
-                    DataStoreManager.saveUserSettings(
-                        requireContext(), API_USER_NAME,
-                        firstName
-                    )
-
-                    showUserName(firstName)
-                }
-            }
-        } else {
-            when (result.code()) {
-                Constants.CODE_ERROR_404 -> showUserName("")
-                Constants.CODE_ERROR_401 -> showUserName("")
-                else -> {
-                    showValidationError("Erro: ${result.code()}")
-                    showUserName("")
-                }
-            }
+    private fun getUserName(token: String) {
+       viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.getClientProfile(profileRepository, token)
         }
     }
 
     private fun showUserName(name: String) {
-
         if (name.isNotEmpty()) {
             binding.txtName.text = getString(R.string.txt_hello_user_home, name)
         } else {
@@ -212,12 +180,28 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         }
     }
 
-    private fun showValidationError(message: String) {
-        view?.let {
-            Snackbar.make(it, message, Snackbar.LENGTH_SHORT)
-                .setTextColor(Color.WHITE)
-                .setBackgroundTint(Color.RED)
-                .show()
+    private fun observerViewModel() {
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiStateFlow.collect { uiState ->
+                    when (uiState) {
+                        HomeUserViewModel.UiState.Success -> {
+                            showUserName(viewModel.state.displayName.toString())
+                        }
+
+                        HomeUserViewModel.UiState.Error -> {
+                        }
+
+                        HomeUserViewModel.UiState.Loading -> {
+
+                        }
+
+                        else -> {
+
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -228,19 +212,35 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         val listTags3 = nearbyTags3()
         val listTags4 = nearbyTags4()
         val tattooBasedOnTags1 =
-            ListOfTattoosBasedOnTagsAndItemMore.TagBasedOfTattoos(id = 1, tattooByTagsUrl[0], listTags1)
+            ListOfTattoosBasedOnTagsAndItemMore.TagBasedOfTattoos(
+                id = 1,
+                tattooByTagsUrl[0],
+                listTags1
+            )
         listOfTattoosBasedOnTags.add(tattooBasedOnTags1)
 
         val tattooBasedOnTags2 =
-            ListOfTattoosBasedOnTagsAndItemMore.TagBasedOfTattoos(id = 2, tattooByTagsUrl[1], listTags2)
+            ListOfTattoosBasedOnTagsAndItemMore.TagBasedOfTattoos(
+                id = 2,
+                tattooByTagsUrl[1],
+                listTags2
+            )
         listOfTattoosBasedOnTags.add(tattooBasedOnTags2)
 
         val tattooBasedOnTags3 =
-            ListOfTattoosBasedOnTagsAndItemMore.TagBasedOfTattoos(id = 3, tattooByTagsUrl[2], listTags3)
+            ListOfTattoosBasedOnTagsAndItemMore.TagBasedOfTattoos(
+                id = 3,
+                tattooByTagsUrl[2],
+                listTags3
+            )
         listOfTattoosBasedOnTags.add(tattooBasedOnTags3)
 
         val tattooBasedOnTags4 =
-            ListOfTattoosBasedOnTagsAndItemMore.TagBasedOfTattoos(id = 4, tattooByTagsUrl[3], listTags4)
+            ListOfTattoosBasedOnTagsAndItemMore.TagBasedOfTattoos(
+                id = 4,
+                tattooByTagsUrl[3],
+                listTags4
+            )
         listOfTattoosBasedOnTags.add(tattooBasedOnTags4)
         val tattooBasedOnTags5 =
             ListOfTattoosBasedOnTagsAndItemMore.MoreItems(id = 1, title = "Referências")
@@ -267,6 +267,7 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
             )
         )
     }
+
     private fun nearbyTags2(): List<TagHomeScreen> {
         return listOf(
             TagHomeScreen(
@@ -286,6 +287,7 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
             )
         )
     }
+
     private fun nearbyTags3(): List<TagHomeScreen> {
         return listOf(
             TagHomeScreen(
@@ -300,6 +302,7 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
             )
         )
     }
+
     private fun nearbyTags4(): List<TagHomeScreen> {
         return listOf(
             TagHomeScreen(
@@ -359,7 +362,8 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         )
         listOfNearbyTattooArtists.add(nearbyTattooartists4)
 
-        val nearbyTattooartists5 = NearbyTattooArtistsAndItemMore.MoreItems(id = 1, title = "Tatuadores")
+        val nearbyTattooartists5 =
+            NearbyTattooArtistsAndItemMore.MoreItems(id = 1, title = "Tatuadores")
         listOfNearbyTattooArtists.add(nearbyTattooartists5)
     }
 
@@ -396,7 +400,7 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         )
         listOfRandomTattoos.add(randomTattoos5)
 
-        val randomTattoos6 = RandomTattoosAndItemMore.MoreItems(id= 1, "Referências")
+        val randomTattoos6 = RandomTattoosAndItemMore.MoreItems(id = 1, "Referências")
         listOfRandomTattoos.add(randomTattoos6)
     }
 

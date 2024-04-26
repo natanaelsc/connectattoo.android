@@ -1,7 +1,7 @@
 package br.com.connectattoo.api
 
 import br.com.connectattoo.api.response.ApiConfirmationResponse
-import br.com.connectattoo.api.response.ProfileUserResponse
+import br.com.connectattoo.api.response.TattooClientProfileResponse
 import br.com.connectattoo.data.ArtistData
 import br.com.connectattoo.data.ClientData
 import br.com.connectattoo.data.TokenData
@@ -31,5 +31,6 @@ interface ApiService {
     @GET("profile/me")
     suspend fun getProfileUser(
         @Header("Authorization") authorization: String
-    ): Response<ProfileUserResponse>
+    ): Response<TattooClientProfileResponse>
+
 }
