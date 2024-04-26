@@ -268,7 +268,7 @@ abstract class UserRegistration<T : ViewBinding> : BaseFragment<T>() {
 
     companion object {
         const val MIN_PASSWORD_LENGTH = 8
-        const val HAS_SPECIAL_SYMBOL = "^(?=.*[_.*=!%()$&@+-/]).*$"
+        const val HAS_SPECIAL_SYMBOL = "^(?=.*[_.*=!%()$&@+-/#]).*$"
         const val HAS_UPPER_CASE = ".*[A-Z].*"
         const val HAS_LOWER_CASE = ".*[a-z].*"
         const val HAS_NUMBER = ".*[0-9].*"
