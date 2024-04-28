@@ -15,4 +15,14 @@
         android:name="br.com.connectattoo.ui.customerprofile.CustomerProfileFragment"
         android:label="fragment_client_user_profile"
         tools:layout="@layout/fragment_customer_profile" />
+    <fragment
+        android:id="@+id/confirmationFragment4"
+        android:name="br.com.connectattoo.ui.confirmation.ConfirmationFragment"
+        android:label="fragment_confirmation"
+        tools:layout="@layout/fragment_confirmation" />
+    <fragment
+        android:id="@+id/tattooClientRegistrationFragment"
+        android:name="br.com.connectattoo.ui.registration.TattooClientRegistrationFragment"
+        android:label="fragment_tattoo_client_registration"
+        tools:layout="@layout/fragment_tattoo_client_registration" />
 </navigation>
