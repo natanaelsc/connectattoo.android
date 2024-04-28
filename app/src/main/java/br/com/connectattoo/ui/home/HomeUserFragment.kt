@@ -8,8 +8,6 @@ import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,7 +34,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationTokenSource
 
-@Suppress("TooManyFunctions", "UNREACHABLE_CODE")
+@Suppress("TooManyFunctions")
 class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var checkLocation = false
@@ -109,21 +107,16 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         container: ViewGroup?
     ): FragmentHomeUserBinding {
         return FragmentHomeUserBinding.inflate(inflater, container, false)
+
     }
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return super.onCreateView(inflater, container, savedInstanceState)
+    override fun setupViews() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         PermissionUtils.getPermissionAndLocationUser(
             requireActivity(),
             requireContext(),
             enableLocationActivityResult
         )
-    }
-    override fun setupViews() {
+
         //getLocationUser()
         val recycleViewListOfTattoosBasedOnTags = binding.recycleListOfTattoosBasedOnTags
         recycleViewListOfTattoosBasedOnTags.layoutManager = LinearLayoutManager(
@@ -159,6 +152,73 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         listOfRandomTattoos()
         userRepository = UserRepository()
         setUserName()
+    }
+
+    private fun setUserName() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            val nameUser = DataStoreManager.getUserSettings(requireContext(), API_USER_NAME)
+            if (nameUser.isEmpty()) {
+                val token = DataStoreManager.getUserSettings(requireContext(), API_TOKEN)
+                getUserNameFromApi(token)
+            } else {
+                showUserName(nameUser)
+            }
+
+        }
+    }
+
+    private suspend fun getUserNameFromApi(token: String) {
+        try {
+            apiRequest(token)
+        } catch (error: IOException) {
+            Log.i(TAG, error.message.toString())
+            showUserName("")
+        }
+    }
+
+    private suspend fun apiRequest(token: String) {
+        val result = userRepository.getProfileUser(token)
+
+        if (result.isSuccessful) {
+            result.body().let { profileUser ->
+                if (profileUser != null) {
+                    val firstName = profileUser.displayName.split(" ")[0]
+                    DataStoreManager.saveUserSettings(
+                        requireContext(), API_USER_NAME,
+                        firstName
+                    )
+
+                    showUserName(firstName)
+                }
+            }
+        } else {
+            when (result.code()) {
+                Constants.CODE_ERROR_404 -> showUserName("")
+                Constants.CODE_ERROR_401 -> showUserName("")
+                else -> {
+                    showValidationError("Erro: ${result.code()}")
+                    showUserName("")
+                }
+            }
+        }
+    }
+
+    private fun showUserName(name: String) {
+
+        if (name.isNotEmpty()) {
+            binding.txtName.text = getString(R.string.txt_hello_user_home, name)
+        } else {
+            binding.txtName.text = getString(R.string.txt_hello_user_home_error)
+        }
+    }
+
+    private fun showValidationError(message: String) {
+        view?.let {
+            Snackbar.make(it, message, Snackbar.LENGTH_SHORT)
+                .setTextColor(Color.WHITE)
+                .setBackgroundTint(Color.RED)
+                .show()
+        }
     }
 
     private fun listOfTattoosBasedOnTags() {
@@ -250,73 +310,6 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
             randomProfileImage[4], like = true, save = true
         )
         listOfRandomTattoos.add(randomTattoos5)
-    }
-
-    private fun setUserName() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            val nameUser = DataStoreManager.getUserSettings(requireContext(), API_USER_NAME)
-            if (nameUser.isEmpty()) {
-                val token = DataStoreManager.getUserSettings(requireContext(), API_TOKEN)
-                getUserNameFromApi(token)
-            } else {
-                showUserName(nameUser)
-            }
-
-        }
-    }
-
-    private suspend fun getUserNameFromApi(token: String) {
-        try {
-            apiRequest(token)
-        } catch (error: IOException) {
-            Log.i(TAG, error.message.toString())
-            showUserName("")
-        }
-    }
-
-    private suspend fun apiRequest(token: String) {
-        val result = userRepository.getProfileUser(token)
-
-        if (result.isSuccessful) {
-            result.body().let { profileUser ->
-                if (profileUser != null) {
-                    val firstName = profileUser.displayName.split(" ")[0]
-                    DataStoreManager.saveUserSettings(
-                        requireContext(), API_USER_NAME,
-                        firstName
-                    )
-
-                    showUserName(firstName)
-                }
-            }
-        } else {
-            when (result.code()) {
-                Constants.CODE_ERROR_404 -> showUserName("")
-                Constants.CODE_ERROR_401 -> showUserName("")
-                else -> {
-                    showValidationError("Erro: ${result.code()}")
-                    showUserName("")
-                }
-            }
-        }
-    }
-
-    private fun showUserName(name: String) {
-
-        if (name.isNotEmpty()) {
-            binding.txtName.text = getString(R.string.txt_hello_user_home, name)
-        } else {
-            binding.txtName.text = getString(R.string.txt_hello_user_home_error)
-        }
-    }
-
-    private fun showValidationError(message: String) {
-        view?.let {
-            Snackbar.make(it, message, Snackbar.LENGTH_SHORT)
-                .setTextColor(Color.WHITE)
-                .setBackgroundTint(Color.RED)
-                .show()
-        }
     }
 
 
