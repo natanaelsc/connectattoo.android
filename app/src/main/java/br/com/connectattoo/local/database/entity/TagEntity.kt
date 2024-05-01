@@ -1,4 +1,4 @@
-package br.com.connectattoo.local.database.entitys
+package br.com.connectattoo.local.database.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

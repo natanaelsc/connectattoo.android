@@ -6,9 +6,9 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import br.com.connectattoo.local.database.dao.TattooClientProfileDao
-import br.com.connectattoo.local.database.entitys.TattooClientProfileConverters
-import br.com.connectattoo.local.database.entitys.TattooClientProfileEntity
-import br.com.connectattoo.local.database.entitys.TagEntity
+import br.com.connectattoo.local.database.entity.TattooClientProfileConverters
+import br.com.connectattoo.local.database.entity.TattooClientProfileEntity
+import br.com.connectattoo.local.database.entity.TagEntity
 
 @Database(entities = [TattooClientProfileEntity::class, TagEntity::class], version = 1, exportSchema = false)
 @TypeConverters(TattooClientProfileConverters::class)

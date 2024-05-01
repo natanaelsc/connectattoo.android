@@ -1,10 +1,9 @@
-package br.com.connectattoo.local.database.entitys
+package br.com.connectattoo.local.database.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
-import br.com.connectattoo.data.Tag
 import br.com.connectattoo.data.TattooClientProfile
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken

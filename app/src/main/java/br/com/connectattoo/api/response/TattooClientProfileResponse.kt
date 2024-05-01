@@ -2,7 +2,7 @@ package br.com.connectattoo.api.response
 
 import br.com.connectattoo.data.Tag
 import br.com.connectattoo.data.toTagEntity
-import br.com.connectattoo.local.database.entitys.TattooClientProfileEntity
+import br.com.connectattoo.local.database.entity.TattooClientProfileEntity
 
 data class TattooClientProfileResponse(
     val displayName: String? = "",

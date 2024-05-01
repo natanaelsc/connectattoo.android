@@ -1,6 +1,6 @@
 package br.com.connectattoo.data
 
-import br.com.connectattoo.local.database.entitys.TagEntity
+import br.com.connectattoo.local.database.entity.TagEntity
 
 data class Tag(
     val id: String? = "",

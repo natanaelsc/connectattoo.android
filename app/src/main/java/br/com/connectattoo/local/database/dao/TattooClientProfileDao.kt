@@ -3,7 +3,7 @@ package br.com.connectattoo.local.database.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import br.com.connectattoo.local.database.entitys.TattooClientProfileEntity
+import br.com.connectattoo.local.database.entity.TattooClientProfileEntity
 
 @Dao
 interface TattooClientProfileDao {
