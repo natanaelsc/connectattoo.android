@@ -5,7 +5,6 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.connectattoo.data.MyGalleryProfile
-import br.com.connectattoo.data.Tag
 import br.com.connectattoo.repository.ProfileRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,20 +22,8 @@ class TattooClientProfileViewModel : ViewModel() {
     val uiStateFlow: StateFlow<UiState> get() = _uiStateFlow
 
     init {
-        getListTagsTattooClientProfile()
         getListGalleriesTattooClientProfile()
         getImageTattooArtistNextAppointment()
-    }
-
-    private fun getListTagsTattooClientProfile() {
-        val listTags = listOf(
-            Tag(name = "Old School"),
-            Tag(name = "Preto e branco"),
-            Tag(name = "Geométrico"),
-            Tag(name = "Geométrico 2"),
-            Tag(name = "Geométrico 3")
-        )
-        _state = _state.copy(listTagsTattooClientProfile = listTags)
     }
 
     private fun getListGalleriesTattooClientProfile() {
@@ -112,7 +99,8 @@ class TattooClientProfileViewModel : ViewModel() {
 
                     if (clientProfile.birthDate != null) {
                         val age = calculateDateBirth(clientProfile.birthDate)
-                        _state = _state.copy(txtAgeAndDisplayName = "$age | @${clientProfile.username}")
+                        _state =
+                            _state.copy(txtAgeAndDisplayName = "$age | @${clientProfile.username}")
                     }
 
                     if (clientProfile.imageProfile != null) {
@@ -121,6 +109,7 @@ class TattooClientProfileViewModel : ViewModel() {
 
                     _state = _state.copy(
                         txtNameUser = "${clientProfile.displayName}",
+                        listTagsTattooClientProfile = clientProfile.tags
                     )
                     _uiStateFlow.value = UiState.Success
                 }
