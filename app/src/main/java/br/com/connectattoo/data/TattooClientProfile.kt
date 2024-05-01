@@ -5,5 +5,6 @@ data class TattooClientProfile(
     val username: String? = "",
     val birthDate: String? = "",
     val imageProfile: String? = "",
-    val tags: List<Tag> = emptyList()
+    val tags: List<Tag> = emptyList(),
+    val email: String? = ""
 )

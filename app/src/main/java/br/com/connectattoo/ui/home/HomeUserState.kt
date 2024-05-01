@@ -8,5 +8,6 @@ data class HomeUserState(
     val birthDate: String? = "",
     val imageProfile: String? = "",
     val stateError: String? = "",
-    val tags: List<Tag>? = emptyList()
+    val tags: List<Tag>? = emptyList(),
+    val email: String? = "",
 )
