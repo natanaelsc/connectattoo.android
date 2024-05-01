@@ -15,7 +15,8 @@ data class TattooClientProfileEntity(
     @ColumnInfo(name = "user_name") val username: String? = "",
     @ColumnInfo(name = "birth_date") val birthDate: String? = "",
     @ColumnInfo(name = "image_profile") val imageProfile: String? = "",
-    var tags: List<TagEntity> = emptyList()
+    var tags: List<TagEntity> = emptyList(),
+    val email: String? = ""
 ) {
 
     fun toTattooClientProfile(): TattooClientProfile =
@@ -24,7 +25,8 @@ data class TattooClientProfileEntity(
             username = this.username ?: "",
             birthDate = this.birthDate ?: "",
             imageProfile = this.imageProfile ?: "",
-            tags = this.tags.toTag()
+            tags = this.tags.toTag(),
+            email = this.email
         )
 
 }
