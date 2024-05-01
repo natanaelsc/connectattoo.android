@@ -6,17 +6,21 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import br.com.connectattoo.local.database.dao.TattooClientProfileDao
-import br.com.connectattoo.local.database.entitys.TattooClientProfileConverters
-import br.com.connectattoo.local.database.entitys.TattooClientProfileEntity
-import br.com.connectattoo.local.database.entitys.TagEntity
+import br.com.connectattoo.local.database.entity.TagEntity
+import br.com.connectattoo.local.database.entity.TattooClientProfileConverters
+import br.com.connectattoo.local.database.entity.TattooClientProfileEntity
+import br.com.connectattoo.util.Constants.DATABASE_NAME
 
-@Database(entities = [TattooClientProfileEntity::class, TagEntity::class], version = 1, exportSchema = false)
+@Database(
+    entities = [TattooClientProfileEntity::class, TagEntity::class],
+    version = 1,
+    exportSchema = false
+)
 @TypeConverters(TattooClientProfileConverters::class)
-abstract class AppDatabase : RoomDatabase(){
-    abstract fun tattooClientProfileDao() : TattooClientProfileDao
-    companion object {
+abstract class AppDatabase : RoomDatabase() {
+    abstract fun tattooClientProfileDao(): TattooClientProfileDao
 
-        private const val DATABASE_NAME: String = "connectattoo-database"
+    companion object {
 
         @Volatile
         private var INSTANCE: AppDatabase? = null

@@ -1,4 +1,4 @@
-package br.com.connectattoo.local.database.entitys
+package br.com.connectattoo.local.database.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -8,7 +8,7 @@ import br.com.connectattoo.data.TattooClientProfile
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-@Entity(tableName = "clientProfile")
+@Entity(tableName = "profile")
 data class TattooClientProfileEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     @ColumnInfo(name = "display_name") val displayName: String? = "",
@@ -26,7 +26,9 @@ data class TattooClientProfileEntity(
             imageProfile = this.imageProfile ?: "",
             tags = this.tags.toTag()
         )
+
 }
+
 class TattooClientProfileConverters {
     @TypeConverter
     fun fromTagEntityList(tags: List<TagEntity>): String {
@@ -40,7 +42,6 @@ class TattooClientProfileConverters {
         val listType = object : TypeToken<List<TagEntity>>() {}.type
         return gson.fromJson(tagsAsString, listType)
     }
-
 
 }
 
