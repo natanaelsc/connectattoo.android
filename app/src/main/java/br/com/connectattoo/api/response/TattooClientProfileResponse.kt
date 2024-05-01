@@ -18,7 +18,7 @@ data class TattooClientProfileResponse(
 
      */
 
-    fun toTattooClientProfileEntityEntity(): TattooClientProfileEntity {
+    fun toTattooClientProfileEntity(): TattooClientProfileEntity {
         return TattooClientProfileEntity(
             displayName = this.displayName ?: "",
             username = this.username ?: "",

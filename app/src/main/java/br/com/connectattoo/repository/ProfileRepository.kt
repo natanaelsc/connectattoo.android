@@ -26,7 +26,7 @@ class ProfileRepository(private val tattooClientProfileDao: TattooClientProfileD
                 val clientProfile = this.body()
                 if (this.isSuccessful && clientProfile != null) {
                     tattooClientProfileDao.dellTattooClientProfile()
-                    tattooClientProfileDao.insertTattooClientProfile(clientProfile.toTattooClientProfileEntityEntity())
+                    tattooClientProfileDao.insertTattooClientProfile(clientProfile.toTattooClientProfileEntity())
                 }
                 data = tattooClientProfileDao.getTattooClientProfile()
             }
