@@ -9,7 +9,8 @@ data class TattooClientProfileResponse(
     val username: String? = "",
     val birthDate: String? = "",
     val imageProfile: String? = "",
-    val tags: List<Tag> = emptyList()
+    val tags: List<Tag> = emptyList(),
+    val email: String? = ""
 ) {
     fun toTattooClientProfileEntity(): TattooClientProfileEntity {
         return TattooClientProfileEntity(
@@ -17,7 +18,8 @@ data class TattooClientProfileResponse(
             username = this.username ?: "",
             birthDate = this.birthDate ?: "",
             imageProfile = this.imageProfile ?: "",
-            tags = this.tags.toTagEntity()
+            tags = this.tags.toTagEntity(),
+            email = this.email
         )
     }
 }
