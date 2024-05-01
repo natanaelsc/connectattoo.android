@@ -1,5 +1,6 @@
 package br.com.connectattoo.ui.home
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.connectattoo.repository.ProfileRepository
@@ -35,6 +36,7 @@ class HomeUserViewModel: ViewModel() {
                         imageProfile = clientProfile.imageProfile,
                         tags = clientProfile.tags
                     )
+                    Log.i("tagsl", _state.tags.toString())
                     _uiStateFlow.value = UiState.Success
                 }
             }

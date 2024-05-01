@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
+import br.com.connectattoo.data.Tag
 import br.com.connectattoo.data.TattooClientProfile
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -26,6 +27,7 @@ data class TattooClientProfileEntity(
             imageProfile = this.imageProfile ?: "",
             tags = this.tags.toTag()
         )
+
 }
 class TattooClientProfileConverters {
     @TypeConverter
@@ -40,7 +42,6 @@ class TattooClientProfileConverters {
         val listType = object : TypeToken<List<TagEntity>>() {}.type
         return gson.fromJson(tagsAsString, listType)
     }
-
 
 }
 

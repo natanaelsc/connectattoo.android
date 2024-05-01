@@ -1,18 +1,22 @@
 package br.com.connectattoo.api.response
 
+import br.com.connectattoo.data.Tag
+import br.com.connectattoo.data.toTagEntity
 import br.com.connectattoo.local.database.entitys.TattooClientProfileEntity
-import br.com.connectattoo.local.database.entitys.TagEntity
 
 data class TattooClientProfileResponse(
     val displayName: String? = "",
     val username: String? = "",
     val birthDate: String? = "",
     val imageProfile: String? = "",
-    val tags: List<String> = emptyList()
+    val tags: List<Tag> = emptyList()
 ) {
+    /*
     private fun mapStringsToTags(tagNames: List<String>): List<TagEntity> {
         return tagNames.map { TagEntity(name = it) }
     }
+
+     */
 
     fun toTattooClientProfileEntityEntity(): TattooClientProfileEntity {
         return TattooClientProfileEntity(
@@ -20,9 +24,7 @@ data class TattooClientProfileResponse(
             username = this.username ?: "",
             birthDate = this.birthDate ?: "",
             imageProfile = this.imageProfile ?: "",
-            tags = mapStringsToTags(this.tags)
+            tags = this.tags.toTagEntity()
         )
     }
-
-
 }
