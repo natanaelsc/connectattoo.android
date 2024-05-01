@@ -10,10 +10,10 @@ interface TattooClientProfileDao {
     @Insert
     suspend fun insertTattooClientProfile(tattooClientProfile: TattooClientProfileEntity)
 
-    @Query("SELECT * FROM clientProfile LIMIT 1")
+    @Query("SELECT * FROM profile LIMIT 1")
     suspend fun getTattooClientProfile(): TattooClientProfileEntity?
 
-    @Query("DELETE FROM clientProfile")
+    @Query("DELETE FROM profile")
     suspend fun dellTattooClientProfile()
 
 }

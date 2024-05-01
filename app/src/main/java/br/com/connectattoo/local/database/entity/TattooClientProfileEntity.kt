@@ -8,7 +8,7 @@ import br.com.connectattoo.data.TattooClientProfile
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-@Entity(tableName = "clientProfile")
+@Entity(tableName = "profile")
 data class TattooClientProfileEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     @ColumnInfo(name = "display_name") val displayName: String? = "",
