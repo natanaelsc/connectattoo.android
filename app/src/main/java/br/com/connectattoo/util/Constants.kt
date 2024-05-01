@@ -15,5 +15,5 @@ object Constants {
     const val TYPE_MORE_ITEMS_NEARBY_TATOOO_ARTISTS = 3
     const val TYPE_RANDOM_TATTOOS  = 4
     const val TYPE_MORE_ITEMS_RANDOM_TATTOOS = 5
-    const val DATABASE_NAME: String = "connectattoo-database"
+    const val DATABASE_NAME: String = "connectattoo"
 }
