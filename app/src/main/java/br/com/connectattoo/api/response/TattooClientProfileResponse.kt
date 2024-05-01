@@ -11,13 +11,6 @@ data class TattooClientProfileResponse(
     val imageProfile: String? = "",
     val tags: List<Tag> = emptyList()
 ) {
-    /*
-    private fun mapStringsToTags(tagNames: List<String>): List<TagEntity> {
-        return tagNames.map { TagEntity(name = it) }
-    }
-
-     */
-
     fun toTattooClientProfileEntity(): TattooClientProfileEntity {
         return TattooClientProfileEntity(
             displayName = this.displayName ?: "",

@@ -28,6 +28,7 @@ data class TattooClientProfileEntity(
         )
 
 }
+
 class TattooClientProfileConverters {
     @TypeConverter
     fun fromTagEntityList(tags: List<TagEntity>): String {
