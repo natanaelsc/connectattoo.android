@@ -30,54 +30,50 @@ class TattooClientProfileViewModel : ViewModel() {
         val listImages = listOf(
             MyGalleryProfile(
                 1,
-                title = "Galeria 1",
-                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst" +
-                    "_carousel%2Ftattoo_tesoura.png",
-                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst" +
-                    "_carousel%2Ftattoo_cartas.png",
-                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst" +
-                    "_carousel%2Ftattoo_passaro_na_mao.png",
-                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst" +
-                    "_carousel%2Ftattoo_calavera.png",
+                title = "Animais Cartoon",
+                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/galleries%2FAnimais%20" +
+                    "Cartoon%2FCoelho.png",
+                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/galleries%2FAnimais%20" +
+                    "Cartoon%2FDinossauro_com_oculos.png",
+                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/galleries%2FAnimais%20" +
+                    "Cartoon%2FGirafa.png",
+                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/galleries%2FAnimais%20" +
+                    "Cartoon%2FUrso.png",
 
                 ),
             MyGalleryProfile(
                 2,
-                title = "Galeria 2",
-                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst" +
-                    "_carousel%2Ftattoo_tesoura.png",
-                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst" +
-                    "_carousel%2Ftattoo_cartas.png",
-                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst" +
-                    "_carousel%2Ftattoo_passaro_na_mao.png",
-                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst" +
-                    "_carousel%2Ftattoo_calavera.png"
+                title = "Caveiras",
+                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/galleries%2FCaveiras%2F" +
+                    "Caveira_1.png",
+                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/galleries%2FCaveiras" +
+                    "%2FCaveira_2.png",
+                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/galleries%2FCaveiras" +
+                    "%2FCaveira_3.png",
+                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/galleries%2FCaveiras" +
+                    "%2FCaveira_4.png"
 
             ),
             MyGalleryProfile(
                 3,
-                title = "Galeria 3",
-                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst" +
-                    "_carousel%2Ftattoo_tesoura.png",
-                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst" +
-                    "_carousel%2Ftattoo_cartas.png",
-                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst" +
-                    "_carousel%2Ftattoo_passaro_na_mao.png",
-                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst" +
-                    "_carousel%2Ftattoo_calavera.png",
+                title = "Costas Fechadas",
+                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/galleries%2FCostas%20" +
+                    "Fechadas%2FCostas_Cobra.png",
+                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/galleries%2FCostas%20" +
+                    "Fechadas%2FCostas_Diabo.png",
+                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/galleries%2FCostas%20" +
+                    "Fechadas%2FCostas_Face.png",
+                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/galleries%2FCostas%20" +
+                    "Fechadas%2FCostas_caveiras.png",
 
                 ),
             MyGalleryProfile(
                 4,
-                title = "Galeria 4",
-                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst" +
-                    "_carousel%2Ftattoo_tesoura.png",
-                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst" +
-                    "_carousel%2Ftattoo_cartas.png",
-                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst" +
-                    "_carousel%2Ftattoo_passaro_na_mao.png",
-                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst" +
-                    "_carousel%2Ftattoo_calavera.png",
+                title = "Mãos",
+                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/galleries%2FMãos%2FDuasmãos.png",
+                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/galleries%2FMãos%2FMão_1.png",
+                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/galleries%2FMãos%2FMão_coraç-ão.png",
+                "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/galleries%2FMãos%2FMão_olho.png",
 
                 ),
         )
