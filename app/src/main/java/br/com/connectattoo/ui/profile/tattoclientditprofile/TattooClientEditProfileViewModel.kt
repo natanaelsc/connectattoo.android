@@ -1,6 +1,8 @@
 package br.com.connectattoo.ui.profile.tattoclientditprofile
 
+import android.content.ContentValues.TAG
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,6 +10,7 @@ import br.com.connectattoo.repository.ProfileRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -55,7 +58,8 @@ class TattooClientEditProfileViewModel : ViewModel() {
         return try {
             val date = birthDate?.let { inputFormat.parse(it) }
             outputFormat.format(date ?: "")
-        } catch (e: Exception) {
+        } catch (error: IOException) {
+            Log.i(TAG, error.message.toString())
             null
         }
     }

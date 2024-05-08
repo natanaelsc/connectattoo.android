@@ -1,7 +1,6 @@
 package br.com.connectattoo.ui.profile.tattoclientditprofile
 
-
-data class TattooClientEditProfileDataState (
+data class TattooClientEditProfileDataState(
     val displayName: String? = "",
     val username: String? = "",
     val birthDate: String? = "",

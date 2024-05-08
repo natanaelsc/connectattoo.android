@@ -1,5 +1,6 @@
 package br.com.connectattoo.ui.profile.tattoclientditprofile
 
+import android.content.ContentValues.TAG
 import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
@@ -18,6 +19,7 @@ import br.com.connectattoo.repository.ProfileRepository
 import br.com.connectattoo.ui.BaseFragment
 import com.bumptech.glide.Glide
 import kotlinx.coroutines.launch
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -81,6 +83,7 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
         }
     }
 
+    @Suppress("EmptyFunctionBlock")
     private fun observerAndValidateBirthDate() {
         binding.etBirthDate.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -125,7 +128,8 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
         return try {
             format.parse(formattedDate)
             formattedDate
-        } catch (e: Exception) {
+        } catch (error: IOException) {
+            Log.i(TAG, error.message.toString())
             null
         }
     }
