@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.profile.tattoclientditprofile.TattoClientEditProfileFragment">
+    tools:context=".ui.profile.tattoclientditprofile.TattooClientEditProfileFragment">
 
 
     <ImageView
@@ -76,7 +76,7 @@
         app:layout_constraintTop_toBottomOf="@+id/iv_photo_client" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_client_name"
+        android:id="@+id/til_display_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_16dp"
@@ -94,7 +94,7 @@
         app:layout_constraintTop_toBottomOf="@+id/btn_edit_client_photo">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_client_name"
+            android:id="@+id/et_display_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
@@ -119,7 +119,7 @@
         app:hintTextColor="@color/black500"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/til_client_name">
+        app:layout_constraintTop_toBottomOf="@+id/til_display_name">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_user_name"
