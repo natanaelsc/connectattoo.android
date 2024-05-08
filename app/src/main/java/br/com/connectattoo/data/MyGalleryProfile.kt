@@ -1,7 +1,7 @@
 package br.com.connectattoo.data
 
 data class MyGalleryProfile(
-    val id: Int? = null,
+    val id: String? = null,
     val title: String? = null,
     val firstImage: String? = null,
     val secondImage: String? = null,

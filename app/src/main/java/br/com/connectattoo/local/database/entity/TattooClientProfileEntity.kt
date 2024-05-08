@@ -4,7 +4,9 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
+import br.com.connectattoo.data.Gallery
 import br.com.connectattoo.data.TattooClientProfile
+import br.com.connectattoo.data.toGalleryList
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -16,7 +18,8 @@ data class TattooClientProfileEntity(
     @ColumnInfo(name = "birth_date") val birthDate: String? = "",
     @ColumnInfo(name = "image_profile") val imageProfile: String? = "",
     var tags: List<TagEntity> = emptyList(),
-    val email: String? = ""
+    val email: String? = "",
+    var galleries: List<Gallery> = emptyList(),
 ) {
 
     fun toTattooClientProfile(): TattooClientProfile =
@@ -26,7 +29,8 @@ data class TattooClientProfileEntity(
             birthDate = this.birthDate ?: "",
             imageProfile = this.imageProfile ?: "",
             tags = this.tags.toTag(),
-            email = this.email
+            email = this.email,
+            galleries = this.galleries.toGalleryList()
         )
 
 }
@@ -43,6 +47,17 @@ class TattooClientProfileConverters {
         val gson = Gson()
         val listType = object : TypeToken<List<TagEntity>>() {}.type
         return gson.fromJson(tagsAsString, listType)
+    }
+    @TypeConverter
+    fun fromGalleryList(gallery: List<Gallery>): String {
+        val gson = Gson()
+        return gson.toJson(gallery)
+    }
+    @TypeConverter
+    fun toGalleryList(galleryAsString: String): List<Gallery> {
+        val gson = Gson()
+        val listType = object : TypeToken<List<Gallery>>() {}.type
+        return gson.fromJson(galleryAsString, listType)
     }
 
 }
