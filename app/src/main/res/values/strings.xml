@@ -26,5 +26,12 @@
     <string name="txt_find_inspiration_in_every_detail">Encontre inspiração em cada detalhe</string>
     <string name="txt_your_perfect_tattoo">a sua tatuagem perfeita!</string>
     <string name="icon_more_itens_list">Ver Mais</string>
+    <string name="name">Nome</string>
+    <string name="txt_edit_profile">Editar Perfil</string>
+    <string name="et_user_name">Nome de usuário</string>
+    <string name="et_email">Email</string>
+    <string name="et_birth_date">Data de Nascimento</string>
+    <string name="content_description_client_photo">Foto Cliente</string>
+    <string name="txt_editar_foto_do_perfil">Editar foto do perfil</string>
 
 </resources>

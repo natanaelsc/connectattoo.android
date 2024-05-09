@@ -99,6 +99,9 @@ dependencies {
     implementation("androidx.room:room-ktx:2.6.1")
     kapt("androidx.room:room-compiler:2.6.1")
 
+    //Masks
+    implementation ("com.github.santalu:maskara:1.0.0")
+
 }
 kapt {
     correctErrorTypes = true
