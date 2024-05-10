@@ -17,6 +17,7 @@ import br.com.connectattoo.R
 import br.com.connectattoo.databinding.FragmentTattooClientEditProfileBinding
 import br.com.connectattoo.repository.ProfileRepository
 import br.com.connectattoo.ui.BaseFragment
+import br.com.connectattoo.util.showBottomSheetEditPhotoProfile
 import com.bumptech.glide.Glide
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -32,6 +33,7 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
         getInitialInformationClientProfile()
         observerViewModel()
         observerAndValidateBirthDate()
+        setupListeners()
     }
 
     private fun getInitialInformationClientProfile() {
@@ -131,6 +133,24 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
         } catch (error: IOException) {
             Log.i(TAG, error.message.toString())
             null
+        }
+    }
+
+    private fun setupListeners(){
+        binding.btnEditClientPhoto.setOnClickListener {
+            showBottomSheetEditPhotoProfile(
+
+                onClickChooseLibrary = {
+                    Log.i("test", "ChooseLibrary")
+                },
+                onClickTakePicture = {
+                    Log.i("test", "TakePicture")
+                },
+                onClickRemovePhoto = {
+                    Log.i("test", "RemovePhoto")
+                }
+
+            )
         }
     }
 
