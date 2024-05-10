@@ -7,7 +7,6 @@ on:
     branches: [ develop ]
 
 env:
-  STAGING_CONDITION: github.event_name == 'push' && github.ref == 'refs/heads/develop'
   FIREBASE_DISTRIBUTION_GROUPS: testers
   OUT_DIR: app/build/outputs/apk/debug
 
@@ -41,7 +40,7 @@ jobs:
           API_URL: ${{ secrets.API_URL }}
 
       - name: Upload Debug APK
-        if: ${{ env.STAGING_CONDITION }}
+        if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
         uses: actions/upload-artifact@v4
         with:
           name: app-debug.apk
@@ -49,7 +48,7 @@ jobs:
 
   firebase:
 
-    if: ${{ env.STAGING_CONDITION }}
+    if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
 
     runs-on: ubuntu-latest
 
