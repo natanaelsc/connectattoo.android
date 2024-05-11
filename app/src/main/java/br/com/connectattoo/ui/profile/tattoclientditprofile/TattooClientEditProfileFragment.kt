@@ -17,6 +17,8 @@ import br.com.connectattoo.R
 import br.com.connectattoo.databinding.FragmentTattooClientEditProfileBinding
 import br.com.connectattoo.repository.ProfileRepository
 import br.com.connectattoo.ui.BaseFragment
+import br.com.connectattoo.util.Constants
+import br.com.connectattoo.util.DataStoreManager
 import br.com.connectattoo.util.showBottomSheetEditPhotoProfile
 import com.bumptech.glide.Glide
 import kotlinx.coroutines.launch
@@ -53,6 +55,10 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
                         }
 
                         TattooClientEditProfileViewModel.UiState.Error -> {
+                            val message = viewModel.dataState.stateErrorDeleteImage
+                            if (message != null) {
+                                Log.i("ErrorDeleteImage", message)
+                            }
                         }
 
                         TattooClientEditProfileViewModel.UiState.Loading -> {
@@ -136,7 +142,7 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
         }
     }
 
-    private fun setupListeners(){
+    private fun setupListeners() {
         binding.btnEditClientPhoto.setOnClickListener {
             showBottomSheetEditPhotoProfile(
 
@@ -148,9 +154,18 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
                 },
                 onClickRemovePhoto = {
                     Log.i("test", "RemovePhoto")
+                    removeClientPhoto()
+
                 }
 
             )
+        }
+    }
+
+    private fun removeClientPhoto() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            val token = DataStoreManager.getUserSettings(requireContext(), Constants.API_TOKEN)
+            viewModel.deleteClientProfilePhoto(profileRepository, token)
         }
     }
 

@@ -31,9 +31,11 @@ fun Fragment.showBottomSheetEditPhotoProfile(
     }
     bottomSheetBinding.ivRemovePhoto.setOnClickListener {
         onClickRemovePhoto()
+        bottomSheetDialog.dismiss()
     }
     bottomSheetBinding.txtRemovePhoto.setOnClickListener {
         onClickRemovePhoto()
+        bottomSheetDialog.dismiss()
     }
 
     bottomSheetDialog.setContentView(bottomSheetBinding.root)

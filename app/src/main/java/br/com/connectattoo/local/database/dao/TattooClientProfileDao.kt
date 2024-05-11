@@ -16,4 +16,7 @@ interface TattooClientProfileDao {
     @Query("DELETE FROM profile")
     suspend fun dellTattooClientProfile()
 
+    @Query("UPDATE profile SET image_profile = '' WHERE id = :id")
+    suspend fun dellTattooClientProfilePhoto(id: Long)
+
 }
