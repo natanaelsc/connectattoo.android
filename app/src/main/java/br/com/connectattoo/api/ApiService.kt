@@ -2,7 +2,6 @@ package br.com.connectattoo.api
 
 import br.com.connectattoo.api.response.ApiConfirmationResponse
 import br.com.connectattoo.api.response.TattooClientProfileResponse
-import br.com.connectattoo.core.ResourceResult
 import br.com.connectattoo.data.ArtistData
 import br.com.connectattoo.data.ClientData
 import br.com.connectattoo.data.TokenData
