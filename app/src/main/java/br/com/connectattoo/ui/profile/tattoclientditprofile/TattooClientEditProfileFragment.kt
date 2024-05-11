@@ -146,14 +146,13 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
         binding.btnEditClientPhoto.setOnClickListener {
             showBottomSheetEditPhotoProfile(
                 onClickChooseLibrary = {
-                    Log.i("test", "ChooseLibrary")
+                    Log.i("ChooseLibrary", "ChooseLibrary")
                 },
                 onClickTakePicture = {
-                    Log.i("test", "TakePicture")
+                    Log.i("TakePicture", "TakePicture")
                 },
                 enableBtnRemovePhoto = !viewModel.dataState.imageProfile.isNullOrEmpty(),
                 onClickRemovePhoto = {
-                    Log.i("test", "RemovePhoto")
                     removeClientPhoto()
 
                 }
