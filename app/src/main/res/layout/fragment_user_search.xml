@@ -33,7 +33,7 @@
         android:background="@drawable/search_user"
         android:backgroundTint="@color/white"
         android:iconifiedByDefault="false"
-        android:queryHint="@string/search"
+        android:queryHint="@string/txt_search"
         android:searchHintIcon="@null"
         android:searchIcon="@drawable/search_icon"
         android:theme="@style/SearchViewTextColor"
