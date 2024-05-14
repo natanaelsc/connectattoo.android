@@ -37,5 +37,5 @@ interface ApiService {
     @DELETE("profile/me/image")
     suspend fun deleteProfilePhoto(
         @Header("Authorization") authorization: String
-    ): Response<String>
+    ): Response<Unit>
 }
