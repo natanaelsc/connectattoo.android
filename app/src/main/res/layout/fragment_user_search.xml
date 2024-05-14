@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_user_search"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black100"
+    android:paddingStart="22dp"
+    android:paddingTop="20dp"
+    android:paddingEnd="22dp"
+    tools:context=".ui.search.UserSearchFragment">
+
+    <TextView
+        android:id="@+id/txt_explore"
+        android:layout_width="79dp"
+        android:layout_height="36dp"
+        android:fontFamily="@font/raleway_extrabold"
+        android:gravity="center"
+        android:lineSpacingExtra="1.8sp"
+        android:text="@string/txt_explore"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <SearchView
+        android:id="@+id/search_user"
+        android:layout_width="316dp"
+        android:layout_height="36dp"
+        android:background="@drawable/search_user"
+        android:backgroundTint="@color/white"
+        android:iconifiedByDefault="false"
+        android:queryHint="@string/search"
+        android:searchHintIcon="@null"
+        android:searchIcon="@drawable/search_icon"
+        android:theme="@style/SearchViewTextColor"
+        android:voiceSearchMode="showVoiceSearchButton|launchRecognizer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_explore"
+        app:voiceIcon="@drawable/microphone_icon" />
+
+    <ImageView
+        android:id="@+id/image_mic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/search_user"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/search_user"
+        android:layout_marginEnd="40dp"
+        android:src="@drawable/microphone_icon"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_images_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_user" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
