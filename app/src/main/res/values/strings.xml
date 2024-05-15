@@ -8,7 +8,9 @@
     <string name="txt_hello_user_home_error">Olá, </string>
     <string name="txt_request_location">Serviço de localização desabilitado quer habilitar?</string>
     <string name="txt_enable_now">Habilitar</string>
-    <string name="txt_calcel">Cancelar</string>
+    <string name="txt_cancel">Cancelar</string>
+    <string name="txt_explore">Explorar</string>
+    <string name="txt_search">Buscar</string>
     <string name="content_description_user_profile_image">Imagem de perfil do usuário</string>
     <string name="txt_my_interests">Meus Interesses</string>
     <string name="btn_to_manage"><u>Gerenciar</u></string>
