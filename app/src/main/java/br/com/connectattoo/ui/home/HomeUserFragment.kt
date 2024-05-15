@@ -1,15 +1,17 @@
 package br.com.connectattoo.ui.home
 
+import android.annotation.SuppressLint
+import android.app.Activity.RESULT_CANCELED
+import android.app.Activity.RESULT_OK
 import android.content.ContentValues.TAG
 import android.graphics.Color
+import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.lifecycle.lifecycleScope
-import android.annotation.SuppressLint
-import android.app.Activity
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.connectattoo.R
 import br.com.connectattoo.adapter.AdapterListOfNearbyTattooArtists
@@ -25,30 +27,21 @@ import br.com.connectattoo.util.Constants
 import br.com.connectattoo.util.Constants.API_TOKEN
 import br.com.connectattoo.util.Constants.API_USER_NAME
 import br.com.connectattoo.util.DataStoreManager
+import br.com.connectattoo.util.GpsStatusListener
+import br.com.connectattoo.util.PermissionUtils
+import br.com.connectattoo.util.TurnOnGps
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.Priority
+import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 import java.io.IOException
-import br.com.connectattoo.util.PermissionUtils
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
-import com.google.android.gms.location.Priority
-import com.google.android.gms.tasks.CancellationTokenSource
 
 @Suppress("TooManyFunctions")
+@RequiresApi(Build.VERSION_CODES.M)
 class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var checkLocation = false
-    private val enableLocationActivityResult =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_CANCELED) {
-                if (PermissionUtils.isLocationEnabled(requireContext())) {
-                    checkLocation = true
-                } else {
-                    Toast.makeText(requireContext(), "Localização não ativada!", Toast.LENGTH_LONG)
-                        .show()
-                }
-            }
-        }
 
 
     private lateinit var adapterListOfTattoosBasedOnTags: AdapterListOfTattoosBasedOnTags
@@ -101,6 +94,16 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Fthird_carousel%2Favatar%2Favatar_jose_fernades.png",
         "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Fsecond_carousel%2Favatar%2Favatar_diogo_almeida.png"
     )
+    private val enableLocationActivityResult = registerForActivityResult(
+        ActivityResultContracts.StartIntentSenderForResult()
+    ) { activityResult ->
+        if (activityResult.resultCode == RESULT_OK) {
+            Log.i("result", activityResult.resultCode.toString())
+        } else if (activityResult.resultCode == RESULT_CANCELED) {
+            Log.i("resultNotAccept", activityResult.resultCode.toString())
+        }
+
+    }
 
     override fun inflateBinding(
         inflater: LayoutInflater,
@@ -109,15 +112,10 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         return FragmentHomeUserBinding.inflate(inflater, container, false)
 
     }
-    override fun setupViews() {
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
-        PermissionUtils.getPermissionAndLocationUser(
-            requireActivity(),
-            requireContext(),
-            enableLocationActivityResult
-        )
 
-        //getLocationUser()
+    override fun setupViews() {
+        observerAndRequestGpsTurnOn()
+
         val recycleViewListOfTattoosBasedOnTags = binding.recycleListOfTattoosBasedOnTags
         recycleViewListOfTattoosBasedOnTags.layoutManager = LinearLayoutManager(
             context,
@@ -154,6 +152,32 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         setUserName()
     }
 
+    private fun observerAndRequestGpsTurnOn() {
+        val gpsStatusListener = GpsStatusListener(requireContext())
+        val turnOnGps = TurnOnGps(requireContext())
+        var isGpsStatusChanged: Boolean? = null
+        gpsStatusListener.observe(this) { isGpsOn ->
+
+            if (isGpsStatusChanged == null) {
+
+                if (!isGpsOn) {
+                    turnOnGps.startGps(enableLocationActivityResult)
+                }
+                isGpsStatusChanged = isGpsOn
+
+            } else {
+                if (isGpsStatusChanged != isGpsOn) {
+                    if (!isGpsOn) {
+                        turnOnGps.startGps(enableLocationActivityResult)
+
+                    }
+                    isGpsStatusChanged = isGpsOn
+                }
+
+            }
+        }
+    }
+
     private fun setUserName() {
         viewLifecycleOwner.lifecycleScope.launch {
             val nameUser = DataStoreManager.getUserSettings(requireContext(), API_USER_NAME)
@@ -163,7 +187,6 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
             } else {
                 showUserName(nameUser)
             }
-
         }
     }
 
@@ -317,6 +340,7 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         super.onResume()
         requestLocationUser()
     }
+
 
     @SuppressLint("MissingPermission")
     private fun requestLocationUser() {
