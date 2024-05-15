@@ -10,6 +10,7 @@ fun Fragment.showBottomSheetEditPhotoProfile(
     onClickChooseLibrary: () -> Unit = {},
     onClickTakePicture: () -> Unit = {},
     onClickRemovePhoto: () -> Unit = {},
+    enableBtnRemovePhoto: Boolean = true
 ) {
     val bottomSheetDialog =
         BottomSheetDialog(requireContext(), R.style.ThemeOverlay_App_BottomSheetDialog)
@@ -29,11 +30,15 @@ fun Fragment.showBottomSheetEditPhotoProfile(
     bottomSheetBinding.txtTakePicture.setOnClickListener {
         onClickTakePicture()
     }
-    bottomSheetBinding.ivRemovePhoto.setOnClickListener {
-        onClickRemovePhoto()
-    }
-    bottomSheetBinding.txtRemovePhoto.setOnClickListener {
-        onClickRemovePhoto()
+    if (enableBtnRemovePhoto){
+        bottomSheetBinding.ivRemovePhoto.setOnClickListener {
+            onClickRemovePhoto()
+            bottomSheetDialog.dismiss()
+        }
+        bottomSheetBinding.txtRemovePhoto.setOnClickListener {
+            onClickRemovePhoto()
+            bottomSheetDialog.dismiss()
+        }
     }
 
     bottomSheetDialog.setContentView(bottomSheetBinding.root)

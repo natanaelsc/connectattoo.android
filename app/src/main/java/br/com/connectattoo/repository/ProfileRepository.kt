@@ -8,8 +8,10 @@ import br.com.connectattoo.core.MessageException
 import br.com.connectattoo.core.ResourceResult
 import br.com.connectattoo.data.TattooClientProfile
 import br.com.connectattoo.local.database.dao.TattooClientProfileDao
+import br.com.connectattoo.util.Constants.CODE_SUCCESS_200
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import retrofit2.Response
 import java.io.IOException
 
 class ProfileRepository(private val tattooClientProfileDao: TattooClientProfileDao) {
@@ -25,7 +27,7 @@ class ProfileRepository(private val tattooClientProfileDao: TattooClientProfileD
             with(apiService.getProfileUser(token)) {
                 val clientProfile = this.body()
                 if (this.isSuccessful && clientProfile != null) {
-                    tattooClientProfileDao.dellTattooClientProfile()
+                    tattooClientProfileDao.deleteTattooClientProfile()
                     tattooClientProfileDao.insertTattooClientProfile(clientProfile.toTattooClientProfileEntity())
                 }
                 data = tattooClientProfileDao.getTattooClientProfile()
@@ -37,7 +39,6 @@ class ProfileRepository(private val tattooClientProfileDao: TattooClientProfileD
         }
         return (ResourceResult.Success(data?.toTattooClientProfile()))
     }
-
 
     fun getClientProfileRoom(): Flow<ResourceResult<TattooClientProfile>> = flow {
         try {
@@ -52,5 +53,32 @@ class ProfileRepository(private val tattooClientProfileDao: TattooClientProfileD
             emit(ResourceResult.Error(null, error))
         }
 
+    }
+
+    fun deleteProfilePhoto(token: String): Flow<ResourceResult<String>> = flow {
+        emit(deleteProfilePhotoAPIAndRoom("Bearer $token"))
+    }
+
+    private suspend fun deleteProfilePhotoAPIAndRoom(token: String): ResourceResult<String> {
+        return try {
+            val result = apiService.deleteProfilePhoto(token)
+            resourceResultDeleteClientProfileImage(result)
+        } catch (error: IOException) {
+            val message = MessageException("Erro na requisição a api")
+            Log.i(TAG, error.message.toString())
+            (ResourceResult.Error(null, message))
+        }
+
+    }
+
+    private suspend fun resourceResultDeleteClientProfileImage(result: Response<Unit>): ResourceResult<String> {
+        return if (result.code() == CODE_SUCCESS_200) {
+            val data = tattooClientProfileDao.getTattooClientProfile()
+            data?.let { tattooClientProfileDao.updateTattooClientProfilePhoto(it.id, "") }
+            (ResourceResult.Success("Sucesso ao deletar a foto de perfil"))
+        } else {
+            val error = MessageException("Foto não encontrada")
+            (ResourceResult.Error(null, error))
+        }
     }
 }
