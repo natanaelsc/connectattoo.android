@@ -14,6 +14,9 @@ interface TattooClientProfileDao {
     suspend fun getTattooClientProfile(): TattooClientProfileEntity?
 
     @Query("DELETE FROM profile")
-    suspend fun dellTattooClientProfile()
+    suspend fun deleteTattooClientProfile()
+
+    @Query("UPDATE profile SET image_profile = :profilePhoto WHERE id = :id")
+    suspend fun updateTattooClientProfilePhoto(id: Long, profilePhoto: String?)
 
 }

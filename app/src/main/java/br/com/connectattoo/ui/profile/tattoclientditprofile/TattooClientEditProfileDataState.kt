@@ -6,5 +6,7 @@ data class TattooClientEditProfileDataState(
     val birthDate: String? = "",
     val imageProfile: String? = "",
     val email: String? = "",
-    val stateError: String? = ""
+    val stateError: String? = "",
+    val stateErrorDeleteImage: String? = "",
+    val messageDeleteImage: String? = ""
 )

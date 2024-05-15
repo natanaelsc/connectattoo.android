@@ -51,6 +51,29 @@ class TattooClientEditProfileViewModel : ViewModel() {
 
     }
 
+    fun deleteClientProfilePhoto(profileRepository: ProfileRepository, token: String) {
+
+        viewModelScope.launch {
+            _uiStateFlow.value = UiState.Loading
+            val result = profileRepository.deleteProfilePhoto(token)
+
+            result.collect {
+                if (it.error != null) {
+                    _dataState =
+                        _dataState.copy(stateErrorDeleteImage = it.error?.message.toString())
+                    _uiStateFlow.value = UiState.Error
+                }
+                it.data?.let { message ->
+                    _dataState = _dataState.copy(
+                        messageDeleteImage = message,
+                        imageProfile = ""
+                    )
+                    _uiStateFlow.value = UiState.Success
+                }
+            }
+        }
+    }
+
     private fun transformBirthDate(birthDate: String?): String? {
         val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val outputFormat = SimpleDateFormat("ddMMyyyy", Locale.getDefault())
