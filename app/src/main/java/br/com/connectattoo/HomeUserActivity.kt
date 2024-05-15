@@ -27,7 +27,6 @@ class HomeUserActivity : AppCompatActivity() {
         }
 
     }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         getPermissionAndLocation()
@@ -40,10 +39,7 @@ class HomeUserActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             binding.homeTrue.isVisible = destination.id == R.id.homeUserFragment
-            binding.chatTrue.isVisible = destination.id == R.id.confirmationFragment4
-            binding.explorarTrue.isVisible = destination.id == R.id.tattooClientRegistrationFragment
             binding.profileTrue.isVisible = destination.id == R.id.clientUserProfileFragment
-
         }
 
         binding.homeFalse.setOnClickListener {
@@ -55,19 +51,19 @@ class HomeUserActivity : AppCompatActivity() {
         }
 
         binding.chatFalse.setOnClickListener {
-            navController.navigate(R.id.confirmationFragment4)
+           /* navController.navigate()
             binding.homeTrue.visibility = View.INVISIBLE
             binding.chatTrue.visibility = View.VISIBLE
             binding.explorarTrue.visibility = View.INVISIBLE
-            binding.profileTrue.visibility = View.INVISIBLE
+            binding.profileTrue.visibility = View.INVISIBLE */
         }
 
         binding.explorarFalse.setOnClickListener {
-            navController.navigate(R.id.tattooClientRegistrationFragment)
+            /* navController.navigate()
             binding.homeTrue.visibility = View.INVISIBLE
             binding.chatTrue.visibility = View.INVISIBLE
             binding.explorarTrue.visibility = View.VISIBLE
-            binding.profileTrue.visibility = View.INVISIBLE
+            binding.profileTrue.visibility = View.INVISIBLE */
         }
 
         binding.profileFalse.setOnClickListener {
@@ -80,7 +76,6 @@ class HomeUserActivity : AppCompatActivity() {
         }
 
     }
-
     override fun onStart() {
         super.onStart()
         if (PermissionUtils.isLocationEnabled(this)) {
