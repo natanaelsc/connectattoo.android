@@ -1,15 +1,11 @@
 package br.com.connectattoo.ui.home
 
-import android.annotation.SuppressLint
-import android.app.Activity.RESULT_CANCELED
-import android.app.Activity.RESULT_OK
 import android.content.ContentValues.TAG
 import android.graphics.Color
 import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,12 +23,6 @@ import br.com.connectattoo.util.Constants
 import br.com.connectattoo.util.Constants.API_TOKEN
 import br.com.connectattoo.util.Constants.API_USER_NAME
 import br.com.connectattoo.util.DataStoreManager
-import br.com.connectattoo.util.GpsStatusListener
-import br.com.connectattoo.util.PermissionUtils
-import br.com.connectattoo.util.TurnOnGps
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.Priority
-import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -40,9 +30,6 @@ import java.io.IOException
 @Suppress("TooManyFunctions")
 @RequiresApi(Build.VERSION_CODES.M)
 class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private var checkLocation = false
-
 
     private lateinit var adapterListOfTattoosBasedOnTags: AdapterListOfTattoosBasedOnTags
     private val listOfTattoosBasedOnTags: MutableList<TagBasedTattoos> = mutableListOf()
@@ -94,16 +81,6 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Fthird_carousel%2Favatar%2Favatar_jose_fernades.png",
         "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Fsecond_carousel%2Favatar%2Favatar_diogo_almeida.png"
     )
-    private val enableLocationActivityResult = registerForActivityResult(
-        ActivityResultContracts.StartIntentSenderForResult()
-    ) { activityResult ->
-        if (activityResult.resultCode == RESULT_OK) {
-            Log.i("result", activityResult.resultCode.toString())
-        } else if (activityResult.resultCode == RESULT_CANCELED) {
-            Log.i("resultNotAccept", activityResult.resultCode.toString())
-        }
-
-    }
 
     override fun inflateBinding(
         inflater: LayoutInflater,
@@ -114,8 +91,6 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
     }
 
     override fun setupViews() {
-        observerAndRequestGpsTurnOn()
-
         val recycleViewListOfTattoosBasedOnTags = binding.recycleListOfTattoosBasedOnTags
         recycleViewListOfTattoosBasedOnTags.layoutManager = LinearLayoutManager(
             context,
@@ -152,31 +127,6 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
         setUserName()
     }
 
-    private fun observerAndRequestGpsTurnOn() {
-        val gpsStatusListener = GpsStatusListener(requireContext())
-        val turnOnGps = TurnOnGps(requireContext())
-        var isGpsStatusChanged: Boolean? = null
-        gpsStatusListener.observe(this) { isGpsOn ->
-
-            if (isGpsStatusChanged == null) {
-
-                if (!isGpsOn) {
-                    turnOnGps.startGps(enableLocationActivityResult)
-                }
-                isGpsStatusChanged = isGpsOn
-
-            } else {
-                if (isGpsStatusChanged != isGpsOn) {
-                    if (!isGpsOn) {
-                        turnOnGps.startGps(enableLocationActivityResult)
-
-                    }
-                    isGpsStatusChanged = isGpsOn
-                }
-
-            }
-        }
-    }
 
     private fun setUserName() {
         viewLifecycleOwner.lifecycleScope.launch {
@@ -333,30 +283,6 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
             randomProfileImage[4], like = true, save = true
         )
         listOfRandomTattoos.add(randomTattoos5)
-    }
-
-
-    override fun onResume() {
-        super.onResume()
-        requestLocationUser()
-    }
-
-
-    @SuppressLint("MissingPermission")
-    private fun requestLocationUser() {
-        if (checkLocation) {
-            if (PermissionUtils.isLocationEnabled(requireContext())) {
-                val result = fusedLocationClient.getCurrentLocation(
-                    Priority.PRIORITY_BALANCED_POWER_ACCURACY,
-                    CancellationTokenSource().token
-                )
-                result.addOnCompleteListener {
-                    val location = "Latitude: " + it.result.latitude + "\n" +
-                        "Longitude: " + it.result.longitude
-                    Log.i("location", location)
-                }
-            }
-        }
     }
 
 }

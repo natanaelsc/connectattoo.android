@@ -40,13 +40,16 @@ object PermissionUtils {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 when {
                     permissions.getOrDefault(
-                        Manifest.permission.ACCESS_FINE_LOCATION, false)
+                        Manifest.permission.ACCESS_FINE_LOCATION, false
+                    )
                         || permissions.getOrDefault(
                         Manifest.permission.ACCESS_COARSE_LOCATION, false
                     ) -> {
                         if (isLocationEnabled(activity)) {
-                            if (ContextCompat.checkSelfPermission(activity,
-                                    Manifest.permission.ACCESS_FINE_LOCATION)
+                            if (ContextCompat.checkSelfPermission(
+                                    activity,
+                                    Manifest.permission.ACCESS_FINE_LOCATION
+                                )
                                 == PackageManager.PERMISSION_GRANTED
                             ) {
                                 val fusedLocationClient =
@@ -66,14 +69,21 @@ object PermissionUtils {
                         } else {
                             showEnableLocationDialog(
                                 context = context,
-                                enableLocationActivityResult = enableLocationActivityResult)
+                                enableLocationActivityResult = enableLocationActivityResult
+                            )
                         }
-                    }else -> {}
+                    }
+
+                    else -> {}
                 }
             }
         }
-        locationPermissionRequest.launch(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION))
+        locationPermissionRequest.launch(
+            arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+        )
     }
 
     fun isLocationEnabled(context: Context): Boolean {
