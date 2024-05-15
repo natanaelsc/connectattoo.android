@@ -22,8 +22,10 @@ class HomeUserActivity : AppCompatActivity() {
     ) { activityResult ->
         if (activityResult.resultCode == RESULT_CANCELED) {
             Log.i("result", activityResult.resultCode.toString())
-        } else if (activityResult.resultCode == RESULT_CANCELED) {
-            Log.i("resultNotAccept", activityResult.resultCode.toString())
+        } else {
+            if (activityResult.resultCode == RESULT_CANCELED) {
+                Log.i("resultNotAccept", activityResult.resultCode.toString())
+            }
         }
 
     }
