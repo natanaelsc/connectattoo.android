@@ -1,21 +1,9 @@
 package br.com.connectattoo.ui.home
 
-import android.content.ContentValues.TAG
-import android.graphics.Color
 import android.os.Build
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
-import android.annotation.SuppressLint
-import android.app.Activity
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -33,14 +21,6 @@ import br.com.connectattoo.repository.ProfileRepository
 import br.com.connectattoo.ui.BaseFragment
 import br.com.connectattoo.util.Constants.API_TOKEN
 import br.com.connectattoo.util.DataStoreManager
-import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.launch
-import java.io.IOException
-import br.com.connectattoo.util.PermissionUtils
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
-import com.google.android.gms.location.Priority
-import com.google.android.gms.tasks.CancellationTokenSource
 import kotlinx.coroutines.launch
 
 @Suppress("TooManyFunctions")
@@ -112,12 +92,6 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
 
     override fun setupViews() {
         viewModel = HomeUserViewModel()
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
-        PermissionUtils.getPermissionAndLocationUser(
-            requireActivity(),
-            requireContext(),
-            enableLocationActivityResult
-        )
         listOfTattoosBasedOnTags()
         listOfNearbyTattooArtists()
         listOfRandomTattoos()
