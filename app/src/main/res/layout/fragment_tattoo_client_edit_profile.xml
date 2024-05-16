@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.profile.tattoclientditprofile.TattooClientEditProfileFragment">
+
+
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/arrow_chevron_left"
+        app:layout_constraintEnd_toStartOf="@+id/txt_edit_profile"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_edit_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/raleway_extrabold"
+        android:text="@string/txt_edit_profile"
+        android:textColor="@color/black"
+        android:textSize="@dimen/txt_size_20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_back"
+        app:layout_constraintEnd_toStartOf="@+id/iv_logo"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/iv_back"
+        app:layout_constraintTop_toTopOf="@+id/iv_back" />
+
+    <ImageView
+        android:id="@+id/iv_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/header_logo_symbol"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_edit_profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/txt_edit_profile"
+        app:layout_constraintTop_toTopOf="@+id/txt_edit_profile" />
+
+    <ImageView
+        android:id="@+id/iv_photo_client"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/circular_image_user_profile_border_purple"
+        android:contentDescription="@string/content_description_client_photo"
+        android:src="@drawable/icon_person_profile_black"
+        app:layout_constraintEnd_toEndOf="@+id/txt_edit_profile"
+        app:layout_constraintStart_toStartOf="@+id/txt_edit_profile"
+        app:layout_constraintTop_toBottomOf="@+id/txt_edit_profile" />
+
+    <Button
+        android:id="@+id/btn_edit_client_photo"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/raleway_extrabold"
+        android:text="@string/txt_editar_foto_do_perfil"
+        android:textAllCaps="false"
+        android:textColor="@color/purple700"
+        android:textSize="@dimen/txt_size_12sp"
+        app:layout_constraintEnd_toEndOf="@+id/iv_photo_client"
+        app:layout_constraintStart_toStartOf="@+id/iv_photo_client"
+        app:layout_constraintTop_toBottomOf="@+id/iv_photo_client" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_display_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_16dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/bg_text_input_layout_backgroud"
+        android:textColor="@color/black500"
+        android:textColorHint="@color/black500"
+        app:boxBackgroundColor="@android:color/transparent"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
+        app:cursorColor="@color/purple500"
+        app:hintTextColor="@color/black500"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_edit_client_photo">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_display_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/raleway_medium"
+            android:hint="@string/name"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_user_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_16dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/bg_text_input_layout_backgroud"
+        android:textColor="@color/black500"
+        android:textColorHint="@color/black500"
+        app:boxBackgroundColor="@android:color/transparent"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
+        app:cursorColor="@color/purple500"
+        app:hintTextColor="@color/black500"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/til_display_name">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_user_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/raleway_medium"
+            android:hint="@string/et_user_name"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_client_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_16dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/bg_text_input_layout_backgroud"
+        android:textColor="@color/black500"
+        android:textColorHint="@color/black500"
+        app:boxBackgroundColor="@android:color/transparent"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
+        app:cursorColor="@color/purple500"
+        app:hintTextColor="@color/black500"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/til_user_name">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_client_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/raleway_medium"
+            android:hint="@string/et_email"
+            android:inputType="textEmailAddress" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_birth_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_16dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/bg_text_input_layout_backgroud"
+        android:textColor="@color/black500"
+        android:textColorHint="@color/black500"
+        app:boxBackgroundColor="@android:color/transparent"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
+        app:cursorColor="@color/purple500"
+        app:hintTextColor="@color/black500"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/til_client_email">
+
+        <com.santalu.maskara.widget.MaskEditText
+            android:id="@+id/et_birth_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/raleway_medium"
+            android:hint="@string/et_birth_date"
+            android:inputType="number"
+            app:mask="__/__/____"
+            app:maskCharacter="_"
+            app:maskStyle="normal" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

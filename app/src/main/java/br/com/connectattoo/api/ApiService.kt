@@ -1,13 +1,14 @@
 package br.com.connectattoo.api
 
 import br.com.connectattoo.api.response.ApiConfirmationResponse
-import br.com.connectattoo.api.response.ProfileUserResponse
+import br.com.connectattoo.api.response.TattooClientProfileResponse
 import br.com.connectattoo.data.ArtistData
 import br.com.connectattoo.data.ClientData
 import br.com.connectattoo.data.TokenData
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
@@ -31,5 +32,10 @@ interface ApiService {
     @GET("profile/me")
     suspend fun getProfileUser(
         @Header("Authorization") authorization: String
-    ): Response<ProfileUserResponse>
+    ): Response<TattooClientProfileResponse>
+
+    @DELETE("profile/me/image")
+    suspend fun deleteProfilePhoto(
+        @Header("Authorization") authorization: String
+    ): Response<Unit>
 }

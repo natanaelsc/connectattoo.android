@@ -621,6 +621,7 @@ style:
       - '7'
       - '8'
       - '9'
+      - '10'
     ignoreHashCodeFunction: true
     ignorePropertyDeclaration: false
     ignoreLocalVariableDeclaration: false

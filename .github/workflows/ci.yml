@@ -1,0 +1,72 @@
+name: Android CI
+
+on:
+  pull_request:
+    branches: [ develop ]
+  push:
+    branches: [ develop ]
+
+env:
+  FIREBASE_DISTRIBUTION_GROUPS: testers
+  OUT_DIR: app/build/outputs/apk/debug
+
+jobs:
+  ci:
+
+    strategy:
+      matrix:
+        java-version: [ '17' ]
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK ${{ matrix.java-version }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ matrix.java-version }}
+          distribution: temurin
+          cache: gradle
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Lint
+        run: ./gradlew detekt
+
+      - name: Build
+        run: ./gradlew assembleDebug
+        env:
+          API_URL: ${{ secrets.API_URL }}
+
+      - name: Upload Debug APK
+        if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug.apk
+          path: ${{ env.OUT_DIR }}
+
+  firebase:
+
+    if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+
+    runs-on: ubuntu-latest
+
+    needs: ci
+
+    environment: staging
+
+    steps:
+      - name: Download Debug APK
+        uses: actions/download-artifact@v4
+        with:
+          name: app-debug.apk
+          path: ${{ env.OUT_DIR }}
+
+      - name: App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1.7.0
+        with:
+          appId: ${{ secrets.FIREBASE_APP_ID }}
+          serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
+          groups: ${{ env.FIREBASE_DISTRIBUTION_GROUPS }}
+          file: ${{ env.OUT_DIR }}/app-debug.apk

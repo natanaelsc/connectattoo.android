@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.customerprofile.CustomerProfileFragment">
+    tools:context=".ui.profile.tattooclient.TattooClientProfileFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_marginHorizontal="@dimen/margin_16dp"
-        android:background="@drawable/bg_shape_customer_profile_top"
+        android:background="@drawable/bg_shape_tattoo_client_profile_top"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -45,7 +45,7 @@
             tools:text="João Silva" />
 
         <TextView
-            android:id="@+id/txtAgeAndEmail"
+            android:id="@+id/txtAgeAndDisplayName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_8dp"
@@ -80,8 +80,8 @@
             android:text="@string/btn_edit_profile"
             android:textColor="@color/white"
             android:textSize="@dimen/txt_size_12sp"
-            app:layout_constraintStart_toStartOf="@+id/txtAgeAndEmail"
-            app:layout_constraintTop_toBottomOf="@+id/txtAgeAndEmail" />
+            app:layout_constraintStart_toStartOf="@+id/txtAgeAndDisplayName"
+            app:layout_constraintTop_toBottomOf="@+id/txtAgeAndDisplayName" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -118,9 +118,10 @@
         android:id="@+id/rvTagsInterests"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_marginStart="@dimen/margin_16dp"
+        android:paddingHorizontal="@dimen/margin_16dp"
         android:layout_marginTop="@dimen/margin_8dp"
         android:orientation="horizontal"
+        android:clipToPadding="false"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -132,9 +133,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_24dp"
+        android:layout_marginStart="@dimen/margin_16dp"
         android:fontFamily="@font/raleway_extrabold"
         android:text="@string/txt_next_scheduling"
         android:textColor="@color/black"
+        android:textSize="@dimen/txt_size_14sp"
         app:layout_constraintStart_toStartOf="@+id/rvTagsInterests"
         app:layout_constraintTop_toBottomOf="@+id/rvTagsInterests" />
 

@@ -100,7 +100,7 @@ object PermissionUtils {
             com.google.android.material.R.style.AlertDialog_AppCompat
         )
             .setMessage(R.string.txt_request_location)
-            .setNeutralButton(R.string.txt_calcel) { _, _ ->
+            .setNeutralButton(R.string.txt_cancel) { _, _ ->
             }
             .setPositiveButton(R.string.txt_enable_now) { _, _ ->
                 val enableLocationIntent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)

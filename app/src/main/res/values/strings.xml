@@ -8,7 +8,9 @@
     <string name="txt_hello_user_home_error">Olá, </string>
     <string name="txt_request_location">Serviço de localização desabilitado quer habilitar?</string>
     <string name="txt_enable_now">Habilitar</string>
-    <string name="txt_calcel">Cancelar</string>
+    <string name="txt_cancel">Cancelar</string>
+    <string name="txt_explore">Explorar</string>
+    <string name="txt_search">Buscar</string>
     <string name="content_description_user_profile_image">Imagem de perfil do usuário</string>
     <string name="txt_my_interests">Meus Interesses</string>
     <string name="btn_to_manage"><u>Gerenciar</u></string>
@@ -22,5 +24,19 @@
     <string name="content_description_user_settings_button">Botão de configurações do usuário</string>
     <string name="content_description_next_appointment_information_button">Botão de informações sobre proximo agendamento</string>
     <string name="btn_edit_profile">Editar Perfil</string>
+    <string name="txt_these_are_the_tattoo_artists_closest_to_you">Estes são os tatuadores mais próximos de você</string>
+    <string name="txt_find_inspiration_in_every_detail">Encontre inspiração em cada detalhe</string>
+    <string name="txt_your_perfect_tattoo">a sua tatuagem perfeita!</string>
+    <string name="icon_more_itens_list">Ver Mais</string>
+    <string name="name">Nome</string>
+    <string name="txt_edit_profile">Editar Perfil</string>
+    <string name="et_user_name">Nome de usuário</string>
+    <string name="et_email">Email</string>
+    <string name="et_birth_date">Data de Nascimento</string>
+    <string name="content_description_client_photo">Foto Cliente</string>
+    <string name="txt_editar_foto_do_perfil">Editar foto do perfil</string>
+    <string name="txt_choose_from_library">Escolher na biblioteca</string>
+    <string name="txt_take_photo">Tirar foto</string>
+    <string name="txt_remove_photo">Remover foto atual</string>
 
 </resources>

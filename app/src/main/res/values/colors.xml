@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
+    <color name="black800">#2d2d2d</color>
     <color name="black100">#C8C8C8</color>
     <color name="black500">#757575</color>
+    <color name="black50">#e4e4e4</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#EF5350</color>
     <color name="deepPurple">#673AB7</color>
     <color name="purple100">#ebd7ff</color>
+    <color name="purple300">#c388fd</color>
     <color name="purple500">#7A32C1</color>
     <color name="purple800">#460d7d</color>
+    <color name="purple700">#601ea1</color>
     <color name="purple900">#30045c</color>
     <color name="gray400">#cbc9ca</color>
     <color name="green">#037D00</color>

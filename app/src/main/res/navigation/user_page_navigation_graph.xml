@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_home_user" />
     <fragment
         android:id="@+id/clientUserProfileFragment"
-        android:name="br.com.connectattoo.ui.customerprofile.CustomerProfileFragment"
+        android:name="br.com.connectattoo.ui.profile.tattooclient.TattooClientProfileFragment"
         android:label="fragment_client_user_profile"
-        tools:layout="@layout/fragment_customer_profile" />
+        tools:layout="@layout/fragment_tattoo_client_profile" />
 </navigation>

@@ -3,15 +3,16 @@ package br.com.connectattoo.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import br.com.connectattoo.data.TagCustomerProfile
+import br.com.connectattoo.data.Tag
 import br.com.connectattoo.databinding.ItemTagsMyInterestsBinding
 
 class AdapterListTagsProfile :
-    androidx.recyclerview.widget.ListAdapter<TagCustomerProfile, AdapterListTagsProfile.ListTagsProfileViewHolder>(
+    ListAdapter<Tag, AdapterListTagsProfile.ListTagsProfileViewHolder>(
         DiffCallbackTagsProfile()
     ) {
-    var listenerTagProfile: (TagCustomerProfile) -> Unit = {}
+    var listenerTagProfile: (Tag) -> Unit = {}
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListTagsProfileViewHolder {
@@ -28,24 +29,24 @@ class AdapterListTagsProfile :
     inner class ListTagsProfileViewHolder(
         private val binding: ItemTagsMyInterestsBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(tagCustomerProfile: TagCustomerProfile) {
+        fun bind(tag: Tag) {
             binding.run {
 
                 btnTagMyInterests.setOnClickListener {
-                    listenerTagProfile(tagCustomerProfile)
+                    listenerTagProfile(tag)
                 }
-                btnTagMyInterests.text = tagCustomerProfile.tag
+                btnTagMyInterests.text = tag.name
             }
 
         }
     }
 }
 
-class DiffCallbackTagsProfile : DiffUtil.ItemCallback<TagCustomerProfile>() {
-    override fun areItemsTheSame(oldItem: TagCustomerProfile, newItem: TagCustomerProfile) =
+class DiffCallbackTagsProfile : DiffUtil.ItemCallback<Tag>() {
+    override fun areItemsTheSame(oldItem: Tag, newItem: Tag) =
         oldItem == newItem
 
-    override fun areContentsTheSame(oldItem: TagCustomerProfile, newItem: TagCustomerProfile) =
+    override fun areContentsTheSame(oldItem: Tag, newItem: Tag) =
         oldItem.id == newItem.id
 
 }
