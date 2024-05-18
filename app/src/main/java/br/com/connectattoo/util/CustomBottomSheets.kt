@@ -20,9 +20,11 @@ fun Fragment.showBottomSheetEditPhotoProfile(
 
     bottomSheetBinding.ivChooseLibrary.setOnClickListener {
         onClickChooseLibrary()
+        bottomSheetDialog.dismiss()
     }
     bottomSheetBinding.txtChooseLibrary.setOnClickListener {
         onClickChooseLibrary()
+        bottomSheetDialog.dismiss()
     }
     bottomSheetBinding.ivTakePicture.setOnClickListener {
         onClickTakePicture()

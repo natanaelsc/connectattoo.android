@@ -7,6 +7,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -37,6 +38,17 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
         observerAndValidateBirthDate()
         setupListeners()
     }
+    private val getContent =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            if (uri != null) {
+                viewModel.setImageUri(uri)
+                Glide.with(this)
+                    .load(uri)
+                    .circleCrop()
+                    .placeholder(R.drawable.icon_person_profile_black)
+                    .into(binding.ivPhotoClient)
+            }
+        }
 
     private fun getInitialInformationClientProfile() {
         val database = (requireActivity().application as ConnectattooApplication).database
@@ -146,7 +158,7 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
         binding.btnEditClientPhoto.setOnClickListener {
             showBottomSheetEditPhotoProfile(
                 onClickChooseLibrary = {
-                    Log.i("ChooseLibrary", "ChooseLibrary")
+                    getContent.launch("image/*")
                 },
                 onClickTakePicture = {
                     Log.i("TakePicture", "TakePicture")

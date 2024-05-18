@@ -1,9 +1,12 @@
 package br.com.connectattoo.ui.profile.tattoclientditprofile
 
 import android.content.ContentValues.TAG
+import android.net.Uri
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.connectattoo.repository.ProfileRepository
@@ -22,6 +25,8 @@ class TattooClientEditProfileViewModel : ViewModel() {
     private val _uiStateFlow = MutableStateFlow<UiState>(UiState.Initial)
     val uiStateFlow: StateFlow<UiState> get() = _uiStateFlow
 
+    private val _imageUri = MutableLiveData<Uri>()
+    val imageUri: LiveData<Uri> = _imageUri
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun getInitialInformationTattooClientProfile(profileRepository: ProfileRepository) {
@@ -85,6 +90,9 @@ class TattooClientEditProfileViewModel : ViewModel() {
             Log.i(TAG, error.message.toString())
             null
         }
+    }
+    fun setImageUri(uri: Uri) {
+        _imageUri.value = uri
     }
 
     sealed class UiState {
