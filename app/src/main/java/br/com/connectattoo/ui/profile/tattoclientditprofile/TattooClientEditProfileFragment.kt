@@ -1,12 +1,13 @@
 package br.com.connectattoo.ui.profile.tattoclientditprofile
 
-import android.content.ContentValues.TAG
 import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -21,11 +22,13 @@ import br.com.connectattoo.util.Constants
 import br.com.connectattoo.util.DataStoreManager
 import br.com.connectattoo.util.showBottomSheetEditPhotoProfile
 import com.bumptech.glide.Glide
+import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.launch
-import java.io.IOException
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Locale
 
+@Suppress("TooManyFunctions")
 @RequiresApi(Build.VERSION_CODES.O)
 class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditProfileBinding>() {
     private lateinit var profileRepository: ProfileRepository
@@ -34,8 +37,13 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
     override fun setupViews() {
         getInitialInformationClientProfile()
         observerViewModel()
-        observerAndValidateBirthDate()
         setupListeners()
+        observerAndValidateField()
+    }
+
+    private fun observerAndValidateField() {
+        onTextChanged(binding.etClientEmail) { validateEmail() }
+        onTextChanged(binding.etBirthDate) { validateBirthDate() }
     }
 
     private fun getInitialInformationClientProfile() {
@@ -91,27 +99,6 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
         }
     }
 
-    @Suppress("EmptyFunctionBlock")
-    private fun observerAndValidateBirthDate() {
-        binding.etBirthDate.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (count == 10) {
-                    val clientBirthDate = binding.etBirthDate.unMasked
-                    val check = validateDate(clientBirthDate)
-                    if (check != null) {
-                        Log.i("check", check)
-                    } else {
-                        Log.i("check", "error")
-                    }
-                }
-            }
-
-            override fun afterTextChanged(s: Editable?) {}
-        })
-    }
-
-
     override fun inflateBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -129,15 +116,14 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
         val year = birthDate.substring(4)
 
         val formattedDate = "$year-$month-$day"
-
         val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         format.isLenient = false
 
         return try {
             format.parse(formattedDate)
             formattedDate
-        } catch (error: IOException) {
-            Log.i(TAG, error.message.toString())
+        } catch (error: ParseException) {
+            Log.i("TAG", error.message.toString())
             null
         }
     }
@@ -161,11 +147,54 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
         }
     }
 
+    private fun validateEmail() {
+        val email = binding.etClientEmail.text.toString()
+        val checkEmail = email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()
+        if (checkEmail) {
+            binding.tilClientEmail.error = null
+        } else {
+            binding.tilClientEmail.setError(R.string.error_field_email)
+        }
+    }
+
+    private fun validateBirthDate() {
+        val clientBirthDate = binding.etBirthDate.unMasked
+        val check = validateDate(clientBirthDate)
+        if (check != null) {
+            binding.tilBirthDate.error = null
+        } else {
+            binding.tilBirthDate.setError(R.string.error_field_birth_date)
+        }
+
+    }
+
+    private fun onTextChanged(editText: EditText, function: () -> Unit) {
+        editText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                return
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                function()
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                return
+            }
+        })
+    }
+
     private fun removeClientPhoto() {
         viewLifecycleOwner.lifecycleScope.launch {
             val token = DataStoreManager.getUserSettings(requireContext(), Constants.API_TOKEN)
             viewModel.deleteClientProfilePhoto(profileRepository, token)
         }
+    }
+
+    private fun TextInputLayout.setError(stringResId: Int?) {
+        error = if (stringResId != null) {
+            getString(stringResId)
+        } else null
     }
 
 }
