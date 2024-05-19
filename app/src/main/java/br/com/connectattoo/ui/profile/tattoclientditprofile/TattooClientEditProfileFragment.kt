@@ -7,6 +7,7 @@ import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import android.widget.EditText
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
@@ -45,6 +46,17 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
         onTextChanged(binding.etClientEmail) { validateEmail() }
         onTextChanged(binding.etBirthDate) { validateBirthDate() }
     }
+    private val getContent =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            if (uri != null) {
+                viewModel.setImageUri(uri)
+                Glide.with(this)
+                    .load(uri)
+                    .circleCrop()
+                    .placeholder(R.drawable.icon_person_profile_black)
+                    .into(binding.ivPhotoClient)
+            }
+        }
 
     private fun getInitialInformationClientProfile() {
         val database = (requireActivity().application as ConnectattooApplication).database
@@ -132,7 +144,7 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
         binding.btnEditClientPhoto.setOnClickListener {
             showBottomSheetEditPhotoProfile(
                 onClickChooseLibrary = {
-                    Log.i("ChooseLibrary", "ChooseLibrary")
+                    getContent.launch("image/*")
                 },
                 onClickTakePicture = {
                     Log.i("TakePicture", "TakePicture")
