@@ -1,5 +1,6 @@
 package br.com.connectattoo.ui.profile.tattoclientditprofile
 
+import android.net.Uri
 import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
@@ -7,9 +8,10 @@ import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts
 import android.widget.EditText
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.core.content.FileProvider
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -25,6 +27,7 @@ import br.com.connectattoo.util.showBottomSheetEditPhotoProfile
 import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.launch
+import java.io.File
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -46,12 +49,26 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
         onTextChanged(binding.etClientEmail) { validateEmail() }
         onTextChanged(binding.etBirthDate) { validateBirthDate() }
     }
+
     private val getContent =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             if (uri != null) {
                 viewModel.setImageUri(uri)
                 Glide.with(this)
                     .load(uri)
+                    .circleCrop()
+                    .placeholder(R.drawable.icon_person_profile_black)
+                    .into(binding.ivPhotoClient)
+            }
+        }
+    private val takePicture =
+        registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
+            if (success) {
+                val image = createImageFileUri()
+                viewModel.setImageUri(image)
+
+                Glide.with(this)
+                    .load(image)
                     .circleCrop()
                     .placeholder(R.drawable.icon_person_profile_black)
                     .into(binding.ivPhotoClient)
@@ -147,7 +164,7 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
                     getContent.launch("image/*")
                 },
                 onClickTakePicture = {
-                    Log.i("TakePicture", "TakePicture")
+                    takePicture()
                 },
                 enableBtnRemovePhoto = !viewModel.dataState.imageProfile.isNullOrEmpty(),
                 onClickRemovePhoto = {
@@ -207,6 +224,22 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
         error = if (stringResId != null) {
             getString(stringResId)
         } else null
+    }
+
+    private fun takePicture() {
+        val photoURI = createImageFileUri()
+        takePicture.launch(photoURI)
+        viewModel.setImageUri(photoURI)
+    }
+
+    private fun createImageFileUri(): Uri {
+        val image = File(requireContext().filesDir, "photo.jpg")
+        return FileProvider.getUriForFile(
+            requireContext(),
+            "br.com.connectattoo.fileprovider",
+            image
+        )
+
     }
 
 }
