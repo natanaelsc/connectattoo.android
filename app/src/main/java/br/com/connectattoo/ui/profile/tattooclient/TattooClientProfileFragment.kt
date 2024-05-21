@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import br.com.connectattoo.ConnectattooApplication
 import br.com.connectattoo.R
 import br.com.connectattoo.adapter.AdapterListMyGalleries
@@ -130,6 +131,7 @@ class TattooClientProfileFragment : BaseFragment<FragmentTattooClientProfileBind
             btnSettings.setOnClickListener {
             }
             btnEditProfile.setOnClickListener {
+                findNavController().navigate(R.id.action_clientUserProfileFragment_to_tattooClientEditProfileFragment)
             }
             btnManageInterests.setOnClickListener {
             }
