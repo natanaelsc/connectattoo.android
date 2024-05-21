@@ -23,5 +23,15 @@
         android:id="@+id/tattooClientEditProfileFragment"
         android:name="br.com.connectattoo.ui.profile.tattoclientditprofile.TattooClientEditProfileFragment"
         android:label="fragment_tattoo_client_edit_profile"
-        tools:layout="@layout/fragment_tattoo_client_edit_profile" />
+        tools:layout="@layout/fragment_tattoo_client_edit_profile"/>
+    <fragment
+        android:id="@+id/userChatFragment"
+        android:name="br.com.connectattoo.ui.chat.UserChatFragment"
+        android:label="fragment_user_chat"
+        tools:layout="@layout/fragment_user_chat" />
+    <fragment
+        android:id="@+id/userSearchFragment"
+        android:name="br.com.connectattoo.ui.search.UserSearchFragment"
+        android:label="fragment_user_search"
+        tools:layout="@layout/fragment_user_search" />
 </navigation>
