@@ -28,9 +28,11 @@ fun Fragment.showBottomSheetEditPhotoProfile(
     }
     bottomSheetBinding.ivTakePicture.setOnClickListener {
         onClickTakePicture()
+        bottomSheetDialog.dismiss()
     }
     bottomSheetBinding.txtTakePicture.setOnClickListener {
         onClickTakePicture()
+        bottomSheetDialog.dismiss()
     }
     if (enableBtnRemovePhoto){
         bottomSheetBinding.ivRemovePhoto.setOnClickListener {
