@@ -17,13 +17,19 @@
         tools:layout="@layout/fragment_tattoo_client_profile" >
         <action
             android:id="@+id/action_clientUserProfileFragment_to_tattooClientEditProfileFragment"
-            app:destination="@id/tattooClientEditProfileFragment" />
+            app:destination="@id/tattooClientEditProfileFragment"
+            app:enterAnim="@anim/slide_in_rigth" />
     </fragment>
     <fragment
         android:id="@+id/tattooClientEditProfileFragment"
         android:name="br.com.connectattoo.ui.profile.tattoclientditprofile.TattooClientEditProfileFragment"
         android:label="fragment_tattoo_client_edit_profile"
-        tools:layout="@layout/fragment_tattoo_client_edit_profile"/>
+        tools:layout="@layout/fragment_tattoo_client_edit_profile" >
+        <action
+            android:id="@+id/action_tattooClientEditProfileFragment_to_clientUserProfileFragment"
+            app:destination="@id/clientUserProfileFragment"
+            app:enterAnim="@anim/slide_out_rigth" />
+    </fragment>
     <fragment
         android:id="@+id/userChatFragment"
         android:name="br.com.connectattoo.ui.chat.UserChatFragment"

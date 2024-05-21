@@ -16,6 +16,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import br.com.connectattoo.ConnectattooApplication
 import br.com.connectattoo.R
 import br.com.connectattoo.databinding.FragmentTattooClientEditProfileBinding
@@ -158,6 +159,9 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
     }
 
     private fun setupListeners() {
+        binding.ivBack.setOnClickListener {
+            findNavController().navigate(R.id.action_tattooClientEditProfileFragment_to_clientUserProfileFragment)
+        }
         binding.btnEditClientPhoto.setOnClickListener {
             showBottomSheetEditPhotoProfile(
                 onClickChooseLibrary = {
