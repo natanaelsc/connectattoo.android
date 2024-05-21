@@ -30,4 +30,14 @@
             app:destination="@id/clientUserProfileFragment"
             app:enterAnim="@anim/slide_out_rigth" />
     </fragment>
+    <fragment
+        android:id="@+id/userChatFragment"
+        android:name="br.com.connectattoo.ui.chat.UserChatFragment"
+        android:label="fragment_user_chat"
+        tools:layout="@layout/fragment_user_chat" />
+    <fragment
+        android:id="@+id/userSearchFragment"
+        android:name="br.com.connectattoo.ui.search.UserSearchFragment"
+        android:label="fragment_user_search"
+        tools:layout="@layout/fragment_user_search" />
 </navigation>

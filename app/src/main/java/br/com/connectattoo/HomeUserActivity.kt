@@ -53,19 +53,19 @@ class HomeUserActivity : AppCompatActivity() {
         }
 
         binding.chatFalse.setOnClickListener {
-           /* navController.navigate()
+            navController.navigate(R.id.userChatFragment)
             binding.homeTrue.visibility = View.INVISIBLE
             binding.chatTrue.visibility = View.VISIBLE
             binding.explorarTrue.visibility = View.INVISIBLE
-            binding.profileTrue.visibility = View.INVISIBLE */
+            binding.profileTrue.visibility = View.INVISIBLE
         }
 
         binding.explorarFalse.setOnClickListener {
-            /* navController.navigate()
+             navController.navigate(R.id.userSearchFragment)
             binding.homeTrue.visibility = View.INVISIBLE
             binding.chatTrue.visibility = View.INVISIBLE
             binding.explorarTrue.visibility = View.VISIBLE
-            binding.profileTrue.visibility = View.INVISIBLE */
+            binding.profileTrue.visibility = View.INVISIBLE
         }
 
         binding.profileFalse.setOnClickListener {
