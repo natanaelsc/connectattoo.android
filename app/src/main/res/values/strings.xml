@@ -40,4 +40,7 @@
     <string name="txt_remove_photo">Remover foto atual</string>
     <string name="error_field_email">Email inválido</string>
     <string name="error_field_birth_date">Data inválida</string>
+    <string name="you_have_denied_permission_for_photos_please_grant_permission_in_settings_to_continue">Você negou a permissão de fotos. Por favor, conceda permissão nas configurações para continuar.</string>
+    <string name="open_settings">Abrir configurações</string>
+    <string name="cancel">Cancelar</string>
 </resources>
