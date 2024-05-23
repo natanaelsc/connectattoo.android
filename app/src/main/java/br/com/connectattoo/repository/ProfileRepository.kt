@@ -35,7 +35,7 @@ class ProfileRepository(private val tattooClientProfileDao: TattooClientProfileD
                 data = tattooClientProfileDao.getTattooClientProfile()
             }
         } catch (error: IOException) {
-            val message = MessageException("Erro na requisição a api")
+            val message = MessageException("Erro na requisição a api: ${error.message}")
             Log.e(TAG, error.message.toString())
             return (ResourceResult.Error(data?.toTattooClientProfile(), message))
         }
@@ -66,7 +66,7 @@ class ProfileRepository(private val tattooClientProfileDao: TattooClientProfileD
             val result = apiService.deleteProfilePhoto(token)
             resourceResultDeleteClientProfileImage(result)
         } catch (error: IOException) {
-            val message = MessageException("Erro na requisição a api")
+            val message = MessageException("Erro no delete da imagem: ${error.message}")
             Log.i(TAG, error.message.toString())
             (ResourceResult.Error(null, message))
         }
@@ -93,12 +93,12 @@ class ProfileRepository(private val tattooClientProfileDao: TattooClientProfileD
                         networkBoundResource(token = "Bearer $token")
                         (ResourceResult.Success("Sucesso no upload da foto de perfil"))
                     } else {
-                        val error = MessageException("Erro no upload")
+                        val error = MessageException("Erro no upload da imagem")
                         (ResourceResult.Error(null, error))
                     }
 
                 } catch (error: IOException) {
-                    val message = MessageException("Erro na requisição a api")
+                    val message = MessageException("Erro no upload da imagem: ${error.message}")
                     Log.i(TAG, error.message.toString())
                     (ResourceResult.Error(null, message))
                 }
