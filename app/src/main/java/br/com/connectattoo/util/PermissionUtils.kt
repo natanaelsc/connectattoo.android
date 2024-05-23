@@ -14,7 +14,9 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import br.com.connectattoo.R
 import br.com.connectattoo.util.Constants.INTERVAL_TIME_MILLIS_10000
@@ -133,4 +135,41 @@ object PermissionUtils {
             }
         }
     }
+
+    fun requestMediaImagesPermission(
+        context: Context,
+        fragment: Fragment,
+        activity: FragmentActivity,
+        onPermissionResult: (Boolean) -> Unit
+    ) {
+        val mediaImagesPermissionRequest =
+            fragment.registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+                onPermissionResult(isGranted)
+            }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            val hasPermission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                ContextCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.READ_MEDIA_IMAGES
+                ) == PackageManager.PERMISSION_GRANTED
+            } else {
+                false
+            }
+            if (hasPermission) {
+                onPermissionResult(true)
+            } else {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    ActivityCompat.shouldShowRequestPermissionRationale(
+                        activity,
+                        Manifest.permission.READ_MEDIA_IMAGES
+                    )
+                    mediaImagesPermissionRequest.launch(Manifest.permission.READ_MEDIA_IMAGES)
+                }
+            }
+        } else {
+            onPermissionResult(true)
+        }
+    }
+
 }

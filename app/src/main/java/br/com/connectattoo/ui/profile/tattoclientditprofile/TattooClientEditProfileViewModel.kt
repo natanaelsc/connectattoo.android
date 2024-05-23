@@ -13,6 +13,7 @@ import br.com.connectattoo.repository.ProfileRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -48,7 +49,6 @@ class TattooClientEditProfileViewModel : ViewModel() {
                         email = clientProfile.email,
                         username = clientProfile.username
                     )
-
                     _uiStateFlow.value = UiState.Success
                 }
             }
@@ -74,6 +74,29 @@ class TattooClientEditProfileViewModel : ViewModel() {
                         imageProfile = ""
                     )
                     _uiStateFlow.value = UiState.Success
+                }
+            }
+        }
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun uploadClientProfilePhoto(profileRepository: ProfileRepository, token: String, image: MultipartBody.Part) {
+
+        viewModelScope.launch {
+            _uiStateFlow.value = UiState.Loading
+            val result = profileRepository.uploadProfilePhoto(token, image)
+
+            result.collect {
+                if (it.error != null) {
+                    _dataState =
+                        _dataState.copy(stateErrorDeleteImage = it.error?.message.toString())
+                    _uiStateFlow.value = UiState.Error
+                }
+                it.data?.let { message ->
+                    _dataState = _dataState.copy(
+                        messageDeleteImage = message,
+                    )
+                    _uiStateFlow.value = UiState.Success
+                    getInitialInformationTattooClientProfile(profileRepository)
                 }
             }
         }

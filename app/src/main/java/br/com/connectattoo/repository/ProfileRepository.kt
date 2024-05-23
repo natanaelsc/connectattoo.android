@@ -9,8 +9,10 @@ import br.com.connectattoo.core.ResourceResult
 import br.com.connectattoo.data.TattooClientProfile
 import br.com.connectattoo.local.database.dao.TattooClientProfileDao
 import br.com.connectattoo.util.Constants.CODE_SUCCESS_200
+import br.com.connectattoo.util.Constants.CODE_SUCCESS_204
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import okhttp3.MultipartBody
 import retrofit2.Response
 import java.io.IOException
 
@@ -81,4 +83,26 @@ class ProfileRepository(private val tattooClientProfileDao: TattooClientProfileD
             (ResourceResult.Error(null, error))
         }
     }
+
+    fun uploadProfilePhoto(token: String, image: MultipartBody.Part): Flow<ResourceResult<String>> =
+        flow {
+            emit(
+                try {
+                    val result = apiService.uploadProfilePhoto("Bearer $token", image)
+                    if (result.code() == CODE_SUCCESS_200 || result.code() == CODE_SUCCESS_204) {
+                        networkBoundResource(token = "Bearer $token")
+                        (ResourceResult.Success("Sucesso no upload da foto de perfil"))
+                    } else {
+                        val error = MessageException("Erro no upload")
+                        (ResourceResult.Error(null, error))
+                    }
+
+                } catch (error: IOException) {
+                    val message = MessageException("Erro na requisição a api")
+                    Log.i(TAG, error.message.toString())
+                    (ResourceResult.Error(null, message))
+                }
+            )
+        }
+
 }
