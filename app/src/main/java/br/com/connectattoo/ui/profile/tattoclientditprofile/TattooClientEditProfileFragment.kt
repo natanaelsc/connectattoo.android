@@ -1,10 +1,9 @@
 package br.com.connectattoo.ui.profile.tattoclientditprofile
 
+import android.Manifest
 import android.content.Context
-import android.content.Intent
 import android.net.Uri
 import android.os.Build
-import android.provider.Settings
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -12,6 +11,7 @@ import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
@@ -26,10 +26,10 @@ import br.com.connectattoo.R
 import br.com.connectattoo.databinding.FragmentTattooClientEditProfileBinding
 import br.com.connectattoo.repository.ProfileRepository
 import br.com.connectattoo.ui.BaseFragment
-import br.com.connectattoo.util.Constants
-import br.com.connectattoo.util.DataStoreManager
-import br.com.connectattoo.util.PermissionUtils.requestMediaImagesPermission
-import br.com.connectattoo.util.showBottomSheetEditPhotoProfile
+import br.com.connectattoo.utils.Constants
+import br.com.connectattoo.utils.DataStoreManager
+import br.com.connectattoo.utils.permissions.PermissionImage.shouldRequestPermission
+import br.com.connectattoo.utils.showBottomSheetEditPhotoProfile
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
@@ -49,21 +49,39 @@ import java.util.Locale
 class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditProfileBinding>() {
     private lateinit var profileRepository: ProfileRepository
     private val viewModel: TattooClientEditProfileViewModel by viewModels()
-    private var isMediaImagesPermissionGranted: Boolean = false
-    override fun setupViews() {
-        requestPermissionImages()
-        getInitialInformationClientProfile()
-        observerViewModel()
-        setupListeners()
-        observerAndValidateField()
-    }
 
+    private lateinit var fileChooserPermissionLauncher: ActivityResultLauncher<Array<String>>
+    private val fileChooserPermissions = arrayOf(Manifest.permission.READ_MEDIA_IMAGES)
     override fun inflateBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentTattooClientEditProfileBinding {
         return FragmentTattooClientEditProfileBinding.inflate(inflater, container, false)
     }
+
+    override fun setupViews() {
+        startChooserPermissionLaucher()
+        getInitialInformationClientProfile()
+        observerViewModel()
+        setupListeners()
+        observerAndValidateField()
+
+    }
+
+    private fun startChooserPermissionLaucher() {
+        fileChooserPermissionLauncher = registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissionResult ->
+            val permissionsIdentified = permissionResult.all { it.key in fileChooserPermissions }
+            val permissionsGrant = permissionResult.all { it.value }
+            if (permissionsIdentified && permissionsGrant) {
+                showBottomSheetProfilePhoto()
+            } else {
+                showSnackBarPermissionImages()
+            }
+        }
+    }
+
 
     private fun observerAndValidateField() {
         onTextChanged(binding.etClientEmail) { validateEmail() }
@@ -107,16 +125,15 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
         val database = (requireActivity().application as ConnectattooApplication).database
         val clientProfileDao = database.tattooClientProfileDao()
         profileRepository = ProfileRepository(clientProfileDao)
-        if (isMediaImagesPermissionGranted) {
-            val fileUri: Uri? = viewModel.imageUri.value
-            val imagePart = fileUri?.let { getFilePartFromUri(requireContext(), it) }
-            if (imagePart != null) {
-                viewLifecycleOwner.lifecycleScope.launch {
-                    val token =
-                        DataStoreManager.getUserSettings(requireContext(), Constants.API_TOKEN)
-                    viewModel.uploadClientProfilePhoto(profileRepository, token, imagePart)
-                }
+        val fileUri: Uri? = viewModel.imageUri.value
+        val imagePart = fileUri?.let { getFilePartFromUri(requireContext(), it) }
+        if (imagePart != null) {
+            viewLifecycleOwner.lifecycleScope.launch {
+                val token =
+                    DataStoreManager.getUserSettings(requireContext(), Constants.API_TOKEN)
+                viewModel.uploadClientProfilePhoto(profileRepository, token, imagePart)
             }
+
         }
 
     }
@@ -155,7 +172,7 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
             Glide.with(ivPhotoClient)
                 .load(
                     if (image.isNullOrEmpty()) R.drawable.icon_person_profile_black
-                   else image
+                    else image
                 )
                 .circleCrop()
                 .placeholder(R.drawable.icon_person_profile)
@@ -195,32 +212,31 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
             findNavController().navigate(R.id.action_tattooClientEditProfileFragment_to_clientUserProfileFragment)
         }
         binding.btnEditClientPhoto.setOnClickListener {
-            showBottomSheetEditPhotoProfile(
-                onClickChooseLibrary = {
-                    if (isMediaImagesPermissionGranted) {
-                        getContent.launch("image/*")
-                    } else {
-                        showSnackBarPermissionImages()
-                    }
-                },
-                onClickTakePicture = {
-                    if (isMediaImagesPermissionGranted) {
-                        takePicture()
-                    } else {
-                        showSnackBarPermissionImages()
-                    }
-                },
-                enableBtnRemovePhoto = !viewModel.dataState.imageProfile.isNullOrEmpty(),
-                onClickRemovePhoto = {
-                    removeClientPhoto()
-
-                }
-
-            )
+            if (shouldRequestPermission(fileChooserPermissions)) {
+                fileChooserPermissionLauncher.launch(fileChooserPermissions)
+            } else {
+                showBottomSheetProfilePhoto()
+            }
         }
         binding.btnUpload.setOnClickListener {
             uploadProfilePhoto()
         }
+    }
+
+    private fun showBottomSheetProfilePhoto() {
+        showBottomSheetEditPhotoProfile(
+            onClickChooseLibrary = {
+                getContent.launch("image/*")
+            },
+            onClickTakePicture = {
+                takePicture()
+
+            },
+            enableBtnRemovePhoto = !viewModel.dataState.imageProfile.isNullOrEmpty(),
+            onClickRemovePhoto = {
+                removeClientPhoto()
+            }
+        )
     }
 
 
@@ -311,27 +327,13 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
         return tempFile
     }
 
-    private fun requestPermissionImages() {
-        requestMediaImagesPermission(requireContext(), this, requireActivity()) { isGranted ->
-            if (isGranted) {
-                isMediaImagesPermissionGranted = true
-            }
-        }
-    }
-
     private fun showSnackBarPermissionImages() {
         val snackbar = Snackbar.make(
             binding.ivPhotoClient,
             getString(R.string.you_have_denied_permission_for_photos_please_grant_permission_in_settings_to_continue),
             Snackbar.ANIMATION_MODE_SLIDE
         ).setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.orange))
-        snackbar.setAction(getString(R.string.open_settings)) {
-            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-            val uri = Uri.fromParts("package", context?.packageName, null)
-            intent.data = uri
-            startActivity(intent)
-            snackbar.dismiss()
-        }
         snackbar.show()
     }
+
 }
