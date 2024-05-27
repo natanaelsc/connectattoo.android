@@ -32,7 +32,6 @@ import br.com.connectattoo.utils.permissions.PermissionImage.shouldRequestPermis
 import br.com.connectattoo.utils.showBottomSheetEditPhotoProfile
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -133,12 +132,16 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
                     DataStoreManager.getUserSettings(requireContext(), Constants.API_TOKEN)
                 viewModel.uploadClientProfilePhoto(profileRepository, token, imagePart)
             }
-
         }
 
     }
 
     private fun observerViewModel() {
+        viewModel.message.observe(viewLifecycleOwner) { message ->
+            if (message == "Sucesso no upload da foto de perfil") {
+                findNavController().popBackStack()
+            }
+        }
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiStateFlow.collect { uiState ->
@@ -212,11 +215,8 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
             findNavController().navigate(R.id.action_tattooClientEditProfileFragment_to_clientUserProfileFragment)
         }
         binding.btnEditClientPhoto.setOnClickListener {
-            if (shouldRequestPermission(fileChooserPermissions)) {
-                fileChooserPermissionLauncher.launch(fileChooserPermissions)
-            } else {
-                showBottomSheetProfilePhoto()
-            }
+            showBottomSheetProfilePhoto()
+
         }
         binding.btnUpload.setOnClickListener {
             uploadProfilePhoto()
@@ -226,11 +226,18 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
     private fun showBottomSheetProfilePhoto() {
         showBottomSheetEditPhotoProfile(
             onClickChooseLibrary = {
-                getContent.launch("image/*")
+                if (shouldRequestPermission(fileChooserPermissions)) {
+                    fileChooserPermissionLauncher.launch(fileChooserPermissions)
+                } else {
+                    getContent.launch("image/*")
+                }
             },
             onClickTakePicture = {
-                takePicture()
-
+                if (shouldRequestPermission(fileChooserPermissions)) {
+                    fileChooserPermissionLauncher.launch(fileChooserPermissions)
+                } else {
+                    takePicture()
+                }
             },
             enableBtnRemovePhoto = !viewModel.dataState.imageProfile.isNullOrEmpty(),
             onClickRemovePhoto = {
@@ -244,9 +251,9 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
         val email = binding.etClientEmail.text.toString()
         val checkEmail = email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()
         if (checkEmail) {
-            binding.tilClientEmail.error = null
+            setBackgroundValid(binding.etClientEmail)
         } else {
-            binding.tilClientEmail.setError(R.string.error_field_email)
+            setBackgroundInvalid(binding.etClientEmail)
         }
     }
 
@@ -254,9 +261,9 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
         val clientBirthDate = binding.etBirthDate.unMasked
         val check = validateDate(clientBirthDate)
         if (check != null) {
-            binding.tilBirthDate.error = null
+            setBackgroundValid(binding.etBirthDate)
         } else {
-            binding.tilBirthDate.setError(R.string.error_field_birth_date)
+            setBackgroundInvalid(binding.etBirthDate)
         }
 
     }
@@ -284,10 +291,12 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
         }
     }
 
-    private fun TextInputLayout.setError(stringResId: Int?) {
-        error = if (stringResId != null) {
-            getString(stringResId)
-        } else null
+    private fun setBackgroundInvalid(editText: EditText) {
+        editText.setBackgroundResource(R.drawable.bg_edit_input_invalid)
+    }
+
+    private fun setBackgroundValid(editText: EditText) {
+        editText.setBackgroundResource(R.drawable.bg_text_input_layout_backgroud)
     }
 
     private fun takePicture() {

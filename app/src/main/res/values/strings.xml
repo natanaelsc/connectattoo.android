@@ -38,8 +38,6 @@
     <string name="txt_choose_from_library">Escolher na biblioteca</string>
     <string name="txt_take_photo">Tirar foto</string>
     <string name="txt_remove_photo">Remover foto atual</string>
-    <string name="error_field_email">Email inválido</string>
-    <string name="error_field_birth_date">Data inválida</string>
     <string name="you_have_denied_permission_for_photos_please_grant_permission_in_settings_to_continue">Você negou as permissões, para continuar você deve permitir em configurações.</string>
     <string name="open_settings">Abrir configurações</string>
     <string name="cancel">Cancelar</string>
