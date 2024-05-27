@@ -29,6 +29,9 @@ class TattooClientEditProfileViewModel : ViewModel() {
     private val _imageUri = MutableLiveData<Uri>()
     val imageUri: LiveData<Uri> = _imageUri
 
+    private val _message = MutableLiveData<String?>()
+    val message: LiveData<String?> = _message
+
     @RequiresApi(Build.VERSION_CODES.O)
     fun getInitialInformationTattooClientProfile(profileRepository: ProfileRepository) {
         _uiStateFlow.value = UiState.Loading
@@ -78,25 +81,29 @@ class TattooClientEditProfileViewModel : ViewModel() {
             }
         }
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
-    fun uploadClientProfilePhoto(profileRepository: ProfileRepository, token: String, image: MultipartBody.Part) {
+    fun uploadClientProfilePhoto(
+        profileRepository: ProfileRepository,
+        token: String,
+        image: MultipartBody.Part
+    ) {
 
         viewModelScope.launch {
             _uiStateFlow.value = UiState.Loading
             val result = profileRepository.uploadProfilePhoto(token, image)
 
-            result.collect {
-                if (it.error != null) {
+            result.collect { errorMessage ->
+                if (errorMessage.error != null) {
                     _dataState =
-                        _dataState.copy(stateErrorDeleteImage = it.error?.message.toString())
+                        _dataState.copy(stateErrorDeleteImage = errorMessage.error?.message.toString())
+                    _message.value = errorMessage.error.let { it?.message.toString() }
                     _uiStateFlow.value = UiState.Error
                 }
-                it.data?.let { message ->
-                    _dataState = _dataState.copy(
-                        messageDeleteImage = message,
-                    )
-                    _uiStateFlow.value = UiState.Success
+                errorMessage.data?.let { message ->
+                    _message.value = message
                     getInitialInformationTattooClientProfile(profileRepository)
+                    _uiStateFlow.value = UiState.Success
                 }
             }
         }
@@ -114,6 +121,7 @@ class TattooClientEditProfileViewModel : ViewModel() {
             null
         }
     }
+
     fun setImageUri(uri: Uri) {
         _imageUri.value = uri
     }
