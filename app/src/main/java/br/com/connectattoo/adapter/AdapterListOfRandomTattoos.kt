@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.connectattoo.data.RandomTattoosAndItemMore
 import br.com.connectattoo.databinding.ItemMoreHomeScreenBinding
 import br.com.connectattoo.databinding.RandomTattoosItemBinding
-import br.com.connectattoo.util.Constants
+import br.com.connectattoo.utils.Constants
 
 
 class AdapterListOfRandomTattoos : RecyclerView.Adapter<RandomTattoosAndItemMoreViewHolder>() {
