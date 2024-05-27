@@ -8,8 +8,8 @@ import br.com.connectattoo.core.MessageException
 import br.com.connectattoo.core.ResourceResult
 import br.com.connectattoo.data.TattooClientProfile
 import br.com.connectattoo.local.database.dao.TattooClientProfileDao
-import br.com.connectattoo.util.Constants.CODE_SUCCESS_200
-import br.com.connectattoo.util.Constants.CODE_SUCCESS_204
+import br.com.connectattoo.utils.Constants.CODE_SUCCESS_200
+import br.com.connectattoo.utils.Constants.CODE_SUCCESS_204
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okhttp3.MultipartBody

@@ -9,7 +9,7 @@ import br.com.connectattoo.local.database.dao.TattooClientProfileDao
 import br.com.connectattoo.local.database.entity.TagEntity
 import br.com.connectattoo.local.database.entity.TattooClientProfileConverters
 import br.com.connectattoo.local.database.entity.TattooClientProfileEntity
-import br.com.connectattoo.util.Constants.DATABASE_NAME
+import br.com.connectattoo.utils.Constants.DATABASE_NAME
 
 @Database(
     entities = [TattooClientProfileEntity::class, TagEntity::class],

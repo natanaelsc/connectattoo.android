@@ -1,4 +1,4 @@
-package br.com.connectattoo.util
+package br.com.connectattoo.utils
 
 import androidx.fragment.app.Fragment
 import br.com.connectattoo.R

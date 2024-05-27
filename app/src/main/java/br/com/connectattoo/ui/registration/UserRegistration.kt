@@ -19,10 +19,10 @@ import br.com.connectattoo.api.ApiService
 import br.com.connectattoo.api.ApiUrl
 import br.com.connectattoo.data.TokenData
 import br.com.connectattoo.ui.BaseFragment
-import br.com.connectattoo.util.Constants.API_TOKEN
-import br.com.connectattoo.util.Constants.CODE_ERROR_404
-import br.com.connectattoo.util.Constants.CODE_ERROR_409
-import br.com.connectattoo.util.DataStoreManager
+import br.com.connectattoo.utils.Constants.API_TOKEN
+import br.com.connectattoo.utils.Constants.CODE_ERROR_404
+import br.com.connectattoo.utils.Constants.CODE_ERROR_409
+import br.com.connectattoo.utils.DataStoreManager
 import com.github.rtoshiro.util.format.SimpleMaskFormatter
 import com.github.rtoshiro.util.format.text.MaskTextWatcher
 import com.google.android.material.snackbar.Snackbar

@@ -19,8 +19,8 @@ import br.com.connectattoo.data.TagHomeScreen
 import br.com.connectattoo.databinding.FragmentHomeUserBinding
 import br.com.connectattoo.repository.ProfileRepository
 import br.com.connectattoo.ui.BaseFragment
-import br.com.connectattoo.util.Constants.API_TOKEN
-import br.com.connectattoo.util.DataStoreManager
+import br.com.connectattoo.utils.Constants.API_TOKEN
+import br.com.connectattoo.utils.DataStoreManager
 import kotlinx.coroutines.launch
 
 @Suppress("TooManyFunctions")

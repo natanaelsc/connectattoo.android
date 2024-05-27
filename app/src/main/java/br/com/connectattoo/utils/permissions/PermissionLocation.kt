@@ -1,4 +1,4 @@
-package br.com.connectattoo.util
+package br.com.connectattoo.utils.permissions
 
 import android.Manifest
 import android.app.Activity
@@ -14,14 +14,12 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import br.com.connectattoo.R
-import br.com.connectattoo.util.Constants.INTERVAL_TIME_MILLIS_10000
-import br.com.connectattoo.util.Constants.INTERVAL_TIME_MILLIS_5000
-import br.com.connectattoo.util.Constants.REQUEST_CODE_100
+import br.com.connectattoo.utils.Constants.INTERVAL_TIME_MILLIS_10000
+import br.com.connectattoo.utils.Constants.INTERVAL_TIME_MILLIS_5000
+import br.com.connectattoo.utils.Constants.REQUEST_CODE_100
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
@@ -30,7 +28,7 @@ import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-object PermissionUtils {
+object PermissionLocation {
     fun getPermissionAndLocationUser(
         activity: FragmentActivity,
         context: Context,
@@ -133,42 +131,6 @@ object PermissionUtils {
                     Toast.makeText(context, sendEX.message, Toast.LENGTH_LONG).show()
                 }
             }
-        }
-    }
-
-    fun requestMediaImagesPermission(
-        context: Context,
-        fragment: Fragment,
-        activity: FragmentActivity,
-        onPermissionResult: (Boolean) -> Unit
-    ) {
-        val mediaImagesPermissionRequest =
-            fragment.registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-                onPermissionResult(isGranted)
-            }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            val hasPermission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                ContextCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.READ_MEDIA_IMAGES
-                ) == PackageManager.PERMISSION_GRANTED
-            } else {
-                false
-            }
-            if (hasPermission) {
-                onPermissionResult(true)
-            } else {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    ActivityCompat.shouldShowRequestPermissionRationale(
-                        activity,
-                        Manifest.permission.READ_MEDIA_IMAGES
-                    )
-                    mediaImagesPermissionRequest.launch(Manifest.permission.READ_MEDIA_IMAGES)
-                }
-            }
-        } else {
-            onPermissionResult(true)
         }
     }
 

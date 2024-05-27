@@ -1,4 +1,4 @@
-package br.com.connectattoo.util
+package br.com.connectattoo.utils
 
 object Constants {
     const val API_TOKEN = "API_TOKEN"
