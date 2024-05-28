@@ -93,14 +93,14 @@ class TattooClientEditProfileViewModel : ViewModel() {
             _uiStateFlow.value = UiState.Loading
             val result = profileRepository.uploadProfilePhoto(token, image)
 
-            result.collect { errorMessage ->
-                if (errorMessage.error != null) {
+            result.collect { resultUpload ->
+                if (resultUpload.error != null) {
                     _dataState =
-                        _dataState.copy(stateErrorDeleteImage = errorMessage.error?.message.toString())
-                    _message.value = errorMessage.error.let { it?.message.toString() }
+                        _dataState.copy(stateError = resultUpload.data.toString())
+                    _message.value = resultUpload.error.let { it?.message.toString() }
                     _uiStateFlow.value = UiState.Error
                 }
-                errorMessage.data?.let { message ->
+                resultUpload.data?.let { message ->
                     _message.value = message
                     getInitialInformationTattooClientProfile(profileRepository)
                     _uiStateFlow.value = UiState.Success

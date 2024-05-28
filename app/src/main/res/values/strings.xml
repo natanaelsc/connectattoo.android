@@ -41,4 +41,6 @@
     <string name="you_have_denied_permission_for_photos_please_grant_permission_in_settings_to_continue">Você negou as permissões, para continuar você deve permitir em configurações.</string>
     <string name="open_settings">Abrir configurações</string>
     <string name="cancel">Cancelar</string>
+    <string name="snack_photo_size_exceeds_5MB">O tamanho da foto excede 5MB</string>
+    <string name="snack_please_select_an_image_in_JPEG_JPG_or_PNG_format">Por favor, selecione uma imagem nos formatos JPEG, JPG ou PNG</string>
 </resources>
