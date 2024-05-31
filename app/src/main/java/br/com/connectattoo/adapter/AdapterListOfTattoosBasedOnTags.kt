@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.connectattoo.data.ListOfTattoosBasedOnTagsAndItemMore
 import br.com.connectattoo.databinding.ItemMoreHomeScreenBinding
 import br.com.connectattoo.databinding.TagbasedtattoosItemBinding
-import br.com.connectattoo.util.Constants.TYPE_MORE_ITEMS_TAG_BASED_TATTOOS
-import br.com.connectattoo.util.Constants.TYPE_TAG_BASED_TATTOOS
+import br.com.connectattoo.utils.Constants.TYPE_MORE_ITEMS_TAG_BASED_TATTOOS
+import br.com.connectattoo.utils.Constants.TYPE_TAG_BASED_TATTOOS
 import java.lang.IllegalArgumentException
 
 class AdapterListOfTattoosBasedOnTags : RecyclerView.Adapter<TagBasedTattoosViewHolder>() {

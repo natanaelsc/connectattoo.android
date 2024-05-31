@@ -12,11 +12,11 @@ import br.com.connectattoo.api.response.ApiConfirmationResponse
 import br.com.connectattoo.databinding.FragmentWelcomeBinding
 import br.com.connectattoo.repository.AuthRepository
 import br.com.connectattoo.ui.BaseFragment
-import br.com.connectattoo.util.Constants.API_TOKEN
-import br.com.connectattoo.util.Constants.API_USER_NAME
-import br.com.connectattoo.util.Constants.CODE_ERROR_401
-import br.com.connectattoo.util.Constants.CODE_ERROR_404
-import br.com.connectattoo.util.DataStoreManager
+import br.com.connectattoo.utils.Constants.API_TOKEN
+import br.com.connectattoo.utils.Constants.API_USER_NAME
+import br.com.connectattoo.utils.Constants.CODE_ERROR_401
+import br.com.connectattoo.utils.Constants.CODE_ERROR_404
+import br.com.connectattoo.utils.DataStoreManager
 import kotlinx.coroutines.launch
 
 class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {

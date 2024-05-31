@@ -10,7 +10,7 @@ import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import br.com.connectattoo.databinding.ActivityHomeUserBinding
-import br.com.connectattoo.util.PermissionUtils
+import br.com.connectattoo.utils.permissions.PermissionLocation
 
 
 class HomeUserActivity : AppCompatActivity() {
@@ -80,13 +80,13 @@ class HomeUserActivity : AppCompatActivity() {
     }
     override fun onStart() {
         super.onStart()
-        if (PermissionUtils.isLocationEnabled(this)) {
+        if (PermissionLocation.isLocationEnabled(this)) {
             getPermissionAndLocation()
         }
     }
 
     private fun getPermissionAndLocation() {
-        PermissionUtils.getPermissionAndLocationUser(
+        PermissionLocation.getPermissionAndLocationUser(
             this,
             this,
             enableLocationActivityResult

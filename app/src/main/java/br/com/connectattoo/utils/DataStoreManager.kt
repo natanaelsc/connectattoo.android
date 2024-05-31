@@ -1,4 +1,4 @@
-package br.com.connectattoo.util
+package br.com.connectattoo.utils
 
 import android.content.Context
 import androidx.datastore.core.DataStore

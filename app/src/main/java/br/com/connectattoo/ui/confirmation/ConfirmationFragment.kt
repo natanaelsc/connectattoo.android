@@ -11,10 +11,10 @@ import br.com.connectattoo.api.response.ApiConfirmationResponse
 import br.com.connectattoo.databinding.FragmentConfirmationBinding
 import br.com.connectattoo.repository.AuthRepository
 import br.com.connectattoo.ui.BaseFragment
-import br.com.connectattoo.util.Constants
-import br.com.connectattoo.util.Constants.CODE_ERROR_401
-import br.com.connectattoo.util.Constants.CODE_ERROR_404
-import br.com.connectattoo.util.DataStoreManager
+import br.com.connectattoo.utils.Constants
+import br.com.connectattoo.utils.Constants.CODE_ERROR_401
+import br.com.connectattoo.utils.Constants.CODE_ERROR_404
+import br.com.connectattoo.utils.DataStoreManager
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.io.IOException

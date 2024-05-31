@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.connectattoo.data.NearbyTattooArtistsAndItemMore
 import br.com.connectattoo.databinding.ItemMoreHomeScreenBinding
 import br.com.connectattoo.databinding.NearbyTattooArtistsItemBinding
-import br.com.connectattoo.util.Constants.TYPE_MORE_ITEMS_NEARBY_TATOOO_ARTISTS
-import br.com.connectattoo.util.Constants.TYPE_NEARBY_TATOOO_ARTISTS
+import br.com.connectattoo.utils.Constants.TYPE_MORE_ITEMS_NEARBY_TATOOO_ARTISTS
+import br.com.connectattoo.utils.Constants.TYPE_NEARBY_TATOOO_ARTISTS
 
 class AdapterListOfNearbyTattooArtists : RecyclerView.Adapter<NearbyTattooArtistsAndItemMoreViewHolder>() {
     private var list = mutableListOf<NearbyTattooArtistsAndItemMore>()

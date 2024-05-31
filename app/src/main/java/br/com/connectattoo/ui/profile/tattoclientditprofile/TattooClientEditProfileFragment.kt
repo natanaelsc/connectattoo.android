@@ -1,5 +1,7 @@
 package br.com.connectattoo.ui.profile.tattoclientditprofile
 
+import android.Manifest
+import android.content.Context
 import android.net.Uri
 import android.os.Build
 import android.text.Editable
@@ -9,8 +11,10 @@ import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -22,13 +26,20 @@ import br.com.connectattoo.R
 import br.com.connectattoo.databinding.FragmentTattooClientEditProfileBinding
 import br.com.connectattoo.repository.ProfileRepository
 import br.com.connectattoo.ui.BaseFragment
-import br.com.connectattoo.util.Constants
-import br.com.connectattoo.util.DataStoreManager
-import br.com.connectattoo.util.showBottomSheetEditPhotoProfile
+import br.com.connectattoo.utils.Constants
+import br.com.connectattoo.utils.Constants.SIZE_1024
+import br.com.connectattoo.utils.DataStoreManager
+import br.com.connectattoo.utils.permissions.PermissionImage.shouldRequestPermission
+import br.com.connectattoo.utils.showBottomSheetEditPhotoProfile
 import com.bumptech.glide.Glide
-import com.google.android.material.textfield.TextInputLayout
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -39,12 +50,39 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
     private lateinit var profileRepository: ProfileRepository
     private val viewModel: TattooClientEditProfileViewModel by viewModels()
 
+    private lateinit var fileChooserPermissionLauncher: ActivityResultLauncher<Array<String>>
+    private val fileChooserPermissions = arrayOf(Manifest.permission.READ_MEDIA_IMAGES)
+    override fun inflateBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentTattooClientEditProfileBinding {
+        return FragmentTattooClientEditProfileBinding.inflate(inflater, container, false)
+    }
+
     override fun setupViews() {
+        startChooserPermissionLauncher()
         getInitialInformationClientProfile()
         observerViewModel()
         setupListeners()
         observerAndValidateField()
+
     }
+
+    private fun startChooserPermissionLauncher() {
+        fileChooserPermissionLauncher = registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissionResult ->
+            val permissionsIdentified = permissionResult.all { it.key in fileChooserPermissions }
+            val permissionsGrant = permissionResult.all { it.value }
+            if (permissionsIdentified && permissionsGrant) {
+                showBottomSheetProfilePhoto()
+            } else {
+                showSnackBarAlert(getString(R.string
+                    .you_have_denied_permission_for_photos_please_grant_permission_in_settings_to_continue))
+            }
+        }
+    }
+
 
     private fun observerAndValidateField() {
         onTextChanged(binding.etClientEmail) { validateEmail() }
@@ -83,7 +121,29 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
         viewModel.getInitialInformationTattooClientProfile(profileRepository)
     }
 
+
+    private fun uploadProfilePhoto() {
+        val database = (requireActivity().application as ConnectattooApplication).database
+        val clientProfileDao = database.tattooClientProfileDao()
+        profileRepository = ProfileRepository(clientProfileDao)
+        val fileUri: Uri? = viewModel.imageUri.value
+        val imagePart = fileUri?.let { getFilePartFromUri(requireContext(), it) }
+        if (imagePart != null) {
+            viewLifecycleOwner.lifecycleScope.launch {
+                val token =
+                    DataStoreManager.getUserSettings(requireContext(), Constants.API_TOKEN)
+                viewModel.uploadClientProfilePhoto(profileRepository, token, imagePart)
+            }
+        }
+
+    }
+
     private fun observerViewModel() {
+        viewModel.message.observe(viewLifecycleOwner) { message ->
+            if (message == "Sucesso no upload da foto de perfil") {
+                findNavController().navigate(R.id.action_tattooClientEditProfileFragment_to_clientUserProfileFragment)
+            }
+        }
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiStateFlow.collect { uiState ->
@@ -129,12 +189,6 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
         }
     }
 
-    override fun inflateBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentTattooClientEditProfileBinding {
-        return FragmentTattooClientEditProfileBinding.inflate(inflater, container, false)
-    }
 
     private fun validateDate(birthDate: String): String? {
         if (birthDate.length != 8) {
@@ -163,30 +217,45 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
             findNavController().navigate(R.id.action_tattooClientEditProfileFragment_to_clientUserProfileFragment)
         }
         binding.btnEditClientPhoto.setOnClickListener {
-            showBottomSheetEditPhotoProfile(
-                onClickChooseLibrary = {
-                    getContent.launch("image/*")
-                },
-                onClickTakePicture = {
-                    takePicture()
-                },
-                enableBtnRemovePhoto = !viewModel.dataState.imageProfile.isNullOrEmpty(),
-                onClickRemovePhoto = {
-                    removeClientPhoto()
+            showBottomSheetProfilePhoto()
 
-                }
-
-            )
+        }
+        binding.btnUpload.setOnClickListener {
+            uploadProfilePhoto()
         }
     }
+
+    private fun showBottomSheetProfilePhoto() {
+        showBottomSheetEditPhotoProfile(
+            onClickChooseLibrary = {
+                if (shouldRequestPermission(fileChooserPermissions)) {
+                    fileChooserPermissionLauncher.launch(fileChooserPermissions)
+                } else {
+                    getContent.launch("image/*")
+                }
+            },
+            onClickTakePicture = {
+                if (shouldRequestPermission(fileChooserPermissions)) {
+                    fileChooserPermissionLauncher.launch(fileChooserPermissions)
+                } else {
+                    takePicture()
+                }
+            },
+            enableBtnRemovePhoto = !viewModel.dataState.imageProfile.isNullOrEmpty(),
+            onClickRemovePhoto = {
+                removeClientPhoto()
+            }
+        )
+    }
+
 
     private fun validateEmail() {
         val email = binding.etClientEmail.text.toString()
         val checkEmail = email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()
         if (checkEmail) {
-            binding.tilClientEmail.error = null
+            setBackgroundValid(binding.etClientEmail)
         } else {
-            binding.tilClientEmail.setError(R.string.error_field_email)
+            setBackgroundInvalid(binding.etClientEmail)
         }
     }
 
@@ -194,9 +263,9 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
         val clientBirthDate = binding.etBirthDate.unMasked
         val check = validateDate(clientBirthDate)
         if (check != null) {
-            binding.tilBirthDate.error = null
+            setBackgroundValid(binding.etBirthDate)
         } else {
-            binding.tilBirthDate.setError(R.string.error_field_birth_date)
+            setBackgroundInvalid(binding.etBirthDate)
         }
 
     }
@@ -224,10 +293,12 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
         }
     }
 
-    private fun TextInputLayout.setError(stringResId: Int?) {
-        error = if (stringResId != null) {
-            getString(stringResId)
-        } else null
+    private fun setBackgroundInvalid(editText: EditText) {
+        editText.setBackgroundResource(R.drawable.bg_edit_input_invalid)
+    }
+
+    private fun setBackgroundValid(editText: EditText) {
+        editText.setBackgroundResource(R.drawable.bg_text_input_layout_backgroud)
     }
 
     private fun takePicture() {
@@ -244,6 +315,75 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
             image
         )
 
+    }
+
+    private fun getFilePartFromUri(
+        context: Context,
+        uri: Uri,
+    ): MultipartBody.Part? {
+        val mimeType = context.contentResolver.getType(uri)
+        var filePart: MultipartBody.Part? = null
+
+        mimeType?.let {
+            if (isImageMimeType(it)) {
+                val file = createFileFromUri(context, uri)
+                if (file.length() <= 5 * SIZE_1024 * SIZE_1024) {
+                    val mediaType = it.toMediaTypeOrNull()
+                    val requestBody = file.asRequestBody(mediaType)
+                    filePart = MultipartBody.Part.createFormData(
+                        "image",
+                        viewModel.dataState.displayName.toString(),
+                        requestBody
+                    )
+                } else {
+                    showSnackBarAlert(getString(R.string.snack_photo_size_exceeds_5MB))
+                }
+            } else {
+                showSnackBarAlert(getString(R.string.snack_please_select_an_image_in_JPEG_JPG_or_PNG_format))
+            }
+        }
+
+        return filePart
+    }
+
+    private fun isImageMimeType(mimeType: String): Boolean {
+        return mimeType.startsWith("image/jpeg") ||
+            mimeType.startsWith("image/png") ||
+            mimeType.startsWith("image/jpg")
+    }
+
+    private fun createFileFromUri(context: Context, uri: Uri): File {
+        val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
+        val mimeType = context.contentResolver.getType(uri)
+        val extension = when (mimeType) {
+            "image/jpeg" -> ".jpeg"
+            "image/png" -> ".png"
+            "image/jpg" -> ".jpg"
+            else -> ""
+        }
+
+        val tempFile = File.createTempFile(
+            viewModel.dataState.displayName.toString(),
+            extension,
+            context.cacheDir
+        )
+        inputStream?.use { input ->
+            FileOutputStream(tempFile).use { output ->
+                input.copyTo(output)
+            }
+        }
+        return tempFile
+    }
+
+    private fun showSnackBarAlert(
+        title: String
+    ) {
+        val snackBar = Snackbar.make(
+            binding.ivPhotoClient,
+            title,
+            Snackbar.ANIMATION_MODE_SLIDE
+        ).setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.orange))
+        snackBar.show()
     }
 
 }
