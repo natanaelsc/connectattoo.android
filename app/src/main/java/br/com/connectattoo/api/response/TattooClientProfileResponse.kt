@@ -7,7 +7,7 @@ import br.com.connectattoo.data.toTagEntity
 import br.com.connectattoo.local.database.entity.TattooClientProfileEntity
 
 data class TattooClientProfileResponse(
-    val displayName: String? = "",
+    val name: String? = "",
     val username: String? = "",
     val birthDate: String? = "",
     val imageProfile: String? = "",
@@ -17,7 +17,7 @@ data class TattooClientProfileResponse(
 ) {
     fun toTattooClientProfileEntity(): TattooClientProfileEntity {
         return TattooClientProfileEntity(
-            displayName = this.displayName ?: "",
+            name = this.name ?: "",
             username = this.username ?: "",
             birthDate = this.birthDate ?: "",
             imageProfile = this.imageProfile ?: "",

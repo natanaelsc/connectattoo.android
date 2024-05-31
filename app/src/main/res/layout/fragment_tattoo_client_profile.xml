@@ -45,7 +45,7 @@
             tools:text="João Silva" />
 
         <TextView
-            android:id="@+id/txtAgeAndDisplayName"
+            android:id="@+id/txtAgeAndName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_8dp"
@@ -80,8 +80,8 @@
             android:text="@string/btn_edit_profile"
             android:textColor="@color/white"
             android:textSize="@dimen/txt_size_12sp"
-            app:layout_constraintStart_toStartOf="@+id/txtAgeAndDisplayName"
-            app:layout_constraintTop_toBottomOf="@+id/txtAgeAndDisplayName" />
+            app:layout_constraintStart_toStartOf="@+id/txtAgeAndName"
+            app:layout_constraintTop_toBottomOf="@+id/txtAgeAndName" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

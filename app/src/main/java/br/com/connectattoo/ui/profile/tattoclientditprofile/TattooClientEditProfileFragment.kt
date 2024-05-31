@@ -182,7 +182,7 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
                 .circleCrop()
                 .placeholder(R.drawable.icon_person_profile)
                 .into(ivPhotoClient)
-            etDisplayName.setText(viewModel.dataState.displayName)
+            etName.setText(viewModel.dataState.name)
             etUserName.setText(viewModel.dataState.username)
             etClientEmail.setText(viewModel.dataState.email)
             etBirthDate.setText(viewModel.dataState.birthDate)
@@ -332,7 +332,7 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
                     val requestBody = file.asRequestBody(mediaType)
                     filePart = MultipartBody.Part.createFormData(
                         "image",
-                        viewModel.dataState.displayName.toString(),
+                        viewModel.dataState.name.toString(),
                         requestBody
                     )
                 } else {
@@ -363,7 +363,7 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
         }
 
         val tempFile = File.createTempFile(
-            viewModel.dataState.displayName.toString(),
+            viewModel.dataState.name.toString(),
             extension,
             context.cacheDir
         )

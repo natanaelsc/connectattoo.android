@@ -7,7 +7,7 @@ import br.com.connectattoo.data.MyGalleryProfile
 
 data class TattooClientProfileState(
     val txtNameUser: String? = null,
-    val txtAgeAndDisplayName: String? = null,
+    val txtAgeAndName: String? = null,
     val txtNameTattooArtist: String? = null,
     val txtTattooArtistProfile: String? = null,
     val txtScheduleTomorrow: String? = null,

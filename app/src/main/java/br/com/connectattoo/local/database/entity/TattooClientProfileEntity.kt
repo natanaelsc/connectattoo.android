@@ -13,7 +13,7 @@ import com.google.gson.reflect.TypeToken
 @Entity(tableName = "profile")
 data class TattooClientProfileEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
-    @ColumnInfo(name = "display_name") val displayName: String? = "",
+    @ColumnInfo(name = "display_name") val name: String? = "",
     @ColumnInfo(name = "user_name") val username: String? = "",
     @ColumnInfo(name = "birth_date") val birthDate: String? = "",
     @ColumnInfo(name = "image_profile") val imageProfile: String? = "",
@@ -24,7 +24,7 @@ data class TattooClientProfileEntity(
 
     fun toTattooClientProfile(): TattooClientProfile =
         TattooClientProfile(
-            displayName = this.displayName ?: "",
+            name = this.name ?: "",
             username = this.username ?: "",
             birthDate = this.birthDate ?: "",
             imageProfile = this.imageProfile ?: "",

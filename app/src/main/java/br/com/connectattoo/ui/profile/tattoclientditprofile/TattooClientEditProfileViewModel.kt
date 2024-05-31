@@ -48,7 +48,7 @@ class TattooClientEditProfileViewModel : ViewModel() {
                     _dataState = _dataState.copy(
                         birthDate = birthDate,
                         imageProfile = clientProfile.imageProfile,
-                        displayName = clientProfile.displayName,
+                        name = clientProfile.name,
                         email = clientProfile.email,
                         username = clientProfile.username
                     )
