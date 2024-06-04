@@ -160,7 +160,7 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
                 viewModel.uiStateFlow.collect { uiState ->
                     when (uiState) {
                         HomeUserViewModel.UiState.Success -> {
-                            showUserName(viewModel.state.displayName.toString())
+                            showUserName(viewModel.state.name.toString())
                         }
 
                         HomeUserViewModel.UiState.Error -> {

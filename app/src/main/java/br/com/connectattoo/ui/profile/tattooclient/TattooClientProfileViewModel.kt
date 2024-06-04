@@ -118,7 +118,7 @@ class TattooClientProfileViewModel : ViewModel() {
                     if (clientProfile.birthDate != null) {
                         val age = calculateDateBirth(clientProfile.birthDate)
                         _state =
-                            _state.copy(txtAgeAndDisplayName = "$age | @${clientProfile.username}")
+                            _state.copy(txtAgeAndName = "$age | @${clientProfile.username}")
                     }
 
                     if (clientProfile.imageProfile != null) {
@@ -126,7 +126,7 @@ class TattooClientProfileViewModel : ViewModel() {
                     }
 
                     _state = _state.copy(
-                        txtNameUser = "${clientProfile.displayName}",
+                        txtNameUser = "${clientProfile.name}",
                         listTagsTattooClientProfile = clientProfile.tags,
                         listGalleries = clientProfile.galleries
                     )
