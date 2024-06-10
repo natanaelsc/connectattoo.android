@@ -8,6 +8,7 @@ import br.com.connectattoo.core.MessageException
 import br.com.connectattoo.core.ResourceResult
 import br.com.connectattoo.data.TattooClientProfile
 import br.com.connectattoo.local.database.dao.TattooClientProfileDao
+import br.com.connectattoo.utils.Constants.BEARER
 import br.com.connectattoo.utils.Constants.CODE_SUCCESS_200
 import br.com.connectattoo.utils.Constants.CODE_SUCCESS_204
 import kotlinx.coroutines.flow.Flow
@@ -19,7 +20,7 @@ import java.io.IOException
 class ProfileRepository(private val tattooClientProfileDao: TattooClientProfileDao) {
     private val apiService: ApiService = ApiUrl.instance.create(ApiService::class.java)
     fun getProfileUser(token: String): Flow<ResourceResult<TattooClientProfile>> = flow {
-        emit(networkBoundResource("Bearer $token"))
+        emit(networkBoundResource("$BEARER $token"))
     }
 
     private suspend fun networkBoundResource(token: String): ResourceResult<TattooClientProfile> {
@@ -58,7 +59,7 @@ class ProfileRepository(private val tattooClientProfileDao: TattooClientProfileD
     }
 
     fun deleteProfilePhoto(token: String): Flow<ResourceResult<String>> = flow {
-        emit(deleteProfilePhotoAPIAndRoom("Bearer $token"))
+        emit(deleteProfilePhotoAPIAndRoom("$BEARER $token"))
     }
 
     private suspend fun deleteProfilePhotoAPIAndRoom(token: String): ResourceResult<String> {
@@ -88,7 +89,7 @@ class ProfileRepository(private val tattooClientProfileDao: TattooClientProfileD
         flow {
             emit(
                 try {
-                    val result = apiService.uploadProfilePhoto("Bearer $token", image)
+                    val result = apiService.uploadProfilePhoto("$BEARER $token", image)
                     if (result.code() == CODE_SUCCESS_200 || result.code() == CODE_SUCCESS_204) {
                         networkBoundResource(token = "Bearer $token")
                         (ResourceResult.Success("Sucesso no upload da foto de perfil"))
@@ -105,4 +106,24 @@ class ProfileRepository(private val tattooClientProfileDao: TattooClientProfileD
             )
         }
 
+    suspend fun updateClientProfile(token: String, map: Map<String, String>): ResourceResult<String> {
+
+      return try {
+            with(apiService.updateProfile("$BEARER $token", map)){
+                if (this.code() == CODE_SUCCESS_200 || this.code() == CODE_SUCCESS_204) {
+                    networkBoundResource(token = "$BEARER $token")
+                   (ResourceResult.Success("Sucesso na atualização do perfil"))
+                } else {
+                    val error = MessageException("Erro na atualização do perfil")
+                    (ResourceResult.Error(null, error))
+                }
+            }
+
+        } catch (error: IOException) {
+            val message = MessageException("Erro na atualização do perfil: ${error.message}")
+            Log.i(TAG, error.message.toString())
+            (ResourceResult.Error(null, message))
+        }
+
+    }
 }
