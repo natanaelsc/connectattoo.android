@@ -33,6 +33,7 @@ import br.com.connectattoo.utils.permissions.PermissionImage.shouldRequestPermis
 import br.com.connectattoo.utils.showBottomSheetEditPhotoProfile
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -77,8 +78,12 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
             if (permissionsIdentified && permissionsGrant) {
                 showBottomSheetProfilePhoto()
             } else {
-                showSnackBarAlert(getString(R.string
-                    .you_have_denied_permission_for_photos_please_grant_permission_in_settings_to_continue))
+                showSnackBarAlert(
+                    getString(
+                        R.string
+                            .you_have_denied_permission_for_photos_please_grant_permission_in_settings_to_continue
+                    )
+                )
             }
         }
     }
@@ -122,25 +127,51 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
     }
 
 
-    private fun uploadProfilePhoto() {
+    private fun uploadProfileData() {
         val database = (requireActivity().application as ConnectattooApplication).database
         val clientProfileDao = database.tattooClientProfileDao()
         profileRepository = ProfileRepository(clientProfileDao)
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            val token = DataStoreManager.getUserSettings(requireContext(), Constants.API_TOKEN)
+            uploadProfilePhoto(token)
+            updateClientProfile(profileRepository, token)
+        }
+    }
+
+    private fun updateClientProfile(profileRepository: ProfileRepository, token: String) {
+        val name = binding.etName.text.toString()
+        //val email = binding.etClientEmail.text.toString()
+        val userName = binding.etUserName.text.toString()
+        val birthDate = binding.etBirthDate.unMasked
+
+        val checkName = validateFields(name, binding.etName)
+        val checkUserName = validateFields(userName, binding.etUserName)
+        val checkBirthDate = validateBirthDate()
+        if (checkName && checkUserName && checkBirthDate) {
+            viewModel.updateClientProfile(
+                profileRepository = profileRepository,
+                token = token,
+                name = name,
+                username = userName,
+                birthDate = birthDate
+            )
+        }
+
+
+    }
+
+    private fun uploadProfilePhoto(token: String) {
         val fileUri: Uri? = viewModel.imageUri.value
         val imagePart = fileUri?.let { getFilePartFromUri(requireContext(), it) }
         if (imagePart != null) {
-            viewLifecycleOwner.lifecycleScope.launch {
-                val token =
-                    DataStoreManager.getUserSettings(requireContext(), Constants.API_TOKEN)
-                viewModel.uploadClientProfilePhoto(profileRepository, token, imagePart)
-            }
+            viewModel.uploadClientProfilePhoto(profileRepository, token, imagePart)
         }
-
     }
 
     private fun observerViewModel() {
         viewModel.message.observe(viewLifecycleOwner) { message ->
-            if (message == "Sucesso no upload da foto de perfil") {
+            if (message == "Sucesso no upload da foto de perfil" || message == "Sucesso na atualização do perfil") {
                 findNavController().navigate(R.id.action_tattooClientEditProfileFragment_to_clientUserProfileFragment)
             }
         }
@@ -221,7 +252,8 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
 
         }
         binding.btnUpload.setOnClickListener {
-            uploadProfilePhoto()
+            validateEmail()
+            uploadProfileData()
         }
     }
 
@@ -248,7 +280,6 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
         )
     }
 
-
     private fun validateEmail() {
         val email = binding.etClientEmail.text.toString()
         val checkEmail = email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()
@@ -259,13 +290,25 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
         }
     }
 
-    private fun validateBirthDate() {
+    private fun validateFields(value: String, textInputEditText: TextInputEditText): Boolean {
+        return if (value.isNotEmpty()) {
+            setBackgroundValid(textInputEditText)
+            true
+        } else {
+            setBackgroundInvalid(textInputEditText)
+            false
+        }
+    }
+
+    private fun validateBirthDate() : Boolean {
         val clientBirthDate = binding.etBirthDate.unMasked
         val check = validateDate(clientBirthDate)
-        if (check != null) {
+       return if (check != null) {
             setBackgroundValid(binding.etBirthDate)
+           true
         } else {
             setBackgroundInvalid(binding.etBirthDate)
+           false
         }
 
     }

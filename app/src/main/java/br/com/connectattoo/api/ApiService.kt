@@ -49,4 +49,10 @@ interface ApiService {
         @Header("Authorization") authorization: String,
         @Part image: MultipartBody.Part
     ): Response<Unit>
+
+    @PATCH("profile/me")
+    suspend fun updateProfile(
+        @Header("Authorization") authorization: String,
+        @Body fields: Map<String, String>
+    ) : Response<Unit>
 }
