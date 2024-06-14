@@ -104,6 +104,8 @@ dependencies {
     //Masks
     implementation ("com.github.santalu:maskara:1.0.0")
 
+    //Flexbox
+    implementation ("com.google.android.flexbox:flexbox:3.0.0")
 }
 kapt {
     correctErrorTypes = true
