@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import br.com.connectattoo.ConnectattooApplication
 import br.com.connectattoo.R
 import br.com.connectattoo.adapter.AdapterListProfileFilterTags
@@ -30,6 +31,7 @@ class TattooClientTagsFilterFragment : BaseFragment<FragmentTattooClientTagsFilt
     private val viewModel: TattooClientTagsFilterViewModel by viewModels()
     private lateinit var profileRepository: ProfileRepository
     override fun setupViews() {
+        setupListeners()
         getAvailableTags()
         setupRecyclerView()
         viewModelObservers()
@@ -106,5 +108,9 @@ class TattooClientTagsFilterFragment : BaseFragment<FragmentTattooClientTagsFilt
             viewModel.getAvailableTags(profileRepository, token)
         }
     }
-
+    private fun setupListeners(){
+        binding.ivBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+    }
 }
