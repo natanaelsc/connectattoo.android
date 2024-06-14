@@ -78,6 +78,7 @@
         android:layout_height="440dp"
         android:clipToPadding="false"
         android:orientation="vertical"
+        android:paddingTop="@dimen/margin_16dp"
         android:paddingHorizontal="@dimen/margin_8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -29,7 +29,7 @@ class TattooClientTagsFilterViewModel : ViewModel() {
         _listTagsSelected.let { listTags ->
             if (listTags.contains(tag)) {
                 listTags.remove(tag)
-            } else if (listTags.count() <= 4) {
+            } else if (listTags.size < 5) {
                 _listTagsSelected.add(tag)
             } else {
                 _maximumTagsChecking.value = true
