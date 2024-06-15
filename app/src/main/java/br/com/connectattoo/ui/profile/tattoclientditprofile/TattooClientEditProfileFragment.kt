@@ -27,7 +27,6 @@ import br.com.connectattoo.databinding.FragmentTattooClientEditProfileBinding
 import br.com.connectattoo.repository.ProfileRepository
 import br.com.connectattoo.ui.BaseFragment
 import br.com.connectattoo.utils.Constants
-import br.com.connectattoo.utils.Constants.SIZE_1024
 import br.com.connectattoo.utils.DataStoreManager
 import br.com.connectattoo.utils.permissions.PermissionImage.shouldRequestPermission
 import br.com.connectattoo.utils.showBottomSheetEditPhotoProfile
@@ -181,9 +180,11 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
                     when (uiState) {
                         TattooClientEditProfileViewModel.UiState.Success -> {
                             insertInformationTattooClientProfile()
+                            binding.btnUpload.isEnabled = true
                         }
 
                         TattooClientEditProfileViewModel.UiState.Error -> {
+                            binding.btnUpload.isEnabled = true
                             val message = viewModel.dataState.stateErrorDeleteImage
                             if (message != null) {
                                 Log.i("ErrorDeleteImage", message)
@@ -191,10 +192,11 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
                         }
 
                         TattooClientEditProfileViewModel.UiState.Loading -> {
-
+                            binding.btnUpload.isEnabled = false
                         }
 
                         else -> {
+                            binding.btnUpload.isEnabled = true
                         }
                     }
                 }
@@ -300,15 +302,15 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
         }
     }
 
-    private fun validateBirthDate() : Boolean {
+    private fun validateBirthDate(): Boolean {
         val clientBirthDate = binding.etBirthDate.unMasked
         val check = validateDate(clientBirthDate)
-       return if (check != null) {
+        return if (check != null) {
             setBackgroundValid(binding.etBirthDate)
-           true
+            true
         } else {
             setBackgroundInvalid(binding.etBirthDate)
-           false
+            false
         }
 
     }
@@ -370,17 +372,14 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
         mimeType?.let {
             if (isImageMimeType(it)) {
                 val file = createFileFromUri(context, uri)
-                if (file.length() <= 5 * SIZE_1024 * SIZE_1024) {
-                    val mediaType = it.toMediaTypeOrNull()
-                    val requestBody = file.asRequestBody(mediaType)
-                    filePart = MultipartBody.Part.createFormData(
-                        "image",
-                        viewModel.dataState.name.toString(),
-                        requestBody
-                    )
-                } else {
-                    showSnackBarAlert(getString(R.string.snack_photo_size_exceeds_5MB))
-                }
+                val mediaType = it.toMediaTypeOrNull()
+                val requestBody = file.asRequestBody(mediaType)
+                filePart = MultipartBody.Part.createFormData(
+                    "image",
+                    viewModel.dataState.name.toString(),
+                    requestBody
+                )
+
             } else {
                 showSnackBarAlert(getString(R.string.snack_please_select_an_image_in_JPEG_JPG_or_PNG_format))
             }
