@@ -1,5 +1,7 @@
 package br.com.connectattoo.ui.profile.tattoclienttagfilter
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -21,9 +23,6 @@ class TattooClientTagsFilterViewModel : ViewModel() {
     private val _listAvailableTags = MutableLiveData <List<Tag>>(mutableListOf())
      val listAvailableTags: LiveData <List<Tag>> = _listAvailableTags
 
-    private val _maximumTagsChecking = MutableLiveData(false)
-    val maximumTagsChecking: LiveData<Boolean> get() = _maximumTagsChecking
-
 
     fun selectTag(tag: Tag) {
         _listTagsSelected.let { listTags ->
@@ -31,8 +30,8 @@ class TattooClientTagsFilterViewModel : ViewModel() {
                 listTags.remove(tag)
             } else if (listTags.size < 5) {
                 _listTagsSelected.add(tag)
-            } else {
-                _maximumTagsChecking.value = true
+            }else{
+                Log.i(TAG, "")
             }
         }
 

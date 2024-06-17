@@ -4,14 +4,12 @@ import android.content.ContentValues.TAG
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import br.com.connectattoo.ConnectattooApplication
-import br.com.connectattoo.R
 import br.com.connectattoo.adapter.AdapterListProfileFilterTags
 import br.com.connectattoo.databinding.FragmentTattooClientTagsFilterBinding
 import br.com.connectattoo.repository.ProfileRepository
@@ -22,7 +20,6 @@ import br.com.connectattoo.utils.UiState
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
 
@@ -65,18 +62,6 @@ class TattooClientTagsFilterFragment : BaseFragment<FragmentTattooClientTagsFilt
     }
 
     private fun viewModelObservers() {
-        viewModel.maximumTagsChecking.observe(viewLifecycleOwner) { checkMaximumTags ->
-            if (checkMaximumTags) {
-                Snackbar.make(
-                    binding.root, getString(
-                        R.string.txt_you_cannot_select_more_than_5_tags
-                    ), Snackbar.LENGTH_LONG
-                )
-                    .setBackgroundTint(
-                        ContextCompat.getColor(requireContext(), R.color.orange)
-                    ).show()
-            }
-        }
         viewModel.listAvailableTags.observe(viewLifecycleOwner){listTags ->
             if (listTags.isNotEmpty()){
                 adapterListTagsProfile.submitList(listTags)
