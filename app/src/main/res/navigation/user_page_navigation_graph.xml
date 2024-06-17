@@ -19,6 +19,9 @@
             android:id="@+id/action_clientUserProfileFragment_to_tattooClientEditProfileFragment"
             app:destination="@id/tattooClientEditProfileFragment"
             app:enterAnim="@anim/slide_in_rigth" />
+        <action
+            android:id="@+id/action_clientUserProfileFragment_to_tattoClientTagsFilterFragment"
+            app:destination="@id/tattoClientTagsFilterFragment" />
     </fragment>
     <fragment
         android:id="@+id/tattooClientEditProfileFragment"
@@ -40,4 +43,9 @@
         android:name="br.com.connectattoo.ui.search.UserSearchFragment"
         android:label="fragment_user_search"
         tools:layout="@layout/fragment_user_search" />
+    <fragment
+        android:id="@+id/tattoClientTagsFilterFragment"
+        android:name="br.com.connectattoo.ui.profile.tattoclienttagfilter.TattooClientTagsFilterFragment"
+        android:label="fragment_tatto_client_tags_filter"
+        tools:layout="@layout/fragment_tattoo_client_tags_filter" />
 </navigation>

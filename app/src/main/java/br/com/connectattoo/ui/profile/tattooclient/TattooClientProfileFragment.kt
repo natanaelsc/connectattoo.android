@@ -134,6 +134,7 @@ class TattooClientProfileFragment : BaseFragment<FragmentTattooClientProfileBind
                 findNavController().navigate(R.id.action_clientUserProfileFragment_to_tattooClientEditProfileFragment)
             }
             btnManageInterests.setOnClickListener {
+                findNavController().navigate(R.id.action_clientUserProfileFragment_to_tattoClientTagsFilterFragment)
             }
             btnManageNextAppointment.setOnClickListener {
             }

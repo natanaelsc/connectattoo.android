@@ -6,6 +6,7 @@ import br.com.connectattoo.api.ApiService
 import br.com.connectattoo.api.ApiUrl
 import br.com.connectattoo.core.MessageException
 import br.com.connectattoo.core.ResourceResult
+import br.com.connectattoo.data.Tag
 import br.com.connectattoo.data.TattooClientProfile
 import br.com.connectattoo.local.database.dao.TattooClientProfileDao
 import br.com.connectattoo.utils.Constants.BEARER
@@ -125,5 +126,23 @@ class ProfileRepository(private val tattooClientProfileDao: TattooClientProfileD
             (ResourceResult.Error(null, message))
         }
 
+    }
+
+   suspend fun getAvailableTags(token: String): ResourceResult<List<Tag>>{
+        return try {
+            with(apiService.getAvailableTags("$BEARER $token")){
+                if (this.code() == CODE_SUCCESS_200 || this.code() == CODE_SUCCESS_204) {
+                    (ResourceResult.Success(this.body()))
+                } else {
+                    val error = MessageException("Erro na obtenção das tags")
+                    (ResourceResult.Error(null, error))
+                }
+            }
+
+        } catch (error: IOException) {
+            val message = MessageException("Erro na obtenção das tags: ${error.message}")
+            Log.i(TAG, error.message.toString())
+            (ResourceResult.Error(null, message))
+        }
     }
 }
