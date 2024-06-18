@@ -22,6 +22,11 @@
         <action
             android:id="@+id/action_clientUserProfileFragment_to_tattoClientTagsFilterFragment"
             app:destination="@id/tattoClientTagsFilterFragment" />
+        <action
+            android:id="@+id/action_clientUserProfileFragment_to_tattooClientConfigurationFragment"
+            app:destination="@id/tattooClientConfigurationFragment"
+            app:enterAnim="@anim/slide_in_rigth"/>
+
     </fragment>
     <fragment
         android:id="@+id/tattooClientEditProfileFragment"
@@ -48,4 +53,14 @@
         android:name="br.com.connectattoo.ui.profile.tattoclienttagfilter.TattooClientTagsFilterFragment"
         android:label="fragment_tatto_client_tags_filter"
         tools:layout="@layout/fragment_tattoo_client_tags_filter" />
+    <fragment
+        android:id="@+id/tattooClientConfigurationFragment"
+        android:name="br.com.connectattoo.ui.profile.tattooclientconfiguration.TattooClientConfigurationFragment"
+        android:label="fragment_tattoo_client_configuration"
+        tools:layout="@layout/fragment_tattoo_client_configuration" >
+        <action
+            android:id="@+id/action_tattooClientConfigurationFragment_to_clientUserProfileFragment"
+            app:destination="@id/clientUserProfileFragment"
+            app:enterAnim="@anim/slide_out_rigth"/>
+    </fragment>
 </navigation>

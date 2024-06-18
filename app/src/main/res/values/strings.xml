@@ -48,4 +48,13 @@
     <string name="txt_select_up_to_5_styles">Selecione até 5 estilos</string>
     <string name="btn_filter">Filtrar</string>
     <string name="txt_you_cannot_select_more_than_5_tags">"Você não pode selecionar mais do que 5 tags."</string>
+    <string name="title_profile_settings">Configurações de Perfil</string>
+    <string name="txt_manage_your_account">Gerenciar a sua conta</string>
+    <string name="txt_communication">Notificações</string>
+    <string name="txt_change_password">Alterar senha</string>
+    <string name="txt_delete_account">Deletar conta</string>
+    <string name="txt_more_information_and_support">Mais informações e suporte</string>
+    <string name="txt_about">Sobre</string>
+    <string name="txt_help">Ajuda</string>
+    <string name="txt_logout">Terminar sessão</string>
 </resources>
