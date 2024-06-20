@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.profile.tattooclientconfiguration.TattooClientConfigurationFragment">
+
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_16dp"
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/arrow_chevron_left"
+        app:layout_constraintEnd_toStartOf="@+id/txt_edit_profile"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_edit_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/raleway_extrabold"
+        android:text="@string/title_profile_settings"
+        android:textColor="@color/black"
+        android:textSize="@dimen/txt_size_20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_back"
+        app:layout_constraintEnd_toStartOf="@+id/iv_logo"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/iv_back"
+        app:layout_constraintTop_toTopOf="@+id/iv_back" />
+
+    <ImageView
+        android:id="@+id/iv_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_16dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/header_logo_symbol"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_edit_profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/txt_edit_profile"
+        app:layout_constraintTop_toTopOf="@+id/txt_edit_profile" />
+
+    <TextView
+        android:id="@+id/txt_manage_your_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_24dp"
+        android:fontFamily="@font/raleway_extrabold"
+        android:text="@string/txt_manage_your_account"
+        android:textColor="@color/black200"
+        android:textSize="@dimen/txt_size_12sp"
+        app:layout_constraintStart_toStartOf="@+id/iv_back"
+        app:layout_constraintTop_toBottomOf="@+id/iv_back" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/icon_communication"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:src="@drawable/communication_bell"
+        app:layout_constraintStart_toStartOf="@+id/txt_manage_your_account"
+        app:layout_constraintTop_toBottomOf="@+id/txt_manage_your_account" />
+
+    <TextView
+        android:id="@+id/txt_communication"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/raleway_semibold"
+        android:text="@string/txt_communication"
+        android:textColor="@color/black900"
+        android:layout_marginStart="@dimen/margin_8dp"
+        android:textSize="@dimen/txt_size_18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/icon_communication"
+        app:layout_constraintStart_toEndOf="@+id/icon_communication"
+        app:layout_constraintTop_toTopOf="@+id/icon_communication" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_communication_settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_16dp"
+        android:src="@drawable/arrow_chevron_right"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_communication"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txt_communication" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/icon_change_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:src="@drawable/interface_lock"
+        app:layout_constraintStart_toStartOf="@+id/icon_communication"
+        app:layout_constraintTop_toBottomOf="@+id/icon_communication" />
+
+    <TextView
+        android:id="@+id/txt_change_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/raleway_semibold"
+        android:text="@string/txt_change_password"
+        android:textColor="@color/black900"
+        android:layout_marginStart="@dimen/margin_8dp"
+        android:textSize="@dimen/txt_size_18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/icon_change_password"
+        app:layout_constraintStart_toEndOf="@+id/icon_change_password"
+        app:layout_constraintTop_toTopOf="@+id/icon_change_password" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_change_password_settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_16dp"
+        android:src="@drawable/arrow_chevron_right"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_change_password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txt_change_password" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/icon_delete_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:src="@drawable/edit_remove_minus_circle"
+        app:layout_constraintStart_toStartOf="@+id/icon_change_password"
+        app:layout_constraintTop_toBottomOf="@+id/icon_change_password" />
+
+    <TextView
+        android:id="@+id/txt_delete_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/raleway_semibold"
+        android:text="@string/txt_delete_account"
+        android:textColor="@color/black900"
+        android:layout_marginStart="@dimen/margin_8dp"
+        android:textSize="@dimen/txt_size_18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/icon_delete_account"
+        app:layout_constraintStart_toEndOf="@+id/icon_delete_account"
+        app:layout_constraintTop_toTopOf="@+id/icon_delete_account" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_delete_account_settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_16dp"
+        android:src="@drawable/arrow_chevron_right"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_delete_account"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txt_delete_account" />
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_marginTop="@dimen/margin_24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_delete_account" />
+
+    <TextView
+        android:id="@+id/txt_more_information_and_support"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_24dp"
+        android:fontFamily="@font/raleway_extrabold"
+        android:text="@string/txt_more_information_and_support"
+        android:textColor="@color/black200"
+        android:textSize="@dimen/txt_size_12sp"
+        app:layout_constraintStart_toStartOf="@+id/icon_delete_account"
+        app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/icon_about"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:src="@drawable/icon_info"
+        app:layout_constraintStart_toStartOf="@+id/txt_more_information_and_support"
+        app:layout_constraintTop_toBottomOf="@+id/txt_more_information_and_support" />
+
+    <TextView
+        android:id="@+id/txt_about"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/raleway_semibold"
+        android:text="@string/txt_about"
+        android:textColor="@color/black900"
+        android:layout_marginStart="@dimen/margin_8dp"
+        android:textSize="@dimen/txt_size_18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/icon_about"
+        app:layout_constraintStart_toEndOf="@+id/icon_about"
+        app:layout_constraintTop_toTopOf="@+id/icon_about" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_about_settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_16dp"
+        android:src="@drawable/arrow_chevron_right"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_about"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txt_about" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/icon_help"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:src="@drawable/warning_help"
+        app:layout_constraintStart_toStartOf="@+id/icon_about"
+        app:layout_constraintTop_toBottomOf="@+id/icon_about" />
+
+    <TextView
+        android:id="@+id/txt_help"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/raleway_semibold"
+        android:text="@string/txt_help"
+        android:textColor="@color/black900"
+        android:layout_marginStart="@dimen/margin_8dp"
+        android:textSize="@dimen/txt_size_18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/icon_help"
+        app:layout_constraintStart_toEndOf="@+id/icon_help"
+        app:layout_constraintTop_toTopOf="@+id/icon_help" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_help_settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_16dp"
+        android:src="@drawable/arrow_chevron_right"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_help"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txt_help" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/icon_logout"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:src="@drawable/interface_log_out"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/icon_help" />
+
+    <TextView
+        android:id="@+id/txt_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/raleway_semibold"
+        android:text="@string/txt_logout"
+        android:textColor="@color/black900"
+        android:layout_marginStart="@dimen/margin_8dp"
+        android:textSize="@dimen/txt_size_18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/icon_logout"
+        app:layout_constraintStart_toEndOf="@+id/icon_logout"
+        app:layout_constraintTop_toTopOf="@+id/icon_logout" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_logout_settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_16dp"
+        android:src="@drawable/arrow_chevron_right"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_logout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txt_logout" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

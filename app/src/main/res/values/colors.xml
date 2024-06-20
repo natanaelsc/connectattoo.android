@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
-    <color name="black800">#2d2d2d</color>
     <color name="black100">#C8C8C8</color>
+    <color name="black200">#acacac</color>
     <color name="black500">#757575</color>
+    <color name="black800">#2d2d2d</color>
+    <color name="black900">#1e1e1e</color>
     <color name="black50">#e4e4e4</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#EF5350</color>

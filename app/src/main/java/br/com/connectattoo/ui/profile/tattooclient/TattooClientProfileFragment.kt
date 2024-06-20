@@ -76,8 +76,8 @@ class TattooClientProfileFragment : BaseFragment<FragmentTattooClientProfileBind
             setHasFixedSize(true)
             adapter = adapterListTagsProfile
         }
-        adapterListTagsProfile.listenerTagProfile = { Tag ->
-            Log.i(TAG, Tag.toString())
+        adapterListTagsProfile.listenerTagProfile = { tag ->
+            Log.i(TAG, tag.toString())
         }
         binding.rvMyGalleries.run {
             setHasFixedSize(true)
@@ -129,6 +129,7 @@ class TattooClientProfileFragment : BaseFragment<FragmentTattooClientProfileBind
             btnUserImage.setOnClickListener {
             }
             btnSettings.setOnClickListener {
+                findNavController().navigate(R.id.action_clientUserProfileFragment_to_tattooClientConfigurationFragment)
             }
             btnEditProfile.setOnClickListener {
                 findNavController().navigate(R.id.action_clientUserProfileFragment_to_tattooClientEditProfileFragment)
