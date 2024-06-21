@@ -57,4 +57,5 @@
     <string name="txt_about">Sobre</string>
     <string name="txt_help">Ajuda</string>
     <string name="txt_logout">Terminar sessão</string>
+    <string name="txt_swipe_down_to_refresh"><b><font color="#FF000000">Deslizar</font></b> para baixo, para <b><font color="#FF000000">atualizar</font></b>.</string>
 </resources>
