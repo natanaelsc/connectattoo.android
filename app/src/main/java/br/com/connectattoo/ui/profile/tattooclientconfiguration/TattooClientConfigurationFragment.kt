@@ -52,7 +52,9 @@ class TattooClientConfigurationFragment : BaseFragment<FragmentTattooClientConfi
         }
         binding.ivLogoutSettings.setOnClickListener {
             logOutClient()
-
+        }
+        binding.txtLogout.setOnClickListener {
+            logOutClient()
         }
     }
     private fun logOutClient(){
