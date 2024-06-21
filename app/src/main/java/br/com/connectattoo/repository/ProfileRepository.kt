@@ -145,4 +145,13 @@ class ProfileRepository(private val tattooClientProfileDao: TattooClientProfileD
             (ResourceResult.Error(null, message))
         }
     }
+    suspend fun deleteClientProfile(): String{
+        return try {
+            tattooClientProfileDao.deleteTattooClientProfile()
+            "Success"
+        }catch (error: IOException){
+            Log.e(TAG, error.message.toString())
+            "Error"
+        }
+    }
 }
