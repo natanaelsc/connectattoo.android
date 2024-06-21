@@ -14,7 +14,9 @@ class AdapterListProfileFilterTags :
         DiffCallbackListProfileFilterTags()
     ) {
     var listenerTagProfile: (Tag) -> Unit = {}
-
+    fun clearTags() {
+        selectedTags.clear()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListTagsProfileViewHolder {
         val inflater = LayoutInflater.from(parent.context)

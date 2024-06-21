@@ -12,6 +12,7 @@ import br.com.connectattoo.utils.UiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 class TattooClientTagsFilterViewModel : ViewModel() {
 
@@ -20,8 +21,11 @@ class TattooClientTagsFilterViewModel : ViewModel() {
 
     private val _listTagsSelected: MutableList<Tag> = mutableListOf()
 
-    private val _listAvailableTags = MutableLiveData <List<Tag>>(mutableListOf())
-     val listAvailableTags: LiveData <List<Tag>> = _listAvailableTags
+    private val _listAvailableTags = MutableLiveData<List<Tag>>(mutableListOf())
+    val listAvailableTags: LiveData<List<Tag>> = _listAvailableTags
+
+    private val _message = MutableLiveData<String?>()
+    val message: LiveData<String?> = _message
 
 
     fun selectTag(tag: Tag) {
@@ -30,11 +34,34 @@ class TattooClientTagsFilterViewModel : ViewModel() {
                 listTags.remove(tag)
             } else if (listTags.size < 5) {
                 _listTagsSelected.add(tag)
-            }else{
+            } else {
                 Log.i(TAG, "")
             }
         }
 
+    }
+
+    fun saveTagsTattooClient(
+        profileRepository: ProfileRepository,
+        token: String
+    ) {
+        try {
+            if (_listTagsSelected.isNotEmpty()) {
+                viewModelScope.launch {
+                    val listIdTags: MutableList<String> = mutableListOf()
+                    _listTagsSelected.forEach {
+                        it.id?.let { it1 -> listIdTags.add(it1) }
+                    }
+
+                    val result =
+                        profileRepository.saveTagsTattooClientAndUpdateLocalDb(token, listIdTags)
+                    _message.value = result.data
+
+                }
+            }
+        } catch (error: IOException) {
+            _message.value = error.message
+        }
     }
 
     fun getAvailableTags(profileRepository: ProfileRepository, token: String) {
@@ -43,16 +70,17 @@ class TattooClientTagsFilterViewModel : ViewModel() {
             val result = profileRepository.getAvailableTags(token)
             if (result.error != null) {
                 _uiStateFlow.value = UiState.Error
-            }else if (!result.data.isNullOrEmpty()) {
-                 result.data.let {
-                     _listAvailableTags.value = it
-                 }
+            } else if (!result.data.isNullOrEmpty()) {
+                result.data.let {
+                    _listAvailableTags.value = it
+                }
                 _uiStateFlow.value = UiState.Success
-            }else{
+            } else {
                 _uiStateFlow.value = UiState.Error
             }
 
         }
 
     }
+
 }

@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import br.com.connectattoo.ConnectattooApplication
 import br.com.connectattoo.adapter.AdapterListProfileFilterTags
 import br.com.connectattoo.databinding.FragmentTattooClientTagsFilterBinding
+import br.com.connectattoo.local.database.AppDatabase
 import br.com.connectattoo.repository.ProfileRepository
 import br.com.connectattoo.ui.BaseFragment
 import br.com.connectattoo.utils.Constants
@@ -27,7 +28,13 @@ class TattooClientTagsFilterFragment : BaseFragment<FragmentTattooClientTagsFilt
     private lateinit var adapterListTagsProfile: AdapterListProfileFilterTags
     private val viewModel: TattooClientTagsFilterViewModel by viewModels()
     private lateinit var profileRepository: ProfileRepository
+    private lateinit var database: AppDatabase
+
     override fun setupViews() {
+        database = (requireActivity().application as ConnectattooApplication).database
+        val clientProfileDao = database.tattooClientProfileDao()
+        profileRepository = ProfileRepository(clientProfileDao)
+
         setupListeners()
         getAvailableTags()
         setupRecyclerView()
@@ -62,8 +69,13 @@ class TattooClientTagsFilterFragment : BaseFragment<FragmentTattooClientTagsFilt
     }
 
     private fun viewModelObservers() {
-        viewModel.listAvailableTags.observe(viewLifecycleOwner){listTags ->
-            if (listTags.isNotEmpty()){
+        viewModel.message.observe(viewLifecycleOwner) { message ->
+            if (message == "Sucesso") {
+                findNavController().popBackStack()
+            }
+        }
+        viewModel.listAvailableTags.observe(viewLifecycleOwner) { listTags ->
+            if (listTags.isNotEmpty()) {
                 adapterListTagsProfile.submitList(listTags)
             }
         }
@@ -71,13 +83,21 @@ class TattooClientTagsFilterFragment : BaseFragment<FragmentTattooClientTagsFilt
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiStateFlow.collect { uiState ->
                     when (uiState) {
-                        UiState.Success -> { Log.i(TAG, "")}
+                        UiState.Success -> {
+                            Log.i(TAG, "")
+                        }
 
-                        UiState.Error -> { Log.i(TAG, "")}
+                        UiState.Error -> {
+                            Log.i(TAG, "")
+                        }
 
-                        UiState.Loading -> { Log.i(TAG, "")}
+                        UiState.Loading -> {
+                            Log.i(TAG, "")
+                        }
 
-                        else -> { Log.i(TAG, "")}
+                        else -> {
+                            Log.i(TAG, "")
+                        }
                     }
                 }
             }
@@ -85,17 +105,31 @@ class TattooClientTagsFilterFragment : BaseFragment<FragmentTattooClientTagsFilt
     }
 
     private fun getAvailableTags() {
-        val database = (requireActivity().application as ConnectattooApplication).database
-        val clientProfileDao = database.tattooClientProfileDao()
-        profileRepository = ProfileRepository(clientProfileDao)
         viewLifecycleOwner.lifecycleScope.launch {
             val token = DataStoreManager.getUserSettings(requireContext(), Constants.API_TOKEN)
             viewModel.getAvailableTags(profileRepository, token)
         }
     }
-    private fun setupListeners(){
+
+    private fun setupListeners() {
         binding.ivBack.setOnClickListener {
             findNavController().popBackStack()
         }
+        binding.btnFilter.setOnClickListener {
+            saveTagsTattooClient()
+        }
+    }
+
+    private fun saveTagsTattooClient() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            val token = DataStoreManager.getUserSettings(requireContext(), Constants.API_TOKEN)
+            viewModel.saveTagsTattooClient(profileRepository, token = token)
+        }
+    }
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        adapterListTagsProfile.clearTags()
     }
 }

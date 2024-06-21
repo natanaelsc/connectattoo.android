@@ -11,6 +11,7 @@ import br.com.connectattoo.data.TattooClientProfile
 import br.com.connectattoo.local.database.dao.TattooClientProfileDao
 import br.com.connectattoo.utils.Constants.BEARER
 import br.com.connectattoo.utils.Constants.CODE_SUCCESS_200
+import br.com.connectattoo.utils.Constants.CODE_SUCCESS_201
 import br.com.connectattoo.utils.Constants.CODE_SUCCESS_204
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -141,6 +142,25 @@ class ProfileRepository(private val tattooClientProfileDao: TattooClientProfileD
 
         } catch (error: IOException) {
             val message = MessageException("Erro na obtenção das tags: ${error.message}")
+            Log.i(TAG, error.message.toString())
+            (ResourceResult.Error(null, message))
+        }
+    }
+
+    suspend fun saveTagsTattooClientAndUpdateLocalDb(token: String, listTags: List<String>) : ResourceResult<String>{
+        return try {
+            with(apiService.saveTagsTattooClient("$BEARER $token", listTags)){
+                if (this.code() == CODE_SUCCESS_201) {
+                    networkBoundResource(token)
+                    ResourceResult.Success("Sucesso")
+                } else {
+                    val error = MessageException("Erro ao salvar as tags tags")
+                    (ResourceResult.Error(null, error))
+                }
+            }
+
+        } catch (error: IOException) {
+            val message = MessageException("Erro ao salvar as tags tags: ${error.message}")
             Log.i(TAG, error.message.toString())
             (ResourceResult.Error(null, message))
         }
