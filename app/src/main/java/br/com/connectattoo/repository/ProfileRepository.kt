@@ -150,7 +150,7 @@ class ProfileRepository(private val tattooClientProfileDao: TattooClientProfileD
     suspend fun saveTagsTattooClientAndUpdateLocalDb(token: String, listTags: List<String>) : ResourceResult<String>{
         return try {
             with(apiService.saveTagsTattooClient("$BEARER $token", listTags)){
-                if (this.code() == CODE_SUCCESS_201) {
+                if (this.code() == CODE_SUCCESS_200) {
                     networkBoundResource(token)
                     ResourceResult.Success("Sucesso")
                 } else {

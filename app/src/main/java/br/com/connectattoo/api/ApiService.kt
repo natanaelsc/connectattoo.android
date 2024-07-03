@@ -62,7 +62,7 @@ interface ApiService {
         @Header("Authorization") authorization: String
     ): Response<List<Tag>>
 
-    @POST("profile/tags")
+    @PATCH("profile/me/tags")
     suspend fun saveTagsTattooClient(
         @Header("Authorization") authorization: String,
         @Body listTags: List<String>
