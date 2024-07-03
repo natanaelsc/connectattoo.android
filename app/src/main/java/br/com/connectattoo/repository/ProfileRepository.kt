@@ -18,6 +18,7 @@ import okhttp3.MultipartBody
 import retrofit2.Response
 import java.io.IOException
 
+@Suppress("TooManyFunctions")
 class ProfileRepository(private val tattooClientProfileDao: TattooClientProfileDao) {
     private val apiService: ApiService = ApiUrl.instance.create(ApiService::class.java)
     fun getProfileUser(token: String): Flow<ResourceResult<TattooClientProfile>> = flow {
