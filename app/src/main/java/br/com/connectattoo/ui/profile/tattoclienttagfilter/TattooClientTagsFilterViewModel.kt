@@ -20,6 +20,7 @@ class TattooClientTagsFilterViewModel : ViewModel() {
     val uiStateFlow: StateFlow<UiState> get() = _uiStateFlow
 
     private val _listTagsSelected: MutableList<Tag> = mutableListOf()
+    private val _listTagsClient: MutableList<Tag> = mutableListOf()
 
     private val _listAvailableTags = MutableLiveData<List<Tag>>(mutableListOf())
     val listAvailableTags: LiveData<List<Tag>> = _listAvailableTags
@@ -49,8 +50,25 @@ class TattooClientTagsFilterViewModel : ViewModel() {
             if (_listTagsSelected.isNotEmpty()) {
                 viewModelScope.launch {
                     val listIdTags: MutableList<String> = mutableListOf()
-                    _listTagsSelected.forEach {
-                        it.id?.let { it1 -> listIdTags.add(it1) }
+                    if (_listTagsSelected.count() < 5) {
+                        _listTagsSelected.forEach {
+                            it.id?.let { it1 -> listIdTags.add(it1) }
+                        }
+
+                        val missingCount = 5 - _listTagsSelected.count()
+
+                        var addedCount = 0
+                        for (tag in _listTagsClient) {
+                            if (addedCount >= missingCount) break
+                            if (!listIdTags.contains(tag.id)) {
+                                tag.id?.let { listIdTags.add(it) }
+                                addedCount++
+                            }
+                        }
+                    } else {
+                        _listTagsSelected.forEach {
+                            it.id?.let { it1 -> listIdTags.add(it1) }
+                        }
                     }
 
                     val result =
@@ -73,6 +91,13 @@ class TattooClientTagsFilterViewModel : ViewModel() {
             } else if (!result.data.isNullOrEmpty()) {
                 result.data.let {
                     _listAvailableTags.value = it
+                    it?.forEach { tag ->
+                        if (tag.isTagFiltered) {
+                            _listTagsSelected.add(tag)
+                            _listTagsClient.add(tag)
+                        }
+                    }
+
                 }
                 _uiStateFlow.value = UiState.Success
             } else {
