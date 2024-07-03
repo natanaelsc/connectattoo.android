@@ -179,15 +179,17 @@ class ProfileRepository(private val tattooClientProfileDao: TattooClientProfileD
             val message = MessageException("Erro ao salvar as tags tags: ${error.message}")
             Log.i(TAG, error.message.toString())
             (ResourceResult.Error(null, message))
+        }
+    }
 
-    suspend fun deleteClientProfile(): String{
+    suspend fun deleteClientProfile(): String {
         return try {
             tattooClientProfileDao.deleteTattooClientProfile()
             "Success"
-        }catch (error: IOException){
+        } catch (error: IOException) {
             Log.e(TAG, error.message.toString())
             "Error"
-
         }
     }
+
 }
