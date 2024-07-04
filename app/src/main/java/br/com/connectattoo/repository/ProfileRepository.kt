@@ -18,6 +18,7 @@ import okhttp3.MultipartBody
 import retrofit2.Response
 import java.io.IOException
 
+@Suppress("TooManyFunctions")
 class ProfileRepository(private val tattooClientProfileDao: TattooClientProfileDao) {
     private val apiService: ApiService = ApiUrl.instance.create(ApiService::class.java)
     fun getProfileUser(token: String): Flow<ResourceResult<TattooClientProfile>> = flow {
@@ -107,13 +108,16 @@ class ProfileRepository(private val tattooClientProfileDao: TattooClientProfileD
             )
         }
 
-    suspend fun updateClientProfile(token: String, map: Map<String, String>): ResourceResult<String> {
+    suspend fun updateClientProfile(
+        token: String,
+        map: Map<String, String>
+    ): ResourceResult<String> {
 
-      return try {
-            with(apiService.updateProfile("$BEARER $token", map)){
+        return try {
+            with(apiService.updateProfile("$BEARER $token", map)) {
                 if (this.code() == CODE_SUCCESS_200 || this.code() == CODE_SUCCESS_204) {
                     networkBoundResource(token = "$BEARER $token")
-                   (ResourceResult.Success("Sucesso na atualização do perfil"))
+                    (ResourceResult.Success("Sucesso na atualização do perfil"))
                 } else {
                     val error = MessageException("Erro na atualização do perfil")
                     (ResourceResult.Error(null, error))
@@ -128,11 +132,22 @@ class ProfileRepository(private val tattooClientProfileDao: TattooClientProfileD
 
     }
 
-   suspend fun getAvailableTags(token: String): ResourceResult<List<Tag>>{
+    suspend fun getAvailableTags(token: String): ResourceResult<List<Tag>> {
         return try {
-            with(apiService.getAvailableTags("$BEARER $token")){
+            with(apiService.getAvailableTags("$BEARER $token")) {
                 if (this.code() == CODE_SUCCESS_200 || this.code() == CODE_SUCCESS_204) {
-                    (ResourceResult.Success(this.body()))
+                    val tagsClient = tattooClientProfileDao.getTattooClientProfile()
+                    val tagsAvailable = this.body()
+
+                    val updatedTagsAvailable = tagsAvailable?.map { tagAvailable ->
+                        if (tagsClient?.tags?.any { it.id == tagAvailable.id } == true) {
+                            tagAvailable.copy(isTagFiltered = true)
+                        } else {
+                            tagAvailable
+                        }
+                    }
+
+                    ResourceResult.Success(updatedTagsAvailable)
                 } else {
                     val error = MessageException("Erro na obtenção das tags")
                     (ResourceResult.Error(null, error))
@@ -145,13 +160,37 @@ class ProfileRepository(private val tattooClientProfileDao: TattooClientProfileD
             (ResourceResult.Error(null, message))
         }
     }
-    suspend fun deleteClientProfile(): String{
+
+    suspend fun saveTagsTattooClientAndUpdateLocalDb(
+        token: String,
+        listTags: List<String>
+    ): ResourceResult<String> {
+        return try {
+            with(apiService.saveTagsTattooClient("$BEARER $token", listTags)) {
+                if (this.code() == CODE_SUCCESS_200) {
+                    networkBoundResource("$BEARER $token")
+                    ResourceResult.Success("Sucesso")
+                } else {
+                    val error = MessageException("Erro ao salvar as tags tags")
+                    (ResourceResult.Error(null, error))
+                }
+            }
+
+        } catch (error: IOException) {
+            val message = MessageException("Erro ao salvar as tags tags: ${error.message}")
+            Log.i(TAG, error.message.toString())
+            (ResourceResult.Error(null, message))
+        }
+    }
+
+    suspend fun deleteClientProfile(): String {
         return try {
             tattooClientProfileDao.deleteTattooClientProfile()
             "Success"
-        }catch (error: IOException){
+        } catch (error: IOException) {
             Log.e(TAG, error.message.toString())
             "Error"
         }
     }
+
 }

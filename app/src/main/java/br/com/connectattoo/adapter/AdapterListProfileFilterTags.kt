@@ -14,7 +14,9 @@ class AdapterListProfileFilterTags :
         DiffCallbackListProfileFilterTags()
     ) {
     var listenerTagProfile: (Tag) -> Unit = {}
-
+    fun clearTags() {
+        selectedTags.clear()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListTagsProfileViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -49,6 +51,12 @@ class AdapterListProfileFilterTags :
                         }
                     }
                     listenerTagProfile(tag)
+                }
+                if (tag.isTagFiltered){
+                    btnTagMyInterests.setBackgroundColor(Color.parseColor("#7A32C1"))
+                    btnTagMyInterests.setTextColor(Color.WHITE)
+                    isSelected = true
+                    selectedTags.add(tag)
                 }
                 btnTagMyInterests.text = tag.name
             }
