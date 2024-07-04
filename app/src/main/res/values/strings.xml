@@ -58,4 +58,7 @@
     <string name="txt_help">Ajuda</string>
     <string name="txt_logout">Terminar sessão</string>
     <string name="txt_swipe_down_to_refresh"><b><font color="#FF000000">Deslizar</font></b> para baixo, para <b><font color="#FF000000">atualizar</font></b>.</string>
+    <string name="txt_client">CLIENTE</string>
+    <string name="txt_lets_get_started_welcome">VAMOS COMEÇAR, SEJA BEM-VINDO!</string>
+    <string name="txt_tattoo_artist">TATUADOR</string>
 </resources>

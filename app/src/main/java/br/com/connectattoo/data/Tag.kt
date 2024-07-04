@@ -4,7 +4,8 @@ import br.com.connectattoo.local.database.entity.TagEntity
 
 data class Tag(
     val id: String? = "",
-    val name: String? = ""
+    val name: String? = "",
+    val isTagFiltered: Boolean = false
 ) {
     fun toTagEntity(): TagEntity = TagEntity(
         id = id,
