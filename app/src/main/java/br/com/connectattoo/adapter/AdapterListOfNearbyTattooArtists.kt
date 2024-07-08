@@ -10,8 +10,12 @@ import br.com.connectattoo.databinding.NearbyTattooArtistsItemBinding
 import br.com.connectattoo.utils.Constants.TYPE_MORE_ITEMS_NEARBY_TATOOO_ARTISTS
 import br.com.connectattoo.utils.Constants.TYPE_NEARBY_TATOOO_ARTISTS
 
-class AdapterListOfNearbyTattooArtists : RecyclerView.Adapter<NearbyTattooArtistsAndItemMoreViewHolder>() {
+class AdapterListOfNearbyTattooArtists :
+    RecyclerView.Adapter<NearbyTattooArtistsAndItemMoreViewHolder>() {
     private var list = mutableListOf<NearbyTattooArtistsAndItemMore>()
+    var listenerNearbyTattooArtists: (NearbyTattooArtistsAndItemMore.NearbyTattooArtists) -> Unit =
+        {}
+
     fun setData(newList: List<NearbyTattooArtistsAndItemMore>) {
         val diffResult =
             DiffUtil.calculateDiff(ListOfNearbyTattooArtistsDiffCallback(list, newList))
@@ -20,17 +24,23 @@ class AdapterListOfNearbyTattooArtists : RecyclerView.Adapter<NearbyTattooArtist
         diffResult.dispatchUpdatesTo(this)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int
+    override fun onCreateViewHolder(
+        parent: ViewGroup, viewType: Int
     ): NearbyTattooArtistsAndItemMoreViewHolder {
         return when (viewType) {
             TYPE_NEARBY_TATOOO_ARTISTS -> NearbyTattooArtistsAndItemMoreViewHolder.NearbyTattooArtistsViewHolder(
-                NearbyTattooArtistsItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                NearbyTattooArtistsItemBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
             )
 
             TYPE_MORE_ITEMS_NEARBY_TATOOO_ARTISTS -> NearbyTattooArtistsAndItemMoreViewHolder
-                .NearbyTattooArtistsMoreItemsViewHolder(ItemMoreHomeScreenBinding
-                    .inflate(LayoutInflater.from(parent.context), parent, false)
-            )
+                .NearbyTattooArtistsMoreItemsViewHolder(
+                    ItemMoreHomeScreenBinding
+                        .inflate(LayoutInflater.from(parent.context), parent, false)
+                )
 
             else -> throw java.lang.IllegalArgumentException("")
 
@@ -46,8 +56,15 @@ class AdapterListOfNearbyTattooArtists : RecyclerView.Adapter<NearbyTattooArtist
 
     override fun onBindViewHolder(holder: NearbyTattooArtistsAndItemMoreViewHolder, position: Int) {
         when (holder) {
-            is NearbyTattooArtistsAndItemMoreViewHolder.NearbyTattooArtistsViewHolder ->
-                holder.bind(list[position] as NearbyTattooArtistsAndItemMore.NearbyTattooArtists)
+            is NearbyTattooArtistsAndItemMoreViewHolder.NearbyTattooArtistsViewHolder -> {
+                val item = list[position] as NearbyTattooArtistsAndItemMore.NearbyTattooArtists
+                holder.bind(item)
+                holder.itemView.setOnClickListener {
+                    listenerNearbyTattooArtists(item)
+
+                }
+            }
+
 
             is NearbyTattooArtistsAndItemMoreViewHolder.NearbyTattooArtistsMoreItemsViewHolder ->
                 holder.bind(list[position] as NearbyTattooArtistsAndItemMore.MoreItems)
