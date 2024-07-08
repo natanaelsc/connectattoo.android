@@ -19,6 +19,7 @@ import br.com.connectattoo.databinding.FragmentTattooClientProfileBinding
 import br.com.connectattoo.repository.ProfileRepository
 import br.com.connectattoo.ui.BaseFragment
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import kotlinx.coroutines.launch
 
 
@@ -104,10 +105,14 @@ class TattooClientProfileFragment : BaseFragment<FragmentTattooClientProfileBind
                 .load(viewModel.state.userImage)
                 .circleCrop()
                 .placeholder(R.drawable.icon_person_profile)
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(btnUserImage)
             Glide.with(ivImageTattooArtist)
                 .load(viewModel.state.imageTattooArtist)
                 .circleCrop()
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(ivImageTattooArtist)
             txtNameUser.text = viewModel.state.txtNameUser
             txtAgeAndName.text = viewModel.state.txtAgeAndName
@@ -118,6 +123,8 @@ class TattooClientProfileFragment : BaseFragment<FragmentTattooClientProfileBind
 
             Glide.with(ivImageTattooArtist).load(viewModel.state.imageTattooArtist).circleCrop()
                 .placeholder(R.drawable.icon_person_profile)
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(ivImageTattooArtist)
 
         }

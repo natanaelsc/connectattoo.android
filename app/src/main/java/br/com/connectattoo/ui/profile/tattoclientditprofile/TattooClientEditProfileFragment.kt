@@ -31,6 +31,7 @@ import br.com.connectattoo.utils.DataStoreManager
 import br.com.connectattoo.utils.permissions.PermissionImage.shouldRequestPermission
 import br.com.connectattoo.utils.showBottomSheetEditPhotoProfile
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.launch
@@ -100,6 +101,8 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
                 Glide.with(this)
                     .load(uri)
                     .circleCrop()
+                    .skipMemoryCache(true)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .placeholder(R.drawable.icon_person_profile_black)
                     .into(binding.ivPhotoClient)
             }
@@ -113,6 +116,8 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
                 Glide.with(this)
                     .load(image)
                     .circleCrop()
+                    .skipMemoryCache(true)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .placeholder(R.drawable.icon_person_profile_black)
                     .into(binding.ivPhotoClient)
             }
@@ -213,6 +218,8 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
                     else image
                 )
                 .circleCrop()
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .placeholder(R.drawable.icon_person_profile)
                 .into(ivPhotoClient)
             etName.setText(viewModel.dataState.name)
