@@ -61,4 +61,7 @@
     <string name="txt_client">CLIENTE</string>
     <string name="txt_lets_get_started_welcome">VAMOS COMEÇAR, SEJA BEM-VINDO!</string>
     <string name="txt_tattoo_artist">TATUADOR</string>
+    <string name="txt_tattoo_artist_distance">Tatuador há <font color='#601ea1'>%s</font> de distância</string>
+    <string name="btn_send_message">Enviar mensagem</string>
+    <string name="btn_see_full_profile">Ver Perfil Completo</string>
 </resources>
