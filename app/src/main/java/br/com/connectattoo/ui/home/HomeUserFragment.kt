@@ -1,13 +1,14 @@
 package br.com.connectattoo.ui.home
 
 import android.os.Build
-import android.util.Log
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import br.com.connectattoo.ConnectattooApplication
 import br.com.connectattoo.R
 import br.com.connectattoo.adapter.AdapterListOfNearbyTattooArtists
@@ -121,8 +122,11 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
                 AdapterListOfNearbyTattooArtists()
             adapter = adapterListOfNearbyTattooartists
             adapterListOfNearbyTattooartists.setData(listOfNearbyTattooArtists)
-            adapterListOfNearbyTattooartists.listenerNearbyTattooArtists = {
-                Log.i("test", it.name.toString())
+            adapterListOfNearbyTattooartists.listenerNearbyTattooArtists = { tattooArtist ->
+                val bundle = Bundle().apply {
+                    putSerializable("tattooArtist", tattooArtist)
+                }
+                findNavController().navigate(R.id.action_homeUserFragment_to_profileTattooArtistDetailsFragment, bundle)
             }
         }
 

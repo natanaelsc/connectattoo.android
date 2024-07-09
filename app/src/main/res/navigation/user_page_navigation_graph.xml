@@ -9,7 +9,11 @@
         android:id="@+id/homeUserFragment"
         android:name="br.com.connectattoo.ui.home.HomeUserFragment"
         android:label="fragment_home_user"
-        tools:layout="@layout/fragment_home_user" />
+        tools:layout="@layout/fragment_home_user" >
+        <action
+            android:id="@+id/action_homeUserFragment_to_profileTattooArtistDetailsFragment"
+            app:destination="@id/profileTattooArtistDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/clientUserProfileFragment"
         android:name="br.com.connectattoo.ui.profile.tattooclient.TattooClientProfileFragment"
@@ -63,4 +67,9 @@
             app:destination="@id/clientUserProfileFragment"
             app:enterAnim="@anim/slide_out_rigth"/>
     </fragment>
+    <fragment
+        android:id="@+id/profileTattooArtistDetailsFragment"
+        android:name="br.com.connectattoo.ui.home.profiletattooartistdetails.ProfileTattooArtistDetailsFragment"
+        android:label="fragment_profile_tattoo_artist_details"
+        tools:layout="@layout/fragment_profile_tattoo_artist_details" />
 </navigation>
