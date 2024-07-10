@@ -1,8 +1,10 @@
 package br.com.connectattoo.ui.home.profiletattooartistdetails
 
+import android.graphics.Typeface
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -42,12 +44,14 @@ class ProfileTattooArtistDetailsFragment :
         val tattooArtist = arguments?.getSerializable("tattooArtist") as?
             NearbyTattooArtistsAndItemMore.NearbyTattooArtists
         binding.run {
+            if (tattooArtist?.profileImage != null){
 
-            Glide.with(ivPhotoArtist).load(tattooArtist?.profileImage).circleCrop()
-                .into(ivPhotoArtist)
+                Glide.with(requireContext())
+                    .load(tattooArtist.profileImage)
+                    .into(ivPhotoArtist)
+            }
             txtassessment.text = tattooArtist?.assessment
             txtNameArtist.text = tattooArtist?.name
-            txtTypeArtist.text = "Artista de tatuagem"
             txtaddress.text = tattooArtist?.address
 
             val distance = "2,1"
@@ -61,6 +65,12 @@ class ProfileTattooArtistDetailsFragment :
             val color = ContextCompat.getColor(requireContext(), R.color.purple500)
             spannableString.setSpan(
                 ForegroundColorSpan(color),
+                colorStart,
+                colorEnd,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            spannableString.setSpan(
+                StyleSpan(Typeface.BOLD),
                 colorStart,
                 colorEnd,
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE

@@ -1,252 +1,262 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.home.profiletattooartistdetails.ProfileTattooArtistDetailsFragment">
+    android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/iv_back"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_16dp"
-        android:layout_marginTop="@dimen/margin_16dp"
-        android:importantForAccessibility="no"
-        android:src="@drawable/arrow_chevron_left"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:context=".ui.home.profiletattooartistdetails.ProfileTattooArtistDetailsFragment">
 
-
-    <ImageView
-        android:id="@+id/iv_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/margin_16dp"
-        android:importantForAccessibility="no"
-        android:src="@drawable/header_logo_symbol"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/iv_back" />
-
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/icon_left_bird"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginEnd="@dimen/margin_8dp"
-        android:src="@drawable/icon_left_bird"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_photo_artist"
-        app:layout_constraintEnd_toStartOf="@+id/iv_photo_artist"
-        app:layout_constraintTop_toTopOf="@+id/iv_photo_artist" />
-
-    <ImageView
-        android:id="@+id/iv_photo_artist"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
-        android:layout_marginTop="@dimen/margin_8dp"
-        android:background="@drawable/circular_image_profile_tattoo_artist_details_border_purple"
-        android:contentDescription="@string/content_description_client_photo"
-        android:src="@drawable/icon_person_profile_black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_back" />
-
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/icon_right_bird"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="@dimen/margin_8dp"
-        android:src="@drawable/icon_right_bird"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_photo_artist"
-        app:layout_constraintStart_toEndOf="@+id/iv_photo_artist"
-        app:layout_constraintTop_toTopOf="@+id/iv_photo_artist" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_marginTop="@dimen/margin_8dp"
-        android:background="@drawable/bg_assessment"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="@+id/iv_photo_artist"
-        app:layout_constraintStart_toStartOf="@+id/iv_photo_artist"
-        app:layout_constraintTop_toBottomOf="@+id/iv_photo_artist">
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:layout_width="12dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_13dp"
-            android:src="@drawable/star" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/txtassessment"
+        <ImageView
+            android:id="@+id/iv_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
-            android:layout_marginEnd="@dimen/margin_13dp"
-            android:fontFamily="@font/raleway_semibold"
-            android:paddingBottom="4dp"
-            android:textColor="@color/white"
-            tools:text="4,7" />
+            android:layout_marginStart="@dimen/margin_16dp"
+            android:layout_marginTop="@dimen/margin_16dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/arrow_chevron_left"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/txt_name_artist"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_8dp"
-        android:fontFamily="@font/raleway_extrabold"
-        android:textColor="@color/purple500"
-        android:textSize="@dimen/txt_size_18sp"
-        app:layout_constraintEnd_toEndOf="@+id/iv_photo_artist"
-        app:layout_constraintHorizontal_bias="0.467"
-        app:layout_constraintStart_toStartOf="@+id/iv_photo_artist"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-        tools:text="Larissa Dias" />
+        <ImageView
+            android:id="@+id/iv_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_16dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/header_logo_symbol"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/iv_back" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/txt_type_artist"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_8dp"
-        android:fontFamily="@font/raleway_regular"
-        android:textColor="@color/black800"
-        android:textSize="@dimen/txt_size_11sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/txt_name_artist"
-        app:layout_constraintStart_toStartOf="@+id/txt_name_artist"
-        app:layout_constraintTop_toBottomOf="@+id/txt_name_artist"
-        tools:text="Artista de tatuagem" />
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/icon_left_bird"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="@dimen/margin_8dp"
+            android:src="@drawable/icon_left_bird"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_photo_artist"
+            app:layout_constraintEnd_toStartOf="@+id/iv_photo_artist"
+            app:layout_constraintTop_toTopOf="@+id/iv_photo_artist" />
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/icon_location"
-        android:layout_width="wrap_content"
-        android:layout_height="15dp"
-        android:layout_marginTop="@dimen/margin_8dp"
-        android:src="@drawable/location_icon"
-        app:layout_constraintEnd_toStartOf="@+id/txtaddress"
-        app:layout_constraintTop_toBottomOf="@+id/txt_type_artist" />
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_photo_artist"
+            style="@style/Widget.Material3.MaterialTimePicker.ImageButton"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:contentDescription="@string/content_description_client_photo"
+            android:padding="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_back"
+            app:srcCompat="@drawable/icon_person_profile_black"
+            app:strokeColor="@color/deepPurple"
+            app:strokeWidth="3dp" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/txtaddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ellipsize="end"
-        android:fontFamily="@font/raleway_semibold"
-        android:lines="2"
-        android:maxLines="2"
-        android:minLines="2"
-        android:textAlignment="center"
-        android:textColor="@color/black800"
-        android:textSize="@dimen/txt_size_12sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/icon_location"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/icon_location"
-        tools:text="Rua Alura 1309, Jardim Santa Cruz, São Paulo - SP" />
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardView"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginStart="@dimen/margin_16dp"
-        android:layout_marginTop="@dimen/margin_24dp"
-        android:layout_marginEnd="@dimen/margin_16dp"
-        android:backgroundTint="@color/purple50"
-        app:cardCornerRadius="@dimen/margin_8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/icon_location"
-        app:strokeColor="@color/purple500"
-        app:strokeWidth="1dp">
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/icon_right_bird"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="@dimen/margin_8dp"
+            android:src="@drawable/icon_right_bird"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_photo_artist"
+            app:layout_constraintStart_toEndOf="@+id/iv_photo_artist"
+            app:layout_constraintTop_toTopOf="@+id/iv_photo_artist" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
+            android:id="@+id/linearLayout3"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:background="@drawable/bg_assessment"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="@+id/iv_photo_artist"
+            app:layout_constraintStart_toStartOf="@+id/iv_photo_artist"
+            app:layout_constraintTop_toBottomOf="@+id/iv_photo_artist">
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/icon_location_distance"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:src="@drawable/icon_location_tattoo" />
-
+                android:layout_width="12dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_13dp"
+                android:src="@drawable/star" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/txt_distance_artist"
+                android:id="@+id/txtassessment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="@dimen/margin_8dp"
-                android:layout_marginEnd="@dimen/margin_16dp"
-                android:ellipsize="end"
-                android:fontFamily="@font/raleway_regular"
-                android:lines="1"
-                android:textColor="@color/black800"
-                android:textSize="@dimen/txt_size_14sp"
-                android:textStyle="bold"
-                tools:text="@string/txt_tattoo_artist_distance" />
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="@dimen/margin_13dp"
+                android:fontFamily="@font/raleway_semibold"
+                android:paddingBottom="4dp"
+                android:textColor="@color/white"
+                tools:text="4,7" />
+
         </LinearLayout>
 
-    </com.google.android.material.card.MaterialCardView>
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txt_name_artist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:fontFamily="@font/raleway_extrabold"
+            android:textColor="@color/purple500"
+            android:textSize="@dimen/txt_size_18sp"
+            app:layout_constraintEnd_toEndOf="@+id/iv_photo_artist"
+            app:layout_constraintHorizontal_bias="0.467"
+            app:layout_constraintStart_toStartOf="@+id/iv_photo_artist"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+            tools:text="Larissa Dias" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_photos_artist_works"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_8dp"
-        android:clipToPadding="false"
-        android:orientation="horizontal"
-        android:paddingHorizontal="@dimen/margin_16dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialCardView"
-        tools:listitem="@layout/item_photo_profile_tattoo_artist_datails" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txt_type_artist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:fontFamily="@font/raleway_regular"
+            android:text="Artista de tatuagem"
+            android:textColor="@color/black800"
+            android:textSize="@dimen/txt_size_11sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/txt_name_artist"
+            app:layout_constraintStart_toStartOf="@+id/txt_name_artist"
+            app:layout_constraintTop_toBottomOf="@+id/txt_name_artist" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_see_full_profile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/margin_16dp"
-        android:background="@drawable/bg_butao_criar_conta"
-        android:text="@string/btn_see_full_profile"
-        android:textAllCaps="false"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:backgroundTint="@null"
-        app:icon="@drawable/user_01"
-        app:iconGravity="textEnd"
-        app:iconPadding="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rv_photos_artist_works" />
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/icon_location"
+            android:layout_width="wrap_content"
+            android:layout_height="15dp"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:src="@drawable/location_icon"
+            app:layout_constraintEnd_toStartOf="@+id/txtaddress"
+            app:layout_constraintTop_toBottomOf="@+id/txt_type_artist" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_send_message"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/margin_16dp"
-        android:layout_marginTop="@dimen/margin_8dp"
-        android:background="@drawable/bg_cancel_button"
-        android:text="@string/btn_send_message"
-        android:textAllCaps="false"
-        android:textColor="@color/deepPurple"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:backgroundTint="@null"
-        app:icon="@drawable/communication_chat_circle_dots"
-        app:iconGravity="textEnd"
-        app:iconPadding="8dp"
-        app:iconTint="@color/purple900"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_see_full_profile" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtaddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/raleway_semibold"
+            android:lines="2"
+            android:maxLines="2"
+            android:minLines="2"
+            android:textAlignment="center"
+            android:textColor="@color/black800"
+            android:textSize="@dimen/txt_size_12sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/icon_location"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/icon_location"
+            tools:text="Rua Alura 1309, Jardim Santa Cruz, São Paulo - SP" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/materialCardView"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="@dimen/margin_16dp"
+            android:layout_marginTop="@dimen/margin_24dp"
+            android:layout_marginEnd="@dimen/margin_16dp"
+            android:backgroundTint="@color/purple50"
+            app:cardCornerRadius="@dimen/margin_8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/icon_location"
+            app:strokeColor="@color/purple500"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/icon_location_distance"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/icon_location_tattoo" />
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txt_distance_artist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/margin_8dp"
+                    android:layout_marginEnd="@dimen/margin_16dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/raleway_regular"
+                    android:lines="1"
+                    android:textColor="@color/black800"
+                    android:textSize="@dimen/txt_size_14sp"
+                    android:textStyle="bold"
+                    tools:text="@string/txt_tattoo_artist_distance" />
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_photos_artist_works"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/margin_16dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView"
+            tools:listitem="@layout/item_photo_profile_tattoo_artist_datails" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_see_full_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_16dp"
+            android:background="@drawable/bg_butao_criar_conta"
+            android:text="@string/btn_see_full_profile"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:backgroundTint="@null"
+            app:icon="@drawable/user_01"
+            app:iconGravity="textEnd"
+            app:iconPadding="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rv_photos_artist_works" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_send_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_16dp"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:layout_marginBottom="@dimen/margin_24dp"
+            android:background="@drawable/bg_cancel_button"
+            android:text="@string/btn_send_message"
+            android:textAllCaps="false"
+            android:textColor="@color/deepPurple"
+            android:textSize="@dimen/txt_size_18sp"
+            android:textStyle="bold"
+            app:backgroundTint="@null"
+            app:icon="@drawable/communication_chat_circle_dots"
+            app:iconGravity="textEnd"
+            app:iconPadding="8dp"
+            app:iconTint="@color/purple900"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_see_full_profile" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
