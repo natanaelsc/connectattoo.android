@@ -7,22 +7,29 @@ import br.com.connectattoo.databinding.ItemMoreHomeScreenBinding
 import br.com.connectattoo.databinding.NearbyTattooArtistsItemBinding
 import com.bumptech.glide.Glide
 
-sealed class NearbyTattooArtistsAndItemMoreViewHolder (binding: ViewBinding) :
+sealed class NearbyTattooArtistsAndItemMoreViewHolder(binding: ViewBinding) :
     RecyclerView.ViewHolder(binding.root) {
-        class NearbyTattooArtistsViewHolder(
-            private val binding: NearbyTattooArtistsItemBinding
-        ): NearbyTattooArtistsAndItemMoreViewHolder(binding){
-            fun bind(nearbyTattooArtists: NearbyTattooArtistsAndItemMore.NearbyTattooArtists){
-                binding.run {
-                    Glide.with(tattoo).load(nearbyTattooArtists.tattoo).into(tattoo)
-                    txtName.text = nearbyTattooArtists.name
-                    txtassessment.text = nearbyTattooArtists.assessment
-                    txtaddress.text = nearbyTattooArtists.address
-                    Glide.with(profileImage).load(nearbyTattooArtists.profileImage)
-                        .into(profileImage)
+    var listenerNearbyTattooArtists: (NearbyTattooArtistsAndItemMore.NearbyTattooArtists) -> Unit =
+        {}
+
+    class NearbyTattooArtistsViewHolder(
+        private val binding: NearbyTattooArtistsItemBinding
+    ) : NearbyTattooArtistsAndItemMoreViewHolder(binding) {
+        fun bind(nearbyTattooArtists: NearbyTattooArtistsAndItemMore.NearbyTattooArtists) {
+            binding.run {
+                cardTattooArtist.setOnClickListener {
+                    listenerNearbyTattooArtists(nearbyTattooArtists)
                 }
+                Glide.with(tattoo).load(nearbyTattooArtists.tattoo).into(tattoo)
+                txtName.text = nearbyTattooArtists.name
+                txtassessment.text = nearbyTattooArtists.assessment
+                txtaddress.text = nearbyTattooArtists.address
+                Glide.with(profileImage).load(nearbyTattooArtists.profileImage)
+                    .into(profileImage)
             }
         }
+    }
+
     class NearbyTattooArtistsMoreItemsViewHolder(
         private val binding: ItemMoreHomeScreenBinding
     ) : NearbyTattooArtistsAndItemMoreViewHolder(binding) {
