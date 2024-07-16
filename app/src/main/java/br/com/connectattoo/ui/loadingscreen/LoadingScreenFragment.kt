@@ -19,7 +19,7 @@ class LoadingScreenFragment : BaseFragment<FragmentLoadingScreenBinding>() {
         observerLoadingState()
         lifecycleScope.launch {
             delay(INTERVAL_TIME_MILLIS_10000)
-            //viewModel.setLoadingState(false)
+
         }
     }
 
@@ -29,9 +29,10 @@ class LoadingScreenFragment : BaseFragment<FragmentLoadingScreenBinding>() {
     ): FragmentLoadingScreenBinding {
         return FragmentLoadingScreenBinding.inflate(inflater, container, false)
     }
-    private fun observerLoadingState(){
+
+    private fun observerLoadingState() {
         lifecycleScope.launch {
-          viewModel.loadingState.collect { loading ->
+            viewModel.loadingState.collect { loading ->
                 if (loading) {
                     binding.run {
                         while (viewModel.loadingState.value) {
