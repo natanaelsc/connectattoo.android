@@ -17,10 +17,20 @@ import br.com.connectattoo.utils.Constants.API_USER_NAME
 import br.com.connectattoo.utils.Constants.CODE_ERROR_401
 import br.com.connectattoo.utils.Constants.CODE_ERROR_404
 import br.com.connectattoo.utils.DataStoreManager
+import br.com.connectattoo.utils.executeWithLoadingAsync
+import br.com.connectattoo.utils.hideLoadingFragment
 import kotlinx.coroutines.launch
 
 class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
     private lateinit var repository: AuthRepository
+    override fun inflateBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentWelcomeBinding {
+        return FragmentWelcomeBinding.inflate(inflater, container, false)
+
+    }
+
     override fun setupViews() {
 
         repository = AuthRepository()
@@ -33,13 +43,6 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
         }
     }
 
-    override fun inflateBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentWelcomeBinding {
-        return FragmentWelcomeBinding.inflate(inflater, container, false)
-
-    }
 
     private fun verifyTokenApi() {
         viewLifecycleOwner.lifecycleScope.launch {
@@ -51,12 +54,15 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
     }
 
     private suspend fun verifyUserConfirmation(token: String) {
-        val result = repository.verifyUserConfirmation(token)
-        if (result.isSuccessful) {
-            handleSuccessfulResponse(result.body(), token)
-        } else {
-            handleErrorResponse(result.code())
+        val result = executeWithLoadingAsync(binding.root) {
+            repository.verifyUserConfirmation(token)
         }
+        if (result.await().isSuccessful) {
+            handleSuccessfulResponse(result.await().body(), token)
+        } else {
+            handleErrorResponse(result.await().code())
+        }
+        hideLoadingFragment(binding.root)
     }
 
     private fun handleSuccessfulResponse(body: ApiConfirmationResponse?, token: String) {

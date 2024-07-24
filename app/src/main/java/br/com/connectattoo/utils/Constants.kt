@@ -11,6 +11,7 @@ object Constants {
     const val CODE_ERROR_409 = 409
     const val INTERVAL_TIME_MILLIS_10000 = 10000L
     const val INTERVAL_TIME_MILLIS_1000 = 1000L
+    const val INTERVAL_TIME_MILLIS_1500 = 1500L
     const val INTERVAL_TIME_MILLIS_5000 = 5000L
     const val INTERVAL_TIME_MILLIS_3000 = 3000L
     const val SIZE_1024 = 1024
