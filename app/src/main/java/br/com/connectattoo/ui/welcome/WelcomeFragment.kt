@@ -55,7 +55,7 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
     }
 
     private suspend fun verifyUserConfirmation(token: String) {
-        val result = executeWithLoadingAsync(binding.root) {
+        val result = executeWithLoadingAsync(binding.root, R.id.nav_host_fragment) {
             repository.verifyUserConfirmation(token)
         }
         if (result.await().isSuccessful) {

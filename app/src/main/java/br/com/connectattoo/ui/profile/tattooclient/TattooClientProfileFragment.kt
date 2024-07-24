@@ -18,6 +18,9 @@ import br.com.connectattoo.adapter.AdapterListTagsProfile
 import br.com.connectattoo.databinding.FragmentTattooClientProfileBinding
 import br.com.connectattoo.repository.ProfileRepository
 import br.com.connectattoo.ui.BaseFragment
+import br.com.connectattoo.utils.UiState
+import br.com.connectattoo.utils.hideLoadingFragment
+import br.com.connectattoo.utils.showLoadingFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import kotlinx.coroutines.launch
@@ -51,19 +54,21 @@ class TattooClientProfileFragment : BaseFragment<FragmentTattooClientProfileBind
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiStateFlow.collect { uiState ->
                     when (uiState) {
-                        TattooClientProfileViewModel.UiState.Success -> {
+                        UiState.Success -> {
                             insertInformationTattooClientProfile()
+                            hideLoadingFragment(binding.root)
                         }
 
-                        TattooClientProfileViewModel.UiState.Error -> {
+                        UiState.Error -> {
+                            hideLoadingFragment(binding.root)
                         }
 
-                        TattooClientProfileViewModel.UiState.Loading -> {
-
+                        UiState.Loading -> {
+                            showLoadingFragment(binding.root, R.id.nav_user_fragment)
                         }
 
                         else -> {
-
+                            hideLoadingFragment(binding.root)
                         }
                     }
                 }

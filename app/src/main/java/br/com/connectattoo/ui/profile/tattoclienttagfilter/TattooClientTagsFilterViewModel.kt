@@ -47,8 +47,10 @@ class TattooClientTagsFilterViewModel : ViewModel() {
         token: String
     ) {
         try {
+
             if (_listTagsSelected.isNotEmpty()) {
                 viewModelScope.launch {
+                    _uiStateFlow.value = UiState.Loading
                     val listIdTags: MutableList<String> = mutableListOf()
                     if (_listTagsSelected.count() < 5) {
                         _listTagsSelected.forEach {
@@ -74,7 +76,7 @@ class TattooClientTagsFilterViewModel : ViewModel() {
                     val result =
                         profileRepository.saveTagsTattooClientAndUpdateLocalDb(token, listIdTags)
                     _message.value = result.data
-
+                    _uiStateFlow.value = UiState.Success
                 }
             }
         } catch (error: IOException) {

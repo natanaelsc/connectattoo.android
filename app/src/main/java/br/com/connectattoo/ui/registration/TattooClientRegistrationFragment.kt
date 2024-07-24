@@ -143,7 +143,7 @@ class TattooClientRegistrationFragment :
     @RequiresApi(Build.VERSION_CODES.O)
     override fun validateUserRegistration(action: Int) {
         val userRegisterData = createRegisterUserData()
-        showLoadingFragment(binding.root)
+        showLoadingFragment(binding.root, R.id.nav_host_fragment)
         apiService.registerUser(userRegisterData).enqueue(object : Callback<TokenData> {
             override fun onResponse(call: Call<TokenData>, response: Response<TokenData>) {
                 registrationResponse(action, response) {

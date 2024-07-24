@@ -2,7 +2,6 @@ package br.com.connectattoo.utils
 
 import android.view.View
 import androidx.fragment.app.Fragment
-import br.com.connectattoo.R
 import br.com.connectattoo.ui.loadingscreen.LoadingScreenFragment
 import br.com.connectattoo.utils.Constants.INTERVAL_TIME_MILLIS_1500
 import kotlinx.coroutines.CoroutineScope
@@ -11,11 +10,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 
-fun Fragment.showLoadingFragment(rootScreen: View) {
+fun Fragment.showLoadingFragment(rootScreen: View, containerId: Int) {
 
     rootScreen.visibility = View.GONE
     parentFragmentManager.beginTransaction()
-        .add(R.id.nav_host_fragment, LoadingScreenFragment(), "loadingFragment")
+        .add(containerId, LoadingScreenFragment(), "loadingFragment")
         .commitAllowingStateLoss()
 }
 
@@ -30,6 +29,7 @@ fun Fragment.hideLoadingFragment(rootScreen: View) {
 
 fun <T> Fragment.executeWithLoadingAsync(
     binding: View,
+    containerId: Int,
     function: suspend () -> T
 ): Deferred<T> {
     return CoroutineScope(Dispatchers.Main).async {
@@ -39,7 +39,7 @@ fun <T> Fragment.executeWithLoadingAsync(
         val durationMs = endTime - startTime
 
         if (durationMs > 1) {
-            showLoadingFragment(binding)
+            showLoadingFragment(binding, containerId)
             delay(INTERVAL_TIME_MILLIS_1500)
         }
 
