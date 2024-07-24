@@ -7,6 +7,7 @@ object Constants {
     const val CODE_SUCCESS_201 = 201
     const val CODE_SUCCESS_204 = 204
     const val CODE_ERROR_401 = 401
+    const val CODE_ERROR_403 = 403
     const val CODE_ERROR_404 = 404
     const val CODE_ERROR_409 = 409
     const val INTERVAL_TIME_MILLIS_10000 = 10000L

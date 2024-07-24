@@ -15,6 +15,8 @@ import br.com.connectattoo.data.AddressData
 import br.com.connectattoo.data.ArtistData
 import br.com.connectattoo.data.TokenData
 import br.com.connectattoo.databinding.FragmentTattooArtistRegistrationBinding
+import br.com.connectattoo.utils.hideLoadingFragment
+import br.com.connectattoo.utils.showLoadingFragment
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -250,7 +252,7 @@ class TattooArtistRegistrationFragment :
     @RequiresApi(Build.VERSION_CODES.O)
     override fun validateUserRegistration(action: Int) {
         val artistRegisterData = createArtistRegisterData()
-
+        showLoadingFragment(binding.root)
         apiService.registerArtist(artistRegisterData).enqueue(object : Callback<TokenData> {
             override fun onResponse(call: Call<TokenData>, response: Response<TokenData>) {
                 registrationResponse(action, response) {

@@ -15,6 +15,7 @@ import br.com.connectattoo.ui.BaseFragment
 import br.com.connectattoo.utils.Constants.API_TOKEN
 import br.com.connectattoo.utils.Constants.API_USER_NAME
 import br.com.connectattoo.utils.Constants.CODE_ERROR_401
+import br.com.connectattoo.utils.Constants.CODE_ERROR_403
 import br.com.connectattoo.utils.Constants.CODE_ERROR_404
 import br.com.connectattoo.utils.DataStoreManager
 import br.com.connectattoo.utils.executeWithLoadingAsync
@@ -60,7 +61,7 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
         if (result.await().isSuccessful) {
             handleSuccessfulResponse(result.await().body(), token)
         } else {
-            handleErrorResponse(result.await().code())
+            handleErrorResponse(result.await().code(), token)
         }
         hideLoadingFragment(binding.root)
     }
@@ -78,8 +79,15 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
         }
     }
 
-    private suspend fun handleErrorResponse(code: Int) {
+    private suspend fun handleErrorResponse(code: Int, token: String) {
         when (code) {
+            CODE_ERROR_403 -> {
+                val bundle = Bundle().apply { putString("token", token) }
+                findNavController().navigate(
+                    R.id.action_welcomeFragment_to_confirmationFragment,
+                    bundle
+                )
+            }
             CODE_ERROR_404 -> {
                 deleteUserInfoDataStore()
             }

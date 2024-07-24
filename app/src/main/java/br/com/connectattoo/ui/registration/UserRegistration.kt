@@ -23,6 +23,7 @@ import br.com.connectattoo.utils.Constants.API_TOKEN
 import br.com.connectattoo.utils.Constants.CODE_ERROR_404
 import br.com.connectattoo.utils.Constants.CODE_ERROR_409
 import br.com.connectattoo.utils.DataStoreManager
+import br.com.connectattoo.utils.hideLoadingFragment
 import com.github.rtoshiro.util.format.SimpleMaskFormatter
 import com.github.rtoshiro.util.format.text.MaskTextWatcher
 import com.google.android.material.snackbar.Snackbar
@@ -214,6 +215,7 @@ abstract class UserRegistration<T : ViewBinding> : BaseFragment<T>() {
         } else {
             handleErrorResponse(response)
         }
+        hideLoadingFragment(binding.root)
     }
 
     private fun handleSuccessfulResponse(action: Int, response: Response<TokenData>) {
