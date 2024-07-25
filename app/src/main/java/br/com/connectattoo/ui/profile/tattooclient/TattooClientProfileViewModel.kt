@@ -104,7 +104,7 @@ class TattooClientProfileViewModel : ViewModel() {
 
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun getInitialInformationTattooClientProfile(profileRepository: ProfileRepository) {
+    fun getInitialInformationTattooClientProfile(profileRepository: ProfileRepository): Boolean {
         viewModelScope.launch {
             _uiStateFlow.value = UiState.Loading
             val result = profileRepository.getClientProfileRoom()
@@ -132,12 +132,11 @@ class TattooClientProfileViewModel : ViewModel() {
                         listGalleries = clientProfile.galleries
                     )
                     getListGalleriesTattooClientProfile()
-                    _uiStateFlow.value = UiState.Success
                 }
             }
-         _uiStateFlow.value = UiState.Success
+            _uiStateFlow.value = UiState.Success
         }
-
+        return true
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

@@ -18,14 +18,16 @@ import br.com.connectattoo.adapter.AdapterListTagsProfile
 import br.com.connectattoo.databinding.FragmentTattooClientProfileBinding
 import br.com.connectattoo.repository.ProfileRepository
 import br.com.connectattoo.ui.BaseFragment
+import br.com.connectattoo.utils.Constants
 import br.com.connectattoo.utils.UiState
 import br.com.connectattoo.utils.hideLoadingFragment
 import br.com.connectattoo.utils.showLoadingFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-
+@RequiresApi(Build.VERSION_CODES.O)
 class TattooClientProfileFragment : BaseFragment<FragmentTattooClientProfileBinding>() {
     private lateinit var adapterListTagsProfile: AdapterListTagsProfile
     private var adapterListMyGalleries = AdapterListMyGalleries()
@@ -38,16 +40,32 @@ class TattooClientProfileFragment : BaseFragment<FragmentTattooClientProfileBind
         return FragmentTattooClientProfileBinding.inflate(inflater, container, false)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+
     override fun setupViews() {
+        setupRecyclerView()
+        getInitialInformation()
+        observerViewModel()
+        setupBtnClicks()
+    }
+
+    private fun getInitialInformation() {
         val database = (requireActivity().application as ConnectattooApplication).database
         val clientProfileDao = database.tattooClientProfileDao()
         profileRepository = ProfileRepository(clientProfileDao)
-        viewModel.getInitialInformationTattooClientProfile(profileRepository)
-        setupRecyclerView()
-        setupBtnClicks()
-        observerViewModel()
+        viewLifecycleOwner.lifecycleScope.launch {
+            val startTime = System.currentTimeMillis()
+            viewModel.getInitialInformationTattooClientProfile(profileRepository)
+            val endTime = System.currentTimeMillis()
+            val durationMs = endTime - startTime
+
+            if (durationMs > 1) {
+                showLoadingFragment(binding.root, R.id.nav_user_fragment)
+                delay(Constants.INTERVAL_TIME_MILLIS_1500)
+            }
+        }
+
     }
+
 
     private fun observerViewModel() {
         lifecycleScope.launch {
@@ -55,8 +73,8 @@ class TattooClientProfileFragment : BaseFragment<FragmentTattooClientProfileBind
                 viewModel.uiStateFlow.collect { uiState ->
                     when (uiState) {
                         UiState.Success -> {
-                            insertInformationTattooClientProfile()
                             hideLoadingFragment(binding.root)
+                            insertInformationTattooClientProfile()
                         }
 
                         UiState.Error -> {
@@ -64,7 +82,6 @@ class TattooClientProfileFragment : BaseFragment<FragmentTattooClientProfileBind
                         }
 
                         UiState.Loading -> {
-                            showLoadingFragment(binding.root, R.id.nav_user_fragment)
                         }
 
                         else -> {

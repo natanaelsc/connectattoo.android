@@ -1,7 +1,5 @@
 package br.com.connectattoo.ui.profile.tattoclienttagfilter
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
@@ -72,11 +70,7 @@ class TattooClientTagsFilterFragment : BaseFragment<FragmentTattooClientTagsFilt
     }
 
     private fun viewModelObservers() {
-        viewModel.message.observe(viewLifecycleOwner) { message ->
-            if (message == "Sucesso") {
-                findNavController().popBackStack()
-            }
-        }
+
         viewModel.listAvailableTags.observe(viewLifecycleOwner) { listTags ->
             if (listTags.isNotEmpty()) {
                 adapterListTagsProfile.submitList(listTags)
@@ -103,6 +97,11 @@ class TattooClientTagsFilterFragment : BaseFragment<FragmentTattooClientTagsFilt
                         }
                     }
                 }
+            }
+        }
+        viewModel.message.observe(viewLifecycleOwner) { message ->
+            if (message == "Sucesso") {
+                findNavController().popBackStack()
             }
         }
     }
