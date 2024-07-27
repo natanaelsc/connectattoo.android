@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.connectattoo.data.MyGalleryProfile
 import br.com.connectattoo.repository.ProfileRepository
+import br.com.connectattoo.utils.UiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -103,9 +104,9 @@ class TattooClientProfileViewModel : ViewModel() {
 
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun getInitialInformationTattooClientProfile(profileRepository: ProfileRepository) {
-        _uiStateFlow.value = UiState.Loading
+    fun getInitialInformationTattooClientProfile(profileRepository: ProfileRepository): Boolean {
         viewModelScope.launch {
+            _uiStateFlow.value = UiState.Loading
             val result = profileRepository.getClientProfileRoom()
 
             result.collect {
@@ -131,11 +132,11 @@ class TattooClientProfileViewModel : ViewModel() {
                         listGalleries = clientProfile.galleries
                     )
                     getListGalleriesTattooClientProfile()
-                    _uiStateFlow.value = UiState.Success
                 }
             }
+            _uiStateFlow.value = UiState.Success
         }
-
+        return true
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -160,13 +161,6 @@ class TattooClientProfileViewModel : ViewModel() {
             imageTattooArtist = "https://pub-777ce89a8a3641429d92a32c49eac191.r2" +
                 ".dev/tattoo_client_profile%2Favatar%2FLarissa_Dias_tatuadora.png"
         )
-    }
-
-    sealed class UiState {
-        data object Success : UiState()
-        data object Error : UiState()
-        data object Loading : UiState()
-        data object Initial : UiState()
     }
 
 }

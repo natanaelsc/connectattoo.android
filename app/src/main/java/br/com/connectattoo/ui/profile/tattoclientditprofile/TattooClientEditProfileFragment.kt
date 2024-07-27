@@ -28,8 +28,10 @@ import br.com.connectattoo.repository.ProfileRepository
 import br.com.connectattoo.ui.BaseFragment
 import br.com.connectattoo.utils.Constants
 import br.com.connectattoo.utils.DataStoreManager
+import br.com.connectattoo.utils.hideLoadingFragment
 import br.com.connectattoo.utils.permissions.PermissionImage.shouldRequestPermission
 import br.com.connectattoo.utils.showBottomSheetEditPhotoProfile
+import br.com.connectattoo.utils.showLoadingFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.snackbar.Snackbar
@@ -185,23 +187,28 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
                     when (uiState) {
                         TattooClientEditProfileViewModel.UiState.Success -> {
                             insertInformationTattooClientProfile()
+                            hideLoadingFragment(binding.root)
                             binding.btnUpload.isEnabled = true
                         }
 
                         TattooClientEditProfileViewModel.UiState.Error -> {
                             binding.btnUpload.isEnabled = true
+                            hideLoadingFragment(binding.root)
                             val message = viewModel.dataState.stateErrorDeleteImage
                             if (message != null) {
                                 Log.i("ErrorDeleteImage", message)
                             }
+
                         }
 
                         TattooClientEditProfileViewModel.UiState.Loading -> {
                             binding.btnUpload.isEnabled = false
+                            showLoadingFragment(binding.root, R.id.nav_user_fragment)
                         }
 
                         else -> {
                             binding.btnUpload.isEnabled = true
+                            hideLoadingFragment(binding.root)
                         }
                     }
                 }

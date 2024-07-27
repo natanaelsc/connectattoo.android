@@ -23,6 +23,8 @@ import br.com.connectattoo.repository.ProfileRepository
 import br.com.connectattoo.ui.BaseFragment
 import br.com.connectattoo.utils.Constants.API_TOKEN
 import br.com.connectattoo.utils.DataStoreManager
+import br.com.connectattoo.utils.hideLoadingFragment
+import br.com.connectattoo.utils.showLoadingFragment
 import kotlinx.coroutines.launch
 
 @Suppress("TooManyFunctions")
@@ -169,17 +171,19 @@ class HomeUserFragment : BaseFragment<FragmentHomeUserBinding>() {
                     when (uiState) {
                         HomeUserViewModel.UiState.Success -> {
                             showUserName(viewModel.state.name.toString())
+                            hideLoadingFragment(binding.root)
                         }
 
                         HomeUserViewModel.UiState.Error -> {
+                            hideLoadingFragment(binding.root)
                         }
 
                         HomeUserViewModel.UiState.Loading -> {
-
+                            showLoadingFragment(binding.root, R.id.nav_user_fragment)
                         }
 
                         else -> {
-
+                            hideLoadingFragment(binding.root)
                         }
                     }
                 }

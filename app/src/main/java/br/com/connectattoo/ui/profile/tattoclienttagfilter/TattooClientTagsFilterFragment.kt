@@ -1,7 +1,5 @@
 package br.com.connectattoo.ui.profile.tattoclienttagfilter
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
@@ -10,6 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import br.com.connectattoo.ConnectattooApplication
+import br.com.connectattoo.R
 import br.com.connectattoo.adapter.AdapterListProfileFilterTags
 import br.com.connectattoo.databinding.FragmentTattooClientTagsFilterBinding
 import br.com.connectattoo.local.database.AppDatabase
@@ -18,6 +17,8 @@ import br.com.connectattoo.ui.BaseFragment
 import br.com.connectattoo.utils.Constants
 import br.com.connectattoo.utils.DataStoreManager
 import br.com.connectattoo.utils.UiState
+import br.com.connectattoo.utils.hideLoadingFragment
+import br.com.connectattoo.utils.showLoadingFragment
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
@@ -34,11 +35,11 @@ class TattooClientTagsFilterFragment : BaseFragment<FragmentTattooClientTagsFilt
         database = (requireActivity().application as ConnectattooApplication).database
         val clientProfileDao = database.tattooClientProfileDao()
         profileRepository = ProfileRepository(clientProfileDao)
+        viewModelObservers()
 
         setupListeners()
         getAvailableTags()
         setupRecyclerView()
-        viewModelObservers()
     }
 
     override fun inflateBinding(
@@ -69,11 +70,7 @@ class TattooClientTagsFilterFragment : BaseFragment<FragmentTattooClientTagsFilt
     }
 
     private fun viewModelObservers() {
-        viewModel.message.observe(viewLifecycleOwner) { message ->
-            if (message == "Sucesso") {
-                findNavController().popBackStack()
-            }
-        }
+
         viewModel.listAvailableTags.observe(viewLifecycleOwner) { listTags ->
             if (listTags.isNotEmpty()) {
                 adapterListTagsProfile.submitList(listTags)
@@ -84,22 +81,27 @@ class TattooClientTagsFilterFragment : BaseFragment<FragmentTattooClientTagsFilt
                 viewModel.uiStateFlow.collect { uiState ->
                     when (uiState) {
                         UiState.Success -> {
-                            Log.i(TAG, "")
+                            hideLoadingFragment(binding.root)
                         }
 
                         UiState.Error -> {
-                            Log.i(TAG, "")
+                            hideLoadingFragment(binding.root)
                         }
 
                         UiState.Loading -> {
-                            Log.i(TAG, "")
+                            showLoadingFragment(binding.root, R.id.nav_user_fragment)
                         }
 
                         else -> {
-                            Log.i(TAG, "")
+                            hideLoadingFragment(binding.root)
                         }
                     }
                 }
+            }
+        }
+        viewModel.message.observe(viewLifecycleOwner) { message ->
+            if (message == "Sucesso") {
+                findNavController().popBackStack()
             }
         }
     }

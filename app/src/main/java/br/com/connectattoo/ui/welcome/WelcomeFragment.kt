@@ -15,12 +15,23 @@ import br.com.connectattoo.ui.BaseFragment
 import br.com.connectattoo.utils.Constants.API_TOKEN
 import br.com.connectattoo.utils.Constants.API_USER_NAME
 import br.com.connectattoo.utils.Constants.CODE_ERROR_401
+import br.com.connectattoo.utils.Constants.CODE_ERROR_403
 import br.com.connectattoo.utils.Constants.CODE_ERROR_404
 import br.com.connectattoo.utils.DataStoreManager
+import br.com.connectattoo.utils.executeWithLoadingAsync
+import br.com.connectattoo.utils.hideLoadingFragment
 import kotlinx.coroutines.launch
 
 class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
     private lateinit var repository: AuthRepository
+    override fun inflateBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentWelcomeBinding {
+        return FragmentWelcomeBinding.inflate(inflater, container, false)
+
+    }
+
     override fun setupViews() {
 
         repository = AuthRepository()
@@ -33,13 +44,6 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
         }
     }
 
-    override fun inflateBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentWelcomeBinding {
-        return FragmentWelcomeBinding.inflate(inflater, container, false)
-
-    }
 
     private fun verifyTokenApi() {
         viewLifecycleOwner.lifecycleScope.launch {
@@ -51,12 +55,15 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
     }
 
     private suspend fun verifyUserConfirmation(token: String) {
-        val result = repository.verifyUserConfirmation(token)
-        if (result.isSuccessful) {
-            handleSuccessfulResponse(result.body(), token)
-        } else {
-            handleErrorResponse(result.code())
+        val result = executeWithLoadingAsync(binding.root, R.id.nav_host_fragment) {
+            repository.verifyUserConfirmation(token)
         }
+        if (result.await().isSuccessful) {
+            handleSuccessfulResponse(result.await().body(), token)
+        } else {
+            handleErrorResponse(result.await().code(), token)
+        }
+        hideLoadingFragment(binding.root)
     }
 
     private fun handleSuccessfulResponse(body: ApiConfirmationResponse?, token: String) {
@@ -72,8 +79,15 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
         }
     }
 
-    private suspend fun handleErrorResponse(code: Int) {
+    private suspend fun handleErrorResponse(code: Int, token: String) {
         when (code) {
+            CODE_ERROR_403 -> {
+                val bundle = Bundle().apply { putString("token", token) }
+                findNavController().navigate(
+                    R.id.action_welcomeFragment_to_confirmationFragment,
+                    bundle
+                )
+            }
             CODE_ERROR_404 -> {
                 deleteUserInfoDataStore()
             }
