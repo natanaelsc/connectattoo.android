@@ -142,7 +142,6 @@
         android:textColorHint="@color/black500"
         app:boxBackgroundColor="@android:color/transparent"
         app:boxStrokeWidth="0dp"
-        android:enabled="false"
         app:boxStrokeWidthFocused="0dp"
         app:cursorColor="@color/purple500"
         app:hintTextColor="@color/black500"
@@ -155,7 +154,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:enabled="false"
             android:fontFamily="@font/raleway_medium"
             android:hint="@string/et_email"
             android:inputType="textEmailAddress" />

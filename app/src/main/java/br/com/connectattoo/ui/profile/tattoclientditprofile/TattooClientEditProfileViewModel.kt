@@ -138,16 +138,18 @@ class TattooClientEditProfileViewModel : ViewModel() {
     fun setImageUri(uri: Uri) {
         _imageUri.value = uri
     }
-
+    @Suppress("LongParameterList")
     fun updateClientProfile(
         profileRepository: ProfileRepository,
         token: String,
         name: String,
         username: String,
-        birthDate: String
+        birthDate: String,
+        email: String
     ) {
 
-        val map = checkFieldChange(name, username, birthDate)
+        val map =
+            checkFieldChange(name = name, username = username, birthDate = birthDate, email = email)
         if (map.isNotEmpty()) {
             viewModelScope.launch {
                 val result = profileRepository.updateClientProfile(token, map)
@@ -160,16 +162,15 @@ class TattooClientEditProfileViewModel : ViewModel() {
 
     private fun checkFieldChange(
         name: String,
-        //email: String,
-        username: String, birthDate: String
+        username: String, birthDate: String, email: String,
     ): Map<String, String> {
         val map = mutableMapOf<String, String>()
         if (name != _dataState.name) {
             map["name"] = name
         }
-        /*if (email != _dataState.email) {
+        if (email != _dataState.email) {
             map["email"] = email
-        }*/
+        }
         if (username != _dataState.username) {
             map["username"] = username
         }
