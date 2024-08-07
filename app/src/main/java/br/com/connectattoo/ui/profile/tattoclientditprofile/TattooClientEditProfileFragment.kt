@@ -147,7 +147,7 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
 
     private fun updateClientProfile(profileRepository: ProfileRepository, token: String) {
         val name = binding.etName.text.toString()
-        //val email = binding.etClientEmail.text.toString()
+        val email = binding.etClientEmail.text.toString()
         val userName = binding.etUserName.text.toString()
         val birthDate = binding.etBirthDate.unMasked
 
@@ -160,7 +160,8 @@ class TattooClientEditProfileFragment : BaseFragment<FragmentTattooClientEditPro
                 token = token,
                 name = name,
                 username = userName,
-                birthDate = birthDate
+                birthDate = birthDate,
+                email
             )
         }
 
