@@ -40,20 +40,20 @@ class LoadingScreenFragment : BaseFragment<FragmentLoadingScreenBinding>() {
 
     private fun sortRandomPhrase() {
         val phrase: List<String> = listOf(
-            "Carregando sua próxima obra-prima na pele...",
-            "Preparando as tintas e a inspiração...",
-            "Aguarde enquanto customizamos sua próxima marca de expressão...",
-            "Transformando suas ideias em arte!",
-            "A espera vale a pena: sua nova tatuagem está chegando!",
-            "Carregando... porque grandes obras de arte levam tempo.",
-            "Em breve: sua história ganhará um novo capítulo na pele.",
-            "Carregando... porque a perfeição demanda paciência.",
-            "Preparando-se para fazer história na sua pele.",
-            "Carregando... porque cada detalhe é importante para nós e para você."
+            getString(R.string.phrase_loading_your_next_masterpiece_on_your_skin),
+            getString(R.string.phrase_preparing_the_inks_and_the_inspiration),
+            getString(R.string.phrase_please_wait_while_we_customize_your_next_expression_mark),
+            getString(R.string.phrase_transforming_your_ideas_into_art),
+            getString(R.string.phrase_the_wait_is_worth_it_your_new_tattoo_is_on_its_way),
+            getString(R.string.phrase_loading_because_great_artworks_take_time),
+            getString(R.string.phrase_coming_soon_your_story_will_gain_a_new_chapter_on_your_skin),
+            getString(R.string.phrase_loading_because_perfection_demands_patience),
+            getString(R.string.phrase_getting_ready_to_make_history_on_your_skin),
+            getString(R.string.phrase_loading_because_every_detail_is_important_to_us_and_to_you)
         )
         val index = Random.nextInt(phrase.size)
         val phraseSorted = phrase[index]
-        binding.txtThisMayTakeAFewSeconds.text = phraseSorted
+        binding.txtLoading.text = phraseSorted
     }
 
     override fun inflateBinding(
