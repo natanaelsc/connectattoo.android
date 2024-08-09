@@ -43,10 +43,10 @@
     <string name="cancel">Cancelar</string>
     <string name="snack_photo_size_exceeds_5MB">O tamanho da foto excede 5MB</string>
     <string name="snack_please_select_an_image_in_JPEG_JPG_or_PNG_format">Por favor, selecione uma imagem nos formatos JPEG, JPG ou PNG</string>
-    <string name="txt_title_filters">Filtros</string>
+    <string name="txt_title_filters">Tags</string>
     <string name="txt_types_of_tattoos">Tipos de Tatuagem</string>
     <string name="txt_select_up_to_5_styles">Selecione até 5 estilos</string>
-    <string name="btn_filter">Filtrar</string>
+    <string name="btn_filter">Salvar</string>
     <string name="txt_you_cannot_select_more_than_5_tags">"Você não pode selecionar mais do que 5 tags."</string>
     <string name="title_profile_settings">Configurações de Perfil</string>
     <string name="txt_manage_your_account">Gerenciar a sua conta</string>
