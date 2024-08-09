@@ -66,4 +66,14 @@
     <string name="btn_see_full_profile">Ver Perfil Completo</string>
     <string name="txt_default_loading_text">Carregando...</string>
     <string name="txt_this_may_take_a_few_seconds">Isso pode demorar alguns segundos</string>
+    <string name="phrase_loading_your_next_masterpiece_on_your_skin">Carregando sua próxima obra-prima na pele...</string>
+    <string name="phrase_preparing_the_inks_and_the_inspiration">Preparando as tintas e a inspiração...</string>
+    <string name="phrase_please_wait_while_we_customize_your_next_expression_mark">Aguarde enquanto customizamos sua próxima marca de expressão...</string>
+    <string name="phrase_transforming_your_ideas_into_art">Transformando suas ideias em arte!</string>
+    <string name="phrase_the_wait_is_worth_it_your_new_tattoo_is_on_its_way">A espera vale a pena: sua nova tatuagem está chegando!</string>
+    <string name="phrase_loading_because_great_artworks_take_time">Carregando... porque grandes obras de arte levam tempo.</string>
+    <string name="phrase_coming_soon_your_story_will_gain_a_new_chapter_on_your_skin">Em breve: sua história ganhará um novo capítulo na pele.</string>
+    <string name="phrase_loading_because_perfection_demands_patience">Carregando... porque a perfeição demanda paciência.</string>
+    <string name="phrase_getting_ready_to_make_history_on_your_skin">Preparando-se para fazer história na sua pele.</string>
+    <string name="phrase_loading_because_every_detail_is_important_to_us_and_to_you">Carregando... porque cada detalhe é importante para nós e para você.</string>
 </resources>
