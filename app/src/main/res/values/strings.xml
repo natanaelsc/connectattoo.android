@@ -76,4 +76,7 @@
     <string name="phrase_loading_because_perfection_demands_patience">Carregando... porque a perfeição demanda paciência.</string>
     <string name="phrase_getting_ready_to_make_history_on_your_skin">Preparando-se para fazer história na sua pele.</string>
     <string name="phrase_loading_because_every_detail_is_important_to_us_and_to_you">Carregando... porque cada detalhe é importante para nós e para você.</string>
+    <string name="txt_next_schedule">Próximo evento</string>
+    <string name="txt_most_recent_conversations">Conversas mais recentes</string>
+    <string name="txt_next_on_your_agenda">Próximo na sua agenda</string>
 </resources>
