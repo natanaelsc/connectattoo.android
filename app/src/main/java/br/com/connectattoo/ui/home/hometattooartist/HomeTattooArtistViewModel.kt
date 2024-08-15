@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import br.com.connectattoo.data.ListOfTattoosBasedOnTagsAndItemMore
+import br.com.connectattoo.data.NextOnYourAgenda
 import br.com.connectattoo.data.TagHomeScreen
 import br.com.connectattoo.utils.UiState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,8 +23,14 @@ class HomeTattooArtistViewModel : ViewModel() {
     val listOfTattoosBasedOnTags: LiveData<MutableList<ListOfTattoosBasedOnTagsAndItemMore>> =
         _listOfTattoosBasedOnTags
 
+    private val _listNextOnYourAgenda =
+        MutableLiveData<MutableList<NextOnYourAgenda>>(mutableListOf())
+    val listNextOnYourAgenda: LiveData<MutableList<NextOnYourAgenda>> =
+        _listNextOnYourAgenda
+
     init {
         getListOfTattoosBasedOnTags()
+        getListNextOnYourAgenda()
     }
 
     fun getListOfTattoosBasedOnTags() {
@@ -148,4 +155,43 @@ class HomeTattooArtistViewModel : ViewModel() {
         )
     }
 
+
+
+    fun getListNextOnYourAgenda() {
+        val nextOnYourAgendaFakeList = mutableListOf(
+            NextOnYourAgenda(
+                title = "Próximo evento",
+                date = "Hoje",
+                time = "11:45",
+                clientPhoto = "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst_carousel%2Ftattoo_tesoura.png",
+                clientName = "Nome do Cliente",
+                clientAt = "@DoCliente"
+            ),
+            NextOnYourAgenda(
+                title = "A seguir",
+                date = "Hoje",
+                time = "11:45",
+                clientPhoto = "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst_carousel%2Ftattoo_tesoura.png",
+                clientName = "Nome do Cliente",
+                clientAt = "@DoCliente",
+            ),
+            NextOnYourAgenda(
+                title = "A seguir",
+                date = "Hoje",
+                time = "11:45",
+                clientPhoto = "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst_carousel%2Ftattoo_tesoura.png",
+                clientName = "Nome do Cliente",
+                clientAt = "@DoCliente",
+            ),
+            NextOnYourAgenda(
+                title = "A seguir",
+                date = "Hoje",
+                time = "11:45",
+                clientPhoto = "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst_carousel%2Ftattoo_tesoura.png",
+                clientName = "Nome do Cliente",
+                clientAt = "@DoCliente",
+            )
+        )
+        _listNextOnYourAgenda.value?.addAll(nextOnYourAgendaFakeList)
+    }
 }

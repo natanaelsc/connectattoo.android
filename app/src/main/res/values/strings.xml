@@ -79,4 +79,6 @@
     <string name="txt_next_schedule">Próximo evento</string>
     <string name="txt_most_recent_conversations">Conversas mais recentes</string>
     <string name="txt_next_on_your_agenda">Próximo na sua agenda</string>
+    <string name="txt_date">Data: </string>
+    <string name="txt_time">Horário: </string>
 </resources>

@@ -9,6 +9,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import br.com.connectattoo.R
+import br.com.connectattoo.adapter.AdapterListNextOnYourAgenda
 import br.com.connectattoo.adapter.AdapterListOfTattoosBasedOnTags
 import br.com.connectattoo.databinding.FragmentHomeTattooArtistBinding
 import br.com.connectattoo.ui.BaseFragment
@@ -23,6 +24,7 @@ class HomeTattooArtistFragment : BaseFragment<FragmentHomeTattooArtistBinding>()
 
     private val viewModel: HomeTattooArtistViewModel by viewModels()
     private lateinit var adapterListOfTattoosBasedOnTags: AdapterListOfTattoosBasedOnTags
+    private lateinit var adapterListNextOnYourAgenda: AdapterListNextOnYourAgenda
 
     override fun inflateBinding(
         inflater: LayoutInflater,
@@ -42,8 +44,11 @@ class HomeTattooArtistFragment : BaseFragment<FragmentHomeTattooArtistBinding>()
             setHasFixedSize(true)
             adapterListOfTattoosBasedOnTags = AdapterListOfTattoosBasedOnTags()
             adapter = adapterListOfTattoosBasedOnTags
-
-
+        }
+        binding.recycleNextSchedules.run {
+            setHasFixedSize(true)
+            adapterListNextOnYourAgenda = AdapterListNextOnYourAgenda()
+            adapter = adapterListNextOnYourAgenda
         }
 
     }
@@ -61,6 +66,11 @@ class HomeTattooArtistFragment : BaseFragment<FragmentHomeTattooArtistBinding>()
         viewModel.listOfTattoosBasedOnTags.observe(viewLifecycleOwner) { listOfTattoosBasedOnTags ->
             if (listOfTattoosBasedOnTags != null) {
                 adapterListOfTattoosBasedOnTags.setData(listOfTattoosBasedOnTags)
+            }
+        }
+        viewModel.listNextOnYourAgenda.observe(viewLifecycleOwner) { listNextOnYourAgenda ->
+            if (listNextOnYourAgenda != null) {
+                adapterListNextOnYourAgenda.submitList(listNextOnYourAgenda)
             }
         }
         lifecycleScope.launch {

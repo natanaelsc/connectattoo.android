@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_tattoo_artist"
     android:layout_width="180dp"
-
     android:layout_height="180dp"
     android:layout_marginEnd="6dp"
     app:cardCornerRadius="10dp"
@@ -12,11 +11,12 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_card"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/txtNewSchedule"
+            android:id="@+id/txtTitleAgenda"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_16dp"
@@ -52,7 +52,7 @@
             app:layout_constraintTop_toBottomOf="@+id/btn_clock" />
 
         <TextView
-            android:id="@+id/txtNameTattooArtist"
+            android:id="@+id/txtNameClient"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_8dp"
@@ -63,15 +63,15 @@
             tools:text="Larissa Diniz" />
 
         <TextView
-            android:id="@+id/txtTattoArtistProfile"
+            android:id="@+id/txtClientAt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/raleway_regular"
             android:text="@lari_tattoo"
             android:textColor="@color/purple900"
             app:layout_constraintBottom_toBottomOf="@+id/ivImageTattooArtist"
-            app:layout_constraintStart_toStartOf="@+id/txtNameTattooArtist"
-            app:layout_constraintTop_toBottomOf="@+id/txtNameTattooArtist" />
+            app:layout_constraintStart_toStartOf="@+id/txtNameClient"
+            app:layout_constraintTop_toBottomOf="@+id/txtNameClient" />
 
         <ImageButton
             android:id="@+id/btnCalendar"
@@ -81,8 +81,8 @@
             android:background="@null"
             android:contentDescription="@string/content_description_btn_calendar"
             android:src="@drawable/icon_calendar"
-            app:layout_constraintStart_toStartOf="@+id/txtNewSchedule"
-            app:layout_constraintTop_toBottomOf="@+id/txtNewSchedule"
+            app:layout_constraintStart_toStartOf="@+id/txtTitleAgenda"
+            app:layout_constraintTop_toBottomOf="@+id/txtTitleAgenda"
             tools:ignore="TouchTargetSizeCheck" />
 
         <TextView
@@ -90,12 +90,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/raleway_extrabold"
+            android:text="@string/txt_date"
             android:textColor="@color/black"
             android:textSize="@dimen/txt_size_12sp"
             app:layout_constraintBottom_toBottomOf="@+id/btnCalendar"
             app:layout_constraintStart_toEndOf="@+id/btnCalendar"
-            app:layout_constraintTop_toTopOf="@+id/btnCalendar"
-            tools:text="Data: " />
+            app:layout_constraintTop_toTopOf="@+id/btnCalendar" />
 
         <TextView
             android:id="@+id/txtScheduleTomorrow"
@@ -125,12 +125,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/raleway_extrabold"
+            android:text="@string/txt_time"
             android:textColor="@color/black800"
             android:textSize="@dimen/txt_size_12sp"
             app:layout_constraintBottom_toBottomOf="@+id/btn_clock"
             app:layout_constraintStart_toEndOf="@+id/btn_clock"
-            app:layout_constraintTop_toTopOf="@+id/btn_clock"
-            tools:text="Horário: " />
+            app:layout_constraintTop_toTopOf="@+id/btn_clock" />
 
         <TextView
             android:id="@+id/txtScheduleHour"
