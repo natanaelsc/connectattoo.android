@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import br.com.connectattoo.data.ListOfTattoosBasedOnTagsAndItemMore
+import br.com.connectattoo.data.MostRecentConversation
 import br.com.connectattoo.data.NextOnYourAgenda
 import br.com.connectattoo.data.TagHomeScreen
 import br.com.connectattoo.utils.UiState
@@ -28,9 +29,15 @@ class HomeTattooArtistViewModel : ViewModel() {
     val listNextOnYourAgenda: LiveData<MutableList<NextOnYourAgenda>> =
         _listNextOnYourAgenda
 
+    private val _listMostRecentConversation =
+        MutableLiveData<MutableList<MostRecentConversation>>(mutableListOf())
+    val listMostRecentConversation: LiveData<MutableList<MostRecentConversation>> =
+        _listMostRecentConversation
+
     init {
         getListOfTattoosBasedOnTags()
         getListNextOnYourAgenda()
+        getMostRecentConversation()
     }
 
     fun getListOfTattoosBasedOnTags() {
@@ -156,7 +163,6 @@ class HomeTattooArtistViewModel : ViewModel() {
     }
 
 
-
     fun getListNextOnYourAgenda() {
         val nextOnYourAgendaFakeList = mutableListOf(
             NextOnYourAgenda(
@@ -193,5 +199,46 @@ class HomeTattooArtistViewModel : ViewModel() {
             )
         )
         _listNextOnYourAgenda.value?.addAll(nextOnYourAgendaFakeList)
+    }
+
+    fun getMostRecentConversation() {
+        val listMostRecentConversationFakeData = mutableListOf(
+            MostRecentConversation(
+                photoClient = "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst_carousel%2Ftattoo_tesoura.png",
+                nameClient = "Mariana Teixeira",
+                numberPendingMessages = "4"
+            ),
+            MostRecentConversation(
+                photoClient = "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst_carousel%2Ftattoo_tesoura.png",
+                nameClient = "Mariana Teixeira",
+                numberPendingMessages = "7"
+            ),
+            MostRecentConversation(
+                photoClient = "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst_carousel%2Ftattoo_tesoura.png",
+                nameClient = "Mariana Teixeira",
+                numberPendingMessages = ""
+            ),
+            MostRecentConversation(
+                photoClient = "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst_carousel%2Ftattoo_tesoura.png",
+                nameClient = "Mariana Teixeira",
+                numberPendingMessages = "4"
+            ),
+            MostRecentConversation(
+                photoClient = "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst_carousel%2Ftattoo_tesoura.png",
+                nameClient = "Mariana Teixeira",
+                numberPendingMessages = "4"
+            ),
+            MostRecentConversation(
+                photoClient = "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst_carousel%2Ftattoo_tesoura.png",
+                nameClient = "Mariana Teixeira",
+                numberPendingMessages = "4"
+            ),
+            MostRecentConversation(
+                photoClient = "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Ffirst_carousel%2Ftattoo_tesoura.png",
+                nameClient = "Mariana Teixeira",
+                numberPendingMessages = "4"
+            ),
+        )
+        _listMostRecentConversation.value?.addAll(listMostRecentConversationFakeData)
     }
 }

@@ -9,6 +9,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import br.com.connectattoo.R
+import br.com.connectattoo.adapter.AdapterListMostRecentConversations
 import br.com.connectattoo.adapter.AdapterListNextOnYourAgenda
 import br.com.connectattoo.adapter.AdapterListOfTattoosBasedOnTags
 import br.com.connectattoo.databinding.FragmentHomeTattooArtistBinding
@@ -25,6 +26,7 @@ class HomeTattooArtistFragment : BaseFragment<FragmentHomeTattooArtistBinding>()
     private val viewModel: HomeTattooArtistViewModel by viewModels()
     private lateinit var adapterListOfTattoosBasedOnTags: AdapterListOfTattoosBasedOnTags
     private lateinit var adapterListNextOnYourAgenda: AdapterListNextOnYourAgenda
+    private lateinit var adapterListMostRecentConversations: AdapterListMostRecentConversations
 
     override fun inflateBinding(
         inflater: LayoutInflater,
@@ -50,6 +52,11 @@ class HomeTattooArtistFragment : BaseFragment<FragmentHomeTattooArtistBinding>()
             adapterListNextOnYourAgenda = AdapterListNextOnYourAgenda()
             adapter = adapterListNextOnYourAgenda
         }
+        binding.recycleMostRecentConversations.run {
+            setHasFixedSize(true)
+            adapterListMostRecentConversations = AdapterListMostRecentConversations()
+            adapter = adapterListMostRecentConversations
+        }
 
     }
 
@@ -71,6 +78,11 @@ class HomeTattooArtistFragment : BaseFragment<FragmentHomeTattooArtistBinding>()
         viewModel.listNextOnYourAgenda.observe(viewLifecycleOwner) { listNextOnYourAgenda ->
             if (listNextOnYourAgenda != null) {
                 adapterListNextOnYourAgenda.submitList(listNextOnYourAgenda)
+            }
+        }
+        viewModel.listMostRecentConversation.observe(viewLifecycleOwner) { listMostRecentConversation ->
+            if (listMostRecentConversation != null) {
+                adapterListMostRecentConversations.submitList(listMostRecentConversation)
             }
         }
         lifecycleScope.launch {
