@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/user_page_navigation_graph"
-    app:startDestination="@id/homeUserFragment">
+    app:startDestination="@id/homeTattooArtistFragment">
 
     <fragment
         android:id="@+id/homeUserFragment"
@@ -72,4 +72,8 @@
         android:name="br.com.connectattoo.ui.home.profiletattooartistdetails.ProfileTattooArtistDetailsFragment"
         android:label="fragment_profile_tattoo_artist_details"
         tools:layout="@layout/fragment_profile_tattoo_artist_details" />
+    <fragment
+        android:id="@+id/homeTattooArtistFragment"
+        android:name="br.com.connectattoo.ui.home.hometattooartist.HomeTattooArtistFragment"
+        android:label="HomeTattooArtistFragment" />
 </navigation>

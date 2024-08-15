@@ -19,8 +19,8 @@
 
     <TextView
         android:id="@+id/amount_of_unread_message"
-        android:layout_width="13dp"
-        android:layout_height="13dp"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="9dp"
         android:background="@drawable/bg_circular_chat_tattoo_artist_purple300"
