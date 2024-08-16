@@ -169,7 +169,7 @@ class HomeTattooArtistViewModel : ViewModel() {
                 title = "Próximo evento",
                 date = "Hoje",
                 time = "11:45",
-                clientPhoto =  "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Fsecond_carousel%2Ftattoo_borboleta.png",
+                clientPhoto =  "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/tattoo_client_profile/avatar/image_1.png",
                 clientName = "Mariana Teixeira",
                 clientAt = "@Mari_teixeira"
             ),
@@ -177,7 +177,7 @@ class HomeTattooArtistViewModel : ViewModel() {
                 title = "A seguir",
                 date = "Hoje",
                 time = "11:45",
-                clientPhoto = "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Fsecond_carousel%2Ftattoo_lion.png",
+                clientPhoto = "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/tattoo_client_profile/avatar/image_2.png",
                 clientName = "Ivone Lara",
                 clientAt = "@ivonelara",
             ),
@@ -185,7 +185,7 @@ class HomeTattooArtistViewModel : ViewModel() {
                 title = "A seguir",
                 date = "Hoje",
                 time = "11:45",
-                clientPhoto = "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Fsecond_carousel%2Ftattoo_tartaruga.png",
+                clientPhoto = "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/tattoo_client_profile/avatar/image_3.png",
                 clientName = "Nome do Cliente",
                 clientAt = "@DoCliente",
             ),
@@ -193,7 +193,7 @@ class HomeTattooArtistViewModel : ViewModel() {
                 title = "A seguir",
                 date = "Hoje",
                 time = "11:45",
-                clientPhoto =  "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Fsecond_carousel%2Ftattoo_Pezkoi.png",
+                clientPhoto =  "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/tattoo_client_profile/avatar/image_4.png",
                 clientName = "Nome do Cliente",
                 clientAt = "@DoCliente",
             )
@@ -204,37 +204,37 @@ class HomeTattooArtistViewModel : ViewModel() {
     fun getMostRecentConversation() {
         val listMostRecentConversationFakeData = mutableListOf(
             MostRecentConversation(
-                photoClient = "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Fthird_carousel%2Ftattoo_rosto_cobras.png",
+                photoClient = "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/tattoo_client_profile/avatar/image_1.png",
                 nameClient = "Mariana Teixeira",
                 numberPendingMessages = "4"
             ),
             MostRecentConversation(
-                photoClient =  "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Fthird_carousel%2Ftattoo_escorpiao.png",
+                photoClient =  "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/tattoo_client_profile/avatar/image_2.png",
                 nameClient = "Ivone Lara",
                 numberPendingMessages = "7"
             ),
             MostRecentConversation(
-                photoClient = "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Fthird_carousel%2Ftattoo_olho.png",
+                photoClient = "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/tattoo_client_profile/avatar/image_3.png",
                 nameClient = "Kleber Silveira",
                 numberPendingMessages = ""
             ),
             MostRecentConversation(
-                photoClient = "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Fthird_carousel%2Ftattoo_tigre.png",
+                photoClient = "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/tattoo_client_profile/avatar/image_4.png",
                 nameClient = "Rafael Felix",
                 numberPendingMessages = "2"
             ),
             MostRecentConversation(
-                photoClient =  "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Fthird_carousel%2Ftattoo_cobra.png",
+                photoClient =  "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/tattoo_client_profile/avatar/image_5.png",
                 nameClient = "Patty Melo",
                 numberPendingMessages = ""
             ),
             MostRecentConversation(
-                photoClient = "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Fthird_carousel%2Ftattoo_rosto_cobras.png",
+                photoClient = "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/tattoo_client_profile/avatar/image_1.png",
                 nameClient = "Mariana Teixeira",
                 numberPendingMessages = "4"
             ),
             MostRecentConversation(
-                photoClient = "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/home%2Fthird_carousel%2Ftattoo_rosto_cobras.png",
+                photoClient = "https://pub-777ce89a8a3641429d92a32c49eac191.r2.dev/tattoo_client_profile/avatar/image_2.png",
                 nameClient = "Mariana Teixeira",
                 numberPendingMessages = "4"
             ),
