@@ -23,9 +23,9 @@
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="23dp"
                 android:fontFamily="@font/raleway_extrabold"
+                android:textColor="@color/black800"
                 android:textSize="@dimen/txt_size_14sp"
                 android:textStyle="bold"
-                android:textColor="@color/black800"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Olá, João" />
@@ -37,9 +37,9 @@
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/raleway_medium"
                 android:text="é um prazer conectar você com"
+                android:textColor="@color/black800"
                 android:textSize="@dimen/txt_size_14sp"
                 android:textStyle="bold"
-                android:textColor="@color/black800"
                 app:layout_constraintBottom_toBottomOf="@+id/txtName"
                 app:layout_constraintStart_toEndOf="@+id/txtName"
                 app:layout_constraintTop_toTopOf="@+id/txtName"
@@ -80,12 +80,15 @@
             android:layout_marginTop="@dimen/margin_8dp"
             android:background="@drawable/search_user"
             android:backgroundTint="@color/white"
+            android:backgroundTintMode="src_in"
             android:iconifiedByDefault="false"
-            android:searchHintIcon="@null"
+            android:layoutDirection="ltr"
+            android:queryBackground="@android:color/transparent"
             android:searchIcon="@drawable/search_icon"
             android:theme="@style/SearchViewTextColor"
             android:voiceSearchMode="showVoiceSearchButton|launchRecognizer"
             app:voiceIcon="@drawable/microphone_icon" />
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycle_ListOfTattoosBasedOnTags"
