@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="80dp"
+    android:layout_width="85dp"
     android:id="@+id/card_user_chat"
     android:layout_height="100dp"
     xmlns:tools="http://schemas.android.com/tools"
@@ -44,12 +44,12 @@
         tools:text="Larissa Diasadsfdags"
         android:textAlignment="center"
         android:textColor="@color/black800"
-        android:textSize="@dimen/txt_size_11sp"
+        android:textSize="@dimen/txt_size_9sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/profileImage"
-        app:layout_constraintStart_toStartOf="@+id/profileImage"
-        app:layout_constraintTop_toBottomOf="@+id/profileImage" />
+        app:layout_constraintEnd_toEndOf="@+id/ivProfileImage"
+        app:layout_constraintStart_toStartOf="@+id/ivProfileImage"
+         />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
