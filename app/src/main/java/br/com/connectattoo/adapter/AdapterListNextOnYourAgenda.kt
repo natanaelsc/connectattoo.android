@@ -10,7 +10,8 @@ import br.com.connectattoo.databinding.ItemLatestConversationsTattooArtistBindin
 import com.bumptech.glide.Glide
 
 class AdapterListNextOnYourAgenda :
-    androidx.recyclerview.widget.ListAdapter<NextOnYourAgenda, AdapterListNextOnYourAgenda.ListNextOnYourAgendaViewHolder>(
+    androidx.recyclerview.widget.ListAdapter<NextOnYourAgenda,
+        AdapterListNextOnYourAgenda.ListNextOnYourAgendaViewHolder>(
         DiffCallbackListNextOnYourAgenda()
     ) {
     var listenerNextAgenda: (NextOnYourAgenda) -> Unit = {}
