@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_tattoo_artist"
+    android:layout_width="180dp"
+    android:layout_height="180dp"
+    android:layout_marginEnd="6dp"
+    app:cardCornerRadius="10dp"
+    app:cardMaxElevation="1dp">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_card"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/txtTitleAgenda"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_16dp"
+            android:layout_marginTop="@dimen/margin_16dp"
+            android:fontFamily="@font/raleway_regular"
+            android:text="@string/txt_next_schedule"
+            android:textColor="@color/purple500"
+            android:textSize="@dimen/txt_size_11sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/btnMoreInfoNextScheduling"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@null"
+            android:backgroundTint="@color/white"
+            android:contentDescription="@string/content_description_next_appointment_information_button"
+            android:src="@drawable/icon_info"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivImageTattooArtist"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/circular_image_user_profile_border_purple"
+            android:contentDescription="@string/content_description_tattoo_artist"
+            android:padding="@dimen/padding_2dp"
+            android:src="@drawable/icon_person_profile"
+            app:layout_constraintStart_toStartOf="@+id/btn_clock"
+            app:layout_constraintTop_toBottomOf="@+id/btn_clock" />
+
+        <TextView
+            android:id="@+id/txtNameClient"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_8dp"
+            android:textSize="@dimen/txt_size_11sp"
+            android:fontFamily="@font/raleway_semibold"
+            android:textColor="@color/purple500"
+            app:layout_constraintStart_toEndOf="@+id/ivImageTattooArtist"
+            app:layout_constraintTop_toTopOf="@+id/ivImageTattooArtist"
+            tools:text="Larissa Diniz" />
+
+        <TextView
+            android:id="@+id/txtClientAt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/txt_size_11sp"
+            android:fontFamily="@font/raleway_regular"
+            android:text="@lari_tattoo"
+            android:textColor="@color/purple900"
+            app:layout_constraintBottom_toBottomOf="@+id/ivImageTattooArtist"
+            app:layout_constraintStart_toStartOf="@+id/txtNameClient"
+            app:layout_constraintTop_toBottomOf="@+id/txtNameClient" />
+
+        <ImageButton
+            android:id="@+id/btnCalendar"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="8dp"
+            android:background="@null"
+            android:contentDescription="@string/content_description_btn_calendar"
+            android:src="@drawable/icon_calendar"
+            app:layout_constraintStart_toStartOf="@+id/txtTitleAgenda"
+            app:layout_constraintTop_toBottomOf="@+id/txtTitleAgenda"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <TextView
+            android:id="@+id/txtScheduleDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/raleway_extrabold"
+            android:text="@string/txt_date"
+            android:textColor="@color/black"
+            android:textSize="@dimen/txt_size_12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/btnCalendar"
+            app:layout_constraintStart_toEndOf="@+id/btnCalendar"
+            app:layout_constraintTop_toTopOf="@+id/btnCalendar" />
+
+        <TextView
+            android:id="@+id/txtScheduleTomorrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/raleway_extrabold"
+            android:textColor="@color/purple500"
+            android:textSize="@dimen/txt_size_12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/txtScheduleDate"
+            app:layout_constraintStart_toEndOf="@+id/txtScheduleDate"
+            app:layout_constraintTop_toTopOf="@+id/txtScheduleDate"
+            tools:text="Hoje" />
+
+        <ImageButton
+            android:id="@+id/btn_clock"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@null"
+            android:contentDescription="@string/content_description_btn_clock"
+            android:src="@drawable/icon_clock"
+            app:layout_constraintStart_toStartOf="@+id/btnCalendar"
+            app:layout_constraintTop_toBottomOf="@+id/btnCalendar"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <TextView
+            android:id="@+id/txtSchedule"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/raleway_extrabold"
+            android:text="@string/txt_time"
+            android:textColor="@color/black800"
+            android:textSize="@dimen/txt_size_12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_clock"
+            app:layout_constraintStart_toEndOf="@+id/btn_clock"
+            app:layout_constraintTop_toTopOf="@+id/btn_clock" />
+
+        <TextView
+            android:id="@+id/txtScheduleHour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/raleway_extrabold"
+            android:textColor="@color/purple500"
+            android:textSize="@dimen/txt_size_12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/txtSchedule"
+            app:layout_constraintStart_toEndOf="@+id/txtSchedule"
+            app:layout_constraintTop_toTopOf="@+id/txtSchedule"
+            tools:text="11:30" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.cardview.widget.CardView>
