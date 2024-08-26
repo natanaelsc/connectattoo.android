@@ -108,7 +108,7 @@ abstract class UserRegistration<T : ViewBinding> : BaseFragment<T>() {
 
     abstract fun validateConfirmPassword()
 
-    @Suppress("MagicNumber")
+    @Suppress("MagicNumber", "NestedBlockDepth")
     private fun validateBirthDay() {
         val birthDay = this.birthDay.text.toString()
         val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale("pt", "BR"))
@@ -117,20 +117,29 @@ abstract class UserRegistration<T : ViewBinding> : BaseFragment<T>() {
             val parsedDate = dateFormat.parse(birthDay)
             if (parsedDate != null) {
                 val currentDate = Date()
-                val calendar = Calendar.getInstance()
-                calendar.time = parsedDate
-                val year = calendar[Calendar.YEAR]
-
-                if (year >= 1923 && year <= (year + 100)) {
-                    this.incorrectDate = false
-                    this.setBackgroundValid(this.birthDay)
-                } else {
-                    throw ParseException("", 0)
-                }
 
                 if (!parsedDate.after(currentDate)) {
-                    this.incorrectDate = false
-                    this.setBackgroundValid(this.birthDay)
+                    val calendarBirthDate = Calendar.getInstance()
+                    calendarBirthDate.time = parsedDate
+                    val calendarCurrentDate = Calendar.getInstance()
+
+                    var age =
+                        calendarCurrentDate.get(Calendar.YEAR) - calendarBirthDate.get(Calendar.YEAR)
+
+                    if (calendarCurrentDate.get(Calendar.DAY_OF_YEAR) < calendarBirthDate.get(
+                            Calendar.DAY_OF_YEAR
+                        )
+                    ) {
+                        age--
+                    }
+
+                    if (age in 18..100) {
+                        this.incorrectDate = false
+                        this.setBackgroundValid(this.birthDay)
+                    } else {
+                        this.incorrectDate = true
+                        this.setBackgroundInvalid(this.birthDay)
+                    }
                 } else {
                     this.incorrectDate = true
                     this.setBackgroundInvalid(this.birthDay)
